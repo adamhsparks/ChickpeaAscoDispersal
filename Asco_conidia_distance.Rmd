@@ -21,6 +21,7 @@ library(cloudy)
 library(readxl)
 library(dplyr)
 library(lme4)
+library(knitr)
 
 # update this when OneDrive decides to work
 As_dat <- as.data.frame(read_xlsx("C:/Users/U8011054/USQ/SCP - Documents/Chickpea_Ascochyta/CPSporesSpatial version 2.xlsx", sheet = "analysisData"))
@@ -31,16 +32,16 @@ Astest1 <- fetch_data(url = "https://usqprd.sharepoint.com/:x:/s/SCP/EYwqdKC38rR
 
 ```{r format_data}
 # format lesion counts into integers
-As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", "mean_count_pot")] <- 
-  lapply(As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", "mean_count_pot")], as.double)
+As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", 
+          "mean_count_pot", "precip","mrain", "mwd","mws")] <- 
+  lapply(As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", 
+                   "mean_count_pot", "precip","mrain", "mwd","mws")], as.double)
 
-# change distance to continuos variable
+# change distance to continuous variable
 As_dat$dist <- as.numeric(unlist(strsplit(As_dat$distance," m")))
 
-# find the sum
-As_dat$sum_pot <- rowSums(As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5")], na.rm = TRUE)
-As_dat <- As_dat[!is.na(As_dat$station),]
-
+As_dat[,c("site","distance", "rep")] <- 
+   lapply(As_dat[,c("site","distance", "rep")],as.factor)
 ```
 
 
@@ -48,9 +49,46 @@ From this data we hope to obtain the following.
   - How far conidia can be dispersed in a spread event  
   - What combination of wind speed / direction / rain effects the dispersal distance.  
   
-Due to the lack of reps at some of the distances we will ignore transect as a factor. We know wind direction will influence our results and we will need to accept that adds variation we cannot statistically account for.  
+Due to the lack of reps at some of the distances we will ignore transect as a factor. We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.  
 
-```{r}
+I will start using lmer to analyse the mean number of lesions per plant at each station. A station is defined by a pot containing five chickpea plants. The factor distance should be fit as a continuous variable, however because we don't know if the relationship between mean lesions and distance from the conidia dispersal foci is linear, we will start with distance as a categorical variable.  
+Site is a categorical variable explaining the trial location. Each site may have experienced a different number of spread events, defined by the term 'rep'. Rainfall is required for conidia to disperse from the infested foci, and each rep constitutes either a simulated rainfall event, or a natural rainfall event. The following list describes the reps per site.  
+
+```{r weatherReps}
+weatherList <- list(pbc = 
+        data.frame(
+           rep = c(1,2,3),
+           rainfall = round(c(10,10,max(As_dat$precip + As_dat$mrain, na.rm = TRUE)),4),
+           WindDirection = round(unique(As_dat$mwd[As_dat$site == "pbc"])[c(1,3,4)],4),
+           WindSpeed = round(unique(As_dat$mws[As_dat$site == "pbc"])[c(1,3,4)],4)
+        ),
+     'Horsham SPA' = 
+        data.frame(
+           rep = c(1,2,3),
+           rainfall = round(unique(As_dat$precip[As_dat$site == "Horsham SPA"])[c(1,3,2)],4),
+           WindDirection = round(unique(As_dat$mwd[As_dat$site == "Horsham SPA"])[c(1,3,2)],4),
+           WindSpeed = round(unique(As_dat$mws[As_dat$site == "Horsham SPA"])[c(1,3,2)],4)
+           ),
+     Curyo = data.frame(
+        rep = c(1,2,3),
+        rainfall = round(unique(As_dat$precip[As_dat$site == "Curyo"])[c(1,2,2)],4),
+        WindDirection = round(unique(As_dat$mwd[As_dat$site == "Curyo"])[c(1,2,2)],4),
+        WindSpeed = round(unique(As_dat$mws[As_dat$site == "Curyo"])[c(1,2,2)],4)
+     )
+     
+)
+
+iterat <- 1
+for(i in weatherList){
+   print(kable(i, align = "c", caption = paste0("Weather during spread event at site ",names(weatherList)[iterat])))
+   irerat <- iterat +1
+}
+
+```
+
+
+
+```{r lmer_mod}
 
 mod1 <- lmer(mean_count_pot ~ distance + (1|site/rep),
              data = As_dat)
