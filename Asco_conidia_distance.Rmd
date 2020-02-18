@@ -1,0 +1,142 @@
+---
+title: "Spatial-temporal dispersal of Ascochyta conidia"
+author: "P. Melloy"
+date: "13/02/2020"
+output: html_document
+---
+
+# Aschochyta spore disperal
+
+## Aims
+
+Using the data collected from preliminary studies undertaken by Ihsan, we aim to produce a model when simulates the spread of conidia in a field within the season.  
+
+To do this we are going to use the blackspot model provided by Art Diggle and change the dispersal parameters. We will need to revise each of the dispersal parameters to decide if they are suitable for ascochyta blight and change them according to the data we have.
+
+Using the asco-conidia model we will simulate the spatial-temporal movement and compare it to new data obtained in future experiments. We will then use bayesian updating to improve the model before comparing the model with future trials.
+
+```{r libraries_and_dataImport, output.lines = 20}
+library(devtools)
+library(cloudy)
+library(readxl)
+library(dplyr)
+library(lme4)
+
+# update this when OneDrive decides to work
+As_dat <- as.data.frame(read_xlsx("C:/Users/U8011054/USQ/SCP - Documents/Chickpea_Ascochyta/CPSporesSpatial version 2.xlsx", sheet = "analysisData"))
+
+?gsub
+```
+
+```{r format_data}
+# format lesion counts into integers
+As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", "mean_count_pot")] <- 
+  lapply(As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", "mean_count_pot")], as.double)
+
+# change distance to continuos variable
+As_dat$dist <- as.numeric(unlist(strsplit(As_dat$distance," m")))
+
+# find the sum
+As_dat$sum_pot <- rowSums(As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5")], na.rm = TRUE)
+As_dat <- As_dat[!is.na(As_dat$station),]
+
+```
+
+
+From this data we hope to obtain the following.  
+  - How far conidia can be dispersed in a spread event  
+  - What combination of wind speed / direction / rain effects the dispersal distance.  
+  
+Due to the lack of reps at some of the distances we will ignore transect as a factor. We know wind direction will influence our results and we will need to accept that adds variation we cannot statistically account for.  
+
+```{r}
+
+mod1 <- lmer(mean_count_pot ~ distance + (1|site/rep),
+             data = As_dat)
+
+mod2 <- lmer(mean_count_pot ~ distance + (distance|site/rep),
+             data = As_dat)
+
+anova(mod1,mod2)
+
+summary(mod2)
+coef(mod2)
+```
+
+```{r}
+As_dat_pbc <- As_dat[As_dat$site == "pbc",]
+
+mod10 <- lmer(mean_count_pot ~ distance + (1|mws:mwd),
+             data = As_dat_pbc)
+
+mod11 <- lmer(mean_count_pot ~ distance + (distance|mws:mwd),
+             data = As_dat_pbc)
+
+mod11 <- lmer(mean_count_pot ~ distance + (distance|mws:mwd:),
+             data = As_dat_pbc)
+
+anova(mod10,mod11)
+
+summary(mod11)
+mod11_co <- coef(mod11)
+cbind(mod11_co$`mws:mwd`[,1],
+  coef(mod11)$`mws:mwd`[,1] + coef(mod11)$`mws:mwd`[,c('distance10 m', 'distance25 m', 'distance50 m','distance75 m')])
+
+rowSums(cbind(coef(mod11)$`mws:mwd`[,1],
+coef(mod11)$`mws:mwd`[,1] + coef(mod11)$`mws:mwd`[,c('distance10 m', 'distance25 m', 'distance50 m','distance75 m')]))
+
+
+2.46/5.514
+3.478/7.344
+5.5366/9.947
+
+1.126/5.514
+1.573/7.344
+2.476/9.947
+
+0.782/5.514
+1.431/7.344
+0.976/9.947
+
+0.619/5.514
+0.49/7.344
+0.76/9.947
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+First I want to create a parameter for pot_rep at each specific location.
+
+```{r}
+pot_rep <- vector()
+As_dat$pot_rep <- NA_real_
+
+for(j in unique(As_dat$site)){
+   dat1 <- As_dat[As_dat$site == j,]
+   for(i in unique(dat1$dist_stat)[unique(dat1$dist_stat) != "NA"]){
+   x1 <- seq_along(dat1[dat1$dist_stat == i,"dist_stat"])
+   pot_rep <- c(pot_rep,x1)
+}
+As_dat[As_dat$site == j &
+          As_dat$dist_stat !="NA",
+       "pot_rep"] <- pot_rep
+   }
+
+
+As_dat[As_dat$dist_stat != "NA",]
+length(x1)
+
+
+```
+
