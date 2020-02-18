@@ -1,2 +1,2 @@
-# chickpea_AB_modelling
+# Chickpea_AB_Modelling
 Chickpea Ascochyta Blight Modelling
