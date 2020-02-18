@@ -25,7 +25,8 @@ library(lme4)
 # update this when OneDrive decides to work
 As_dat <- as.data.frame(read_xlsx("C:/Users/U8011054/USQ/SCP - Documents/Chickpea_Ascochyta/CPSporesSpatial version 2.xlsx", sheet = "analysisData"))
 
-?gsub
+Astest1 <- fetch_data(url = "https://usqprd.sharepoint.com/:x:/s/SCP/EYwqdKC38rRJloCqAe5N6TMBNTTGtJAX5RaWT17XmmAHdw?e=tEbKBI")
+
 ```
 
 ```{r format_data}
