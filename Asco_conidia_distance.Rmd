@@ -22,6 +22,8 @@ library(readxl)
 library(dplyr)
 library(lme4)
 library(knitr)
+library(ggplot2)
+source(file = "R/ggCaterpillar.R")
 
 # update this when OneDrive decides to work
 As_dat <- as.data.frame(read_xlsx("C:/Users/U8011054/USQ/SCP - Documents/Chickpea_Ascochyta/CPSporesSpatial version 2.xlsx", sheet = "analysisData"))
@@ -98,11 +100,29 @@ mod1 <- lmer(mean_count_pot ~ distance + (1|site/rep),
 mod2 <- lmer(mean_count_pot ~ distance + (distance|site/rep),
              data = As_dat)
 
+# Compare models
 anova(mod1,mod2)
-
-summary(mod2)
-coef(mod2)
 ```
+A comparison of the two models shows us that `mod2` is much better fit given the lower AIC.  
+
+Lets examine the results of this analysis.  
+```{r mod2_summary}
+summary(mod2)
+```
+
+This analysis shows there is little residual variance compared to the the variation explained by our random effects. Also we can see that the amount of variation explained by site is lower than rep.  We should test that site is a significant random intercept term later.  
+
+The fixed effects give us the mean number of lesions per plant at distance zero (intercept) and this is significantly different from zero. We can also see the mean number of lesions decreases as distance from the foci increases.  
+
+We can look at the best linear unbiased predictors of the random effects to see how much the 'rep' and 'site' influenced this spread.  
+
+```{r mod2_coef}
+coef(mod2)
+
+
+
+```
+
 
 ```{r}
 As_dat_pbc <- As_dat[As_dat$site == "pbc",]
