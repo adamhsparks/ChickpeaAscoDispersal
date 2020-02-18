@@ -86,7 +86,9 @@ for(i in weatherList){
 
 ```
 
-
+The First models I will look at are asking:  
+   (i) What is the estimated mean lesions per plant as each distance from the foci, given that the conditions of each spread event is nested within each site.  
+   (ii) What is the estimated mean lesions per plant as each distance from the foci, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.  
 
 ```{r lmer_mod}
 
