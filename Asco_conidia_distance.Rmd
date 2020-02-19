@@ -108,7 +108,7 @@ Lets examine the results of this analysis.
 summary(mod2)
 ```
 
-This analysis shows there is little residual variance compared to the the variation explained by our random effects. Also we can see that the amount of variation explained by site is lower than rep.  We should test that site is a significant random intercept term later.  
+This analysis shows there is little residual variance compared to the the variation explained by our random effects. Also we can see that the amount of variation explained by site is lower than rep.  We should test that site is a significant random intercept term later. We can also not that as the distance increases so does the variance, this could be explained by the fact the spores are only going to travel further on a bearing that is the same as the wind direction.  
 
 The fixed effects give us the mean number of lesions per plant at distance zero (intercept) and this is significantly different from zero. We can also see the mean number of lesions decreases as distance from the foci increases.  
 
@@ -116,10 +116,42 @@ We can look at the best linear unbiased predictors of the random effects to see 
 
 ```{r mod2_coef}
 coef(mod2)
+```
+Here the intercept is the estimated mean at zero meters from foci (BLUP). As the distance increases the number of estimated mean lesions per plant decreases.  
+Lets look at the estimated means in a table.  
 
+```{r}
+BLUP_rep.site <- coef(mod2)$`rep:site`
+BLUP_rep.site$site <- data.frame(do.call(rbind, strsplit(row.names(BLUP_rep.site), split = ":")))[,1]
+BLUP_rep.site$rep <- data.frame(do.call(rbind, strsplit(row.names(BLUP_rep.site), split = ":")))[,2]
+BLUP_rep.site[,2:5] <- BLUP_rep.site[,1] + BLUP_rep.site[,2:5]
+p1_dat <- reshape2::melt(BLUP_rep.site[c(3,5,6,2,4,1),])
 
+names(p1_dat) <- c("rep","site", "distance","lesions")
+
+p1_dat[p1_dat$site == "pbc",] %>%
+  ggplot(aes(x = distance, y = lesions, colour = rep))+
+  geom_point()+
+    geom_line(data = . %>%
+              mutate(distance = as.numeric(distance)) %>%
+              group_by(rep) %>%
+
+              # increase n for smoother line; can also try the other methods listed under
+              # ?spline, though I find "natural" looks better than some of the rest: "fmm"'s 
+              # curves are rather drastic, & "periodic" doesn't touch all the points
+              summarise(x1 = list(spline(distance, lesions, n = 25, method = "natural")[["x"]]),
+                        y1 = list(spline(distance, lesions, n = 25, method = "natural")[["y"]])) %>%
+
+              tidyr::unnest(),
+            aes(x = x1, y = y1))+
+  labs(title="Estimated mean lesions (BLUPS) which developed as each distance",
+       subtitle="Location: pbc", 
+       col='Spread event (reps)')
+  
 
 ```
+
+
 
 
 ```{r}
