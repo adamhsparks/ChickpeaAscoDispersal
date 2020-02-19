@@ -45,7 +45,7 @@ dat[, c("site", "distance", "rep")] <-
 
 ## Fit GAMs
 
-### Distance
+### mod1 - s(Distance)
 
 ```{r fit-mod1}
 mod1 <-
@@ -55,20 +55,54 @@ mod1 <-
    )
 
 plot(mod1)
+
+summary(mod1)
+AIC(mod1)
 ```
 
-The `k` value has to be set to 5, default is 10. Else the model will not fit due to lack of degrees of freedom.
+The `k` value has to be set to 5, default is 10. Else the model will not fit due
+to lack of degrees of freedom.
 
-### Windspeed
+### mod2 - s(Distance) plus Precipitation 
 
 ```{r fit-mod2}
 mod2 <-
    gam(
-      mean_count_pot ~ s(mws, k = 5),
+      mean_count_pot ~ precip + s(dist, k = 5),
       data = dat
    )
 
 plot(mod2)
+
+summary(mod2)
+AIC(mod2)
 ```
 
-The `k` value has to be set to 5, default is 10. Else the model will not fit due to lack of degrees of freedom.
+The `k` value has to be set to 5, default is 10. Else the model will not fit due
+to lack of degrees of freedom.
+
+
+### mod3 - s(Distance and Windspeed) plus Precipitation
+
+```{r fit-mod3}
+mod3 <-
+   gam(
+      mean_count_pot ~ precip + s(dist + mws, k = 3),
+      data = dat
+   )
+
+plot(mod3)
+
+summary(mod3)
+AIC(mod3)
+```
+
+The `k` value has to be set to 3, default is 10. Else the model will not fit due
+to lack of degrees of freedom.
+
+## Thoughts
+
+Examining the AIC, GCV and R^2 values, the best fitting model so far is `mod2`
+with the smoothed distance and precipitation. Adding windspeed decreases the
+model's fitness and the graph indicates less of a good explainer for dispersal
+as well.
