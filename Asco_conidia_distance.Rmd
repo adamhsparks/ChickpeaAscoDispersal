@@ -23,6 +23,7 @@ library(dplyr)
 library(lme4)
 library(knitr)
 library(ggplot2)
+library(mgcv)
 source(file = "R/ggCaterpillar.R")
 
 # update this when OneDrive decides to work
@@ -120,20 +121,26 @@ coef(mod2)
 Here the intercept is the estimated mean at zero meters from foci (BLUP). As the distance increases the number of estimated mean lesions per plant decreases.  
 Lets look at the estimated means in a table.  
 
-```{r}
+```{r BLUP_table}
 BLUP_rep.site <- coef(mod2)$`rep:site`
 BLUP_rep.site$rep <- data.frame(do.call(rbind, strsplit(row.names(BLUP_rep.site), split = ":")))[,1]
 BLUP_rep.site$site <- data.frame(do.call(rbind, strsplit(row.names(BLUP_rep.site), split = ":")))[,2]
 BLUP_rep.site[,2:5] <- BLUP_rep.site[,1] + BLUP_rep.site[,2:5]
 
 rownames(BLUP_rep.site) <- NULL
+BLUP_rep.site <- BLUP_rep.site[c(3,5,6,2,4,1),c("site","rep","(Intercept)","distance10 m","distance25 m","distance50 m","distance75 m")]
+BLUP_rep.site[,c("rainfall","WindDirection", "WindSpeed")] <-
+  bind_rows(weatherList)[!is.na(bind_rows(weatherList)$rainfall),
+                       c("rainfall","WindDirection", "WindSpeed")]
 
-kable(BLUP_rep.site[,c("site","rep","(Intercept)","distance10 m","distance25 m","distance50 m","distance75 m")])
+kable(BLUP_rep.site)
+```
 
+```{r BLUP_plot_pba}
+# Reformat data to long form
+p1_dat <- reshape2::melt(BLUP_rep.site[,1:7])
 
-
-p1_dat <- reshape2::melt(BLUP_rep.site[c(3,5,6,2,4,1),])
-
+# rename column variables and values
 names(p1_dat)[3:4] <- c("distance","lesions")
 
 p1_dat[p1_dat$site == "pbc",] %>%
@@ -143,6 +150,7 @@ p1_dat[p1_dat$site == "pbc",] %>%
               mutate(distance = as.numeric(distance)) %>%
               group_by(rep) %>%
 
+              # Function taken from https://stackoverflow.com/questions/54898700/connecting-points-with-curved-line-on-ggplot-for-a-categorical-variable-on-the  
               # increase n for smoother line; can also try the other methods listed under
               # ?spline, though I find "natural" looks better than some of the rest: "fmm"'s 
               # curves are rather drastic, & "periodic" doesn't touch all the points
@@ -153,9 +161,13 @@ p1_dat[p1_dat$site == "pbc",] %>%
             aes(x = x1, y = y1))+
   labs(title="Estimated mean lesions (BLUPS) which developed as each distance",
        subtitle="Location: pbc", 
-       col='Spread event (reps)')
+       col='Spread event (reps)')+
+  geom_rect(aes(xmin = 3, xmax = 4.5, ymin = 3, ymax = 4.5, fill = NULL))+
+  geom_segment(aes(x = 2.8, y = 3.2, xend = 2.8, yend = 4.2), 
+               arrow = arrow(length = unit(0.03, "npc")))
+```
 
-
+```{r BLUP_plot_Horsham}
 
 p1_dat[p1_dat$site == "Horsham SPA",] %>%
   ggplot(aes(x = distance, y = lesions, colour = rep))+
