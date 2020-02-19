@@ -1,7 +1,7 @@
 ---
-title: "Spatial-temporal dispersal of Ascochyta conidia"
+title: "Spatial-temporal dispersal of _Ascochyta_ conidia"
 author: "P. Melloy"
-date: "13/02/2020"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -17,7 +17,6 @@ Using the asco-conidia model we will simulate the spatial-temporal movement and 
 
 ```{r libraries_and_dataImport, output.lines = 20}
 library(devtools)
-library(cloudy)
 library(readxl)
 library(dplyr)
 library(lme4)
@@ -27,22 +26,34 @@ library(mgcv)
 source(file = "R/ggCaterpillar.R")
 
 # update this when OneDrive decides to work
-As_dat <- as.data.frame(read.csv("data/CPSporesSpatial version 2.csv", stringsAsFactors = FALSE))
+As_dat <-
+  read.csv("data/CPSporesSpatial version 2.csv", stringsAsFactors = FALSE)
 
 ```
 
 ```{r format_data}
+dbl <-
+  c(
+    "counts_p1",
+    "counts_p2",
+    "counts_p3",
+    "counts_p4",
+    "counts_p5",
+    "mean_count_pot",
+    "precip",
+    "mrain",
+    "mwd",
+    "mws"
+  )
+
 # format lesion counts into integers
-As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", 
-          "mean_count_pot", "precip","mrain", "mwd","mws")] <- 
-  lapply(As_dat[,c("counts_p1","counts_p2","counts_p3","counts_p4","counts_p5", 
-                   "mean_count_pot", "precip","mrain", "mwd","mws")], as.double)
+As_dat[, dbl] <- lapply(As_dat[, dbl], as.double)
 
 # change distance to continuous variable
-As_dat$dist <- as.numeric(unlist(strsplit(As_dat$distance," m")))
+As_dat$dist <- as.numeric(gsub(" m", "", As_dat$distance))
 
-As_dat[,c("site","distance", "rep")] <- 
-   lapply(As_dat[,c("site","distance", "rep")],as.factor)
+As_dat[, c("site", "distance", "rep")] <-
+  lapply(As_dat[, c("site", "distance", "rep")], as.factor)
 ```
 
 
@@ -225,7 +236,7 @@ mod10 <- lmer(mean_count_pot ~ distance + (1|mws:mwd),
 mod11 <- lmer(mean_count_pot ~ distance + (distance|mws:mwd),
              data = As_dat_pbc)
 
-mod11 <- lmer(mean_count_pot ~ distance + (distance|mws:mwd:),
+mod11 <- lmer(mean_count_pot ~ distance + (distance|mws:mwd),
              data = As_dat_pbc)
 
 anova(mod10,mod11)
