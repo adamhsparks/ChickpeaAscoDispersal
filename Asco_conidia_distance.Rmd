@@ -154,7 +154,50 @@ p1_dat[p1_dat$site == "pbc",] %>%
   labs(title="Estimated mean lesions (BLUPS) which developed as each distance",
        subtitle="Location: pbc", 
        col='Spread event (reps)')
+
+
+
+p1_dat[p1_dat$site == "Horsham SPA",] %>%
+  ggplot(aes(x = distance, y = lesions, colour = rep))+
+  geom_point()+
+    geom_line(data = . %>%
+              mutate(distance = as.numeric(distance)) %>%
+              group_by(rep) %>%
+
+              # increase n for smoother line; can also try the other methods listed under
+              # ?spline, though I find "natural" looks better than some of the rest: "fmm"'s 
+              # curves are rather drastic, & "periodic" doesn't touch all the points
+              summarise(x1 = list(spline(distance, lesions, n = 25, method = "natural")[["x"]]),
+                        y1 = list(spline(distance, lesions, n = 25, method = "natural")[["y"]])) %>%
+
+              tidyr::unnest(),
+            aes(x = x1, y = y1))+
+  labs(title="Estimated mean lesions (BLUPS) which developed as each distance",
+       subtitle="Location: pbc", 
+       col='Spread event (reps)')
   
+
+
+
+
+p1_dat[p1_dat$site == "Curyo",] %>%
+  ggplot(aes(x = distance, y = lesions, colour = rep))+
+  geom_point()+
+    geom_line(data = . %>%
+              mutate(distance = as.numeric(distance)) %>%
+              group_by(rep) %>%
+
+              # increase n for smoother line; can also try the other methods listed under
+              # ?spline, though I find "natural" looks better than some of the rest: "fmm"'s 
+              # curves are rather drastic, & "periodic" doesn't touch all the points
+              summarise(x1 = list(spline(distance, lesions, n = 25, method = "natural")[["x"]]),
+                        y1 = list(spline(distance, lesions, n = 25, method = "natural")[["y"]])) %>%
+
+              tidyr::unnest(),
+            aes(x = x1, y = y1))+
+  labs(title="Estimated mean lesions (BLUPS) which developed as each distance",
+       subtitle="Location: pbc", 
+       col='Spread event (reps)')
 
 ```
 
