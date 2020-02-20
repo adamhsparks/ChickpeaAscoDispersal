@@ -1,95 +1,12 @@
 Fit GAMs to dispersal patterns of *Ascochyta* conidia
 ================
 A.H. Sparks
-2020-02-20
+2020-02-21
 
 ## Import Data
 
 See “R/wrangle\_raw\_data.R” for the script that handles the data
 import. This Rmd file focuses on the models themselves.
-
-|                                                  |      |
-| :----------------------------------------------- | :--- |
-| Name                                             | dat  |
-| Number of rows                                   | 336  |
-| Number of columns                                | 29   |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |      |
-| Column type frequency:                           |      |
-| character                                        | 3    |
-| factor                                           | 7    |
-| numeric                                          | 19   |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |      |
-| Group variables                                  | None |
-
-Data summary
-
-**Variable type: character**
-
-| skim\_variable | n\_missing | complete\_rate | min | max | empty | n\_unique | whitespace |
-| :------------- | ---------: | -------------: | --: | --: | ----: | --------: | ---------: |
-| distance       |          0 |              1 |   3 |   4 |     0 |         5 |          0 |
-| dist\_stat     |          0 |              1 |   4 |   6 |     0 |        38 |          0 |
-| ptype          |          0 |              1 |   4 |   7 |     0 |         2 |          0 |
-
-**Variable type: factor**
-
-| skim\_variable | n\_missing | complete\_rate | ordered | n\_unique |            top\_counts             |
-| :------------- | ---------: | -------------: | :------ | --------: | :--------------------------------: |
-| SpEv           |          0 |              1 | FALSE   |         6 | Cur: 56, Hor: 56, Hor: 56, pbc: 56 |
-| site           |          0 |              1 | FALSE   |         3 |    pbc: 168, Hor: 112, Cur: 56     |
-| rep            |          0 |              1 | FALSE   |         3 |       1: 168, 2: 112, 3: 56        |
-| station        |          0 |              1 | FALSE   |        10 |     1: 48, 2: 48, 3: 48, 4: 48     |
-| transect       |          0 |              1 | FALSE   |        10 |    1: 48, 4: 48, 7: 48, 10: 48     |
-| plant\_no      |          0 |              1 | FALSE   |         2 |           5: 216, 3: 120           |
-| pot\_no        |          0 |              1 | FALSE   |        56 |       1: 6, 2: 6, 3: 6, 4: 6       |
-
-**Variable type: numeric**
-
-| skim\_variable   | n\_missing | complete\_rate |   mean |    sd |     p0 |    p25 |    p50 |    p75 |   p100 | hist  |
-| :--------------- | ---------: | -------------: | -----: | ----: | -----: | -----: | -----: | -----: | -----: | :---- |
-| counts\_p1       |          2 |           0.99 |   1.24 |  1.69 |   0.00 |   0.00 |   1.00 |   2.00 |  12.00 | ▇▁▁▁▁ |
-| counts\_p2       |          2 |           0.99 |   1.02 |  1.39 |   0.00 |   0.00 |   0.00 |   2.00 |   8.00 | ▇▂▁▁▁ |
-| counts\_p3       |          2 |           0.99 |   1.10 |  1.61 |   0.00 |   0.00 |   0.00 |   2.00 |  11.00 | ▇▁▁▁▁ |
-| counts\_p4       |        124 |           0.63 |   1.41 |  1.78 |   0.00 |   0.00 |   1.00 |   2.00 |  11.00 | ▇▂▁▁▁ |
-| counts\_p5       |        132 |           0.61 |   1.33 |  1.88 |   0.00 |   0.00 |   1.00 |   2.00 |  14.00 | ▇▁▁▁▁ |
-| mean\_count\_pot |          2 |           0.99 |   1.08 |  1.21 |   0.00 |   0.33 |   0.67 |   1.40 |   8.40 | ▇▂▁▁▁ |
-| SD\_count\_pot   |          2 |           0.99 |   0.92 |  0.69 |   0.00 |   0.55 |   0.84 |   1.30 |   4.39 | ▇▆▁▁▁ |
-| mat              |          0 |           1.00 |  13.08 |  1.18 |  11.28 |  12.25 |  12.97 |  14.24 |  14.80 | ▃▃▇▁▇ |
-| mah              |          0 |           1.00 |  71.21 |  3.95 |  64.03 |  70.04 |  71.06 |  74.45 |  76.64 | ▂▁▇▁▅ |
-| minws            |          0 |           1.00 |   1.83 |  0.94 |   0.78 |   1.03 |   1.75 |   1.99 |   3.67 | ▇▃▇▁▃ |
-| mws              |          0 |           1.00 |   3.55 |  1.52 |   1.90 |   2.23 |   3.33 |   4.00 |   6.53 | ▇▇▃▁▃ |
-| maxws            |          0 |           1.00 |   5.82 |  2.29 |   3.36 |   3.74 |   5.40 |   6.73 |  10.27 | ▇▇▃▁▃ |
-| mwd              |          0 |           1.00 | 253.25 | 43.40 | 203.10 | 211.38 | 249.29 | 272.80 | 333.65 | ▇▃▇▁▃ |
-| precip           |          0 |           1.00 |   5.01 |  5.00 |   0.00 |   0.01 |   5.01 |  10.00 |  10.00 | ▇▁▁▁▇ |
-| mdp              |          0 |           1.00 |  16.37 | 16.04 |   5.57 |   7.43 |   7.66 |  20.69 |  62.64 | ▇▁▁▁▁ |
-| mrain            |          0 |           1.00 |   0.00 |  0.00 |   0.00 |   0.00 |   0.00 |   0.00 |   0.00 | ▇▁▁▁▂ |
-| dist             |          0 |           1.00 |  32.68 | 24.95 |   0.00 |  10.00 |  25.00 |  50.00 |  75.00 | ▆▇▁▃▃ |
-| rainfall         |          0 |           1.00 |   5.01 |  5.00 |   0.00 |   0.01 |   5.01 |  10.00 |  10.00 | ▇▁▁▁▇ |
-| sum\_rain        |          0 |           1.00 |   9.10 |  5.53 |   0.80 |   4.60 |  10.00 |  10.60 |  18.60 | ▂▂▇▁▂ |
-
-## Visualise the Dispersal Data
-
-``` r
-ggplot(dat, aes(x = dist, y = mean_count_pot)) +
-   geom_count(na.rm = TRUE, alpha = 0.5) +
-   stat_summary(fun.y = "median",
-                geom = "line",
-                na.rm = TRUE) +
-   stat_summary(
-      fun.y = "median",
-      colour = usq_cols("usq yellow"),
-      na.rm = TRUE,
-      size = 5.5,
-      geom = "point",
-      alpha = 0.65
-   ) +
-   theme_usq() +
-   ylab("Mean lesion count values") +
-   xlab("Distance (m)") +
-   labs(caption = "Median lesion count values in yellow.")
-```
-
-![](GAM_files/figure-gfm/visualise_data-1.png)<!-- -->
 
 ## Fit GAMs
 
@@ -103,14 +20,14 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## mean_count_pot ~ s(dist, k = 5)
     ## 
     ## Parametric coefficients:
-    ##             Estimate Std. Error t value            Pr(>|t|)    
-    ## (Intercept)   1.0802     0.0475    22.7 <0.0000000000000002 ***
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  1.08024    0.04751   22.74   <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Approximate significance of smooth terms:
-    ##          edf Ref.df    F             p-value    
-    ## s(dist) 3.93      4 78.4 <0.0000000000000002 ***
+    ##           edf Ref.df    F p-value    
+    ## s(dist) 3.926  3.996 78.4  <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
@@ -127,15 +44,15 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## mean_count_pot ~ sum_rain + s(dist, k = 5)
     ## 
     ## Parametric coefficients:
-    ##             Estimate Std. Error t value             Pr(>|t|)    
-    ## (Intercept)   0.8169     0.0907    9.00 < 0.0000000000000002 ***
-    ## sum_rain      0.0288     0.0085    3.39              0.00079 ***
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept) 0.816921   0.090724   9.004  < 2e-16 ***
+    ## sum_rain    0.028779   0.008496   3.387 0.000792 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Approximate significance of smooth terms:
-    ##          edf Ref.df  F             p-value    
-    ## s(dist) 3.93      4 81 <0.0000000000000002 ***
+    ##           edf Ref.df     F p-value    
+    ## s(dist) 3.928  3.996 80.95  <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
@@ -152,15 +69,15 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## mean_count_pot ~ mws + s(dist, k = 5)
     ## 
     ## Parametric coefficients:
-    ##             Estimate Std. Error t value  Pr(>|t|)    
-    ## (Intercept)   0.6440     0.1182    5.45 0.0000001 ***
-    ## mws           0.1227     0.0306    4.01 0.0000747 ***
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  0.64401    0.11825   5.446 1.01e-07 ***
+    ## mws          0.12273    0.03059   4.012 7.47e-05 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Approximate significance of smooth terms:
-    ##          edf Ref.df  F             p-value    
-    ## s(dist) 3.93      4 82 <0.0000000000000002 ***
+    ##           edf Ref.df     F p-value    
+    ## s(dist) 3.929  3.996 81.99  <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
@@ -178,15 +95,15 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## 
     ## Parametric coefficients:
     ##             Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)  0.47345    0.13152    3.60  0.00037 ***
-    ## sum_rain     0.02401    0.00846    2.84  0.00481 ** 
-    ## mws          0.10892    0.03066    3.55  0.00044 ***
+    ## (Intercept) 0.473449   0.131519   3.600 0.000368 ***
+    ## sum_rain    0.024009   0.008457   2.839 0.004808 ** 
+    ## mws         0.108916   0.030659   3.552 0.000438 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Approximate significance of smooth terms:
-    ##          edf Ref.df    F             p-value    
-    ## s(dist) 3.93      4 83.8 <0.0000000000000002 ***
+    ##          edf Ref.df    F p-value    
+    ## s(dist) 3.93  3.996 83.8  <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
@@ -206,15 +123,15 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## mean_count_pot ~ sum_rain + s(dist + mws, k = 5)
     ## 
     ## Parametric coefficients:
-    ##             Estimate Std. Error t value             Pr(>|t|)    
-    ## (Intercept)   0.8169     0.0907    9.00 < 0.0000000000000002 ***
-    ## sum_rain      0.0288     0.0085    3.39              0.00079 ***
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept) 0.816921   0.090724   9.004  < 2e-16 ***
+    ## sum_rain    0.028779   0.008496   3.387 0.000792 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Approximate significance of smooth terms:
-    ##          edf Ref.df  F             p-value    
-    ## s(dist) 3.93      4 81 <0.0000000000000002 ***
+    ##           edf Ref.df     F p-value    
+    ## s(dist) 3.928  3.996 80.95  <2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
@@ -251,33 +168,33 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## mod1
 
     ## (Intercept)   s(dist).1   s(dist).2   s(dist).3   s(dist).4 
-    ##       1.080     -13.444       7.369      -1.254      -2.292
+    ##    1.080240  -13.444330    7.368783   -1.254080   -2.291845
 
     ## 
     ## mod2
 
-    ## (Intercept)    sum_rain   s(dist).1   s(dist).2   s(dist).3   s(dist).4 
-    ##     0.81692     0.02878   -13.40978     7.33465    -1.25209    -2.29384
+    ##  (Intercept)     sum_rain    s(dist).1    s(dist).2    s(dist).3    s(dist).4 
+    ##   0.81692128   0.02877889 -13.40978000   7.33464779  -1.25209090  -2.29384111
 
     ## 
     ## mod3
 
     ## (Intercept)         mws   s(dist).1   s(dist).2   s(dist).3   s(dist).4 
-    ##      0.6440      0.1227    -13.4869      7.3983     -1.2560     -2.2949
+    ##   0.6440143   0.1227341 -13.4868763   7.3983152  -1.2560432  -2.2949104
 
     ## 
     ## mod4
 
-    ## (Intercept)    sum_rain         mws   s(dist).1   s(dist).2   s(dist).3 
-    ##     0.47345     0.02401     0.10892   -13.45271     7.36613    -1.25414 
-    ##   s(dist).4 
-    ##    -2.29619
+    ##  (Intercept)     sum_rain          mws    s(dist).1    s(dist).2    s(dist).3 
+    ##   0.47344866   0.02400933   0.10891607 -13.45271077   7.36612892  -1.25413637 
+    ##    s(dist).4 
+    ##  -2.29619141
 
     ## 
     ## mod5
 
-    ## (Intercept)    sum_rain   s(dist).1   s(dist).2   s(dist).3   s(dist).4 
-    ##     0.81692     0.02878   -13.40978     7.33465    -1.25209    -2.29384
+    ##  (Intercept)     sum_rain    s(dist).1    s(dist).2    s(dist).3    s(dist).4 
+    ##   0.81692128   0.02877889 -13.40978000   7.33464779  -1.25209090  -2.29384111
 
 ### ANOVA
 
@@ -288,12 +205,12 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## Model 3: mean_count_pot ~ mws + s(dist, k = 5)
     ## Model 4: mean_count_pot ~ sum_rain + mws + s(dist, k = 5)
     ## Model 5: mean_count_pot ~ sum_rain + s(dist + mws, k = 5)
-    ##   Resid. Df Resid. Dev        Df Deviance        F    Pr(>F)    
-    ## 1       329        248                                          
-    ## 2       328        240  1.000198     8.38    11.87   0.00064 ***
-    ## 3       328        236  0.000171     3.22 26709.89 0.0000029 ***
-    ## 4       327        231  1.000114     5.69     8.06   0.00482 ** 
-    ## 5       328        240 -1.000285    -8.91    12.62   0.00044 ***
+    ##   Resid. Df Resid. Dev          Df Deviance          F    Pr(>F)    
+    ## 1       329     248.10                                              
+    ## 2       328     239.72  1.00019797   8.3816    11.8748 0.0006427 ***
+    ## 3       328     236.49  0.00017108   3.2247 26709.8941 2.926e-06 ***
+    ## 4       327     230.81  1.00011438   5.6857     8.0561 0.0048171 ** 
+    ## 5       328     239.72 -1.00028547  -8.9104    12.6230 0.0004365 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
