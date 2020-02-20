@@ -50,7 +50,7 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
 
 ### mod1 - s(Distance)
 
-```{r fit-mod1}
+```{r fit-mod1, echo=FALSE}
 mod1 <-
    gam(
       mean_count_pot ~ s(dist, k = 5),
@@ -60,7 +60,7 @@ mod1 <-
 plot(mod1)
 
 summary(mod1)
-AIC(mod1)
+paste("AIC: ", AIC(mod1))
 ```
 
 The `k` value has to be set to 5, default is 10. Else the model will not fit due
@@ -68,7 +68,7 @@ to lack of degrees of freedom.
 
 ### mod2 - s(Distance) plus Precipitation
 
-```{r fit-mod2}
+```{r fit-mod2, echo=FALSE}
 mod2 <-
    gam(
       mean_count_pot ~ rainfall + s(dist, k = 5),
@@ -78,14 +78,14 @@ mod2 <-
 plot(mod2)
 
 summary(mod2)
-AIC(mod2)
+paste("AIC: ", AIC(mod2))
 ```
 
 The `k` value has to be set to 5, default is 10. Else the model will not fit due
 to lack of degrees of freedom.
 
 
-### mod3 - s(Distance and Windspeed) plus Precipitation
+### mod3 - s(Distance) Windspeed plus Precipitation
 
 ```{r fit-mod3, echo=FALSE}
 mod3 <-
@@ -109,10 +109,10 @@ to lack of degrees of freedom.
 
 ### mod3 - s(Distance and Wind direction) plus Precipitation
 
-```{r fit-mod4}
+```{r fit-mod4, echo=FALSE}
 mod4 <-
    gam(
-      mean_count_pot ~ rainfall + s(dist + mwd, k = 5),
+      mean_count_pot ~ rainfall + s(dist + mws, k = 5),
       data = dat
    )
 
@@ -121,48 +121,21 @@ plot(mod4)
 summary(mod4)
 AIC(mod4)
 ```
-Model gives warning; and is exactly the output same as `mod3` and `mod2`.
 
 
-```{r fit-mod5}
-mod5 <-
-   gam(
-      mean_count_pot ~ rainfall + mws+ s(dist, k = 5),
-      data = dat
-   )
-
-plot(mod5)
-
-summary(mod5)
-AIC(mod5)
-```
-
-```{r fit-mod6}
-mod6 <-
-   gam(
-      mean_count_pot ~ SpEv+ s(dist, k = 5),
-      data = dat
-   )
-
-plot(mod6)
-
-summary(mod6)
-AIC(mod6)
-```
-
+## Model Comparison 
 
 Lets compare all the models above
-```{r}
-AIC(mod1,mod2,mod3,mod4, mod5,mod6)
 
-anova(mod1,mod2,mod3,mod4, mod5, mod6, test = "F")
+```{r compare-mods}
+AIC(mod1, mod2, mod3, mod4)
+
+anova(mod1, mod2, mod3, mod4, test = "F")
 ```
-
-
 
 ## Thoughts
 
-Examining the AIC, GCV and R^2 values, the best fitting model was `mod6`,
+Examining the AIC, GCV and R^2^ values, the best fitting model was `mod6`,
 however this model does not explain the effect of windspeed or rainfall.
 We will proceed with `mod5` as the next best model which utilises both
 windspeed and rainfall as linear terms.
