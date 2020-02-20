@@ -11,17 +11,12 @@ output: github_document
 library("tidyverse")
 library("mgcv")
 library("theme.usq")
-library("ggpubr")
+library("broom")
 ```
 
 ```{r import data, message=FALSE}
-dat <-
-   read_csv("data/CPSporesSpatial version 2.csv") %>%
-   drop_na(dist_stat) %>%
-   mutate(dist = as.numeric(str_replace(distance, " m", ""))) %>%
-   mutate_at(vars(site, rep, station, transect, plant_no, pot_no), factor) %>%
-   group_by(site, transect, station) %>%
-   mutate(rainfall = precip + mrain)
+source("R/wrangle_raw_data.R")
+glimpse(dat)
 ```
 
 ## Visualise the Dispersal Data
@@ -57,10 +52,7 @@ mod1 <-
       data = dat
    )
 
-plot(mod1)
-
 summary(mod1)
-paste("AIC: ", AIC(mod1))
 ```
 
 The `k` value has to be set to 5, default is 10. Else the model will not fit due
@@ -71,73 +63,80 @@ to lack of degrees of freedom.
 ```{r fit-mod2, echo=FALSE}
 mod2 <-
    gam(
-      mean_count_pot ~ rainfall + s(dist, k = 5),
+      mean_count_pot ~ sum_rain+ s(dist, k = 5),
       data = dat
    )
-
-plot(mod2)
 
 summary(mod2)
-paste("AIC: ", AIC(mod2))
 ```
 
-The `k` value has to be set to 5, default is 10. Else the model will not fit due
-to lack of degrees of freedom.
-
-
-### mod3 - s(Distance) Windspeed plus Precipitation
-
+### mod3 - s(Distance) Windspeed
 ```{r fit-mod3, echo=FALSE}
 mod3 <-
-   gam(mean_count_pot ~ rainfall + mws + s(dist, k = 5),
+   gam(mean_count_pot ~ mws + s(dist, k = 5),
        data = dat)
 
-plot(mod3)
-
 summary(mod3)
-paste("AIC: ", AIC(mod3))
 ```
 
-The `k` value has to be set to 5, default is 10. Else the model will not fit due
-mean wind speed looks like a linear term. move it out of the smoothing funtion.
-
-Model looks the same as `mod2`
-
-The `k` value has to be set to 3, default is 10. Else the model will not fit due
-to lack of degrees of freedom.
-
-
-### mod3 - s(Distance and Wind direction) plus Precipitation
-
+### mod4 - s(Distance) Windspeed plus Precipitation
 ```{r fit-mod4, echo=FALSE}
 mod4 <-
+   gam(mean_count_pot ~ sum_rain + mws + s(dist, k = 5),
+       data = dat)
+
+summary(mod4)
+```
+
+### mod5 - s(Distance + Windspeed) plus Precipitation
+
+```{r fit-mod5, echo=FALSE}
+mod5 <-
    gam(
-      mean_count_pot ~ rainfall + s(dist + mws, k = 5),
+      mean_count_pot ~ sum_rain + s(dist + mws, k = 5),
       data = dat
    )
 
-plot(mod4)
-
-summary(mod4)
-AIC(mod4)
+summary(mod5)
 ```
 
+## Compare the Models
 
-## Model Comparison 
-
-Lets compare all the models above
-
-```{r compare-mods}
-AIC(mod1, mod2, mod3, mod4)
-
-anova(mod1, mod2, mod3, mod4, test = "F")
+### AIC, BIC
+```{r compare-mods, echo=FALSE}
+models <- list(mod1 = mod1, 
+               mod2 = mod2, 
+               mod3 = mod3,
+               mod4 = mod4,
+               mod5 = mod5)
+map_df(models, glance, .id = "model") %>% 
+   arrange(AIC)
 ```
 
-## Thoughts
+### R^2^
+```{r r2, echo=FALSE}
+enframe(c(
+   mod1 = summary(mod1)$r.sq,
+   mod2 = summary(mod2)$r.sq,
+   mod3 = summary(mod3)$r.sq,
+   mod4 = summary(mod4)$r.sq
+)) %>%
+   arrange(desc(value))
+```
 
-Examining the AIC, GCV and R^2^ values, the best fitting model was `mod6`,
-however this model does not explain the effect of windspeed or rainfall.
-We will proceed with `mod5` as the next best model which utilises both
-windspeed and rainfall as linear terms.
-Adding wind direction does not improve the model suffiently to warrant inclusion;
-especially considering we are not interested in this variable.
+### ANOVA
+```{r anova, echo=FALSE}
+anova(mod1, mod2, mod3, mod4, mod5, test = "F")
+```
+
+### Visualise the Models
+
+```{r vis-mods, echo=FALSE}
+par(mfrow = c(2, 2))
+plot(mod1, main = "s(Distance)")
+plot(mod2, main = "s(Distance) + Precipitation")
+plot(mod3, main = "s(Distance) + Windspeed")
+plot(mod4, main = "s(Distance) + Windspeed + Precipitation")
+plot(mod5, main = "s(Distance + Windspeed) + Precipitation")
+```
+
