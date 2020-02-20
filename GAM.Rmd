@@ -38,7 +38,7 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    theme_usq() +
    ylab("Mean lesion count values") +
    xlab("Distance (m)") +
-   labs(caption = "Median spore count values in yellow.")
+   labs(caption = "Median lesion count values in yellow.")
 ```
 
 
