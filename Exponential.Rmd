@@ -26,7 +26,7 @@ source("R/wrangle_raw_data.R")
 The data appear to behave like an exponential decay model. This may be useful in
 the absence of more data to fit a GAM, which would be the ideal situation.
 
-```{r dist}
+```{r vis_mod_dist}
 ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    geom_count() +
    stat_smooth(
@@ -42,7 +42,7 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
 
 ## Model
 
-```{r}
+```{r fit_mod}
 mod1 <- nls(mean_count_pot ~ SSasymp(dist, Asym, R0, lrc), data = dat)
 
 summary(mod1)

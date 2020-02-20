@@ -10,7 +10,7 @@ The data appear to behave like an exponential decay model. This may be
 useful in the absence of more data to fit a GAM, which would be the
 ideal situation.
 
-![](Exponential_files/figure-gfm/dist-1.png)<!-- -->
+![](Exponential_files/figure-gfm/vis_mod_dist-1.png)<!-- -->
 
 ## Model
 
@@ -37,7 +37,7 @@ ideal situation.
 
     ## [1] "R2: 0.479022286586982"
 
-![](Exponential_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](Exponential_files/figure-gfm/fit_mod-1.png)<!-- -->
 
     ## 
     ## ------
