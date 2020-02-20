@@ -14,10 +14,10 @@ See "R/wrangle_raw_data.R" for the script that handles the data import. This
 Rmd file focuses on the data.
 
 ```{r libraries, message=FALSE, echo=FALSE}
-library("tidyverse")
-library("theme.usq")
-library("skimr")
-library("clifro")
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, clifro, skimr, devtools)
+
+if (!require("theme.usq")) devtools::install_github("adamhsparks/theme.usq")
 ```
 
 ```{r import data, message=FALSE, echo=FALSE}
