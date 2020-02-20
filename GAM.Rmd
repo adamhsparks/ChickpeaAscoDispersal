@@ -16,7 +16,9 @@ library("mgcv")
 dat <-
    read_csv("data/CPSporesSpatial version 2.csv") %>%
    group_by(site, rep, transect, distance, station, mat, mah, mws, mwd) %>%
-   drop_na(dist_stat)
+   drop_na(dist_stat) 
+
+dat$rainfall <- dat$mrain + dat$precip
 
 dbl <-
    c(
@@ -41,7 +43,13 @@ dat$dist <- as.numeric(gsub(" m", "", dat$distance))
 # set factors
 dat[, c("site", "distance", "rep")] <-
    lapply(dat[, c("site", "distance", "rep")], as.factor)
+
+dat$SpEv <- as.factor(paste0(dat$site,dat$rep))
+
 ```
+
+
+
 
 ## Fit GAMs
 
@@ -68,7 +76,7 @@ to lack of degrees of freedom.
 ```{r fit-mod2}
 mod2 <-
    gam(
-      mean_count_pot ~ precip + s(dist, k = 5),
+      mean_count_pot ~ rainfall + s(dist, k = 5),
       data = dat
    )
 
@@ -87,7 +95,7 @@ to lack of degrees of freedom.
 ```{r fit-mod3}
 mod3 <-
    gam(
-      mean_count_pot ~ precip + s(dist + mws, k = 3),
+      mean_count_pot ~ rainfall + SpEv + s(mws, k = 5),
       data = dat
    )
 
@@ -99,6 +107,19 @@ AIC(mod3)
 
 The `k` value has to be set to 3, default is 10. Else the model will not fit due
 to lack of degrees of freedom.
+
+```{r fit-mod4}
+mod4 <-
+   gam(
+      mean_count_pot ~ rainfall + mws+ s(dist, k = 4),
+      data = dat
+   )
+
+plot(mod4)
+
+summary(mod4)
+AIC(mod4)
+```
 
 ## Thoughts
 
