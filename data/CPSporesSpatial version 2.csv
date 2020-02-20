@@ -1,4 +1,4 @@
-site,rep,distance ,station,transect,dist_stat,plant_no,pot_ no,counts_p1,counts_p2,counts_p3,counts_p4,counts_p5,mean_count_pot,SD_count_pot,mat,mah,minws,mws,maxws,mwd,precip,ptype,mdp,mrain
+site,rep,distance,station,transect,dist_stat,plant_no,pot_no,counts_p1,counts_p2,counts_p3,counts_p4,counts_p5,mean_count_pot,SD_count_pot,mat,mah,minws,mws,maxws,mwd,precip,ptype,mdp,mrain
 pbc,1,0 m,1,1,0m_1,5,1,1,2,2,0,3,1.6,1.140175425,11.27586207,70.69931034,0.783448276,1.902827586,3.357724138,211.3755768,10,simRain,5.568493124,0
 pbc,1,0 m,1,1,0m_1,5,2,2,5,1,1,4,2.6,1.816590212,11.27586207,70.69931034,0.783448276,1.902827586,3.357724138,211.3755768,10,simRain,5.568493124,0
 pbc,1,0 m,NA,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
