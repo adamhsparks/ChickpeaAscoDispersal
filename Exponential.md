@@ -4,9 +4,15 @@ conidia
 A.H. Sparks
 2020-02-21
 
-## Fit Non-linear Model
+## Visualise Fit Non-linear Model
 
-![](Exponential_files/figure-gfm/exponential-1.png)<!-- -->
+The data appear to behave like an exponential decay model. This may be
+useful in the absence of more data to fit a GAM, which would be the
+ideal situation.
+
+![](Exponential_files/figure-gfm/dist-1.png)<!-- -->
+
+## Model
 
     ## 
     ## Formula: mean_count_pot ~ SSasymp(dist, Asym, R0, lrc)
@@ -23,3 +29,40 @@ A.H. Sparks
     ## 
     ## Number of iterations to convergence: 6 
     ## Achieved convergence tolerance: 7.212e-06
+
+    ## # A tibble: 1 x 8
+    ##   sigma isConv     finTol logLik   AIC   BIC deviance df.residual
+    ##   <dbl> <lgl>       <dbl>  <dbl> <dbl> <dbl>    <dbl>       <int>
+    ## 1 0.873 TRUE   0.00000721  -427.  862.  877.     252.         331
+
+    ## [1] "R2: 0.479022286586982"
+
+![](Exponential_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
+    ## 
+    ## ------
+    ##  Shapiro-Wilk normality test
+    ## 
+    ## data:  stdres
+    ## W = 0.87547, p-value = 8.61e-16
+    ## 
+    ## 
+    ## ------
+
+    ## 
+    ##  Runs Test
+    ## 
+    ## data:  as.factor(run)
+    ## Standard Normal = -3.0204, p-value = 0.002524
+    ## alternative hypothesis: two.sided
+
+## Thoughts
+
+The diagnostic plots don’t look so great for this data. Better starting
+values might help if we optimised the nls.
+
+The R<sup>2</sup> value is also roughly the same as the GAMs we’ve been
+looking at.
+
+While this model may have some utility, maybe best to focus on GAMs for
+the time being.
