@@ -1,0 +1,67 @@
+---
+title: "Fit Exponential Decay Models to dispersal patterns of _Ascochyta_ conidia"
+author: "A.H. Sparks"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+## Import Data
+
+See "R/wrangle_raw_data.R" for the script that handles the data import. This
+Rmd file focuses on the models themselves.
+
+```{r libraries, message=FALSE, echo=FALSE}
+library("tidyverse")
+library("mgcv")
+library("theme.usq")
+library("broom")
+library("skimr")
+```
+
+```{r import data, message=FALSE, echo=FALSE}
+source("R/wrangle_raw_data.R")
+skim(dat)
+```
+
+## Visualise the Dispersal Data
+
+```{r visualise_data}
+ggplot(dat, aes(x = dist, y = mean_count_pot)) +
+   geom_count(na.rm = TRUE, alpha = 0.5) +
+   stat_summary(fun.y = "median",
+                geom = "line",
+                na.rm = TRUE) +
+   stat_summary(
+      fun.y = "median",
+      colour = usq_cols("usq yellow"),
+      na.rm = TRUE,
+      size = 5.5,
+      geom = "point",
+      alpha = 0.65
+   ) +
+   theme_usq() +
+   ylab("Mean lesion count values") +
+   xlab("Distance (m)") +
+   labs(caption = "Median lesion count values in yellow.")
+```
+
+## Fit Non-linear Model
+
+```{r exponential}
+ggplot(dat, aes(x = dist, y = mean_count_pot)) +
+   geom_point() +
+   stat_smooth(
+      method = "nls",
+      formula = y ~ SSasymp(x, Asym, R0, lrc),
+      se = FALSE,
+      colour = usq_cols("usq yellow")
+   ) +
+   ylab("Mean lesion count values") +
+   xlab("Distance (m)") +
+   theme_usq()
+```
+
+```{r}
+fit <- nls(mean_count_pot ~ SSasymp(dist, Asym, R0, lrc), data = dat)
+summary(fit)
+```
