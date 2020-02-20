@@ -4,7 +4,7 @@ library("tidyverse")
 
 dat <-
    read_csv("data/CPSporesSpatial version 2.csv") %>%
-   drop_na(dist_stat) %>%
+   drop_na(counts_p1) %>%
    mutate(dist = as.numeric(str_replace(distance, " m", ""))) %>%
    mutate(rainfall = precip + mrain) %>% 
    add_column(sum_rain = NA) %>% 
