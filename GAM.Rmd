@@ -5,18 +5,22 @@ date: "`r Sys.Date()`"
 output: github_document
 ---
 
-## Load Libraries and Import Data
+## Import Data
 
-```{r libraries, message=FALSE}
+See "R/wrangle_raw_data.R" for the script that handles the data import. This
+Rmd file focuses on the models themselves.
+
+```{r libraries, message=FALSE, echo=FALSE}
 library("tidyverse")
 library("mgcv")
 library("theme.usq")
 library("broom")
+library("skimr")
 ```
 
-```{r import data, message=FALSE}
+```{r import data, message=FALSE, echo=FALSE}
 source("R/wrangle_raw_data.R")
-glimpse(dat)
+skim(dat)
 ```
 
 ## Visualise the Dispersal Data
@@ -117,9 +121,25 @@ enframe(c(
    mod1 = summary(mod1)$r.sq,
    mod2 = summary(mod2)$r.sq,
    mod3 = summary(mod3)$r.sq,
-   mod4 = summary(mod4)$r.sq
+   mod4 = summary(mod4)$r.sq,
+   mod5 = summary(mod4)$r.sq
 )) %>%
    arrange(desc(value))
+```
+
+### Coefficients
+
+```{r coef, echo=FALSE}
+cat("\nmod1\n")
+coef(mod1)
+cat("\nmod2\n")
+coef(mod2)
+cat("\nmod3\n")
+coef(mod3)
+cat("\nmod4\n")
+coef(mod4)
+cat("\nmod5\n")
+coef(mod5)
 ```
 
 ### ANOVA
