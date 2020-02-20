@@ -10,11 +10,6 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(fig.width = 12, fig.height = 9) 
 ```
 
-## Import Data
-
-See "R/wrangle_raw_data.R" for the script that handles the data import. This
-Rmd file focuses on the models themselves.
-
 ```{r libraries, message=FALSE, echo=FALSE}
 library("tidyverse")
 library("mgcv")

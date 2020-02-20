@@ -4,11 +4,6 @@ conidia
 A.H. Sparks
 2020-02-21
 
-## Import Data
-
-See “R/wrangle\_raw\_data.R” for the script that handles the data
-import. This Rmd file focuses on the models themselves.
-
 ## Fit Non-linear Model
 
 ![](Exponential_files/figure-gfm/exponential-1.png)<!-- -->
