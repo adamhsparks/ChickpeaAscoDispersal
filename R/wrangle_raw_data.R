@@ -1,6 +1,6 @@
 # wrangle data for Ascochyta condia dispersal model
-
-library("tidyverse")
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse)
 
 dat <-
    read_csv("data/CPSporesSpatial version 2.csv") %>%
