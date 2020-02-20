@@ -66,8 +66,9 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
       alpha = 0.65
    ) +
    theme_usq() +
-   ylab("Median and high/low mean lesion count values") +
-   xlab("Distance (m)")
+   ylab("Mean lesion count values") +
+   xlab("Distance (m)") +
+   labs(caption = "Median spore count values in yellow.")
 ```
 
 ![](GAM_files/figure-gfm/visualise_data-1.png)<!-- -->
@@ -97,9 +98,6 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
     ## 
     ## R-sq.(adj) =  0.482   Deviance explained = 48.8%
     ## GCV = 0.76522  Scale est. = 0.75394   n = 334
-
-The `k` value has to be set to 5, default is 10. Else the model will not
-fit due to lack of degrees of freedom.
 
 ### mod2 - s(Distance) plus Precipitation
 
