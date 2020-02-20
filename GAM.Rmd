@@ -4,7 +4,7 @@ author: "A.H. Sparks"
 date: "`r Sys.Date()`"
 output: github_document
 ---
-   
+
 ## Load Libraries and Import Data
 
 ```{r libraries, message=FALSE}
@@ -18,9 +18,9 @@ library("ggpubr")
 dat <-
    read_csv("data/CPSporesSpatial version 2.csv") %>%
    drop_na(dist_stat) %>%
-   mutate(dist = as.numeric(str_replace(distance, " m", ""))) %>% 
+   mutate(dist = as.numeric(str_replace(distance, " m", ""))) %>%
    mutate_at(vars(site, rep, station, transect, plant_no, pot_no), factor) %>%
-   group_by(site, transect, station) %>% 
+   group_by(site, transect, station) %>%
    mutate(rainfall = precip + mrain)
 ```
 
@@ -45,6 +45,7 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    xlab("Distance (m)")
 ```
 
+
 ## Fit GAMs
 
 ### mod1 - s(Distance)
@@ -65,7 +66,7 @@ AIC(mod1)
 The `k` value has to be set to 5, default is 10. Else the model will not fit due
 to lack of degrees of freedom.
 
-### mod2 - s(Distance) plus Precipitation 
+### mod2 - s(Distance) plus Precipitation
 
 ```{r fit-mod2}
 mod2 <-
@@ -98,11 +99,72 @@ paste("AIC: ", AIC(mod3))
 ```
 
 The `k` value has to be set to 5, default is 10. Else the model will not fit due
+mean wind speed looks like a linear term. move it out of the smoothing funtion.
+
+Model looks the same as `mod2`
+
+The `k` value has to be set to 3, default is 10. Else the model will not fit due
 to lack of degrees of freedom.
+
+
+### mod3 - s(Distance and Wind direction) plus Precipitation
+
+```{r fit-mod4}
+mod4 <-
+   gam(
+      mean_count_pot ~ rainfall + s(dist + mwd, k = 5),
+      data = dat
+   )
+
+plot(mod4)
+
+summary(mod4)
+AIC(mod4)
+```
+Model gives warning; and is exactly the output same as `mod3` and `mod2`.
+
+
+```{r fit-mod5}
+mod5 <-
+   gam(
+      mean_count_pot ~ rainfall + mws+ s(dist, k = 5),
+      data = dat
+   )
+
+plot(mod5)
+
+summary(mod5)
+AIC(mod5)
+```
+
+```{r fit-mod6}
+mod6 <-
+   gam(
+      mean_count_pot ~ SpEv+ s(dist, k = 5),
+      data = dat
+   )
+
+plot(mod6)
+
+summary(mod6)
+AIC(mod6)
+```
+
+
+Lets compare all the models above
+```{r}
+AIC(mod1,mod2,mod3,mod4, mod5,mod6)
+
+anova(mod1,mod2,mod3,mod4, mod5, mod6, test = "F")
+```
+
+
 
 ## Thoughts
 
-Examining the AIC, GCV and R^2 values, the best fitting model so far is `mod2`
-with the smoothed distance and precipitation. Adding windspeed decreases the
-model's fitness and the graph indicates less of a good explainer for dispersal
-as well.
+Examining the AIC, GCV and R^2 values, the best fitting model was `mod6`,
+however this model does not explain the effect of windspeed or rainfall.
+We will proceed with `mod5` as the next best model which utilises both
+windspeed and rainfall as linear terms.
+Adding wind direction does not improve the model suffiently to warrant inclusion;
+especially considering we are not interested in this variable.

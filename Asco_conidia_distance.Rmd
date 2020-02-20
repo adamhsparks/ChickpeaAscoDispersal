@@ -122,12 +122,28 @@ summary(mod2)
 
 This analysis shows there is little residual variance compared to the the variation explained by our random effects. Also we can see that the amount of variation explained by site is lower than rep.  We should test that site is a significant random intercept term later. We can also not that as the distance increases so does the variance, this could be explained by the fact the spores are only going to travel further on a bearing that is the same as the wind direction.  
 
+```{r Site_test}
+# To test site we need to create a variable that describes a spread event regardless of location
+As_dat$SpEv <- as.factor(paste0(As_dat$site,As_dat$rep))
+
+mod2 <- lmer(mean_count_pot ~ distance + (distance|site/rep),
+             data = As_dat)
+
+mod3 <- lmer(mean_count_pot ~ distance + (distance|SpEv),
+             data = As_dat)
+
+
+# Compare models
+anova(mod2,mod3)
+```
+Site is not a significant factor and we can use spread event variable instead. We will use `mod3` in the following analysis. This is shown by the lower AIC for mod3 and that the site/rep nesting is not significant on the chi squared test of models.  
+
 The fixed effects give us the mean number of lesions per plant at distance zero (intercept) and this is significantly different from zero. We can also see the mean number of lesions decreases as distance from the foci increases.  
 
 We can look at the best linear unbiased predictors of the random effects to see how much the 'rep' and 'site' influenced this spread.  
 
 ```{r mod2_coef}
-coef(mod2)
+coef(mod3)
 ```
 Here the intercept is the estimated mean at zero meters from foci (BLUP). As the distance increases the number of estimated mean lesions per plant decreases.  
 Lets look at the estimated means in a table.  
@@ -221,6 +237,15 @@ p1_dat[p1_dat$site == "Curyo",] %>%
   labs(title="Estimated mean lesions (BLUPS) which developed as each distance",
        subtitle="Location: pbc", 
        col='Spread event (reps)')
+As_dat
+```
+
+
+
+```{r GAM_analysis}
+
+gam(mean_count_pot ~ s(dist, by = ),
+    data = As_dat)
 
 ```
 
@@ -250,31 +275,8 @@ rowSums(cbind(coef(mod11)$`mws:mwd`[,1],
 coef(mod11)$`mws:mwd`[,1] + coef(mod11)$`mws:mwd`[,c('distance10 m', 'distance25 m', 'distance50 m','distance75 m')]))
 
 
-2.46/5.514
-3.478/7.344
-5.5366/9.947
-
-1.126/5.514
-1.573/7.344
-2.476/9.947
-
-0.782/5.514
-1.431/7.344
-0.976/9.947
-
-0.619/5.514
-0.49/7.344
-0.76/9.947
-
 
 ```
-
-
-
-
-
-
-
 
 
 
