@@ -55,9 +55,6 @@ mod1 <-
 summary(mod1)
 ```
 
-The `k` value has to be set to 5, default is 10. Else the model will not fit due
-to lack of degrees of freedom.
-
 ### mod2 - s(Distance) plus Precipitation
 
 ```{r fit-mod2, echo=FALSE}
@@ -104,12 +101,12 @@ summary(mod5)
 
 ### AIC, BIC
 ```{r compare-mods, echo=FALSE}
-models <- list(mod1 = mod1, 
-               mod2 = mod2, 
+models <- list(mod1 = mod1,
+               mod2 = mod2,
                mod3 = mod3,
                mod4 = mod4,
                mod5 = mod5)
-map_df(models, glance, .id = "model") %>% 
+map_df(models, glance, .id = "model") %>%
    arrange(AIC)
 ```
 
@@ -139,4 +136,3 @@ plot(mod3, main = "s(Distance) + Windspeed")
 plot(mod4, main = "s(Distance) + Windspeed + Precipitation")
 plot(mod5, main = "s(Distance + Windspeed) + Precipitation")
 ```
-
