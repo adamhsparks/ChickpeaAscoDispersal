@@ -95,7 +95,7 @@ to lack of degrees of freedom.
 ```{r fit-mod3}
 mod3 <-
    gam(
-      mean_count_pot ~ rainfall + SpEv + s(mws, k = 5),
+      mean_count_pot ~ rainfall + s(dist + mws, k = 5),
       data = dat
    )
 
@@ -105,13 +105,20 @@ summary(mod3)
 AIC(mod3)
 ```
 
+mean wind speed looks like a linear term. move it out of the smoothing funtion.
+
+Model looks the same as `mod2`
+
 The `k` value has to be set to 3, default is 10. Else the model will not fit due
 to lack of degrees of freedom.
+
+
+### mod3 - s(Distance and Wind direction) plus Precipitation
 
 ```{r fit-mod4}
 mod4 <-
    gam(
-      mean_count_pot ~ rainfall + mws+ s(dist, k = 4),
+      mean_count_pot ~ rainfall + s(dist + mwd, k = 5),
       data = dat
    )
 
@@ -120,10 +127,50 @@ plot(mod4)
 summary(mod4)
 AIC(mod4)
 ```
+Model gives warning; and is exactly the output same as `mod3` and `mod2`.  
+
+
+```{r fit-mod5}
+mod5 <-
+   gam(
+      mean_count_pot ~ rainfall + mws+ s(dist, k = 5),
+      data = dat
+   )
+
+plot(mod5)
+
+summary(mod5)
+AIC(mod5)
+```
+
+```{r fit-mod6}
+mod6 <-
+   gam(
+      mean_count_pot ~ SpEv+ s(dist, k = 5),
+      data = dat
+   )
+
+plot(mod6)
+
+summary(mod6)
+AIC(mod6)
+```
+
+
+Lets compare all the models above
+```{r}
+AIC(mod1,mod2,mod3,mod4, mod5,mod6)
+
+anova(mod1,mod2,mod3,mod4, mod5, mod6, test = "F")
+```
+
+
 
 ## Thoughts
 
-Examining the AIC, GCV and R^2 values, the best fitting model so far is `mod2`
-with the smoothed distance and precipitation. Adding windspeed decreases the
-model's fitness and the graph indicates less of a good explainer for dispersal
-as well.
+Examining the AIC, GCV and R^2 values, the best fitting model was `mod6`,
+however this model does not explain the effect of windspeed or rainfall. 
+We will proceed with `mod5` as the next best model which utilises both 
+windspeed and rainfall as linear terms.
+Adding wind direction does not improve the model suffiently to warrant inclusion;
+especially considering we are not interested in this variable.  
