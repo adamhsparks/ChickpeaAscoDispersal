@@ -186,5 +186,5 @@ however this model does not explain the effect of windspeed or rainfall.
 The next best model fit used mean wind direction and sum_rain, however this 
 term does not aid in the answering the question we have of the data, 
 what are the predictors which influence the distance a spore can travel.
-The next best model fit that does not include mean wind direction is `mod5` 
+The next best model fit that does not include mean wind direction is `mod6` 
 which uses sum rainfall and mean wind speed as linear predictors.  
