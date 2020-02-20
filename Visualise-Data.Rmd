@@ -1,0 +1,72 @@
+---
+title: "Visualise Data"
+author: "A.H. Sparks"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(fig.width = 12, fig.height = 9) 
+```
+
+## Import Data
+
+See "R/wrangle_raw_data.R" for the script that handles the data import. This
+Rmd file focuses on the models themselves.
+
+```{r libraries, message=FALSE, echo=FALSE}
+library("tidyverse")
+library("theme.usq")
+library("skimr")
+library("clifro")
+```
+
+```{r import data, message=FALSE, echo=FALSE}
+source("R/wrangle_raw_data.R")
+skim(dat)
+```
+
+## Visualise the Dispersal Data
+
+```{r conbined-dispersal}
+ggplot(dat, aes(x = dist, y = mean_count_pot)) +
+   geom_count(alpha = 0.5) +
+   scale_size_continuous(range = c(3, 12)) +
+   stat_summary(fun.y = "median",
+                geom = "line",
+                na.rm = TRUE) +
+   ylim(c(-0.5, 9)) +
+   ylab("Mean lesion count values") +
+   xlab("Distance (m)") +
+   labs(main = "Dispersal by event", 
+        caption = "Line shows median lesion count values") +
+   theme_usq(base_size = 15)
+```
+
+```{r facet-dispersal}
+ggplot(dat, aes(x = dist, y = mean_count_pot)) +
+   geom_count(alpha = 0.5,
+              aes(colour = SpEv)) +
+   scale_size_continuous(range = c(3, 12)) +
+   scale_colour_usq("bright") +
+   stat_summary(fun.y = "median",
+                geom = "line",
+                na.rm = TRUE) +
+   ylim(c(-0.5, 9)) +
+   ylab("Mean lesion count values") +
+   xlab("Distance (m)") +
+   labs(main = "Dispersal for all events",
+        caption = "Line shows median lesion count values") +
+   theme_usq(base_size = 15) +
+   facet_wrap(SpEv ~ .)
+```
+
+## Visualise the Windspeed and Direction
+
+```{r wind}
+p <-
+   with(dat, windrose(mws, mwd, SpEv, n_col = 3, col_pal = "YlOrRd"))
+p + theme_usq(base_size = 15) +
+   labs(caption = "Mean windspeed and mean direction for each event.")
+```
