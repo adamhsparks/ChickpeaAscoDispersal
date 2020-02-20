@@ -16,11 +16,10 @@ See "R/wrangle_raw_data.R" for the script that handles the data import. This
 Rmd file focuses on the models themselves.
 
 ```{r libraries, message=FALSE, echo=FALSE}
-library("tidyverse")
-library("mgcv")
-library("theme.usq")
-library("broom")
-library("skimr")
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, broom, skimr, devtools, mgcv)
+
+if (!require("theme.usq")) devtools::install_github("adamhsparks/theme.usq")
 ```
 
 ```{r import data, message=FALSE, echo=FALSE}
