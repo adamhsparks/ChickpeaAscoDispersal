@@ -14,37 +14,7 @@ library("mgcv")
 
 ```{r import data, message=FALSE}
 dat <-
-   read_csv("data/CPSporesSpatial version 2.csv") %>%
-   group_by(site, rep, transect, distance, station, mat, mah, mws, mwd) %>%
-   drop_na(dist_stat) 
-
-dat$rainfall <- dat$mrain + dat$precip
-
-dbl <-
-   c(
-      "counts_p1",
-      "counts_p2",
-      "counts_p3",
-      "counts_p4",
-      "counts_p5",
-      "mean_count_pot",
-      "precip",
-      "mrain",
-      "mwd",
-      "mws"
-   )
-
-# format lesion counts into integers
-dat[, dbl] <- lapply(dat[, dbl], as.double)
-
-# change distance to continuous variable
-dat$dist <- as.numeric(gsub(" m", "", dat$distance))
-
-# set factors
-dat[, c("site", "distance", "rep")] <-
-   lapply(dat[, c("site", "distance", "rep")], as.factor)
-
-dat$SpEv <- as.factor(paste0(dat$site,dat$rep))
+   source("r/wrangle_raw_data.R")$value
 
 ```
 
@@ -71,12 +41,12 @@ AIC(mod1)
 The `k` value has to be set to 5, default is 10. Else the model will not fit due
 to lack of degrees of freedom.
 
-### mod2 - s(Distance) plus Precipitation 
+### mod2 - s(Distance) plus categorical value Spread Event 
 
 ```{r fit-mod2}
 mod2 <-
    gam(
-      mean_count_pot ~ rainfall + s(dist, k = 5),
+      mean_count_pot ~ SpEv+ s(dist, k = 5),
       data = dat
    )
 
@@ -86,16 +56,15 @@ summary(mod2)
 AIC(mod2)
 ```
 
-The `k` value has to be set to 5, default is 10. Else the model will not fit due
-to lack of degrees of freedom.
+This model fits much better and has a much lower AIC
 
 
-### mod3 - s(Distance and Windspeed) plus Precipitation
+### mod3 - s(Distance) plus mean wind speed
 
 ```{r fit-mod3}
 mod3 <-
-   gam(
-      mean_count_pot ~ rainfall + s(dist + mws, k = 5),
+      gam(
+      mean_count_pot ~ mws+ s(dist, k = 5),
       data = dat
    )
 
@@ -105,20 +74,14 @@ summary(mod3)
 AIC(mod3)
 ```
 
-mean wind speed looks like a linear term. move it out of the smoothing funtion.
+mean wind speed looks like a significant linear term. 
 
-Model looks the same as `mod2`
-
-The `k` value has to be set to 3, default is 10. Else the model will not fit due
-to lack of degrees of freedom.
-
-
-### mod3 - s(Distance and Wind direction) plus Precipitation
+### mod3 - s(Distance ) plus wind direction
 
 ```{r fit-mod4}
 mod4 <-
    gam(
-      mean_count_pot ~ rainfall + s(dist + mwd, k = 5),
+      mean_count_pot ~ mwd+ s(dist, k = 5),
       data = dat
    )
 
@@ -127,13 +90,13 @@ plot(mod4)
 summary(mod4)
 AIC(mod4)
 ```
-Model gives warning; and is exactly the output same as `mod3` and `mod2`.  
+Wind direction is a better linear term in comparison to wind speed as indicated by a lower AIC, higher R-squared and lower GCV.
 
 
 ```{r fit-mod5}
 mod5 <-
    gam(
-      mean_count_pot ~ rainfall + mws+ s(dist, k = 5),
+      mean_count_pot ~ sum_rain + s(dist, k = 5),
       data = dat
    )
 
@@ -142,11 +105,13 @@ plot(mod5)
 summary(mod5)
 AIC(mod5)
 ```
+Sum rainfall is a significant linear term, however is not as good as wind speed or wind direction in predicting mean lesions per plant over the whole trial
+
 
 ```{r fit-mod6}
 mod6 <-
    gam(
-      mean_count_pot ~ SpEv+ s(dist, k = 5),
+      mean_count_pot ~ sum_rain + mws+ s(dist, k = 5),
       data = dat
    )
 
@@ -156,21 +121,70 @@ summary(mod6)
 AIC(mod6)
 ```
 
+Using both sum rainfall and mean wind speed as linear terms improves the model fit in comparison to the `mod3`, and `mod5` when these terms were used without the other, as evaulated by AIC and r-squared. It is still not as good of a fit in comparison to when mean wind direction was used as a single linear term.  
 
-Lets compare all the models above
+```{r fit-mod7}
+mod7 <-
+   gam(
+      mean_count_pot ~ sum_rain + mwd + s(dist, k = 5),
+      data = dat
+   )
+
+plot(mod7)
+
+summary(mod7)
+AIC(mod7)
+```
+
+Including sum rainfall as a linear predictor with mean wind direction barely improves the model compared to `mod4` when mean wind direction was the only linear predictor.  
+
+```{r fit-mod8}
+mod8 <-
+gam(
+      mean_count_pot ~ sum_rain + s(dist + mwd, k = 5),
+      data = dat
+   )
+
+plot(mod8)
+
+summary(mod8)
+AIC(mod8)
+```
+
+It makes sense to look at mean wind direction as a non-linear predictor given the premise that there is a optimum wind bearing which provides maximum spore spread over the plots. It the wind bearing is higher or lower than this one would expect lower number of mean lesions over the plots.  
+
+However here we see the model does not fit correctly with two smooth terms due to a lack of data. The model therefore preforms poorly in comparison to all the other models.  
+
+```{r fit-mod9}
+mod9 <-
+gam(
+      mean_count_pot ~ sum_rain + s(dist + mws, k = 5),
+      data = dat
+   )
+
+plot(mod9)
+
+summary(mod9)
+AIC(mod9)
+```
+
+Again we see the model does not fit correctly with two smooth terms due to a lack of data. The model therefore preforms poorly in comparison to all the other models.  
+
+Lets compare all the models we have fit above
 ```{r}
-AIC(mod1,mod2,mod3,mod4, mod5,mod6)
+AIC(mod1,mod2,mod3,mod4, mod5,mod6,mod7,mod8,mod9)
 
-anova(mod1,mod2,mod3,mod4, mod5, mod6, test = "F")
+anova(mod1,mod2,mod3,mod4, mod5, mod6,mod7,mod8,mod9, test = "F")
 ```
 
 
 
 ## Thoughts
 
-Examining the AIC, GCV and R^2 values, the best fitting model was `mod6`,
+Examining the AIC, GCV and R^2 values, the best fitting model was `mod2`,
 however this model does not explain the effect of windspeed or rainfall. 
-We will proceed with `mod5` as the next best model which utilises both 
-windspeed and rainfall as linear terms.
-Adding wind direction does not improve the model suffiently to warrant inclusion;
-especially considering we are not interested in this variable.  
+The next best model fit used mean wind direction and sum_rain, however this 
+term does not aid in the answering the question we have of the data, 
+what are the predictors which influence the distance a spore can travel.
+The next best model fit that does not include mean wind direction is `mod5` 
+which uses sum rainfall and mean wind speed as linear predictors.  
