@@ -7,7 +7,7 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-knitr::opts_chunk$set(fig.width = 12, fig.height = 9) 
+knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
 ```
 
 See "R/wrangle_raw_data.R" for the script that handles the data import. This
@@ -18,11 +18,20 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, clifro, skimr, devtools)
 
 if (!require("theme.usq")) devtools::install_github("adamhsparks/theme.usq")
+theme_set(theme_usq(base_size = 15))
 ```
 
 ```{r import data, message=FALSE, echo=FALSE}
 source("R/wrangle_raw_data.R")
 skim(dat)
+```
+
+## Visualise Counts per Pot
+
+```{r lesion-count}
+ggplot(dat, aes(x = mean_count_pot)) +
+   geom_density() +
+   xlab("Mean lesion count per pot")
 ```
 
 ## Visualise the Dispersal Data
@@ -38,8 +47,7 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    ylab("Mean lesion count values") +
    xlab("Distance (m)") +
    labs(main = "Dispersal by event", 
-        caption = "Line shows median lesion count values") +
-   theme_usq(base_size = 15)
+        caption = "Line shows median lesion count values")
 ```
 
 ```{r facet-dispersal}
@@ -63,8 +71,26 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
 ## Visualise the Windspeed and Direction
 
 ```{r wind}
-p <-
+pw <-
    with(dat, windrose(mws, mwd, SpEv, n_col = 3, col_pal = "YlOrRd"))
-p + theme_usq(base_size = 15) +
+pw + theme_usq(base_size = 15) +
    labs(caption = "Mean windspeed and mean direction for each event.")
 ```
+
+## Visualise the Rainfall and Irrigation Events
+```{r rain}
+ggplot(dat, aes(
+   x = SpEv,
+   y = sum_rain/100,
+   colour = SpEv,
+   fill = SpEv
+)) +
+   geom_bar(stat = "identity") +
+   scale_fill_usq("bright") +
+   scale_colour_usq("bright") +
+   ylab("Total precipitation in event (mm)") +
+   xlab("Event") +
+   labs(main = "Rainfall events") +
+   theme(legend.position = "none")
+```
+

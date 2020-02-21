@@ -65,6 +65,10 @@ Data summary
 | rainfall         |          0 |           1.00 |   5.04 |  5.00 |   0.00 |   0.01 |  10.00 |  10.00 |  10.00 | ▇▁▁▁▇ |
 | sum\_rain        |          0 |           1.00 |   9.15 |  5.51 |   0.80 |   4.60 |  10.00 |  10.60 |  18.60 | ▂▂▇▁▂ |
 
+## Visualise Counts per Pot
+
+![](Visualise-Data_files/figure-gfm/lesion-count-1.png)<!-- -->
+
 ## Visualise the Dispersal Data
 
 ![](Visualise-Data_files/figure-gfm/conbined-dispersal-1.png)<!-- -->
@@ -74,3 +78,7 @@ Data summary
 ## Visualise the Windspeed and Direction
 
 ![](Visualise-Data_files/figure-gfm/wind-1.png)<!-- -->
+
+## Visualise the Rainfall and Irrigation Events
+
+![](Visualise-Data_files/figure-gfm/rain-1.png)<!-- -->
