@@ -2,7 +2,10 @@
 title: "Fit GAMs to dispersal patterns of _Ascochyta_ conidia"
 author: "A.H. Sparks"
 date: "`r Sys.Date()`"
-output: github_document
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -15,20 +18,26 @@ knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
 See "R/wrangle_raw_data.R" for the script that handles the data import. This
 Rmd file focuses on the models themselves.
 
-```{r libraries, message=FALSE, echo=FALSE}
+```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, broom, skimr, devtools, mgcv)
 ```
 
-```{r import data, message=FALSE, echo=FALSE}
+```{r import data, message=FALSE}
 source("R/wrangle_raw_data.R")
 ```
 
 ## Fit GAMs
 
+For reproducibility purposes, use `set.seed()`.
+
+```{r set-seed, echo=TRUE}
+set.seed(27)
+```
+
 ### mod1 - s(Distance)
 
-```{r fit-mod1, echo=FALSE}
+```{r fit-mod1}
 mod1 <-
    gam(
       mean_count_pot ~ s(dist, k = 5),
@@ -38,9 +47,9 @@ mod1 <-
 summary(mod1)
 ```
 
-### mod2 - s(Distance) plus Precipitation
+### mod2 - s(Distance) + Precipitation
 
-```{r fit-mod2, echo=FALSE}
+```{r fit-mod2}
 mod2 <-
    gam(
       mean_count_pot ~ sum_rain+ s(dist, k = 5),
@@ -50,8 +59,8 @@ mod2 <-
 summary(mod2)
 ```
 
-### mod3 - s(Distance) Windspeed
-```{r fit-mod3, echo=FALSE}
+### mod3 - s(Distance) + Windspeed
+```{r fit-mod3}
 mod3 <-
    gam(mean_count_pot ~ mws + s(dist, k = 5),
        data = dat)
@@ -59,8 +68,8 @@ mod3 <-
 summary(mod3)
 ```
 
-### mod4 - s(Distance) Windspeed plus Precipitation
-```{r fit-mod4, echo=FALSE}
+### mod4 - s(Distance) + Windspeed + Precipitation
+```{r fit-mod4}
 mod4 <-
    gam(mean_count_pot ~ sum_rain + mws + s(dist, k = 5),
        data = dat)
@@ -68,9 +77,9 @@ mod4 <-
 summary(mod4)
 ```
 
-### mod5 - s(Distance + Windspeed) plus Precipitation
+### mod5 - s(Distance + Windspeed) + Precipitation
 
-```{r fit-mod5, echo=FALSE}
+```{r fit-mod5}
 mod5 <-
    gam(
       mean_count_pot ~ sum_rain + s(dist + mws, k = 5),
@@ -80,9 +89,9 @@ mod5 <-
 summary(mod5)
 ```
 
-### mod6 - s(Distance) + s(Windspeed) plus Precipitation
+### mod6 - s(Distance) + s(Windspeed) + Precipitation
 
-```{r fit-mod6, echo=FALSE}
+```{r fit-mod6}
 mod6 <-
    gam(
       mean_count_pot ~ sum_rain + s(dist, k = 5) + s(mws, k = 5),
@@ -94,7 +103,7 @@ summary(mod6)
 
 ### mod7 - s(Distance) + s(Windspeed)
 
-```{r fit-mod7, echo=FALSE}
+```{r fit-mod7}
 mod7 <-
    gam(
       mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5),
@@ -104,9 +113,9 @@ mod7 <-
 summary(mod7)
 ```
 
-### mod8 - s(Distance) + s(Windspeed) +s(Precipitation)
+### mod8 - s(Distance) + s(Windspeed) + s(Precipitation)
 
-```{r fit-mod8, echo=FALSE}
+```{r fit-mod8}
 mod8 <-
    gam(
       mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
@@ -116,9 +125,9 @@ mod8 <-
 summary(mod8)
 ```
 
-### mod9 - s(Distance) +s(Precipitation)
+### mod9 - s(Distance) + s(Precipitation)
 
-```{r fit-mod9, echo=FALSE}
+```{r fit-mod9}
 mod9 <-
    gam(
       mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5),
@@ -130,7 +139,7 @@ summary(mod9)
 
 ### mod10 - s(Distance) +s(Precipitation) + Windspeed
 
-```{r fit-mod10, echo=FALSE}
+```{r fit-mod10}
 mod10 <-
    gam(
       mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5) + mws,
@@ -140,9 +149,9 @@ mod10 <-
 summary(mod10)
 ```
 
-### mod11 - s(Distance) + s(Windspeed) +s(Precipitation) - Family = tw()
+### mod11 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
 
-```{r fit-mod11, echo=FALSE}
+```{r fit-mod11}
 mod11 <-
    gam(
       mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
@@ -153,10 +162,32 @@ mod11 <-
 summary(mod11)
 ```
 
+This is the same as `mod8` but using `family = tw()`, see `?family.mgcv` for
+more on the families. The Tweedie distribution is used where the distribution
+has a positive mass at zero, but is continuous unlike the Poisson distribution
+that requires count data. The data visualisation shows clearly that the mean
+pot count data have this shape.
+
+### mod12 - s(Distance) + s(Precipitation) + Windspeed, family = tw()
+
+```{r fit-mod12}
+mod12 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5) + mws,
+      data = dat,
+      family = tw()
+   )
+
+summary(mod12)
+```
+
+Looking at `mod11`, `mws` is not significant as a smoothed term, and we'd
+suspect it was linear anyway, so add it as a linear term only.
+
 ## Compare the Models
 
 ### AIC, BIC
-```{r compare-mods, echo=FALSE}
+```{r compare-mods}
 models <- list(mod1 = mod1,
                mod2 = mod2,
                mod3 = mod3,
@@ -167,14 +198,15 @@ models <- list(mod1 = mod1,
                mod8 = mod8,
                mod9 = mod9,
                mod10 = mod10,
-               mod11 = mod11
+               mod11 = mod11,
+               mod12 = mod12
                )
 map_df(models, glance, .id = "model") %>%
    arrange(AIC)
 ```
 
 ### R^2^
-```{r r2, echo=FALSE}
+```{r r2}
 enframe(c(
    mod1 = summary(mod1)$r.sq,
    mod2 = summary(mod2)$r.sq,
@@ -186,14 +218,15 @@ enframe(c(
    mod8 = summary(mod8)$r.sq,
    mod9 = summary(mod9)$r.sq,
    mod10 = summary(mod10)$r.sq,
-   mod11 = summary(mod11)$r.sq
+   mod11 = summary(mod11)$r.sq,
+   mod12 = summary(mod12)$r.sq
 )) %>%
    arrange(desc(value))
 ```
 
 ### Coefficients
 
-```{r coef, echo=FALSE}
+```{r coef}
 cat("\nmod1\n")
 coef(mod1)
 cat("\nmod2\n")
@@ -216,10 +249,12 @@ cat("\nmod10\n")
 coef(mod10)
 cat("\nmod11\n")
 coef(mod11)
+cat("\nmod12\n")
+coef(mod12)
 ```
 
 ### ANOVA
-```{r anova, echo=FALSE}
+```{r anova}
 anova(mod1,
       mod2,
       mod3,
@@ -231,12 +266,13 @@ anova(mod1,
       mod9,
       mod10,
       mod11,
+      mod12,
       test = "F")
 ```
 
 ### Visualise the Models
 
-```{r vis-mods, echo=FALSE}
+```{r vis-mods}
 par(mfrow = c(2, 2))
 plot(mod1, main = "s(Distance)")
 plot(mod2, main = "s(Distance) + Precipitation")
@@ -248,5 +284,28 @@ plot(mod7, main = "s(Distance) + s(Windspeed)")
 plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation)")
 plot(mod9, main = "s(Distance) + s(Precipitation)")
 plot(mod10, main = "s(Distance) + s(Precipitation) + Windspeed")
-plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()")
+plot(mod11, main = "s(Distance) + s(Windspeed) + s(Precipitation), family = tw()")
+plot(mod11, main = "s(Distance) + s(Precipitation) + Windspeed, family = tw()")
 ```
+
+### Check Best Model Fit
+
+#### Mod11 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
+
+```{r mod-check11}
+gam.check(mod11)
+```
+
+#### Mod12 - s(Distance) + s(Precipitation) + Windspeed, family = tw()
+
+```{r mod-check12}
+gam.check(mod12)
+```
+
+## Thoughts
+
+This model, 
+`mean_pot_count ~ s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()`,
+lacks enough numbers of basis functions for two of three predictors, `dist`,
+`wsp`, but it's close. Realistically we need to increase the `k` values for
+these predictors, but we're lacking the data to do this.
