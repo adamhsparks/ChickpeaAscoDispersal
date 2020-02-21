@@ -2,7 +2,10 @@
 title: "Visualise Data"
 author: "A.H. Sparks"
 date: "`r Sys.Date()`"
-output: github_document
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
