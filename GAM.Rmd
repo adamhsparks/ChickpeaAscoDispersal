@@ -18,8 +18,6 @@ Rmd file focuses on the models themselves.
 ```{r libraries, message=FALSE, echo=FALSE}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, broom, skimr, devtools, mgcv)
-
-if (!require("theme.usq")) devtools::install_github("adamhsparks/theme.usq")
 ```
 
 ```{r import data, message=FALSE, echo=FALSE}
@@ -82,6 +80,79 @@ mod5 <-
 summary(mod5)
 ```
 
+### mod6 - s(Distance) + s(Windspeed) plus Precipitation
+
+```{r fit-mod6, echo=FALSE}
+mod6 <-
+   gam(
+      mean_count_pot ~ sum_rain + s(dist, k = 5) + s(mws, k = 5),
+      data = dat
+   )
+
+summary(mod6)
+```
+
+### mod7 - s(Distance) + s(Windspeed)
+
+```{r fit-mod7, echo=FALSE}
+mod7 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5),
+      data = dat
+   )
+
+summary(mod7)
+```
+
+### mod8 - s(Distance) + s(Windspeed) +s(Precipitation)
+
+```{r fit-mod8, echo=FALSE}
+mod8 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
+      data = dat
+   )
+
+summary(mod8)
+```
+
+### mod9 - s(Distance) +s(Precipitation)
+
+```{r fit-mod9, echo=FALSE}
+mod9 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5),
+      data = dat
+   )
+
+summary(mod9)
+```
+
+### mod10 - s(Distance) +s(Precipitation) + Windspeed
+
+```{r fit-mod10, echo=FALSE}
+mod10 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5) + mws,
+      data = dat
+   )
+
+summary(mod10)
+```
+
+### mod11 - s(Distance) + s(Windspeed) +s(Precipitation) - Family = tw()
+
+```{r fit-mod11, echo=FALSE}
+mod11 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
+      data = dat,
+      family = tw()
+   )
+
+summary(mod11)
+```
+
 ## Compare the Models
 
 ### AIC, BIC
@@ -90,7 +161,14 @@ models <- list(mod1 = mod1,
                mod2 = mod2,
                mod3 = mod3,
                mod4 = mod4,
-               mod5 = mod5)
+               mod5 = mod5,
+               mod6 = mod6,
+               mod7 = mod7,
+               mod8 = mod8,
+               mod9 = mod9,
+               mod10 = mod10,
+               mod11 = mod11
+               )
 map_df(models, glance, .id = "model") %>%
    arrange(AIC)
 ```
@@ -102,7 +180,13 @@ enframe(c(
    mod2 = summary(mod2)$r.sq,
    mod3 = summary(mod3)$r.sq,
    mod4 = summary(mod4)$r.sq,
-   mod5 = summary(mod4)$r.sq
+   mod5 = summary(mod5)$r.sq,
+   mod6 = summary(mod6)$r.sq,
+   mod7 = summary(mod7)$r.sq,
+   mod8 = summary(mod8)$r.sq,
+   mod9 = summary(mod9)$r.sq,
+   mod10 = summary(mod10)$r.sq,
+   mod11 = summary(mod11)$r.sq
 )) %>%
    arrange(desc(value))
 ```
@@ -120,11 +204,34 @@ cat("\nmod4\n")
 coef(mod4)
 cat("\nmod5\n")
 coef(mod5)
+cat("\nmod6\n")
+coef(mod6)
+cat("\nmod7\n")
+coef(mod7)
+cat("\nmod8\n")
+coef(mod8)
+cat("\nmod9\n")
+coef(mod9)
+cat("\nmod10\n")
+coef(mod10)
+cat("\nmod11\n")
+coef(mod11)
 ```
 
 ### ANOVA
 ```{r anova, echo=FALSE}
-anova(mod1, mod2, mod3, mod4, mod5, test = "F")
+anova(mod1,
+      mod2,
+      mod3,
+      mod4,
+      mod5,
+      mod6,
+      mod7,
+      mod8,
+      mod9,
+      mod10,
+      mod11,
+      test = "F")
 ```
 
 ### Visualise the Models
@@ -136,4 +243,10 @@ plot(mod2, main = "s(Distance) + Precipitation")
 plot(mod3, main = "s(Distance) + Windspeed")
 plot(mod4, main = "s(Distance) + Windspeed + Precipitation")
 plot(mod5, main = "s(Distance + Windspeed) + Precipitation")
+plot(mod6, main = "s(Distance) + s(Windspeed) + Precipitation")
+plot(mod7, main = "s(Distance) + s(Windspeed)")
+plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation)")
+plot(mod9, main = "s(Distance) + s(Precipitation)")
+plot(mod10, main = "s(Distance) + s(Precipitation) + Windspeed")
+plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()")
 ```
