@@ -21,6 +21,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, clifro, skimr, devtools)
 
 if (!require("theme.usq")) devtools::install_github("adamhsparks/theme.usq")
+library(theme.usq)
 theme_set(theme_usq(base_size = 15))
 ```
 
@@ -41,7 +42,8 @@ ggplot(dat, aes(x = mean_count_pot)) +
 
 ```{r conbined-dispersal}
 ggplot(dat, aes(x = dist, y = mean_count_pot)) +
-   geom_count(alpha = 0.5) +
+   geom_count(alpha = 0.5,
+              aes(colour = ptype)) +
    scale_size_continuous(range = c(3, 12)) +
    stat_summary(fun.y = "median",
                 geom = "line",
@@ -50,7 +52,8 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    ylab("Mean lesion count values") +
    xlab("Distance (m)") +
    labs(main = "Dispersal by event", 
-        caption = "Line shows median lesion count values")
+        caption = "Line shows median lesion count values") +
+   facet_grid(. ~ ptype)
 ```
 
 ```{r facet-dispersal}

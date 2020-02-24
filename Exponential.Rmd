@@ -18,6 +18,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, broom, nlstools, devtools)
 
 if (!require("theme.usq")) devtools::install_github("adamhsparks/theme.usq")
+library(theme.usq)
 ```
 
 ```{r import data, message=FALSE, echo=FALSE}
