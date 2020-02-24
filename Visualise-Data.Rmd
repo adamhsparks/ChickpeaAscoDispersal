@@ -8,7 +8,7 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
 ```
@@ -18,11 +18,20 @@ Rmd file focuses on the data.
 
 ```{r libraries, message=FALSE, echo=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, clifro, skimr, devtools)
+pacman::p_load(tidyverse, clifro, skimr, devtools, extrafont, ggpubr)
 
-if (!require("theme.usq")) devtools::install_github("adamhsparks/theme.usq")
+if (!require("theme.usq"))
+   devtools::install_github("adamhsparks/theme.usq")
 library(theme.usq)
-theme_set(theme_usq(base_size = 15))
+
+theme_set(theme_pubclean())
+```
+
+```{r fonts, include=FALSE, echo=FALSE, message=FALSE, eval=FALSE}
+# run only if knitting on new computer
+# this is necessary to embed fonts in .eps files for EJPP
+font_import(pattern = "Arial")
+loadfonts(device = "postscript") 
 ```
 
 ```{r import data, message=FALSE, echo=FALSE}
@@ -40,10 +49,12 @@ ggplot(dat, aes(x = mean_count_pot)) +
 
 ## Visualise the Dispersal Data
 
-```{r conbined-dispersal}
+```{r conbined-dispersal, message=FALSE}
+facet_labs <- c("Rainfall", "Irrigation")
+names(facet_labs) <- c("rain", "simRain")
+
 ggplot(dat, aes(x = dist, y = mean_count_pot)) +
-   geom_count(alpha = 0.5,
-              aes(colour = ptype)) +
+   geom_count() +
    scale_size_continuous(range = c(3, 12)) +
    stat_summary(fun.y = "median",
                 geom = "line",
@@ -51,9 +62,14 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    ylim(c(-0.5, 9)) +
    ylab("Mean lesion count values") +
    xlab("Distance (m)") +
-   labs(main = "Dispersal by event", 
-        caption = "Line shows median lesion count values") +
-   facet_grid(. ~ ptype)
+   facet_grid(. ~ ptype,
+              labeller = labeller(ptype = facet_labs))
+
+# save a .png to refer to while writing and a .eps for publication submission
+ggsave("figures/Fig1.png")
+ggsave("figures/Fig1.eps")
+embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
+            options = "-dEPSCrop")
 ```
 
 ```{r facet-dispersal}
@@ -76,27 +92,38 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
 
 ## Visualise the Windspeed and Direction
 
-```{r wind}
+```{r wind, message=FALSE}
 pw <-
    with(dat, windrose(mws, mwd, SpEv, n_col = 3, col_pal = "YlOrRd"))
-pw + theme_usq(base_size = 15) +
-   labs(caption = "Mean windspeed and mean direction for each event.")
+
+pw + 
+   xlab("") + 
+   theme_pubclean()
+
+# save a .png to refer to while writign and a .eps for publication submission
+ggsave("figures/Fig2.png")
+ggsave("figures/Fig2.eps")
+embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
+            options = "-dEPSCrop")
 ```
 
 ## Visualise the Rainfall and Irrigation Events
-```{r rain}
-ggplot(dat, aes(
-   x = SpEv,
-   y = sum_rain/100,
-   colour = SpEv,
-   fill = SpEv
-)) +
+```{r rain, message=FALSE}
+ggplot(data =  distinct(dat, SpEv, .keep_all = TRUE),
+       aes(
+          x = SpEv,
+          y = sum_rain
+       )) +
    geom_bar(stat = "identity") +
-   scale_fill_usq("bright") +
    scale_colour_usq("bright") +
    ylab("Total precipitation in event (mm)") +
    xlab("Event") +
    labs(main = "Rainfall events") +
    theme(legend.position = "none")
-```
 
+# save a .png to refer to while writing and a .eps for publication submission
+ggsave("figures/Fi3.png")
+ggsave("figures/Fig3.eps")
+embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
+            options = "-dEPSCrop")
+```
