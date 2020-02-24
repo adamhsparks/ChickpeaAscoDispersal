@@ -24,7 +24,7 @@ if (!require("theme.usq"))
    devtools::install_github("adamhsparks/theme.usq")
 library(theme.usq)
 
-theme_set(theme_pubclean())
+theme_set(theme_pubclean(base_size = 15))
 ```
 
 ```{r fonts, include=FALSE, echo=FALSE, message=FALSE, eval=FALSE}
@@ -95,7 +95,6 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
 ```{r wind, message=FALSE}
 pw <-
    with(dat, windrose(mws, mwd, SpEv, n_col = 3, col_pal = "YlOrRd"))
-
 pw + 
    xlab("") + 
    theme_pubclean()
@@ -126,4 +125,33 @@ ggsave("figures/Fi3.png")
 ggsave("figures/Fig3.eps")
 embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
             options = "-dEPSCrop")
+```
+
+## Heatmap of Lesions Along Transects
+
+Note that this does not indicate degrees direction.
+It is just the 10 transects on a polar coordinate.
+
+```{r polar_coord_transects, message = FALSE}
+ggplot(dat, aes(x = transect, y = dist)) +
+   geom_count(aes(size = mean_count_pot, colour = SpEv), alpha = 0.5) +
+   scale_colour_usq("bright") +
+   ylab("Distance (m)") +
+   xlab("Transect") +
+   coord_polar() +
+   facet_wrap(. ~ SpEv, ncol = 3)
+```
+
+## Heatmap of Lesions Along Transects
+
+This should work once we have the direction available as degrees for each transect.
+
+```{r polar_coord_transects, message = FALSE, eval=FALSE}
+ggplot(dat, aes(x = mean_count_pot, y = dist, colour = direction)) +
+   geom_count(aes(size = mean_count_pot)) +
+   coord_polar(start = 3.5 * pi * max(dat$direction) / diff(range(dat$direction))) +
+   scale_colour_usq("bright") +
+   ylab("Distance (m)") +
+   xlab("Transect") +
+   facet_wrap(. ~ SpEv, ncol = 3)
 ```
