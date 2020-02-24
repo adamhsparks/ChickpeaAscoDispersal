@@ -10,7 +10,7 @@ output:
 
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
+knitr::opts_chunk$set(fig.width = 4.7, fig.height = 4.7)
 ```
 
 See "R/wrangle_raw_data.R" for the script that handles the data import. This
@@ -24,7 +24,7 @@ if (!require("theme.usq"))
    devtools::install_github("adamhsparks/theme.usq")
 library(theme.usq)
 
-theme_set(theme_pubclean(base_size = 15))
+theme_set(theme_pubclean())
 ```
 
 ```{r fonts, include=FALSE, echo=FALSE, message=FALSE, eval=FALSE}
@@ -49,13 +49,12 @@ ggplot(dat, aes(x = mean_count_pot)) +
 
 ## Visualise the Dispersal Data
 
-```{r conbined-dispersal, message=FALSE}
+```{r combined-dispersal, message=FALSE}
 facet_labs <- c("Rainfall", "Irrigation")
 names(facet_labs) <- c("rain", "simRain")
 
 ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    geom_count() +
-   scale_size_continuous(range = c(3, 12)) +
    stat_summary(fun.y = "median",
                 geom = "line",
                 na.rm = TRUE) +
@@ -70,24 +69,6 @@ ggsave("figures/Fig1.png")
 ggsave("figures/Fig1.eps")
 embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
             options = "-dEPSCrop")
-```
-
-```{r facet-dispersal}
-ggplot(dat, aes(x = dist, y = mean_count_pot)) +
-   geom_count(alpha = 0.5,
-              aes(colour = SpEv)) +
-   scale_size_continuous(range = c(3, 12)) +
-   scale_colour_usq("bright") +
-   stat_summary(fun.y = "median",
-                geom = "line",
-                na.rm = TRUE) +
-   ylim(c(-0.5, 9)) +
-   ylab("Mean lesion count values") +
-   xlab("Distance (m)") +
-   labs(main = "Dispersal for all events",
-        caption = "Line shows median lesion count values") +
-   theme_usq(base_size = 15) +
-   facet_wrap(SpEv ~ .)
 ```
 
 ## Visualise the Windspeed and Direction
@@ -108,17 +89,18 @@ embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
 
 ## Visualise the Rainfall and Irrigation Events
 ```{r rain, message=FALSE}
-ggplot(data =  distinct(dat, SpEv, .keep_all = TRUE),
+ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
        aes(
           x = SpEv,
           y = sum_rain
        )) +
    geom_bar(stat = "identity") +
-   scale_colour_usq("bright") +
+   scale_colour_usq() +
    ylab("Total precipitation in event (mm)") +
    xlab("Event") +
    labs(main = "Rainfall events") +
-   theme(legend.position = "none")
+   theme(legend.position = "none") +
+   coord_flip()
 
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave("figures/Fig3.png")
@@ -143,7 +125,7 @@ ggplot(dat,
       option = "plasma",
       direction = -1
    ) +
-   scale_size_continuous(name = "Mean Lesion Pot Count") +
+   scale_size_continuous(name = "n") +
    guides(color = FALSE) +
    ylab("Distance (m)") +
    xlab("Transect") +

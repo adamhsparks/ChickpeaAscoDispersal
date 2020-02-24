@@ -4,6 +4,7 @@ pacman::p_load(tidyverse)
 
 dat <-
    read_csv("data/CPSporesSpatial version 2.csv") %>%
+   mutate(site = str_remove(site, " SPA")) %>% 
    drop_na(counts_p1) %>%
    mutate(dist = as.numeric(str_replace(distance, " m", ""))) %>%
    mutate(rainfall = precip + mrain) %>% 
@@ -124,7 +125,7 @@ HorshamSE1.dl <-
    Horsham0[Horsham0$Time >= as.POSIXct("15/10/2019 08:00", format = "%d/%m/%Y %H:%M") &
                Horsham0$Time <= as.POSIXct("17/10/2019 18:00", format = "%d/%m/%Y %H:%M"), ]
 
-dat[dat$SpEv == "Horsham SPA_1", "sum_rain"] <-
+dat[dat$SpEv == "Horsham_1", "sum_rain"] <-
    sum(if (all(is.na(HorshamSE1.dl$Rainfall....mm.))) {
       NA
    } else{
@@ -149,7 +150,7 @@ HorshamSE2.dl <-
    Horsham0[Horsham0$Time >= as.POSIXct("01/11/2019 08:00", format = "%d/%m/%Y %H:%M") &
                Horsham0$Time <= as.POSIXct("08/11/2019 18:00", format = "%d/%m/%Y %H:%M"), ]
 
-dat[dat$SpEv == "Horsham SPA_2", "sum_rain"] <-
+dat[dat$SpEv == "Horsham_2", "sum_rain"] <-
    sum(if (all(is.na(HorshamSE2.dl$Rainfall....mm.))) {
       NA
    } else{
