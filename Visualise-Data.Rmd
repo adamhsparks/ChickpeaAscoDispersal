@@ -121,7 +121,7 @@ ggplot(data =  distinct(dat, SpEv, .keep_all = TRUE),
    theme(legend.position = "none")
 
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/Fi3.png")
+ggsave("figures/Fig3.png")
 ggsave("figures/Fig3.eps")
 embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
             options = "-dEPSCrop")
@@ -129,29 +129,29 @@ embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
 
 ## Heatmap of Lesions Along Transects
 
-Note that this does not indicate degrees direction.
-It is just the 10 transects on a polar coordinate.
-
-```{r polar_coord_transects, message = FALSE}
-ggplot(dat, aes(x = transect, y = dist)) +
-   geom_count(aes(size = mean_count_pot, colour = SpEv), alpha = 0.5) +
-   scale_colour_usq("bright") +
-   ylab("Distance (m)") +
-   xlab("Transect") +
-   coord_polar() +
-   facet_wrap(. ~ SpEv, ncol = 3)
-```
-
-## Heatmap of Lesions Along Transects
-
-This should work once we have the direction available as degrees for each transect.
-
-```{r polar_coord_transects, message = FALSE, eval=FALSE}
-ggplot(dat, aes(x = mean_count_pot, y = dist, colour = direction)) +
-   geom_count(aes(size = mean_count_pot)) +
-   coord_polar(start = 3.5 * pi * max(dat$direction) / diff(range(dat$direction))) +
-   scale_colour_usq("bright") +
+```{r polar_coord_transects, message = FALSE, eval=TRUE}
+ggplot(dat,
+       aes(
+          x = transect,
+          y = dist,
+          colour = mean_count_pot,
+          size = mean_count_pot
+       )) +
+   geom_count() +
+   # coord_polar(start = 3.5 * pi * max(dat$direction) / diff(range(dat$direction))) +
+   scale_colour_viridis_c(
+      option = "plasma",
+      direction = -1
+   ) +
+   scale_size_continuous(name = "Mean Lesion Pot Count") +
+   guides(color = FALSE) +
    ylab("Distance (m)") +
    xlab("Transect") +
    facet_wrap(. ~ SpEv, ncol = 3)
+
+ggsave("figures/Fig4.png")
+ggsave("figures/Fig4.eps")
+embed_fonts("figures/Fig4.eps", outfile = "figures/Fig4.eps",
+            options = "-dEPSCrop")
 ```
+
