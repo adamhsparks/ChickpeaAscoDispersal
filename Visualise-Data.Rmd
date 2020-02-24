@@ -40,7 +40,7 @@ ggplot(dat, aes(x = mean_count_pot)) +
 
 ## Visualise the Dispersal Data
 
-```{r conbined-dispersal}
+```{r comined-dispersal}
 ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    geom_count(alpha = 0.5,
               aes(colour = ptype)) +
