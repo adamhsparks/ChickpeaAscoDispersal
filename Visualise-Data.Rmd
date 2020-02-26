@@ -112,18 +112,35 @@ embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
 ## Heatmap of Lesions Along Transects
 
 ```{r polar_coord_transects, message = FALSE, eval=TRUE}
-ggplot(dat,
-       aes(
-          x = transect,
-          y = dist,
-          colour = mean_count_pot,
-          size = mean_count_pot
-       )) +
+dat %>%
+   mutate(
+      transect = case_when(
+         transect == 1 ~ 0,
+         transect == 2 ~ 10,
+         transect == 3 ~ 20,
+         transect == 4 ~ 30,
+         transect == 5 ~ 40,
+         transect == 6 ~ 50,
+         transect == 7 ~ 60,
+         transect == 8 ~ 70,
+         transect == 9 ~ 80,
+         transect == 10 ~ 90
+      )
+   ) %>% ggplot(aes(
+      x = as.numeric(transect),
+      y = dist,
+      colour = mean_count_pot,
+      size = mean_count_pot
+   )) +
    geom_count() +
-   # coord_polar(start = 3.5 * pi * max(dat$direction) / diff(range(dat$direction))) +
-   scale_colour_viridis_c(
-      option = "plasma",
-      direction = -1
+   coord_polar(theta = "x",
+               start = 0,
+               direction = 1) +
+   scale_colour_viridis_c(direction = -1) +
+   scale_x_continuous(
+      breaks = c(0, 180),
+      expand = c(0, 0),
+      limits = c(0, 360)
    ) +
    scale_size_continuous(name = "n") +
    guides(color = FALSE) +
