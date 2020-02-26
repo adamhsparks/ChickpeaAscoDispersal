@@ -173,7 +173,7 @@ summary(mod11.0)
 Try fitting the same model using a different shrinkage smoother, `ts` is thin-
 plate splines.
 
-### mod11.` - s(Distance, bs = "ts") + s(Windspeed, bs = "ts") + s(Precipitation, bs = "ts"), family = tw()
+### mod11.1 - s(Distance, bs = "ts") + s(Windspeed, bs = "ts") + s(Precipitation, bs = "ts"), family = tw()
 
 ```{r fit-mod11.1}
 mod11.1 <-
@@ -188,7 +188,7 @@ mod11.1 <-
 summary(mod11.1)
 ```
 
-This model uses 
+This model, same structure as `mod11.0`, uses thin-plate splines to shrink the coefficients of the smooth to zero.
 
 ### mod12 - s(Distance) + s(Precipitation) + Windspeed, family = tw()
 
@@ -301,19 +301,19 @@ anova(mod1,
 
 ```{r vis-mods}
 par(mfrow = c(2, 2))
-plot(mod1, main = "s(Distance)", pages = 1)
-plot(mod2, main = "s(Distance) + Precipitation", pages = 1)
-plot(mod3, main = "s(Distance) + Windspeed", pages = 1)
-plot(mod4, main = "s(Distance) + Windspeed + Precipitation", pages = 1)
-plot(mod5, main = "s(Distance + Windspeed) + Precipitation", pages = 1)
-plot(mod6, main = "s(Distance) + s(Windspeed) + Precipitation", pages = 1)
-plot(mod7, main = "s(Distance) + s(Windspeed)", pages = 1)
-plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation)", pages = 1)
-plot(mod9, main = "s(Distance) + s(Precipitation)", pages = 1)
-plot(mod10, main = "s(Distance) + s(Precipitation) + Windspeed", pages = 1)
-plot(mod11.0, main = "s(Distance) + s(Windspeed) + s(Precipitation), family = tw()", pages = 1)
-plot(mod11.1, main = "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()", pages = 1)
-plot(mod12, main = "s(Distance) + s(Precipitation) + Windspeed, family = tw()", pages = 1)
+plot(mod1, main = "s(Distance)", pages = 1, rug = TRUE)
+plot(mod2, main = "s(Distance) + Precipitation", pages = 1, rug = TRUE)
+plot(mod3, main = "s(Distance) + Windspeed", pages = 1, rug = TRUE)
+plot(mod4, main = "s(Distance) + Windspeed + Precipitation", pages = 1, rug = TRUE)
+plot(mod5, main = "s(Distance + Windspeed) + Precipitation", pages = 1, rug = TRUE)
+plot(mod6, main = "s(Distance) + s(Windspeed) + Precipitation", pages = 1, rug = TRUE)
+plot(mod7, main = "s(Distance) + s(Windspeed)", pages = 1, rug = TRUE)
+plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation)", pages = 1, rug = TRUE)
+plot(mod9, main = "s(Distance) + s(Precipitation)", pages = 1, rug = TRUE)
+plot(mod10, main = "s(Distance) + s(Precipitation) + Windspeed", pages = 1, rug = TRUE)
+plot(mod11.0, main = "s(Distance) + s(Windspeed) + s(Precipitation), family = tw()", pages = 1, rug = TRUE)
+plot(mod11.1, main = "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()", pages = 1, rug = TRUE)
+plot(mod12, main = "s(Distance) + s(Precipitation) + Windspeed, family = tw()", pages = 1, rug = TRUE)
 ```
 
 ### Check Best Model Fit
