@@ -1,5 +1,6 @@
 # wrangle data for Ascochyta condia dispersal model
-if (!require("pacman")) install.packages("pacman")
+if (!require("pacman"))
+   install.packages("pacman")
 pacman::p_load(tidyverse)
 
 dat <-
@@ -10,6 +11,11 @@ dat <-
    mutate(rainfall = precip + mrain) %>%
    add_column(sum_rain = NA) %>%
    unite(SpEv, c(site, rep), remove = FALSE) %>%
+   mutate(ptype = case_when(
+      SpEv == "pbc_3" ~ "mixed",
+      ptype == "simRain" ~ "irrigation",
+      TRUE ~ ptype
+   )) %>% 
    mutate(
       degrees = case_when(
          site == "Curyo" & transect == 1 ~ 290,
@@ -43,7 +49,7 @@ dat <-
          site == "pbc" & transect == 9 ~ 125,
          site == "pbc" & transect == 10 ~ 135
       )
-   ) %>%
+   ) %>% 
    mutate_at(vars(site, rep, station, transect, plant_no, pot_no, SpEv),
              factor)
 
@@ -202,3 +208,29 @@ dat[dat$SpEv == "Horsham_2", "sum_rain"] <-
       sum(HorshamSE2.dl$Irrigation, na.rm = TRUE)
    },
    na.rm = TRUE)
+
+# create nicer names for events
+dat <-
+   dat %>%
+   mutate(
+      SpEv = case_when(
+         SpEv == "pbc_1" ~ "Horsham Irrg 1",
+         SpEv == "pbc_2" ~ "Horsham Irrg 2",
+         SpEv == "pbc_3" ~ "Horsham Mixd 1",
+         SpEv == "Horsham_1" ~ "Horsham Rain 1",
+         SpEv == "Horsham_2" ~ "Horsham Rain 2",
+         SpEv == "Curyo_1" ~ "Curyo Rain 1"
+      )
+   )
+
+dat$SpEv <- ordered(factor(
+   dat$SpEv,
+   levels = c(
+      "Horsham Irrg 1",
+      "Horsham Irrg 2",
+      "Horsham Mixd 1",
+      "Horsham Rain 1",
+      "Horsham Rain 2",
+      "Curyo Rain 1"
+   )
+))

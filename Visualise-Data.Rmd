@@ -10,7 +10,7 @@ output:
 
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-knitr::opts_chunk$set(fig.width = 4.7, fig.height = 4.7)
+knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
 See "R/wrangle_raw_data.R" for the script that handles the data import. This
@@ -19,10 +19,6 @@ Rmd file focuses on the data.
 ```{r libraries, message=FALSE, echo=FALSE}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, clifro, skimr, devtools, extrafont, ggpubr)
-
-if (!require("theme.usq"))
-   devtools::install_github("adamhsparks/theme.usq")
-library(theme.usq)
 
 theme_set(theme_pubclean())
 ```
@@ -41,7 +37,7 @@ skim(dat)
 
 ## Visualise Counts per Pot
 
-```{r lesion-count}
+```{r lesion-count, fig.cap="Density plot of mean lesions counted per pot for all six events."}
 ggplot(dat, aes(x = mean_count_pot)) +
    geom_density() +
    xlab("Mean lesion count per pot")
@@ -49,10 +45,7 @@ ggplot(dat, aes(x = mean_count_pot)) +
 
 ## Visualise the Dispersal Data
 
-```{r combined-dispersal, message=FALSE}
-facet_labs <- c("Rainfall", "Irrigation")
-names(facet_labs) <- c("rain", "simRain")
-
+```{r combined-dispersal, message=FALSE, fig.cap="Mean counts of lesions per pot at each station for ten transects at each station for all six events."}
 ggplot(dat, aes(x = dist, y = mean_count_pot)) +
    geom_count() +
    stat_summary(fun.y = "median",
@@ -60,9 +53,7 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
                 na.rm = TRUE) +
    ylim(c(-0.5, 9)) +
    ylab("Mean lesion count values") +
-   xlab("Distance (m)") +
-   facet_grid(. ~ ptype,
-              labeller = labeller(ptype = facet_labs))
+   xlab("Distance (m)")
 
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave("figures/Fig1.png")
@@ -73,9 +64,9 @@ embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
 
 ## Visualise the Windspeed and Direction
 
-```{r wind, message=FALSE}
+```{r wind, message=FALSE, fig.cap=paste0("Windroses showing the windspeed and direction for each event. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
 pw <-
-   with(dat, windrose(mws, mwd, SpEv, n_col = 3, col_pal = "YlOrRd"))
+   with(dat, windrose(mws, mwd, SpEv, n_col = 3, col_pal = "YlGnBu"))
 pw + 
    xlab("") + 
    theme_pubclean()
@@ -87,15 +78,64 @@ embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
             options = "-dEPSCrop")
 ```
 
-## Visualise the Rainfall and Irrigation Events
-```{r rain, message=FALSE}
-ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
+## Heatmap of Lesions Along Transects
+
+```{r polar_coord_transects, message = FALSE, eval=TRUE, fig.cap=paste0("Heatmap showing count of mean lesions per pot at each station along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+heat_dat <-
+   dat %>%
+   group_by(SpEv, degrees) %>%
+   mutate(summed_count_pot =
+             case_when(dist == 0 ~ sum(mean_count_pot),
+                       TRUE ~ mean_count_pot)) %>% 
+   filter(mean_count_pot > 0)
+
+ggplot(data = heat_dat,
        aes(
-          x = SpEv,
-          y = sum_rain
+          x = degrees,
+          y = dist,
+          colour = summed_count_pot,
+          size = summed_count_pot
        )) +
+   geom_count(data = subset(heat_dat, dist == 0)) +
+   geom_count(data = subset(heat_dat, dist > 0)) +
+   scale_colour_viridis_c(
+      direction = -1,
+      name = "n",
+      guide = "legend"
+   ) +
+   coord_polar(theta = "x",
+               start = 0,
+               direction = 1) +
+   scale_size(range = c(2, 8), name = "n") +
+   scale_x_continuous(
+      breaks = c(0, 90, 180, 270),
+      expand = c(0, 0),
+      limits = c(0, 360),
+      labels = c("N", "E", "S", "W")
+   ) +
+   scale_y_continuous(breaks = c(0, 10, 20, 50, 75),
+                      limits = c(0, 75)) +
+   ylab("Distance (m)") +
+   xlab("Transect") +
+   facet_wrap(. ~ SpEv, ncol = 3)
+
+
+ggsave("figures/Fig4.png")
+ggsave("figures/Fig4.eps")
+embed_fonts("figures/Fig4.eps", outfile = "figures/Fig4.eps",
+            options = "-dEPSCrop")
+```
+
+## Visualise the Rainfall and Irrigation Events
+```{r rain, message=FALSE, fig.cap=paste0("Total precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
+       aes(x = fct_rev(SpEv),
+           y = sum_rain,
+           colour = ptype,
+           fill = ptype)) +
    geom_bar(stat = "identity") +
-   scale_colour_usq() +
+   scale_fill_viridis_d() +
+   scale_colour_viridis_d() +
    ylab("Total precipitation in event (mm)") +
    xlab("Event") +
    labs(main = "Rainfall events") +
@@ -106,38 +146,6 @@ ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
 ggsave("figures/Fig3.png")
 ggsave("figures/Fig3.eps")
 embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
-            options = "-dEPSCrop")
-```
-
-## Heatmap of Lesions Along Transects
-
-```{r polar_coord_transects, message = FALSE, eval=TRUE}
-ggplot(data = dat,
-       aes(
-          x = degrees,
-          y = dist,
-          colour = mean_count_pot,
-          size = mean_count_pot
-       )) +
-   geom_count() +
-   coord_polar(theta = "x",
-               start = 0,
-               direction = 1) +
-   scale_colour_viridis_c(direction = -1) +
-   scale_x_continuous(
-      breaks = c(0, 180),
-      expand = c(0, 0),
-      limits = c(0, 360)
-   ) +
-   scale_size_continuous(name = "n") +
-   guides(color = FALSE) +
-   ylab("Distance (m)") +
-   xlab("Transect") +
-   facet_wrap(. ~ SpEv, ncol = 3)
-
-ggsave("figures/Fig4.png")
-ggsave("figures/Fig4.eps")
-embed_fonts("figures/Fig4.eps", outfile = "figures/Fig4.eps",
             options = "-dEPSCrop")
 ```
 
