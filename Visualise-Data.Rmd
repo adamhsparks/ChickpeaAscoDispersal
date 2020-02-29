@@ -80,7 +80,7 @@ pw +
    xlab("") + 
    theme_pubclean()
 
-# save a .png to refer to while writign and a .eps for publication submission
+# save a .png to refer to while writing and a .eps for publication submission
 ggsave("figures/Fig2.png")
 ggsave("figures/Fig2.eps")
 embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
@@ -112,26 +112,13 @@ embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
 ## Heatmap of Lesions Along Transects
 
 ```{r polar_coord_transects, message = FALSE, eval=TRUE}
-dat %>%
-   mutate(
-      transect = case_when(
-         transect == 1 ~ 0,
-         transect == 2 ~ 10,
-         transect == 3 ~ 20,
-         transect == 4 ~ 30,
-         transect == 5 ~ 40,
-         transect == 6 ~ 50,
-         transect == 7 ~ 60,
-         transect == 8 ~ 70,
-         transect == 9 ~ 80,
-         transect == 10 ~ 90
-      )
-   ) %>% ggplot(aes(
-      x = as.numeric(transect),
-      y = dist,
-      colour = mean_count_pot,
-      size = mean_count_pot
-   )) +
+ggplot(data = dat,
+       aes(
+          x = degrees,
+          y = dist,
+          colour = mean_count_pot,
+          size = mean_count_pot
+       )) +
    geom_count() +
    coord_polar(theta = "x",
                start = 0,

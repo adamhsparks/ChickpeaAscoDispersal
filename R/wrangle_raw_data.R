@@ -4,13 +4,48 @@ pacman::p_load(tidyverse)
 
 dat <-
    read_csv("data/CPSporesSpatial version 2.csv") %>%
-   mutate(site = str_remove(site, " SPA")) %>% 
+   mutate(site = str_remove(site, " SPA")) %>%
    drop_na(counts_p1) %>%
    mutate(dist = as.numeric(str_replace(distance, " m", ""))) %>%
-   mutate(rainfall = precip + mrain) %>% 
-   add_column(sum_rain = NA) %>% 
-   unite(SpEv, c(site, rep), remove = FALSE) %>% 
-   mutate_at(vars(site, rep, station, transect, plant_no, pot_no, SpEv), factor)
+   mutate(rainfall = precip + mrain) %>%
+   add_column(sum_rain = NA) %>%
+   unite(SpEv, c(site, rep), remove = FALSE) %>%
+   mutate(
+      degrees = case_when(
+         site == "Curyo" & transect == 1 ~ 290,
+         site == "Curyo" & transect == 2 ~ 300,
+         site == "Curyo" & transect == 3 ~ 310,
+         site == "Curyo" & transect == 4 ~ 320,
+         site == "Curyo" & transect == 5 ~ 330,
+         site == "Curyo" & transect == 6 ~ 340,
+         site == "Curyo" & transect == 7 ~ 350,
+         site == "Curyo" & transect == 8 ~ 360,
+         site == "Curyo" & transect == 9 ~ 10,
+         site == "Curyo" & transect == 10 ~ 20,
+         site == "Horsham" & transect == 1 ~ 45,
+         site == "Horsham" & transect == 2 ~ 55,
+         site == "Horsham" & transect == 3 ~ 65,
+         site == "Horsham" & transect == 4 ~ 75,
+         site == "Horsham" & transect == 5 ~ 85,
+         site == "Horsham" & transect == 6 ~ 95,
+         site == "Horsham" & transect == 7 ~ 105,
+         site == "Horsham" & transect == 8 ~ 115,
+         site == "Horsham" & transect == 9 ~ 125,
+         site == "Horsham" & transect == 10 ~ 135,
+         site == "pbc" & transect == 1 ~ 45,
+         site == "pbc" & transect == 2 ~ 55,
+         site == "pbc" & transect == 3 ~ 65,
+         site == "pbc" & transect == 4 ~ 75,
+         site == "pbc" & transect == 5 ~ 85,
+         site == "pbc" & transect == 6 ~ 95,
+         site == "pbc" & transect == 7 ~ 105,
+         site == "pbc" & transect == 8 ~ 115,
+         site == "pbc" & transect == 9 ~ 125,
+         site == "pbc" & transect == 10 ~ 135
+      )
+   ) %>%
+   mutate_at(vars(site, rep, station, transect, plant_no, pot_no, SpEv),
+             factor)
 
 ### Curyo weather
 #Sum rainfall data
