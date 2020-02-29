@@ -149,18 +149,7 @@ mod10 <-
 summary(mod10)
 ```
 
-### mod11 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
-
-```{r fit-mod11}
-mod11 <-
-   gam(
-      mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
-      data = dat,
-      family = tw()
-   )
-
-summary(mod11)
-```
+### mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
 
 This is the same as `mod8` but using `family = tw()`, see `?family.mgcv` for
 more on the families. The Tweedie distribution is used where the distribution
@@ -168,7 +157,43 @@ has a positive mass at zero, but is continuous unlike the Poisson distribution
 that requires count data. The data visualisation shows clearly that the mean
 pot count data have this shape.
 
+```{r fit-mod11.0}
+mod11.0 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5) + 
+         s(mws, k = 5) + 
+         s(sum_rain, k = 5),
+      data = dat,
+      family = tw()
+   )
+
+summary(mod11.0)
+```
+
+Try fitting the same model using a different shrinkage smoother, `ts` is thin-
+plate splines.
+
+### mod11.1 - s(Distance, bs = "ts") + s(Windspeed, bs = "ts") + s(Precipitation, bs = "ts"), family = tw()
+
+```{r fit-mod11.1}
+mod11.1 <-
+   gam(
+      mean_count_pot ~ s(dist, k = 5, bs = "ts") + 
+         s(mws, k = 5, bs = "ts") + 
+         s(sum_rain, k = 5, bs = "ts"),
+      data = dat,
+      family = tw()
+   )
+
+summary(mod11.1)
+```
+
+This model, same structure as `mod11.0`, uses thin-plate splines to shrink the coefficients of the smooth to zero.
+
 ### mod12 - s(Distance) + s(Precipitation) + Windspeed, family = tw()
+
+Looking at `mod11.1`, `mws` is not significant as a smoothed term, and we'd
+suspect it was linear anyway, so add it as a linear term only.
 
 ```{r fit-mod12}
 mod12 <-
@@ -180,9 +205,6 @@ mod12 <-
 
 summary(mod12)
 ```
-
-Looking at `mod11`, `mws` is not significant as a smoothed term, and we'd
-suspect it was linear anyway, so add it as a linear term only.
 
 ## Compare the Models
 
@@ -198,7 +220,8 @@ models <- list(mod1 = mod1,
                mod8 = mod8,
                mod9 = mod9,
                mod10 = mod10,
-               mod11 = mod11,
+               mod11.0 = mod11.0,
+               mod11.1 = mod11.1,
                mod12 = mod12
                )
 map_df(models, glance, .id = "model") %>%
@@ -218,7 +241,8 @@ enframe(c(
    mod8 = summary(mod8)$r.sq,
    mod9 = summary(mod9)$r.sq,
    mod10 = summary(mod10)$r.sq,
-   mod11 = summary(mod11)$r.sq,
+   mod11.0 = summary(mod11.0)$r.sq,
+   mod11.1 = summary(mod11.1)$r.sq,
    mod12 = summary(mod12)$r.sq
 )) %>%
    arrange(desc(value))
@@ -247,8 +271,10 @@ cat("\nmod9\n")
 coef(mod9)
 cat("\nmod10\n")
 coef(mod10)
-cat("\nmod11\n")
-coef(mod11)
+cat("\nmod11.0\n")
+coef(mod11.0)
+cat("\nmod11.1\n")
+coef(mod11.1)
 cat("\nmod12\n")
 coef(mod12)
 ```
@@ -265,7 +291,8 @@ anova(mod1,
       mod8,
       mod9,
       mod10,
-      mod11,
+      mod11.0,
+      mod11.1,
       mod12,
       test = "F")
 ```
@@ -274,37 +301,32 @@ anova(mod1,
 
 ```{r vis-mods}
 par(mfrow = c(2, 2))
-plot(mod1, main = "s(Distance)")
-plot(mod2, main = "s(Distance) + Precipitation")
-plot(mod3, main = "s(Distance) + Windspeed")
-plot(mod4, main = "s(Distance) + Windspeed + Precipitation")
-plot(mod5, main = "s(Distance + Windspeed) + Precipitation")
-plot(mod6, main = "s(Distance) + s(Windspeed) + Precipitation")
-plot(mod7, main = "s(Distance) + s(Windspeed)")
-plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation)")
-plot(mod9, main = "s(Distance) + s(Precipitation)")
-plot(mod10, main = "s(Distance) + s(Precipitation) + Windspeed")
-plot(mod11, main = "s(Distance) + s(Windspeed) + s(Precipitation), family = tw()")
-plot(mod11, main = "s(Distance) + s(Precipitation) + Windspeed, family = tw()")
+plot(mod1, main = "s(Distance)", pages = 1, rug = TRUE)
+plot(mod2, main = "s(Distance) + Precipitation", pages = 1, rug = TRUE)
+plot(mod3, main = "s(Distance) + Windspeed", pages = 1, rug = TRUE)
+plot(mod4, main = "s(Distance) + Windspeed + Precipitation", pages = 1, rug = TRUE)
+plot(mod5, main = "s(Distance + Windspeed) + Precipitation", pages = 1, rug = TRUE)
+plot(mod6, main = "s(Distance) + s(Windspeed) + Precipitation", pages = 1, rug = TRUE)
+plot(mod7, main = "s(Distance) + s(Windspeed)", pages = 1, rug = TRUE)
+plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation)", pages = 1, rug = TRUE)
+plot(mod9, main = "s(Distance) + s(Precipitation)", pages = 1, rug = TRUE)
+plot(mod10, main = "s(Distance) + s(Precipitation) + Windspeed", pages = 1, rug = TRUE)
+plot(mod11.0, main = "s(Distance) + s(Windspeed) + s(Precipitation), family = tw()", pages = 1, rug = TRUE)
+plot(mod11.1, main = "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()", pages = 1, rug = TRUE)
+plot(mod12, main = "s(Distance) + s(Precipitation) + Windspeed, family = tw()", pages = 1, rug = TRUE)
 ```
 
 ### Check Best Model Fit
 
-#### Mod11 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
+#### Mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
 
 ```{r mod-check11}
-gam.check(mod11)
-```
-
-#### Mod12 - s(Distance) + s(Precipitation) + Windspeed, family = tw()
-
-```{r mod-check12}
-gam.check(mod12)
+gam.check(mod11.0)
 ```
 
 ## Thoughts
 
-This model, 
+This model, _mod11.0_, 
 `mean_pot_count ~ s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()`,
 lacks enough numbers of basis functions for two of three predictors, `dist`,
 `wsp`, but it's close. Realistically we need to increase the `k` values for
