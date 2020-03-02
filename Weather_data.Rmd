@@ -18,6 +18,8 @@ Import and select only the weather data necessary for analysis from Curyo and Ho
 The original data are located in the "data" directory.
 Dates for events are recorded in the "data/Dispersal experiments dates.csv" file and are used to subset the weather data in this file.
 
+In this step the data are imported and only the date and time, average windspeed and average wind direction are selected.
+
 ## Curyo weather
 
 ### Import Curyo weather
@@ -31,8 +33,6 @@ Curyo_w <-
    select(1, 6, 8, 11) %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Curyo") %>%
-   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
-   rename(`Wind Speed - average (m/s)` = `Wind Speed - average (km/h)`) %>% 
    select(Location, everything())
 ```
 
@@ -57,9 +57,7 @@ Horsham_w <-
    select(1, 6, 8, 11) %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Horsham") %>%
-   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
-   rename(`Wind Speed - average (m/s)` = `Wind Speed - average (km/h)`) %>% 
-   select(Location, everything())
+   select(Location, everything(), -`Wind Speed - average (km/h)`)
 ```
 
 ### Inspect Horsham data
@@ -86,7 +84,7 @@ kable(events, format = "html", table.attr = 'class="table table-hover"')
 ### Filter the data
 
 Filter the data removing any dates that do not have "event" data necessary for analysis.
-To do this, first `filter()`, then use `case_when()` to match the dates and times with the event data frame to 
+To do this, first `filter()`, then use `case_when()` to match the dates and times with the `events` data frame and create new variables to indicate which replicate and location, which is used to determine an event in the data.
 
 ```{r filter}
 Horsham_w <-
@@ -140,9 +138,33 @@ Curyo <-
 
 ```{r merge}
 weather <- bind_rows(Curyo_w, Horsham_w)
-glimpse(weather)
 ```
 
+### Rename columns and add other calculations
+
+The `Wind Speed - average (km/h)` column is renamed to `mws` (mean wind speed) and the standard deviation of the wind speed and directions are calculated for the data.
+The columns are then reordered by `Location`, `Rep`, `Time` and the weather data.
+
+* mdr - mean direction degrees for wind
+
+* mws - mean wind speed
+
+* mdr_sd - standard deviation of the wind direction
+
+* mws_sd - standard deviation of the wind speed
+
+```{r rename-and-sd}
+weather <- 
+   weather %>% 
+   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
+   rename(mws = `Wind Speed - average (km/h)`) %>% 
+   rename(mdr = `Wind Direction - average (º)`) %>%
+   mutate(mws_sd = sd(mws)) %>% 
+   mutate(direction_sd = sd(mdr)) %>% 
+   select(Location, Rep, Time, everything())
+
+glimpse(weather)
+```
 ## Export weather to cache
 
 Save the resulting weather data to the "cache" directory for further use.
