@@ -72,6 +72,14 @@ curSE <-
 dat[dat$SpEv == "Curyo_1", "sum_rain"] <-
    sum(curSE$Rainfall....mm., na.rm = TRUE)
 
+# standard deviation of wind direction
+dat[dat$SpEv == "Curyo_1", "sdwd"] <-
+   sd(curSE$Wind.Direction...average..Âº.)
+
+# time of spread event in hours
+dat[dat$SpEv == "Curyo_1", "SpEv_Th"] <-
+   difftime(last(curSE$Time), first(curSE$Time), units = "hours")
+
 ### Horsham weather
 #Sum rainfall data
 Horsham0 <-
@@ -109,6 +117,17 @@ dat[dat$SpEv == "pbc_1", "sum_rain"] <-
    10,
    na.rm = TRUE)
 
+# standard deviation of wind direction
+dat[dat$SpEv == "pbc_1", "sdwd"] <-
+   sd(HorshamSE1$Wind.Direction...average..Âº.)
+
+# time of spread event in hours
+dat[dat$SpEv == "pbc_1", "SpEv_Th"] <-
+   difftime(last(HorshamSE1$Time), 
+            first(HorshamSE1$Time), units = "hours")
+
+
+
 # Horsham irrigated
 # subset by spread event 2
 HorshamSE2 <-
@@ -133,6 +152,18 @@ dat[dat$SpEv == "pbc_2", "sum_rain"] <-
    },
    10,
    na.rm = TRUE)
+
+# standard deviation of wind direction
+dat[dat$SpEv == "pbc_2", "sdwd"] <-
+   sd(HorshamSE2$Wind.Direction...average..Âº.)
+
+# time of spread event in hours
+dat[dat$SpEv == "pbc_2", "SpEv_Th"] <-
+   difftime(last(HorshamSE2$Time), 
+            first(HorshamSE2$Time), 
+            units = "hours")
+
+
 
 # Horsham irrigated
 # subset by spread event 3
@@ -159,6 +190,16 @@ dat[dat$SpEv == "pbc_3", "sum_rain"] <-
    10,
    na.rm = TRUE)
 
+# standard deviation of wind direction
+dat[dat$SpEv == "pbc_3", "sdwd"] <-
+   sd(HorshamSE3$Wind.Direction...average..Âº.)
+
+# time of spread event in hours
+dat[dat$SpEv == "pbc_3", "SpEv_Th"] <-
+   difftime(last(HorshamSE3$Time), 
+            first(HorshamSE3$Time), 
+            units = "hours")
+
 
 # Horsham dryland
 # subset by spread event 1
@@ -184,6 +225,20 @@ dat[dat$SpEv == "Horsham_1", "sum_rain"] <-
    },
    na.rm = TRUE)
 
+# standard deviation of wind direction
+dat[dat$SpEv == "Horsham_1", "sdwd"] <-
+   sd(HorshamSE1.dl$Wind.Direction...average..Âº.)
+
+# time of spread event in hours
+dat[dat$SpEv == "Horsham_1", "SpEv_Th"] <-
+   difftime(last(HorshamSE1.dl$Time), 
+            first(HorshamSE1.dl$Time), 
+            units = "hours")
+
+# plot(density(HorshamSE1.dl$Wind.Direction...average..Âº.))
+# abline(v = unique(dat[dat$SpEv == "Horsham_1", "mwd"]))
+# abline(v = HorshamSE1.dl[which(HorshamSE1.dl$Rainfall....mm. != 0),]$Wind.Direction...average..Âº., col = "blue")
+
 
 # Horsham dryland
 # subset by spread event 2
@@ -208,6 +263,18 @@ dat[dat$SpEv == "Horsham_2", "sum_rain"] <-
       sum(HorshamSE2.dl$Irrigation, na.rm = TRUE)
    },
    na.rm = TRUE)
+
+# standard deviation of wind direction
+dat[dat$SpEv == "Horsham_2", "sdwd"] <-
+   sd(HorshamSE2.dl$Wind.Direction...average..Âº.)
+
+# time of spread event in hours
+dat[dat$SpEv == "Horsham_2", "SpEv_Th"] <-
+   difftime(last(HorshamSE2.dl$Time), 
+            first(HorshamSE2.dl$Time), 
+            units = "hours")
+
+
 
 # create nicer names for events
 dat <-
