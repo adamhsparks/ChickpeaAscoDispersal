@@ -57,7 +57,7 @@ Horsham_w <-
    select(Time, 'Wind Speed - average (km/h)','Wind Direction - average (º)', "Rainfall - (mm)") %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Horsham") %>%
-   select(Location, everything(), -`Wind Speed - average (km/h)`)
+   select(Location, everything(), -`Wind Speed - average (km/h)`) # why 
 ```
 
 ### Inspect Horsham data
@@ -90,7 +90,8 @@ To do this, first `filter()`, then use `case_when()` to match the dates and time
 events <- events %>% 
    mutate(exposed = `time out` %--% `time removed`)
 
-Horsham_w %>%
+Horsham_w <-
+   Horsham_w %>%
    filter(Time %within% events[1:5,"exposed"])%>%
    mutate(
       Location = case_when(
@@ -112,12 +113,12 @@ Horsham_w %>%
    ) %>%
    select(Location, Rep, Time, everything())
 
-Curyo <-
+Curyo_w <-
    Curyo_w %>%
    filter(Time %within% 
              events[which(events$site == "Curyo"),
                     "exposed"]) %>%
-   mutate(Location2 = case_when(
+   mutate(Location = case_when(
       Time %within% events[which(events$site == "Curyo"),
                            "exposed"] ~ "Curyo")) %>%
    mutate(Rep = case_when(
@@ -139,7 +140,7 @@ The columns are then reordered by `Location`, `Rep`, `Time` and the weather data
 
 * mdr - mean direction degrees for wind
 
-* mws - mean wind speed
+* mws - mean wind speed in meters per second
 
 * mdr_sd - standard deviation of the wind direction
 
@@ -148,9 +149,10 @@ The columns are then reordered by `Location`, `Rep`, `Time` and the weather data
 ```{r rename-and-sd}
 weather <- 
    weather %>% 
-   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
+   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% # changing to meters per second
    rename(mws = `Wind Speed - average (km/h)`) %>% 
    rename(mdr = `Wind Direction - average (º)`) %>%
+   group_by(Location, Rep) %>%
    mutate(mws_sd = sd(mws)) %>% 
    mutate(direction_sd = sd(mdr)) %>% 
    select(Location, Rep, Time, everything())
