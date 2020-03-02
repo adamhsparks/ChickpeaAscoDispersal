@@ -28,7 +28,7 @@ Curyo_w <-
       "data",
       "Curyo SPA 2019 - Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
    )) %>%
-   select(1, 2, 6, 8, 11) %>%
+   select(1, 6, 8, 11) %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Curyo") %>%
    mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
@@ -54,7 +54,7 @@ Horsham_w <-
          "Horsham SPA 2019 - Horsham SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
       )
    ) %>% 
-   select(1, 2, 6, 8, 11) %>%
+   select(1, 6, 8, 11) %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Horsham") %>%
    mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
