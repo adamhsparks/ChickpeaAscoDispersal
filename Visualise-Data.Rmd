@@ -6,31 +6,31 @@ output:
   html_document:
     number_sections: yes
     toc: yes
+    code_folding: hide
 ---
 
-```{r setup, include=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
 See "R/wrangle_raw_data.R" for the script that handles the data import. This
 Rmd file focuses on the data.
 
-```{r libraries, message=FALSE, echo=FALSE}
+```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, clifro, skimr, devtools, extrafont, ggpubr)
 
 theme_set(theme_pubclean())
 ```
 
-```{r fonts, include=FALSE, echo=FALSE, message=FALSE, eval=FALSE}
+```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
 # run only if knitting on new computer
 # this is necessary to embed fonts in .eps files for EJPP
 font_import(pattern = "Arial")
 loadfonts(device = "postscript") 
 ```
 
-```{r import data, message=FALSE, echo=FALSE}
+```{r import data, message=FALSE}
 source("R/wrangle_raw_data.R")
 skim(dat)
 ```
@@ -46,11 +46,15 @@ ggplot(dat, aes(x = mean_count_pot)) +
 ## Visualise the Dispersal Data
 
 ```{r combined-dispersal, message=FALSE, fig.cap="Mean counts of lesions per pot at each station for ten transects at each station for all six events."}
-ggplot(dat, aes(x = dist, y = mean_count_pot)) +
+ggplot(dat, aes(
+   x = dist,
+   y = mean_count_pot
+)) +
    geom_count() +
    stat_summary(fun.y = "median",
                 geom = "line",
                 na.rm = TRUE) +
+   scale_x_continuous(breaks = c(0, 10, 25, 50, 75)) +
    ylim(c(-0.5, 9)) +
    ylab("Mean lesion count values") +
    xlab("Distance (m)")
@@ -59,6 +63,30 @@ ggplot(dat, aes(x = dist, y = mean_count_pot)) +
 ggsave("figures/Fig1.png")
 ggsave("figures/Fig1.eps")
 embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
+            options = "-dEPSCrop")
+```
+
+## Visualise the Rainfall and Irrigation Events
+
+```{r rain, message=FALSE, fig.cap=paste0("Total precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
+       aes(x = fct_rev(SpEv),
+           y = sum_rain,
+           colour = ptype,
+           fill = ptype)) +
+   geom_bar(stat = "identity") +
+   scale_fill_viridis_d() +
+   scale_colour_viridis_d() +
+   ylab("Total precipitation in event (mm)") +
+   xlab("Event") +
+   labs(main = "Rainfall events") +
+   theme(legend.position = "none") +
+   coord_flip()
+
+# save a .png to refer to while writing and a .eps for publication submission
+ggsave("figures/Fig2.png")
+ggsave("figures/Fig2.eps")
+embed_fonts("figures/Fig2.eps", outfile = "figures/Fig4.eps",
             options = "-dEPSCrop")
 ```
 
@@ -72,9 +100,9 @@ pw +
    theme_pubclean()
 
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/Fig2.png")
-ggsave("figures/Fig2.eps")
-embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
+ggsave("figures/Fig3.png")
+ggsave("figures/Fig3.eps")
+embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
             options = "-dEPSCrop")
 ```
 
@@ -120,32 +148,8 @@ ggplot(data = heat_dat,
    facet_wrap(. ~ SpEv, ncol = 3)
 
 
-ggsave("figures/Fig3.png")
-ggsave("figures/Fig3.eps")
-embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
-            options = "-dEPSCrop")
-```
-
-## Visualise the Rainfall and Irrigation Events
-```{r rain, message=FALSE, fig.cap=paste0("Total precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
-ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
-       aes(x = fct_rev(SpEv),
-           y = sum_rain,
-           colour = ptype,
-           fill = ptype)) +
-   geom_bar(stat = "identity") +
-   scale_fill_viridis_d() +
-   scale_colour_viridis_d() +
-   ylab("Total precipitation in event (mm)") +
-   xlab("Event") +
-   labs(main = "Rainfall events") +
-   theme(legend.position = "none") +
-   coord_flip()
-
-# save a .png to refer to while writing and a .eps for publication submission
 ggsave("figures/Fig4.png")
 ggsave("figures/Fig4.eps")
 embed_fonts("figures/Fig4.eps", outfile = "figures/Fig4.eps",
             options = "-dEPSCrop")
 ```
-

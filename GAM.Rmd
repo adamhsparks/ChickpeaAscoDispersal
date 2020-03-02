@@ -6,10 +6,10 @@ output:
   html_document:
     number_sections: yes
     toc: yes
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(fig.width = 12, fig.height = 9) 
 ```
 
