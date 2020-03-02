@@ -6,31 +6,31 @@ output:
   html_document:
     number_sections: yes
     toc: yes
+    code_folding: hide
 ---
 
-```{r setup, include=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
 See "R/wrangle_raw_data.R" for the script that handles the data import. This
 Rmd file focuses on the data.
 
-```{r libraries, message=FALSE, echo=FALSE}
+```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, clifro, skimr, devtools, extrafont, ggpubr)
 
 theme_set(theme_pubclean())
 ```
 
-```{r fonts, include=FALSE, echo=FALSE, message=FALSE, eval=FALSE}
+```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
 # run only if knitting on new computer
 # this is necessary to embed fonts in .eps files for EJPP
 font_import(pattern = "Arial")
 loadfonts(device = "postscript") 
 ```
 
-```{r import data, message=FALSE, echo=FALSE}
+```{r import data, message=FALSE}
 source("R/wrangle_raw_data.R")
 skim(dat)
 ```
