@@ -46,11 +46,15 @@ ggplot(dat, aes(x = mean_count_pot)) +
 ## Visualise the Dispersal Data
 
 ```{r combined-dispersal, message=FALSE, fig.cap="Mean counts of lesions per pot at each station for ten transects at each station for all six events."}
-ggplot(dat, aes(x = dist, y = mean_count_pot)) +
+ggplot(dat, aes(
+   x = dist,
+   y = mean_count_pot
+)) +
    geom_count() +
    stat_summary(fun.y = "median",
                 geom = "line",
                 na.rm = TRUE) +
+   scale_x_continuous(breaks = c(0, 10, 25, 50, 75)) +
    ylim(c(-0.5, 9)) +
    ylab("Mean lesion count values") +
    xlab("Distance (m)")
