@@ -66,6 +66,30 @@ embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
             options = "-dEPSCrop")
 ```
 
+## Visualise the Rainfall and Irrigation Events
+
+```{r rain, message=FALSE, fig.cap=paste0("Total precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
+       aes(x = fct_rev(SpEv),
+           y = sum_rain,
+           colour = ptype,
+           fill = ptype)) +
+   geom_bar(stat = "identity") +
+   scale_fill_viridis_d() +
+   scale_colour_viridis_d() +
+   ylab("Total precipitation in event (mm)") +
+   xlab("Event") +
+   labs(main = "Rainfall events") +
+   theme(legend.position = "none") +
+   coord_flip()
+
+# save a .png to refer to while writing and a .eps for publication submission
+ggsave("figures/Fig2.png")
+ggsave("figures/Fig2.eps")
+embed_fonts("figures/Fig2.eps", outfile = "figures/Fig4.eps",
+            options = "-dEPSCrop")
+```
+
 ## Visualise the Windspeed and Direction
 
 ```{r wind, message=FALSE, fig.cap=paste0("Windroses showing the windspeed and direction for each event. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
@@ -76,9 +100,9 @@ pw +
    theme_pubclean()
 
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/Fig2.png")
-ggsave("figures/Fig2.eps")
-embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
+ggsave("figures/Fig3.png")
+ggsave("figures/Fig3.eps")
+embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
             options = "-dEPSCrop")
 ```
 
@@ -124,32 +148,8 @@ ggplot(data = heat_dat,
    facet_wrap(. ~ SpEv, ncol = 3)
 
 
-ggsave("figures/Fig3.png")
-ggsave("figures/Fig3.eps")
-embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
-            options = "-dEPSCrop")
-```
-
-## Visualise the Rainfall and Irrigation Events
-```{r rain, message=FALSE, fig.cap=paste0("Total precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
-ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
-       aes(x = fct_rev(SpEv),
-           y = sum_rain,
-           colour = ptype,
-           fill = ptype)) +
-   geom_bar(stat = "identity") +
-   scale_fill_viridis_d() +
-   scale_colour_viridis_d() +
-   ylab("Total precipitation in event (mm)") +
-   xlab("Event") +
-   labs(main = "Rainfall events") +
-   theme(legend.position = "none") +
-   coord_flip()
-
-# save a .png to refer to while writing and a .eps for publication submission
 ggsave("figures/Fig4.png")
 ggsave("figures/Fig4.eps")
 embed_fonts("figures/Fig4.eps", outfile = "figures/Fig4.eps",
             options = "-dEPSCrop")
 ```
-
