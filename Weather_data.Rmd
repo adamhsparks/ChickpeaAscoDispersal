@@ -150,19 +150,33 @@ The columns are then reordered by `Location`, `Rep`, `Time` and the weather data
 weather <- 
    weather %>% 
    mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% # changing to meters per second
-   rename(mws = `Wind Speed - average (km/h)`) %>% 
-   rename(mdr = `Wind Direction - average (º)`) %>%
-   group_by(Location, Rep) %>%
-   mutate(mws_sd = sd(mws)) %>% 
-   mutate(direction_sd = sd(mdr)) %>% 
+   rename(wind_speed = `Wind Speed - average (km/h)`) %>% 
+   rename(wind_direction = `Wind Direction - average (º)`) %>%
+   rename(rainfall = `Rainfall - (mm)`) %>%
    select(Location, Rep, Time, everything())
 
 glimpse(weather)
 ```
+
+```{r summary-weather}
+weather_summary <- 
+   weather %>%
+   group_by(Location, Rep) %>%
+   summarise(mws = mean(wind_speed),
+             ws_sd = sd(wind_speed),
+             mwd = mean(wind_direction),
+             wd_sd = sd(wind_direction),
+             sum_rain = sum(rainfall)) 
+# Irrigation has not been added to the sites
+```
+
+
+
 ## Export weather to cache
 
 Save the resulting weather data to the "cache" directory for further use.
 
 ```{r export-weather, message=FALSE}
 write_csv(weather, here("cache", "cleaned_weather.csv"))
+write_csv(weather_summary, here("cache", "weather_summary.csv"))
 ```
