@@ -1405,7 +1405,7 @@ Curyo_w &lt;-
 </div>
 <div id="rename-columns-and-add-other-calculations" class="section level3" number="0.3.4">
 <h3 number="0.3.4"><span class="header-section-number">0.3.4</span> Rename columns and add other calculations</h3>
-<p>The <code>Wind Speed - average (km/h)</code> column is renamed to <code>mws</code> (mean wind speed) and the standard deviation of the wind speed and directions are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
+<p>The <code>Wind Speed - average (km/h)</code> column is renamed to <code>mws</code> (mean wind speed) and converted to metres per second. The standard deviation of the wind speed and wind direction are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
 <ul>
 <li><p>mdr - mean direction degrees for wind</p></li>
 <li><p>mws - mean wind speed in meters per second</p></li>
@@ -1414,7 +1414,7 @@ Curyo_w &lt;-
 </ul>
 <pre class="r"><code>weather &lt;- 
    weather %&gt;% 
-   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %&gt;% # changing to meters per second
+   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %&gt;% 
    rename(wind_speed = `Wind Speed - average (km/h)`) %&gt;% 
    rename(wind_direction = `Wind Direction - average (º)`) %&gt;%
    rename(rainfall = `Rainfall - (mm)`) %&gt;%

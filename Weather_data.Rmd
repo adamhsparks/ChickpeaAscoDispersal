@@ -135,7 +135,8 @@ weather <- bind_rows(Curyo_w, Horsham_w)
 
 ### Rename columns and add other calculations
 
-The `Wind Speed - average (km/h)` column is renamed to `mws` (mean wind speed) and the standard deviation of the wind speed and directions are calculated for the data.
+The `Wind Speed - average (km/h)` column is renamed to `mws` (mean wind speed) and converted to metres per second.
+The standard deviation of the wind speed and wind direction are calculated for the data.
 The columns are then reordered by `Location`, `Rep`, `Time` and the weather data.
 
 * mdr - mean direction degrees for wind
@@ -149,7 +150,7 @@ The columns are then reordered by `Location`, `Rep`, `Time` and the weather data
 ```{r rename-and-sd}
 weather <- 
    weather %>% 
-   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% # changing to meters per second
+   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
    rename(wind_speed = `Wind Speed - average (km/h)`) %>% 
    rename(wind_direction = `Wind Direction - average (º)`) %>%
    rename(rainfall = `Rainfall - (mm)`) %>%
