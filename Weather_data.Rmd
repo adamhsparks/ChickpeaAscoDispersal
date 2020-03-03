@@ -81,7 +81,7 @@ kable(events, format = "html", table.attr = 'class="table table-hover"')
 
 
 
-### Filter the data
+### Filter and merge the locations' the data
 
 Filter the data removing any dates that do not have "event" data necessary for analysis.
 To do this, first `filter()`, then use `case_when()` to match the dates and times with the `events` data frame and create new variables to indicate which replicate and location, which is used to determine an event in the data.
@@ -125,11 +125,7 @@ Curyo_w <-
       Time %within% events[which(events$site == "Curyo"),"exposed"] ~
          events[[which(events$site == "Curyo"), "rep"]])) %>%
    select(Location, Rep, Time, everything())
-```
 
-### Merge the two location's weather data
-
-```{r merge}
 weather <- bind_rows(Curyo_w, Horsham_w)
 ```
 

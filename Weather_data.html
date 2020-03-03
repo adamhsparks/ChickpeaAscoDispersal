@@ -11,7 +11,7 @@
 
 <meta name="author" content="A.H. Sparks" />
 
-<meta name="date" content="2020-03-03" />
+<meta name="date" content="2020-03-04" />
 
 <title>Weather Data Import and Cleaning</title>
 
@@ -449,7 +449,7 @@ summary {
 
 <h1 class="title toc-ignore">Weather Data Import and Cleaning</h1>
 <h4 class="author">A.H. Sparks</h4>
-<h4 class="date">2020-03-03</h4>
+<h4 class="date">2020-03-04</h4>
 
 </div>
 
@@ -468,9 +468,8 @@ summary {
 <li><a href="#merge-and-filter-the-data-for-events"><span class="toc-section-number">0.3</span> Merge and filter the data for events</a>
 <ul>
 <li><a href="#import-the-event-data"><span class="toc-section-number">0.3.1</span> Import the event data</a></li>
-<li><a href="#filter-the-data"><span class="toc-section-number">0.3.2</span> Filter the data</a></li>
-<li><a href="#merge-the-two-locations-weather-data"><span class="toc-section-number">0.3.3</span> Merge the two location’s weather data</a></li>
-<li><a href="#rename-columns-and-add-other-calculations"><span class="toc-section-number">0.3.4</span> Rename columns and add other calculations</a></li>
+<li><a href="#filter-and-merge-the-locations-the-data"><span class="toc-section-number">0.3.2</span> Filter and merge the locations’ the data</a></li>
+<li><a href="#rename-columns-and-add-other-calculations"><span class="toc-section-number">0.3.3</span> Rename columns and add other calculations</a></li>
 </ul></li>
 <li><a href="#export-weather-to-cache"><span class="toc-section-number">0.4</span> Export weather to cache</a></li>
 </ul>
@@ -1357,8 +1356,8 @@ Curyo
 </tbody>
 </table>
 </div>
-<div id="filter-the-data" class="section level3" number="0.3.2">
-<h3 number="0.3.2"><span class="header-section-number">0.3.2</span> Filter the data</h3>
+<div id="filter-and-merge-the-locations-the-data" class="section level3" number="0.3.2">
+<h3 number="0.3.2"><span class="header-section-number">0.3.2</span> Filter and merge the locations’ the data</h3>
 <p>Filter the data removing any dates that do not have “event” data necessary for analysis. To do this, first <code>filter()</code>, then use <code>case_when()</code> to match the dates and times with the <code>events</code> data frame and create new variables to indicate which replicate and location, which is used to determine an event in the data.</p>
 <pre class="r"><code>events &lt;- events %&gt;% 
    mutate(exposed = `time out` %--% `time removed`)
@@ -1397,14 +1396,12 @@ Curyo_w &lt;-
    mutate(Rep = case_when(
       Time %within% events[which(events$site == &quot;Curyo&quot;),&quot;exposed&quot;] ~
          events[[which(events$site == &quot;Curyo&quot;), &quot;rep&quot;]])) %&gt;%
-   select(Location, Rep, Time, everything())</code></pre>
+   select(Location, Rep, Time, everything())
+
+weather &lt;- bind_rows(Curyo_w, Horsham_w)</code></pre>
 </div>
-<div id="merge-the-two-locations-weather-data" class="section level3" number="0.3.3">
-<h3 number="0.3.3"><span class="header-section-number">0.3.3</span> Merge the two location’s weather data</h3>
-<pre class="r"><code>weather &lt;- bind_rows(Curyo_w, Horsham_w)</code></pre>
-</div>
-<div id="rename-columns-and-add-other-calculations" class="section level3" number="0.3.4">
-<h3 number="0.3.4"><span class="header-section-number">0.3.4</span> Rename columns and add other calculations</h3>
+<div id="rename-columns-and-add-other-calculations" class="section level3" number="0.3.3">
+<h3 number="0.3.3"><span class="header-section-number">0.3.3</span> Rename columns and add other calculations</h3>
 <p>The <code>Wind Speed - average (km/h)</code> column is renamed to <code>mws</code> (mean wind speed) and converted to metres per second. The standard deviation of the wind speed and wind direction are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
 <ul>
 <li><p>mdr - mean direction degrees for wind</p></li>
