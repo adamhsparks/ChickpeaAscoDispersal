@@ -488,8 +488,8 @@ pacman::p_load(tidyverse, lubridate, skimr, here, kableExtra)</code></pre>
    read_csv(here(
       &quot;data&quot;,
       &quot;Curyo SPA 2019 - Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv&quot;
-   )) %&gt;%
-   select(1, 6, 8, 11) %&gt;%
+   ))%&gt;%
+   select(Time, &#39;Wind Speed - average (km/h)&#39;,&#39;Wind Direction - average (º)&#39;, &quot;Rainfall - (mm)&quot;) %&gt;%
    mutate(Time = dmy_hm(Time)) %&gt;%
    mutate(Location = &quot;Curyo&quot;) %&gt;%
    select(Location, everything())</code></pre>
@@ -861,10 +861,10 @@ Time
          &quot;Horsham SPA 2019 - Horsham SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv&quot;
       )
    ) %&gt;% 
-   select(1, 6, 8, 11) %&gt;%
+   select(Time, &#39;Wind Speed - average (km/h)&#39;,&#39;Wind Direction - average (º)&#39;, &quot;Rainfall - (mm)&quot;) %&gt;%
    mutate(Time = dmy_hm(Time)) %&gt;%
    mutate(Location = &quot;Horsham&quot;) %&gt;%
-   select(Location, everything(), -`Wind Speed - average (km/h)`)</code></pre>
+   select(Location, everything())</code></pre>
 </div>
 <div id="inspect-horsham-data" class="section level3" number="0.2.2">
 <h3 number="0.2.2"><span class="header-section-number">0.2.2</span> Inspect Horsham data</h3>
@@ -903,7 +903,7 @@ Number of rows
 Number of columns
 </td>
 <td style="text-align:left;">
-4
+5
 </td>
 </tr>
 <tr>
@@ -933,7 +933,7 @@ character
 numeric
 </td>
 <td style="text-align:left;">
-2
+3
 </td>
 </tr>
 <tr>
@@ -1060,6 +1060,41 @@ hist
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Wind Speed - average (km/h)
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8.16
+</td>
+<td style="text-align:right;">
+6.98
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2.77
+</td>
+<td style="text-align:right;">
+6.37
+</td>
+<td style="text-align:right;">
+12.13
+</td>
+<td style="text-align:right;">
+49.39
+</td>
+<td style="text-align:left;">
+▇▃▁▁▁
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Wind Direction - average (º)
@@ -1325,50 +1360,43 @@ Curyo
 <div id="filter-the-data" class="section level3" number="0.3.2">
 <h3 number="0.3.2"><span class="header-section-number">0.3.2</span> Filter the data</h3>
 <p>Filter the data removing any dates that do not have “event” data necessary for analysis. To do this, first <code>filter()</code>, then use <code>case_when()</code> to match the dates and times with the <code>events</code> data frame and create new variables to indicate which replicate and location, which is used to determine an event in the data.</p>
-<pre class="r"><code>Horsham_w &lt;-
+<pre class="r"><code>events &lt;- events %&gt;% 
+   mutate(exposed = `time out` %--% `time removed`)
+
+Horsham_w &lt;-
    Horsham_w %&gt;%
-   filter(
-      Time &gt;= events[[1, 3]] &amp; Time &lt;= events[[1, 4]] |
-         Time &gt;= events[[2, 3]] &amp; Time &lt;= events[[2, 4]] |
-         Time &gt;= events[[3, 3]] &amp; Time &lt;= events[[3, 4]] |
-         Time &gt;= events[[4, 3]] &amp; Time &lt;= events[[4, 4]] |
-         Time &gt;= events[[5, 3]] &amp; Time &lt;= events[[5, 4]]
-   ) %&gt;%
+   filter(Time %within% events[1:5,&quot;exposed&quot;])%&gt;%
    mutate(
       Location = case_when(
-         Time &gt;= events[[1, 3]] &amp; Time &lt;= events[[1, 4]] ~ events[[1, 1]],
-         Time &gt;= events[[2, 3]] &amp;
-            Time &lt;= events[[2, 4]] ~ events[[2, 1]],
-         Time &gt;= events[[3, 3]] &amp;
-            Time &lt;= events[[3, 4]] ~ events[[3, 1]],
-         Time &gt;= events[[4, 3]] &amp;
-            Time &lt;= events[[4, 4]] ~ events[[4, 1]],
-         Time &gt;= events[[5, 3]] &amp;
-            Time &lt;= events[[5, 4]] ~ events[[5, 1]]
+         Time %within% events[1,&quot;exposed&quot;] ~ events[[1, &quot;site&quot;]],
+         Time %within% events[2,&quot;exposed&quot;] ~ events[[2, &quot;site&quot;]],
+         Time %within% events[3,&quot;exposed&quot;] ~ events[[3, &quot;site&quot;]],
+         Time %within% events[4,&quot;exposed&quot;] ~ events[[4, &quot;site&quot;]],
+         Time %within% events[5,&quot;exposed&quot;] ~ events[[5, &quot;site&quot;]]
       )
    ) %&gt;%
    mutate(
       Rep = case_when(
-         Time &gt;= events[[1, 3]] &amp; Time &lt;= events[[1, 4]] ~ events[[1, 2]],
-         Time &gt;= events[[2, 3]] &amp;
-            Time &lt;= events[[2, 4]] ~ events[[2, 2]],
-         Time &gt;= events[[3, 3]] &amp;
-            Time &lt;= events[[3, 4]] ~ events[[3, 2]],
-         Time &gt;= events[[4, 3]] &amp;
-            Time &lt;= events[[4, 4]] ~ events[[4, 2]],
-         Time &gt;= events[[5, 3]] &amp;
-            Time &lt;= events[[5, 4]] ~ events[[5, 2]]
+         Time %within% events[1,&quot;exposed&quot;] ~ events[[1, &quot;rep&quot;]],
+         Time %within% events[2,&quot;exposed&quot;] ~ events[[2, &quot;rep&quot;]],
+         Time %within% events[3,&quot;exposed&quot;] ~ events[[3, &quot;rep&quot;]],
+         Time %within% events[4,&quot;exposed&quot;] ~ events[[4, &quot;rep&quot;]],
+         Time %within% events[5,&quot;exposed&quot;] ~ events[[5, &quot;rep&quot;]]
       )
    ) %&gt;%
    select(Location, Rep, Time, everything())
 
-Curyo &lt;-
+Curyo_w &lt;-
    Curyo_w %&gt;%
-   filter(Time &gt;= events[[6, 3]] &amp; Time &lt;= events[[6, 4]]) %&gt;%
-   mutate(Location2 = case_when(Time &gt;= events[[6, 3]] &amp;
-                                   Time &lt;= events[[6, 4]] ~ events[[6, 1]])) %&gt;%
-   mutate(Rep = case_when(Time &gt;= events[[6, 3]] &amp;
-                             Time &lt;= events[[6, 4]] ~ events[[6, 2]])) %&gt;%
+   filter(Time %within% 
+             events[which(events$site == &quot;Curyo&quot;),
+                    &quot;exposed&quot;]) %&gt;%
+   mutate(Location = case_when(
+      Time %within% events[which(events$site == &quot;Curyo&quot;),
+                           &quot;exposed&quot;] ~ &quot;Curyo&quot;)) %&gt;%
+   mutate(Rep = case_when(
+      Time %within% events[which(events$site == &quot;Curyo&quot;),&quot;exposed&quot;] ~
+         events[[which(events$site == &quot;Curyo&quot;), &quot;rep&quot;]])) %&gt;%
    select(Location, Rep, Time, everything())</code></pre>
 </div>
 <div id="merge-the-two-locations-weather-data" class="section level3" number="0.3.3">
@@ -1380,36 +1408,849 @@ Curyo &lt;-
 <p>The <code>Wind Speed - average (km/h)</code> column is renamed to <code>mws</code> (mean wind speed) and the standard deviation of the wind speed and directions are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
 <ul>
 <li><p>mdr - mean direction degrees for wind</p></li>
-<li><p>mws - mean wind speed</p></li>
+<li><p>mws - mean wind speed in meters per second</p></li>
 <li><p>mdr_sd - standard deviation of the wind direction</p></li>
 <li><p>mws_sd - standard deviation of the wind speed</p></li>
 </ul>
 <pre class="r"><code>weather &lt;- 
    weather %&gt;% 
-   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %&gt;% 
-   rename(mws = `Wind Speed - average (km/h)`) %&gt;% 
-   rename(mdr = `Wind Direction - average (º)`) %&gt;%
-   mutate(mws_sd = sd(mws)) %&gt;% 
-   mutate(direction_sd = sd(mdr)) %&gt;% 
+   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %&gt;% # changing to meters per second
+   rename(wind_speed = `Wind Speed - average (km/h)`) %&gt;% 
+   rename(wind_direction = `Wind Direction - average (º)`) %&gt;%
+   rename(rainfall = `Rainfall - (mm)`) %&gt;%
    select(Location, Rep, Time, everything())
 
 glimpse(weather)</code></pre>
-<pre><code>## Observations: 45,120
-## Variables: 8
-## $ Location          &lt;chr&gt; &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo…
-## $ Rep               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ Time              &lt;dttm&gt; 2019-01-22 12:40:00, 2019-01-22 12:50:00, 2019-01-…
-## $ mws               &lt;dbl&gt; 0.00, 1.12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.73, 0.0…
-## $ mdr               &lt;dbl&gt; 287.824360, 311.197414, 314.920533, 314.920533, 314…
-## $ `Rainfall - (mm)` &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.6, 0.0, 0.0, 0…
-## $ mws_sd            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ direction_sd      &lt;dbl&gt; 141.958, 141.958, 141.958, 141.958, 141.958, 141.95…</code></pre>
+<pre><code>## Observations: 719
+## Variables: 6
+## $ Location       &lt;chr&gt; &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, …
+## $ Rep            &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ Time           &lt;dttm&gt; 2019-10-15 08:00:00, 2019-10-15 08:10:00, 2019-10-15 …
+## $ wind_speed     &lt;dbl&gt; 3.37, 3.44, 3.30, 3.49, 3.69, 3.73, 3.61, 3.32, 3.40, …
+## $ wind_direction &lt;dbl&gt; 350.537678, 357.810346, 357.167889, 357.911110, 355.97…
+## $ rainfall       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
+<pre class="r"><code>weather_summary &lt;- 
+   weather %&gt;%
+   group_by(Location, Rep) %&gt;%
+   summarise(mws = mean(wind_speed),
+             ws_sd = sd(wind_speed),
+             mwd = mean(wind_direction),
+             wd_sd = sd(wind_direction),
+             sum_rain = sum(rainfall)) 
+
+skim(weather_summary)</code></pre>
+<table style="width: auto;" class="table table-condensed">
+<caption>
+Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+weather_summary
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+Location
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rep
+</td>
+<td style="text-align:left;">
+Curyo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▁▁▇▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rep
+</td>
+<td style="text-align:left;">
+Horsham dryland
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.50
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.25
+</td>
+<td style="text-align:right;">
+1.50
+</td>
+<td style="text-align:right;">
+1.75
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rep
+</td>
+<td style="text-align:left;">
+Horsham irrigated
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.50
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+2.50
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:left;">
+▇▁▇▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mws
+</td>
+<td style="text-align:left;">
+Curyo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:left;">
+▁▁▇▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mws
+</td>
+<td style="text-align:left;">
+Horsham dryland
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.37
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+<td style="text-align:right;">
+3.12
+</td>
+<td style="text-align:right;">
+3.25
+</td>
+<td style="text-align:right;">
+3.37
+</td>
+<td style="text-align:right;">
+3.49
+</td>
+<td style="text-align:right;">
+3.62
+</td>
+<td style="text-align:left;">
+▇▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mws
+</td>
+<td style="text-align:left;">
+Horsham irrigated
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.68
+</td>
+<td style="text-align:right;">
+2.55
+</td>
+<td style="text-align:right;">
+1.89
+</td>
+<td style="text-align:right;">
+2.22
+</td>
+<td style="text-align:right;">
+2.55
+</td>
+<td style="text-align:right;">
+4.57
+</td>
+<td style="text-align:right;">
+6.60
+</td>
+<td style="text-align:left;">
+▇▁▁▁▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ws_sd
+</td>
+<td style="text-align:left;">
+Curyo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:left;">
+▁▁▇▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ws_sd
+</td>
+<td style="text-align:left;">
+Horsham dryland
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.36
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:right;">
+2.13
+</td>
+<td style="text-align:right;">
+2.25
+</td>
+<td style="text-align:right;">
+2.36
+</td>
+<td style="text-align:right;">
+2.48
+</td>
+<td style="text-align:right;">
+2.60
+</td>
+<td style="text-align:left;">
+▇▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ws_sd
+</td>
+<td style="text-align:left;">
+Horsham irrigated
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.46
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+0.93
+</td>
+<td style="text-align:right;">
+1.10
+</td>
+<td style="text-align:right;">
+1.27
+</td>
+<td style="text-align:right;">
+1.72
+</td>
+<td style="text-align:right;">
+2.18
+</td>
+<td style="text-align:left;">
+▇▇▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mwd
+</td>
+<td style="text-align:left;">
+Curyo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+203.10
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+203.10
+</td>
+<td style="text-align:right;">
+203.10
+</td>
+<td style="text-align:right;">
+203.10
+</td>
+<td style="text-align:right;">
+203.10
+</td>
+<td style="text-align:right;">
+203.10
+</td>
+<td style="text-align:left;">
+▁▁▇▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mwd
+</td>
+<td style="text-align:left;">
+Horsham dryland
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+234.25
+</td>
+<td style="text-align:right;">
+14.87
+</td>
+<td style="text-align:right;">
+223.73
+</td>
+<td style="text-align:right;">
+228.99
+</td>
+<td style="text-align:right;">
+234.25
+</td>
+<td style="text-align:right;">
+239.51
+</td>
+<td style="text-align:right;">
+244.77
+</td>
+<td style="text-align:left;">
+▇▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mwd
+</td>
+<td style="text-align:left;">
+Horsham irrigated
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+271.72
+</td>
+<td style="text-align:right;">
+61.58
+</td>
+<td style="text-align:right;">
+210.80
+</td>
+<td style="text-align:right;">
+240.61
+</td>
+<td style="text-align:right;">
+270.41
+</td>
+<td style="text-align:right;">
+302.18
+</td>
+<td style="text-align:right;">
+333.94
+</td>
+<td style="text-align:left;">
+▇▁▇▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wd_sd
+</td>
+<td style="text-align:left;">
+Curyo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+170.30
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+170.30
+</td>
+<td style="text-align:right;">
+170.30
+</td>
+<td style="text-align:right;">
+170.30
+</td>
+<td style="text-align:right;">
+170.30
+</td>
+<td style="text-align:right;">
+170.30
+</td>
+<td style="text-align:left;">
+▁▁▇▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wd_sd
+</td>
+<td style="text-align:left;">
+Horsham dryland
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+127.12
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+122.88
+</td>
+<td style="text-align:right;">
+125.00
+</td>
+<td style="text-align:right;">
+127.12
+</td>
+<td style="text-align:right;">
+129.24
+</td>
+<td style="text-align:right;">
+131.36
+</td>
+<td style="text-align:left;">
+▇▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wd_sd
+</td>
+<td style="text-align:left;">
+Horsham irrigated
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+33.35
+</td>
+<td style="text-align:right;">
+35.90
+</td>
+<td style="text-align:right;">
+8.74
+</td>
+<td style="text-align:right;">
+12.75
+</td>
+<td style="text-align:right;">
+16.76
+</td>
+<td style="text-align:right;">
+45.65
+</td>
+<td style="text-align:right;">
+74.55
+</td>
+<td style="text-align:left;">
+▇▁▁▁▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sum_rain
+</td>
+<td style="text-align:left;">
+Curyo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:left;">
+▁▁▇▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sum_rain
+</td>
+<td style="text-align:left;">
+Horsham dryland
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.70
+</td>
+<td style="text-align:right;">
+2.12
+</td>
+<td style="text-align:right;">
+1.20
+</td>
+<td style="text-align:right;">
+1.95
+</td>
+<td style="text-align:right;">
+2.70
+</td>
+<td style="text-align:right;">
+3.45
+</td>
+<td style="text-align:right;">
+4.20
+</td>
+<td style="text-align:left;">
+▇▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sum_rain
+</td>
+<td style="text-align:left;">
+Horsham irrigated
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+<td style="text-align:left;">
+▇▁▁▁▃
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="export-weather-to-cache" class="section level2" number="0.4">
 <h2 number="0.4"><span class="header-section-number">0.4</span> Export weather to cache</h2>
 <p>Save the resulting weather data to the “cache” directory for further use.</p>
-<pre class="r"><code>write_csv(weather, here(&quot;cache&quot;, &quot;cleaned_weather.csv&quot;))</code></pre>
+<pre class="r"><code>write_csv(weather, here(&quot;cache&quot;, &quot;cleaned_weather.csv&quot;))
+write_csv(weather_summary, here(&quot;cache&quot;, &quot;weather_summary.csv&quot;))</code></pre>
 </div>
 
 

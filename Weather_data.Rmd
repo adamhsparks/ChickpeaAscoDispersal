@@ -57,7 +57,7 @@ Horsham_w <-
    select(Time, 'Wind Speed - average (km/h)','Wind Direction - average (º)', "Rainfall - (mm)") %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Horsham") %>%
-   select(Location, everything(), -`Wind Speed - average (km/h)`) # why 
+   select(Location, everything())
 ```
 
 ### Inspect Horsham data
@@ -167,7 +167,8 @@ weather_summary <-
              mwd = mean(wind_direction),
              wd_sd = sd(wind_direction),
              sum_rain = sum(rainfall)) 
-# Irrigation has not been added to the sites
+
+skim(weather_summary)
 ```
 
 
