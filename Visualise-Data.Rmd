@@ -20,7 +20,7 @@ This Rmd file focuses on the data.
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, clifro, skimr, devtools, extrafont, ggpubr)
 
-theme_set(theme_pubclean())
+theme_set(theme_pubclean(base_size = 14))
 ```
 
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
