@@ -461,7 +461,7 @@ if (!require(&quot;pacman&quot;))
 pacman::p_load(tidyverse, skimr)</code></pre>
 <p>This documents the raw data import, calculation of mean lesion values and exports the new data to /cache for further use in visualisation and analysis.</p>
 <p>In the first step, the data is imported, the “m” from the <code>distance</code> column is dropped and the column is converted to numeric. A new colum, <code>SpEv</code> (Spread Event), is created for each location and replicated event at that location. Another new column, <code>degrees</code>, is added for each transect to indicate the direction in degrees based on J. Fanning’s best information. Lastly the mean pot count, <code>mean_pot_count</code> is calculated for each of the transects at each distance, 0, 10, 25, 50 and 75 meters from the plots.</p>
-<p>After the data are updated, the spread events, <code>SpEv</code>, are renamed for clarity and ordered as factors for data visualisation.</p>
+<p>After the data are updated, a column for precipitation type, <code>ptype</code>, is added and the spread events, <code>SpEv</code>, are renamed for clarity and ordered as factors for data visualisation.</p>
 <pre class="r"><code>dat &lt;-
    read_csv(&quot;data/lesion_counts.csv&quot;) %&gt;%
    mutate(site = str_remove(site, &quot; SPA&quot;)) %&gt;%
@@ -505,9 +505,21 @@ pacman::p_load(tidyverse, skimr)</code></pre>
    mutate_at(vars(site, rep, station, transect, plant_no, pot_no, SpEv),
              factor)
 
+# create new variables for the type of precipitation event
 # create new variables for each event (location by replicate number at that location)
+
 dat &lt;-
    dat %&gt;%
+      mutate(
+      ptype = case_when(
+         SpEv == &quot;pbc_1&quot; ~ &quot;irrigation&quot;,
+         SpEv == &quot;pbc_2&quot; ~ &quot;irrigation&quot;,
+         SpEv == &quot;pbc_3&quot; ~ &quot;mixed&quot;,
+         SpEv == &quot;Horsham_1&quot; ~ &quot;rainfall&quot;,
+         SpEv == &quot;Horsham_2&quot; ~ &quot;rainfall&quot;,
+         SpEv == &quot;Curyo_1&quot; ~ &quot;rainfall&quot;
+      )
+   ) %&gt;% 
    mutate(
       SpEv = case_when(
          SpEv == &quot;pbc_1&quot; ~ &quot;Horsham Irrg 1&quot;,
@@ -548,7 +560,7 @@ skim(dat)</code></pre>
 </tr>
 <tr class="odd">
 <td align="left">Number of columns</td>
-<td align="left">16</td>
+<td align="left">17</td>
 </tr>
 <tr class="even">
 <td align="left">_______________________</td>
@@ -560,7 +572,7 @@ skim(dat)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">character</td>
-<td align="left">1</td>
+<td align="left">2</td>
 </tr>
 <tr class="odd">
 <td align="left">factor</td>
@@ -603,6 +615,16 @@ skim(dat)</code></pre>
 <td align="right">6</td>
 <td align="right">0</td>
 <td align="right">38</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">ptype</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">3</td>
 <td align="right">0</td>
 </tr>
 </tbody>
