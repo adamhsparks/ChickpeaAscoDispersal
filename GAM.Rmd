@@ -308,7 +308,7 @@ anova(mod1,
 
 ### Visualise the Models
 
-```{r vis-mods}
+```{r vis-mods, message=FALSE, warning=FALSE}
 # generic function to print GAMs using mgcViz
 p_gam <- function(x) {
    plot(x, allTerms = T) +
@@ -349,16 +349,9 @@ print(p_gam(x = getViz(mod9)) +
 print(p_gam(x = getViz(mod10)) +
          ggtitle("s(Distance) + s(Precipitation) + Windspeed"),
       pages = 1)
-print(
-   p_gam(x = getViz(mod11.0)) +
-      ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
-   pages = 1
-)
-# save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/FigGAM.png")
-ggsave("figures/FigGAM.eps")
-embed_fonts("figures/FigGAM.eps", outfile = "figures/FigGAM.eps",
-            options = "-dEPSCrop")
+print(p_gam(x = getViz(mod11.0)) +
+   ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
+   pages = 1)
 print(
    p_gam(x = getViz(mod11.1)) +
       ggtitle(
@@ -371,6 +364,30 @@ print(
       ggtitle("s(Distance) + s(Precipitation) + Windspeed, family = tw()"),
    pages = 1
 )
+```
+
+```{r save_gam_plot, include=FALSE}
+# generate a new plot.gam object just for the publication (no main title)
+p11.1 <- p_gam(x = getViz(mod11.0))
+
+# save png and eps files
+png(
+   file = "figures/Fig1.png",
+   width = 480,
+   height = 480,
+   units = "px",
+   pointsize = 14
+)
+print(p11.1, pages = 1)
+dev.off()
+
+postscript(file = "figures/Fig1.eps", family = "Arial")
+par(mar = c(5, 3, 2, 2) + 0.1)
+print(p11.1, pages = 1)
+dev.off()
+
+embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
+            options = "-dEPSCrop")
 ```
 
 ### Check Best Model Fit
