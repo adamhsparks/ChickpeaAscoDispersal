@@ -9,13 +9,14 @@ output:
     code_folding: hide
 ---
 
-```{r setup, message=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
 
+```{r libraries, message=FALSE}
 if (!require("pacman"))
    install.packages("pacman")
 pacman::p_load(tidyverse, skimr, here)
-
 ```
 
 This documents the raw data import, calculation of mean lesion values and exports the new data to /cache for further use in visualisation and analysis.
