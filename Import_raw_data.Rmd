@@ -70,6 +70,7 @@ dat <-
              factor)
 
 # create new variables for the type of precipitation event
+# rename the site names to align with the cleaned weather data
 # create new variables for each event (location by replicate number at that location)
 
 dat <-
@@ -83,14 +84,21 @@ dat <-
          SpEv == "Horsham_2" ~ "rainfall",
          SpEv == "Curyo_1" ~ "rainfall"
       )
+   ) %>%
+   mutate(
+      site = case_when(
+         site == "pbc" ~ "Horsham irrigated",
+         site == "Horsham" ~ "Horsham dryland",
+         site == "Curyo" ~ "Curyo"
+      )
    ) %>% 
    mutate(
       SpEv = case_when(
          SpEv == "pbc_1" ~ "Horsham Irrg 1",
          SpEv == "pbc_2" ~ "Horsham Irrg 2",
          SpEv == "pbc_3" ~ "Horsham Mixd 1",
-         SpEv == "Horsham_1" ~ "Horsham Rain 1",
-         SpEv == "Horsham_2" ~ "Horsham Rain 2",
+         SpEv == "Horsham_1" ~ "Horsham Dryland 1",
+         SpEv == "Horsham_2" ~ "Horsham Dryland 2",
          SpEv == "Curyo_1" ~ "Curyo Rain 1"
       )
    )

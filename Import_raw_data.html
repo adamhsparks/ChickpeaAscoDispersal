@@ -504,6 +504,7 @@ pacman::p_load(tidyverse, skimr, here)</code></pre>
              factor)
 
 # create new variables for the type of precipitation event
+# rename the site names to align with the cleaned weather data
 # create new variables for each event (location by replicate number at that location)
 
 dat &lt;-
@@ -517,14 +518,21 @@ dat &lt;-
          SpEv == &quot;Horsham_2&quot; ~ &quot;rainfall&quot;,
          SpEv == &quot;Curyo_1&quot; ~ &quot;rainfall&quot;
       )
+   ) %&gt;%
+   mutate(
+      site = case_when(
+         site == &quot;pbc&quot; ~ &quot;Horsham irrigated&quot;,
+         site == &quot;Horsham&quot; ~ &quot;Horsham dryland&quot;,
+         site == &quot;Curyo&quot; ~ &quot;Curyo&quot;
+      )
    ) %&gt;% 
    mutate(
       SpEv = case_when(
          SpEv == &quot;pbc_1&quot; ~ &quot;Horsham Irrg 1&quot;,
          SpEv == &quot;pbc_2&quot; ~ &quot;Horsham Irrg 2&quot;,
          SpEv == &quot;pbc_3&quot; ~ &quot;Horsham Mixd 1&quot;,
-         SpEv == &quot;Horsham_1&quot; ~ &quot;Horsham Rain 1&quot;,
-         SpEv == &quot;Horsham_2&quot; ~ &quot;Horsham Rain 2&quot;,
+         SpEv == &quot;Horsham_1&quot; ~ &quot;Horsham Dryland 1&quot;,
+         SpEv == &quot;Horsham_2&quot; ~ &quot;Horsham Dryland 2&quot;,
          SpEv == &quot;Curyo_1&quot; ~ &quot;Curyo Rain 1&quot;
       )
    )
@@ -570,11 +578,11 @@ skim(dat)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">character</td>
-<td align="left">2</td>
+<td align="left">3</td>
 </tr>
 <tr class="odd">
 <td align="left">factor</td>
-<td align="left">7</td>
+<td align="left">6</td>
 </tr>
 <tr class="even">
 <td align="left">numeric</td>
@@ -606,6 +614,16 @@ skim(dat)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">site</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">17</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
 <td align="left">dist_stat</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -615,7 +633,7 @@ skim(dat)</code></pre>
 <td align="right">38</td>
 <td align="right">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ptype</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -642,56 +660,48 @@ skim(dat)</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">SpEv</td>
-<td align="right">0</td>
-<td align="right">1</td>
+<td align="right">73</td>
+<td align="right">0.69</td>
 <td align="left">TRUE</td>
-<td align="right">6</td>
-<td align="center">Cur: 50, Hor: 40, Hor: 40, Hor: 39</td>
+<td align="right">4</td>
+<td align="center">Cur: 50, Hor: 40, Hor: 39, Hor: 30</td>
 </tr>
 <tr class="even">
-<td align="left">site</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">FALSE</td>
-<td align="right">3</td>
-<td align="center">pbc: 109, Hor: 73, Cur: 50</td>
-</tr>
-<tr class="odd">
 <td align="left">rep</td>
 <td align="right">0</td>
-<td align="right">1</td>
+<td align="right">1.00</td>
 <td align="left">FALSE</td>
 <td align="right">3</td>
 <td align="center">1: 129, 2: 63, 3: 40</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">station</td>
 <td align="right">0</td>
-<td align="right">1</td>
+<td align="right">1.00</td>
 <td align="left">FALSE</td>
 <td align="right">10</td>
 <td align="center">2: 35, 4: 34, 1: 32, 3: 31</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">transect</td>
 <td align="right">0</td>
-<td align="right">1</td>
+<td align="right">1.00</td>
 <td align="left">FALSE</td>
 <td align="right">10</td>
 <td align="center">4: 38, 10: 35, 1: 32, 7: 32</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">plant_no</td>
 <td align="right">0</td>
-<td align="right">1</td>
+<td align="right">1.00</td>
 <td align="left">FALSE</td>
 <td align="right">2</td>
 <td align="center">5: 156, 3: 76</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pot_no</td>
 <td align="right">0</td>
-<td align="right">1</td>
+<td align="right">1.00</td>
 <td align="left">FALSE</td>
 <td align="right">56</td>
 <td align="center">4: 6, 6: 6, 25: 6, 26: 6</td>
