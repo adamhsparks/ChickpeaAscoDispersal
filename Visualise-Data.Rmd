@@ -13,12 +13,9 @@ output:
 knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
-See "R/wrangle_raw_data.R" for the script that handles the data import.
-This Rmd file focuses on the data.
-
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, clifro, skimr, extrafont, ggpubr)
+pacman::p_load(tidyverse, clifro, skimr, extrafont, ggpubr, here)
 
 theme_set(theme_pubclean(base_size = 14))
 ```
@@ -30,15 +27,20 @@ font_import(pattern = "Arial")
 loadfonts(device = "postscript") 
 ```
 
-```{r import data, message=FALSE}
-source("R/wrangle_raw_data.R")
+```{r import_data, message=FALSE}
+# import
+lesion <- read_csv(here("cache", "summarised_lesion_data.csv"))
+weather <- read_csv(here("cache", "weather_summary.csv"))
+
+dat <- left_join(lesion, weather, by = c("site" = "Location", "rep" = "Rep"))
+
 skim(dat)
 ```
 
 ## Visualise Counts per Pot
 
-```{r lesion-count, fig.cap="Density plot of mean lesions counted per pot for all six events."}
-ggplot(dat, aes(x = mean_count_pot)) +
+```{r lesion-count, fig.cap="Density plot of mean lesions counted per pot for all six events.", message=FALSE}
+ggplot(dat, aes(x = mean_pot_count)) +
    geom_density() +
    xlab("Mean lesion count per pot")
 ```
@@ -46,8 +48,8 @@ ggplot(dat, aes(x = mean_count_pot)) +
 ## Visualise the Dispersal Data
 
 ```{r combined-dispersal, message=FALSE, fig.cap="Mean counts of lesions per pot at each station for ten transects at each station for all six events."}
-ggplot(dat, aes(x = dist,
-                y = mean_count_pot)) +
+ggplot(dat, aes(x = distance,
+                y = mean_pot_count)) +
    geom_count() +
    stat_summary(fun.y = "median",
                 geom = "line",
@@ -112,19 +114,19 @@ heat_dat <-
    dat %>%
    group_by(SpEv, degrees) %>%
    mutate(summed_count_pot =
-             case_when(dist == 0 ~ sum(mean_count_pot),
-                       TRUE ~ mean_count_pot)) %>% 
-   filter(mean_count_pot > 0)
+             case_when(distance == 0 ~ sum(mean_pot_count),
+                       TRUE ~ mean_pot_count)) %>% 
+   filter(mean_pot_count > 0)
 
 ggplot(data = heat_dat,
        aes(
           x = degrees,
-          y = dist,
+          y = distance,
           colour = summed_count_pot,
           size = summed_count_pot
        )) +
-   geom_count(data = subset(heat_dat, dist == 0)) +
-   geom_count(data = subset(heat_dat, dist > 0)) +
+   geom_count(data = subset(heat_dat, distance == 0)) +
+   geom_count(data = subset(heat_dat, distance > 0)) +
    scale_colour_viridis_c(
       direction = -1,
       name = "n",
