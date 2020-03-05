@@ -1,0 +1,122 @@
+---
+title: "Import raw lesion count data"
+author: "A.H. Sparks"
+date: "05/03/2020"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, message=FALSE}
+if (!require("pacman"))
+   install.packages("pacman")
+pacman::p_load(tidyverse, skimr, here)
+```
+
+This documents the raw data import, calculation of mean lesion values and exports the new data to /cache for further use in visualisation and analysis.
+
+In the first step, the data is imported, the "m" from the `distance` column is dropped and the column is converted to numeric. A new colum, `SpEv` (Spread Event), is created for each location and replicated event at that location. Another new column, `degrees`, is added for each transect to indicate the direction in degrees based on J. Fanning's best information. Lastly the mean pot count, `mean_pot_count` is calculated for each of the transects at each distance, 0, 10, 25, 50 and 75 meters from the plots.
+
+After the data are updated, a column for precipitation type, `ptype`, is added and the spread events, `SpEv`, are renamed for clarity and ordered as factors for data visualisation.
+
+```{r import_data, message=FALSE}
+dat <-
+   read_csv(here("data", "lesion_counts.csv")) %>%
+   mutate(site = str_remove(site, " SPA")) %>%
+   mutate(distance = as.numeric(str_replace(distance, " m", ""))) %>%
+   unite(SpEv, c(site, rep), remove = FALSE) %>%
+   mutate(
+      degrees = case_when(
+         site == "Curyo" & transect == 1 ~ 290,
+         site == "Curyo" & transect == 2 ~ 300,
+         site == "Curyo" & transect == 3 ~ 310,
+         site == "Curyo" & transect == 4 ~ 320,
+         site == "Curyo" & transect == 5 ~ 330,
+         site == "Curyo" & transect == 6 ~ 340,
+         site == "Curyo" & transect == 7 ~ 350,
+         site == "Curyo" & transect == 8 ~ 360,
+         site == "Curyo" & transect == 9 ~ 10,
+         site == "Curyo" & transect == 10 ~ 20,
+         site == "Horsham" & transect == 1 ~ 45,
+         site == "Horsham" & transect == 2 ~ 55,
+         site == "Horsham" & transect == 3 ~ 65,
+         site == "Horsham" & transect == 4 ~ 75,
+         site == "Horsham" & transect == 5 ~ 85,
+         site == "Horsham" & transect == 6 ~ 95,
+         site == "Horsham" & transect == 7 ~ 105,
+         site == "Horsham" & transect == 8 ~ 115,
+         site == "Horsham" & transect == 9 ~ 125,
+         site == "Horsham" & transect == 10 ~ 135,
+         site == "pbc" & transect == 1 ~ 45,
+         site == "pbc" & transect == 2 ~ 55,
+         site == "pbc" & transect == 3 ~ 65,
+         site == "pbc" & transect == 4 ~ 75,
+         site == "pbc" & transect == 5 ~ 85,
+         site == "pbc" & transect == 6 ~ 95,
+         site == "pbc" & transect == 7 ~ 105,
+         site == "pbc" & transect == 8 ~ 115,
+         site == "pbc" & transect == 9 ~ 125,
+         site == "pbc" & transect == 10 ~ 135
+      )
+   ) %>%
+   mutate(mean_pot_count = rowMeans(select(., counts_p1:counts_p5), na.rm = TRUE)) %>%
+   mutate_at(vars(site, rep, station, transect, plant_no, pot_no, SpEv),
+             factor)
+
+# create new variables for the type of precipitation event
+# rename the site names to align with the cleaned weather data
+# create new variables for each event (location by replicate number at that location)
+
+dat <-
+   dat %>%
+      mutate(
+      ptype = case_when(
+         SpEv == "pbc_1" ~ "irrigation",
+         SpEv == "pbc_2" ~ "irrigation",
+         SpEv == "pbc_3" ~ "mixed",
+         SpEv == "Horsham_1" ~ "rainfall",
+         SpEv == "Horsham_2" ~ "rainfall",
+         SpEv == "Curyo_1" ~ "rainfall"
+      )
+   ) %>%
+   mutate(
+      site = case_when(
+         site == "pbc" ~ "Horsham irrigated",
+         site == "Horsham" ~ "Horsham dryland",
+         site == "Curyo" ~ "Curyo"
+      ) 
+   ) %>%
+   mutate(
+      SpEv = case_when(
+         SpEv == "pbc_1" ~ "Horsham Irrg 1",
+         SpEv == "pbc_2" ~ "Horsham Irrg 2",
+         SpEv == "pbc_3" ~ "Horsham Mixd 1",
+         SpEv == "Horsham_1" ~ "Horsham Dryland 1",
+         SpEv == "Horsham_2" ~ "Horsham Dryland 2",
+         SpEv == "Curyo_1" ~ "Curyo Dryland 1"
+      )
+   )
+
+# order the events for nicer graphing
+dat$SpEv <- ordered(factor(
+   dat$SpEv,
+   levels = c(
+      "Horsham Irrg 1",
+      "Horsham Irrg 2",
+      "Horsham Mixd 1",
+      "Horsham Dryland 1",
+      "Horsham Dryland 2",
+      "Curyo Dryland 1"
+   )
+))
+
+write_csv(x = dat, path = here("cache", "summarised_lesion_data.csv"))
+
+skim(dat)
+```

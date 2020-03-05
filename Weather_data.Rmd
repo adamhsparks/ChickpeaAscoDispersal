@@ -1,6 +1,6 @@
 ---
 title: "Weather Data Import and Cleaning"
-author: "A.H. Sparks"
+author: "A.H. Sparks and P. Melloy"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -29,8 +29,11 @@ Curyo_w <-
    read_csv(here(
       "data",
       "Curyo SPA 2019 - Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
-   ))%>%
-   select(Time, 'Wind Speed - average (km/h)','Wind Direction - average (º)', "Rainfall - (mm)") %>%
+   )) %>%
+   select(Time,
+          'Wind Speed - average (km/h)',
+          'Wind Direction - average (º)',
+          "Rainfall - (mm)") %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Curyo") %>%
    select(Location, everything())
@@ -53,8 +56,11 @@ Horsham_w <-
          "data",
          "Horsham SPA 2019 - Horsham SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
       )
-   ) %>% 
-   select(Time, 'Wind Speed - average (km/h)','Wind Direction - average (º)', "Rainfall - (mm)") %>%
+   ) %>%
+   select(Time,
+          'Wind Speed - average (km/h)',
+          'Wind Direction - average (º)',
+          "Rainfall - (mm)") %>%
    mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Horsham") %>%
    select(Location, everything())
@@ -73,7 +79,8 @@ skim(Horsham_w)
 Event data have dates and times when trap plants were deployed, retrieved and assessed for each event.
 
 ```{r import-event, message=FALSE}
-events <- read_csv(here("data", "Dispersal experiments dates.csv")) %>% 
+events <-
+   read_csv(here("data", "Dispersal experiments dates.csv")) %>%
    mutate(`assessment date` = dmy(`assessment date`))
 
 kable(events, format = "html", table.attr = 'class="table table-hover"')
@@ -87,43 +94,41 @@ Filter the data removing any dates that do not have "event" data necessary for a
 To do this, first `filter()`, then use `case_when()` to match the dates and times with the `events` data frame and create new variables to indicate which replicate and location, which is used to determine an event in the data.
 
 ```{r filter}
-events <- events %>% 
+events <- events %>%
    mutate(exposed = `time out` %--% `time removed`)
 
 Horsham_w <-
    Horsham_w %>%
-   filter(Time %within% events[1:5,"exposed"])%>%
+   filter(Time %within% events[1:5, "exposed"]) %>%
    mutate(
       Location = case_when(
-         Time %within% events[1,"exposed"] ~ events[[1, "site"]],
-         Time %within% events[2,"exposed"] ~ events[[2, "site"]],
-         Time %within% events[3,"exposed"] ~ events[[3, "site"]],
-         Time %within% events[4,"exposed"] ~ events[[4, "site"]],
-         Time %within% events[5,"exposed"] ~ events[[5, "site"]]
+         Time %within% events[1, "exposed"] ~ events[[1, "site"]],
+         Time %within% events[2, "exposed"] ~ events[[2, "site"]],
+         Time %within% events[3, "exposed"] ~ events[[3, "site"]],
+         Time %within% events[4, "exposed"] ~ events[[4, "site"]],
+         Time %within% events[5, "exposed"] ~ events[[5, "site"]]
       )
    ) %>%
    mutate(
       Rep = case_when(
-         Time %within% events[1,"exposed"] ~ events[[1, "rep"]],
-         Time %within% events[2,"exposed"] ~ events[[2, "rep"]],
-         Time %within% events[3,"exposed"] ~ events[[3, "rep"]],
-         Time %within% events[4,"exposed"] ~ events[[4, "rep"]],
-         Time %within% events[5,"exposed"] ~ events[[5, "rep"]]
+         Time %within% events[1, "exposed"] ~ events[[1, "rep"]],
+         Time %within% events[2, "exposed"] ~ events[[2, "rep"]],
+         Time %within% events[3, "exposed"] ~ events[[3, "rep"]],
+         Time %within% events[4, "exposed"] ~ events[[4, "rep"]],
+         Time %within% events[5, "exposed"] ~ events[[5, "rep"]]
       )
    ) %>%
    select(Location, Rep, Time, everything())
 
 Curyo_w <-
    Curyo_w %>%
-   filter(Time %within% 
+   filter(Time %within%
              events[which(events$site == "Curyo"),
                     "exposed"]) %>%
-   mutate(Location = case_when(
-      Time %within% events[which(events$site == "Curyo"),
-                           "exposed"] ~ "Curyo")) %>%
-   mutate(Rep = case_when(
-      Time %within% events[which(events$site == "Curyo"),"exposed"] ~
-         events[[which(events$site == "Curyo"), "rep"]])) %>%
+   mutate(Location = case_when(Time %within% events[which(events$site == "Curyo"),
+                                                    "exposed"] ~ "Curyo")) %>%
+   mutate(Rep = case_when(Time %within% events[which(events$site == "Curyo"), "exposed"] ~
+                             events[[which(events$site == "Curyo"), "rep"]])) %>%
    select(Location, Rep, Time, everything())
 
 weather <- bind_rows(Curyo_w, Horsham_w)
@@ -144,10 +149,11 @@ The columns are then reordered by `Location`, `Rep`, `Time` and the weather data
 * mws_sd - standard deviation of the wind speed
 
 ```{r rename-and-sd}
-weather <- 
-   weather %>% 
-   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)`/3.6) %>% 
-   rename(wind_speed = `Wind Speed - average (km/h)`) %>% 
+weather <-
+   weather %>%
+   mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)` /
+             3.6) %>%
+   rename(wind_speed = `Wind Speed - average (km/h)`) %>%
    rename(wind_direction = `Wind Direction - average (º)`) %>%
    rename(rainfall = `Rainfall - (mm)`) %>%
    select(Location, Rep, Time, everything())
@@ -156,14 +162,16 @@ glimpse(weather)
 ```
 
 ```{r summary-weather}
-weather_summary <- 
+weather_summary <-
    weather %>%
    group_by(Location, Rep) %>%
-   summarise(mws = mean(wind_speed),
-             ws_sd = sd(wind_speed),
-             mwd = mean(wind_direction),
-             wd_sd = sd(wind_direction),
-             sum_rain = sum(rainfall)) 
+   summarise(
+      mws = mean(wind_speed),
+      ws_sd = sd(wind_speed),
+      mwd = mean(wind_direction),
+      wd_sd = sd(wind_direction),
+      sum_rain = sum(rainfall)
+   )
 
 skim(weather_summary)
 ```

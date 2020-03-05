@@ -15,14 +15,19 @@ knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
 
 ## Import Data
 
-See "R/wrangle_raw_data.R" for the script that handles the data import. This
-Rmd file focuses on the models themselves.
-
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, broom, skimr, devtools, ggpubr, mgcv, extrafont, mgcViz)
+pacman::p_load(tidyverse, broom, skimr, devtools, ggpubr, mgcv, extrafont, mgcViz, here)
 
 theme_set(theme_pubclean(base_size = 14))
+```
+
+```{r import_data, message=FALSE}
+# import
+lesion <- read_csv(here("cache", "summarised_lesion_data.csv"))
+weather <- read_csv(here("cache", "weather_summary.csv"))
+
+dat <- left_join(lesion, weather, by = c("site" = "Location", "rep" = "Rep"))
 ```
 
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
@@ -30,10 +35,6 @@ theme_set(theme_pubclean(base_size = 14))
 # this is necessary to embed fonts in .eps files for EJPP
 font_import(pattern = "Arial")
 loadfonts(device = "postscript") 
-```
-
-```{r import data, message=FALSE}
-source("R/wrangle_raw_data.R")
 ```
 
 ## Fit GAMs
@@ -49,7 +50,7 @@ set.seed(27)
 ```{r fit-mod1}
 mod1 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5),
+      mean_pot_count ~ s(distance, k = 5),
       data = dat
    )
 
@@ -61,7 +62,7 @@ summary(mod1)
 ```{r fit-mod2}
 mod2 <-
    gam(
-      mean_count_pot ~ sum_rain+ s(dist, k = 5),
+      mean_pot_count ~ sum_rain+ s(distance, k = 5),
       data = dat
    )
 
@@ -71,7 +72,7 @@ summary(mod2)
 ### mod3 - s(Distance) + Windspeed
 ```{r fit-mod3}
 mod3 <-
-   gam(mean_count_pot ~ mws + s(dist, k = 5),
+   gam(mean_pot_count ~ mws + s(distance, k = 5),
        data = dat)
 
 summary(mod3)
@@ -80,7 +81,7 @@ summary(mod3)
 ### mod4 - s(Distance) + Windspeed + Precipitation
 ```{r fit-mod4}
 mod4 <-
-   gam(mean_count_pot ~ sum_rain + mws + s(dist, k = 5),
+   gam(mean_pot_count ~ sum_rain + mws + s(distance, k = 5),
        data = dat)
 
 summary(mod4)
@@ -91,7 +92,7 @@ summary(mod4)
 ```{r fit-mod5}
 mod5 <-
    gam(
-      mean_count_pot ~ sum_rain + s(dist + mws, k = 5),
+      mean_pot_count ~ sum_rain + s(distance + mws, k = 5),
       data = dat
    )
 
@@ -103,7 +104,7 @@ summary(mod5)
 ```{r fit-mod6}
 mod6 <-
    gam(
-      mean_count_pot ~ sum_rain + s(dist, k = 5) + s(mws, k = 5),
+      mean_pot_count ~ sum_rain + s(distance, k = 5) + s(mws, k = 5),
       data = dat
    )
 
@@ -115,7 +116,7 @@ summary(mod6)
 ```{r fit-mod7}
 mod7 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5),
+      mean_pot_count ~ s(distance, k = 5) + s(mws, k = 5),
       data = dat
    )
 
@@ -127,7 +128,7 @@ summary(mod7)
 ```{r fit-mod8}
 mod8 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
+      mean_pot_count ~ s(distance, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
       data = dat
    )
 
@@ -139,7 +140,7 @@ summary(mod8)
 ```{r fit-mod9}
 mod9 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5),
+      mean_pot_count ~ s(distance, k = 5) + s(sum_rain, k = 5),
       data = dat
    )
 
@@ -151,7 +152,7 @@ summary(mod9)
 ```{r fit-mod10}
 mod10 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5) + mws,
+      mean_pot_count ~ s(distance, k = 5) + s(sum_rain, k = 5) + mws,
       data = dat
    )
 
@@ -169,7 +170,7 @@ pot count data have this shape.
 ```{r fit-mod11.0}
 mod11.0 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5) + 
+      mean_pot_count ~ s(distance, k = 5) + 
          s(mws, k = 5) + 
          s(sum_rain, k = 5),
       data = dat,
@@ -187,7 +188,7 @@ plate splines.
 ```{r fit-mod11.1}
 mod11.1 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5, bs = "ts") + 
+      mean_pot_count ~ s(distance, k = 5, bs = "ts") + 
          s(mws, k = 5, bs = "ts") + 
          s(sum_rain, k = 5, bs = "ts"),
       data = dat,
@@ -207,7 +208,7 @@ suspect it was linear anyway, so add it as a linear term only.
 ```{r fit-mod12}
 mod12 <-
    gam(
-      mean_count_pot ~ s(dist, k = 5) + s(sum_rain, k = 5) + mws,
+      mean_pot_count ~ s(distance, k = 5) + s(sum_rain, k = 5) + mws,
       data = dat,
       family = tw()
    )
@@ -308,7 +309,7 @@ anova(mod1,
 
 ### Visualise the Models
 
-```{r vis-mods}
+```{r vis-mods, message=FALSE, warning=FALSE}
 # generic function to print GAMs using mgcViz
 p_gam <- function(x) {
    plot(x, allTerms = T) +
@@ -349,16 +350,9 @@ print(p_gam(x = getViz(mod9)) +
 print(p_gam(x = getViz(mod10)) +
          ggtitle("s(Distance) + s(Precipitation) + Windspeed"),
       pages = 1)
-print(
-   p_gam(x = getViz(mod11.0)) +
-      ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
-   pages = 1
-)
-# save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/FigGAM.png")
-ggsave("figures/FigGAM.eps")
-embed_fonts("figures/FigGAM.eps", outfile = "figures/FigGAM.eps",
-            options = "-dEPSCrop")
+print(p_gam(x = getViz(mod11.0)) +
+   ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
+   pages = 1)
 print(
    p_gam(x = getViz(mod11.1)) +
       ggtitle(
@@ -373,6 +367,30 @@ print(
 )
 ```
 
+```{r save_gam_plot, include=FALSE}
+# generate a new plot.gam object just for the publication (no main title)
+p11.1 <- p_gam(x = getViz(mod11.0))
+
+# save png and eps files
+png(
+   file = "figures/Fig1.png",
+   width = 480,
+   height = 480,
+   units = "px",
+   pointsize = 14
+)
+print(p11.1, pages = 1)
+dev.off()
+
+postscript(file = "figures/Fig1.eps", family = "Arial")
+par(mar = c(5, 3, 2, 2) + 0.1)
+print(p11.1, pages = 1)
+dev.off()
+
+embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
+            options = "-dEPSCrop")
+```
+
 ### Check Best Model Fit
 
 #### Mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
@@ -385,6 +403,6 @@ gam.check(mod11.0)
 
 This model, _mod11.0_, 
 `mean_pot_count ~ s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()`,
-lacks enough numbers of basis functions for two of three predictors, `dist`,
+lacks enough numbers of basis functions for two of three predictors, `distance`,
 `wsp`, but it's close. Realistically we need to increase the `k` values for
 these predictors, but we're lacking the data to do this.
