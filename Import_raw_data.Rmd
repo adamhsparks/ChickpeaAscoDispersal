@@ -1,6 +1,6 @@
 ---
 title: "Import raw lesion count data"
-author: "Adam H. Sparks"
+author: "A.H. Sparks"
 date: "05/03/2020"
 output:
   html_document:
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 if (!require("pacman"))
    install.packages("pacman")
-pacman::p_load(tidyverse, skimr)
+pacman::p_load(tidyverse, skimr, here)
 
 ```
 
@@ -26,7 +26,7 @@ After the data are updated, a column for precipitation type, `ptype`, is added a
 
 ```{r import_data, message=FALSE}
 dat <-
-   read_csv("data/lesion_counts.csv") %>%
+   read_csv(here("data", "lesion_counts.csv")) %>%
    mutate(site = str_remove(site, " SPA")) %>%
    mutate(distance = as.numeric(str_replace(distance, " m", ""))) %>%
    unite(SpEv, c(site, rep), remove = FALSE) %>%
@@ -107,7 +107,7 @@ dat$SpEv <- ordered(factor(
    )
 ))
 
-write_csv(x = dat, path = "cache/summarised_lesion_data.csv")
+write_csv(x = dat, path = here("cache", "summarised_lesion_data.csv"))
 
 skim(dat)
 ```
