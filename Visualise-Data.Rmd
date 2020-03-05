@@ -109,7 +109,7 @@ embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
 
 ## Heatmap of Lesions Along Transects
 
-```{r polar_coord_transects, message = FALSE, eval=TRUE, fig.cap=paste0("Heatmap showing count of mean lesions per pot at each station along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+```{r polar_coord_transects, message = FALSE, warning=FALSE, fig.cap=paste0("Heatmap showing count of mean lesions per pot at each station along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
 heat_dat <-
    dat %>%
    group_by(SpEv, degrees) %>%
