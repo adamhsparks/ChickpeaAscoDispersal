@@ -99,7 +99,11 @@ events <- events %>%
 
 Horsham_w <-
    Horsham_w %>%
-   filter(Time %within% events[1:5, "exposed"]) %>%
+   filter(Time %within% events[1, "exposed"] |
+             Time %within% events[2, "exposed"] |
+             Time %within% events[3, "exposed"] |
+             Time %within% events[4, "exposed"] |
+             Time %within% events[5, "exposed"]) %>%
    mutate(
       Location = case_when(
          Time %within% events[1, "exposed"] ~ events[[1, "site"]],
