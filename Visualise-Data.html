@@ -465,7 +465,7 @@ summary {
 
 <p>See “R/wrangle_raw_data.R” for the script that handles the data import. This Rmd file focuses on the data.</p>
 <pre class="r"><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)
-pacman::p_load(tidyverse, clifro, skimr, devtools, extrafont, ggpubr)
+pacman::p_load(tidyverse, clifro, skimr, extrafont, ggpubr)
 
 theme_set(theme_pubclean(base_size = 14))</code></pre>
 <pre class="r"><code>source(&quot;R/wrangle_raw_data.R&quot;)
@@ -977,9 +977,9 @@ Mean counts of lesions per pot at each station for ten transects at each station
 </p>
 </div>
 <pre class="r"><code># save a .png to refer to while writing and a .eps for publication submission
-ggsave(&quot;figures/Fig1.png&quot;)
-ggsave(&quot;figures/Fig1.eps&quot;)
-embed_fonts(&quot;figures/Fig1.eps&quot;, outfile = &quot;figures/Fig1.eps&quot;,
+ggsave(&quot;figures/Fig2.png&quot;)
+ggsave(&quot;figures/Fig2.eps&quot;)
+embed_fonts(&quot;figures/Fig2.eps&quot;, outfile = &quot;figures/Fig2.eps&quot;,
             options = &quot;-dEPSCrop&quot;)</code></pre>
 </div>
 <div id="visualise-the-rainfall-and-irrigation-events" class="section level2" number="0.3">
@@ -1003,11 +1003,6 @@ embed_fonts(&quot;figures/Fig1.eps&quot;, outfile = &quot;figures/Fig1.eps&quot;
 Total precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; source of precipitation ‘Irrg’ (irrigation), ‘Rain’ (rainfall) or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’
 </p>
 </div>
-<pre class="r"><code># save a .png to refer to while writing and a .eps for publication submission
-ggsave(&quot;figures/Fig2.png&quot;)
-ggsave(&quot;figures/Fig2.eps&quot;)
-embed_fonts(&quot;figures/Fig2.eps&quot;, outfile = &quot;figures/Fig4.eps&quot;,
-            options = &quot;-dEPSCrop&quot;)</code></pre>
 </div>
 <div id="visualise-the-windspeed-and-direction" class="section level2" number="0.4">
 <h2 number="0.4"><span class="header-section-number">0.4</span> Visualise the Windspeed and Direction</h2>

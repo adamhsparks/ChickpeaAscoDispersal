@@ -65,9 +65,9 @@ ggplot(dat, aes(x = dist,
    facet_wrap(. ~ SpEv, ncol = 3)
 
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/Fig1.png")
-ggsave("figures/Fig1.eps")
-embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
+ggsave("figures/Fig2.png")
+ggsave("figures/Fig2.eps")
+embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
             options = "-dEPSCrop")
 ```
 
@@ -87,12 +87,6 @@ ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
    labs(main = "Rainfall events") +
    theme(legend.position = "none") +
    coord_flip()
-
-# save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/Fig2.png")
-ggsave("figures/Fig2.eps")
-embed_fonts("figures/Fig2.eps", outfile = "figures/Fig4.eps",
-            options = "-dEPSCrop")
 ```
 
 ## Visualise the Windspeed and Direction
