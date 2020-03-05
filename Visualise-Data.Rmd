@@ -18,7 +18,7 @@ This Rmd file focuses on the data.
 
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, clifro, skimr, devtools, extrafont, ggpubr)
+pacman::p_load(tidyverse, clifro, skimr, extrafont, ggpubr)
 
 theme_set(theme_pubclean(base_size = 14))
 ```

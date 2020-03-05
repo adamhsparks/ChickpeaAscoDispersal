@@ -20,7 +20,9 @@ Rmd file focuses on the models themselves.
 
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, broom, skimr, devtools, mgcv)
+pacman::p_load(tidyverse, broom, skimr, devtools, ggpubr, mgcv, extrafont, mgcViz)
+
+theme_set(theme_pubclean(base_size = 14))
 ```
 
 ```{r import data, message=FALSE}
@@ -300,20 +302,63 @@ anova(mod1,
 ### Visualise the Models
 
 ```{r vis-mods}
-par(mfrow = c(2, 2))
-plot(mod1, main = "s(Distance)", pages = 1, rug = TRUE)
-plot(mod2, main = "s(Distance) + Precipitation", pages = 1, rug = TRUE)
-plot(mod3, main = "s(Distance) + Windspeed", pages = 1, rug = TRUE)
-plot(mod4, main = "s(Distance) + Windspeed + Precipitation", pages = 1, rug = TRUE)
-plot(mod5, main = "s(Distance + Windspeed) + Precipitation", pages = 1, rug = TRUE)
-plot(mod6, main = "s(Distance) + s(Windspeed) + Precipitation", pages = 1, rug = TRUE)
-plot(mod7, main = "s(Distance) + s(Windspeed)", pages = 1, rug = TRUE)
-plot(mod8, main = "s(Distance) + s(Windspeed) + s(Precipitation)", pages = 1, rug = TRUE)
-plot(mod9, main = "s(Distance) + s(Precipitation)", pages = 1, rug = TRUE)
-plot(mod10, main = "s(Distance) + s(Precipitation) + Windspeed", pages = 1, rug = TRUE)
-plot(mod11.0, main = "s(Distance) + s(Windspeed) + s(Precipitation), family = tw()", pages = 1, rug = TRUE)
-plot(mod11.1, main = "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()", pages = 1, rug = TRUE)
-plot(mod12, main = "s(Distance) + s(Precipitation) + Windspeed, family = tw()", pages = 1, rug = TRUE)
+# generic function to print GAMs using mgcViz
+p_gam <- function(x) {
+   plot(x, allTerms = T) +
+      l_points() +
+      l_fitLine(linetype = 1)  +
+      l_ciLine(linetype = 3) +
+      l_ciBar() +
+      l_rug()
+}
+
+print(p_gam(x = getViz(mod1)) +
+         ggtitle("s(Distance)"),
+      pages = 1)
+print(p_gam(x = getViz(mod2)) +
+         ggtitle("s(Distance) + Precipitation"),
+      pages = 1)
+print(p_gam(x = getViz(mod3)) +
+         ggtitle("s(Distance) + Windspeed"),
+      pages = 1)
+print(p_gam(x = getViz(mod4)) +
+         ggtitle("s(Distance) + Windspeed + Precipitation"),
+      pages = 1)
+print(p_gam(x = getViz(mod5)) +
+         ggtitle("s(Distance + Windspeed) + Precipitation"),
+      pages = 1)
+print(p_gam(x = getViz(mod6)) +
+         ggtitle("s(Distance) + s(Windspeed) + Precipitation"),
+      pages = 1)
+print(p_gam(x = getViz(mod7)) +
+         ggtitle("s(Distance) + s(Windspeed)"),
+      pages = 1)
+print(p_gam(x = getViz(mod8)) +
+         ggtitle("s(Distance) + s(Windspeed) + s(Precipitation)"),
+      pages = 1)
+print(p_gam(x = getViz(mod9)) +
+         ggtitle("s(Distance) + s(Precipitation)"),
+      pages = 1)
+print(p_gam(x = getViz(mod10)) +
+         ggtitle("s(Distance) + s(Precipitation) + Windspeed"),
+      pages = 1)
+print(
+   p_gam(x = getViz(mod11.0)) +
+      ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
+   pages = 1
+)
+print(
+   p_gam(x = getViz(mod11.1)) +
+      ggtitle(
+         "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()"
+      ),
+   pages = 1
+)
+print(
+   p_gam(x = getViz(mod12)) +
+      ggtitle("s(Distance) + s(Precipitation) + Windspeed, family = tw()"),
+   pages = 1
+)
 ```
 
 ### Check Best Model Fit
