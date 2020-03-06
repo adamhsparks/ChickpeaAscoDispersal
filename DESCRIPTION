@@ -1,0 +1,45 @@
+Package: ChickpeaAscoDispersal
+Title: Research Compendium for the paper ...
+Version: 0.1
+Authors@R: c(person("Adam H.", "Sparks", email = "adam.sparks@usq.edu.au",
+                     role = c("aut", "cre"),
+                     comment = c(ORCID = "0000-0002-0061-8359")),
+                     person("Ihsan", "Khaliq",
+                     email = "ihsan.khaliq@usq.edu.au",
+                     role = "aut"),
+                     person("Paul", "Melloy",
+                     email = "paul.melloy@usq.edu.au",
+                     role = "aut",
+                     comment = c(ORCID = "0000-0003-4253-7167")),
+                     person("Daniel", "Burrell",
+                     email = "daniel.burrell@usq.edu.au",
+                     role = "aut"),
+                     person("Joshua", "Fanning",
+                     email = "joshua.fanning@agriculture.vic.gov.au",
+                     role = "aut",
+                     comment = c(ORCID = "0000-0002-7730-8498")),
+                     person("Jean", "Galloway",
+                     email = "jean.galloway@dpird.wa.gov.au",
+                     role = "aut"),
+                     person("Kevin", "Moore",
+                     email = "kevin.moore@dpi.nsw.gov.au",
+                     role = "aut"))
+Description: Documents the workflow and processes involved in the analysis of
+   data for the paper ...
+Depends: R (>= 3.1.0)
+Imports:
+   broom,
+   clifro,
+   extrafont,
+   ggplot2,
+   ggpubr,
+   here,
+   kableExtra,
+   lubridate,
+   mgcv,
+   mgcViz,
+   scales,
+   skimr
+Remotes:
+   adamhsparks/theme.usq
+License: MIT
