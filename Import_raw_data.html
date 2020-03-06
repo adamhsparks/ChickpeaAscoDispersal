@@ -537,19 +537,6 @@ dat &lt;-
       )
    )
 
-# order the events for nicer graphing
-dat$SpEv &lt;- ordered(factor(
-   dat$SpEv,
-   levels = c(
-      &quot;Horsham Irrg 1&quot;,
-      &quot;Horsham Irrg 2&quot;,
-      &quot;Horsham Mixd 1&quot;,
-      &quot;Horsham Rain 1&quot;,
-      &quot;Horsham Rain 2&quot;,
-      &quot;Curyo Rain 1&quot;
-   )
-))
-
 write_csv(x = dat, path = here(&quot;cache&quot;, &quot;summarised_lesion_data.csv&quot;))
 
 skim(dat)</code></pre>
@@ -578,11 +565,11 @@ skim(dat)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">character</td>
-<td align="left">3</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">factor</td>
-<td align="left">6</td>
+<td align="left">5</td>
 </tr>
 <tr class="even">
 <td align="left">numeric</td>
@@ -614,6 +601,16 @@ skim(dat)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">SpEv</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
 <td align="left">site</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -623,7 +620,7 @@ skim(dat)</code></pre>
 <td align="right">3</td>
 <td align="right">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">dist_stat</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -633,7 +630,7 @@ skim(dat)</code></pre>
 <td align="right">38</td>
 <td align="right">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ptype</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -659,14 +656,6 @@ skim(dat)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">SpEv</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">TRUE</td>
-<td align="right">6</td>
-<td align="center">Hor: 56, Hor: 56, Hor: 56, Hor: 56</td>
-</tr>
-<tr class="even">
 <td align="left">rep</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -674,7 +663,7 @@ skim(dat)</code></pre>
 <td align="right">3</td>
 <td align="center">1: 168, 2: 112, 3: 56</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">station</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -682,7 +671,7 @@ skim(dat)</code></pre>
 <td align="right">10</td>
 <td align="center">1: 48, 2: 48, 3: 48, 4: 48</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">transect</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -690,7 +679,7 @@ skim(dat)</code></pre>
 <td align="right">10</td>
 <td align="center">1: 48, 4: 48, 7: 48, 10: 48</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">plant_no</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -698,7 +687,7 @@ skim(dat)</code></pre>
 <td align="right">2</td>
 <td align="center">5: 216, 3: 120</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">pot_no</td>
 <td align="right">0</td>
 <td align="right">1</td>

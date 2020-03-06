@@ -103,19 +103,6 @@ dat <-
       )
    )
 
-# order the events for nicer graphing
-dat$SpEv <- ordered(factor(
-   dat$SpEv,
-   levels = c(
-      "Horsham Irrg 1",
-      "Horsham Irrg 2",
-      "Horsham Mixd 1",
-      "Horsham Rain 1",
-      "Horsham Rain 2",
-      "Curyo Rain 1"
-   )
-))
-
 write_csv(x = dat, path = here("cache", "summarised_lesion_data.csv"))
 
 skim(dat)
