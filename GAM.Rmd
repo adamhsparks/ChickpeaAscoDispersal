@@ -250,7 +250,7 @@ print(
 )
 ```
 
-This model, same structure as `mod11.0`, uses thin-plate splines to shrink the coefficients of the smooth to zero.
+This model, same structure as `mod11.0`, uses thin-plate splines to shrink the coefficients of the smooth to zero when possible.
 
 ## Compare the Models
 
