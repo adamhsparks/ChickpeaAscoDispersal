@@ -86,8 +86,6 @@ events <-
 kable(events, format = "html", table.attr = 'class="table table-hover"')
 ```
 
-
-
 ### Filter and merge the locations' the data
 
 Filter the data removing any dates that do not have "event" data necessary for analysis.
@@ -144,14 +142,6 @@ The `Wind Speed - average (km/h)` column is renamed to `mws` (mean wind speed) a
 The standard deviation of the wind speed and wind direction are calculated for the data.
 The columns are then reordered by `Location`, `Rep`, `Time` and the weather data.
 
-* mdr - mean direction degrees for wind
-
-* mws - mean wind speed in meters per second
-
-* mdr_sd - standard deviation of the wind direction
-
-* mws_sd - standard deviation of the wind speed
-
 ```{r rename-and-sd}
 weather <-
    weather %>%
@@ -164,6 +154,21 @@ weather <-
 
 glimpse(weather)
 ```
+
+### Summarise weather data by event
+
+The weather data are now ready for summarising for each event that occured.
+The resulting columns are:
+
+* mws - mean wind speed in meters per second
+
+* ws_sd - standard deviation of the wind speed
+
+* mwd - mean wind direction in degrees
+
+* wd_sd - standard deviation of the wind direction in degrees
+
+* sum_rain - total rainfall during the event
 
 ```{r summary-weather}
 weather_summary <-
@@ -180,11 +185,9 @@ weather_summary <-
 skim(weather_summary)
 ```
 
-
-
 ## Export weather to cache
 
-Save the resulting weather data to the "cache" directory for further use.
+Save the resulting weather data to /cache for further use.
 
 ```{r export-weather, message=FALSE}
 write_csv(weather, here("cache", "cleaned_weather.csv"))

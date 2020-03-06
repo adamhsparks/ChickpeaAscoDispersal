@@ -470,6 +470,7 @@ summary {
 <li><a href="#import-the-event-data"><span class="toc-section-number">0.3.1</span> Import the event data</a></li>
 <li><a href="#filter-and-merge-the-locations-the-data"><span class="toc-section-number">0.3.2</span> Filter and merge the locations’ the data</a></li>
 <li><a href="#rename-columns-and-add-other-calculations"><span class="toc-section-number">0.3.3</span> Rename columns and add other calculations</a></li>
+<li><a href="#summarise-weather-data-by-event"><span class="toc-section-number">0.3.4</span> Summarise weather data by event</a></li>
 </ul></li>
 <li><a href="#export-weather-to-cache"><span class="toc-section-number">0.4</span> Export weather to cache</a></li>
 </ul>
@@ -1412,12 +1413,6 @@ weather &lt;- bind_rows(Curyo_w, Horsham_w)</code></pre>
 <div id="rename-columns-and-add-other-calculations" class="section level3" number="0.3.3">
 <h3 number="0.3.3"><span class="header-section-number">0.3.3</span> Rename columns and add other calculations</h3>
 <p>The <code>Wind Speed - average (km/h)</code> column is renamed to <code>mws</code> (mean wind speed) and converted to metres per second. The standard deviation of the wind speed and wind direction are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
-<ul>
-<li><p>mdr - mean direction degrees for wind</p></li>
-<li><p>mws - mean wind speed in meters per second</p></li>
-<li><p>mdr_sd - standard deviation of the wind direction</p></li>
-<li><p>mws_sd - standard deviation of the wind speed</p></li>
-</ul>
 <pre class="r"><code>weather &lt;-
    weather %&gt;%
    mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)` /
@@ -1436,6 +1431,17 @@ glimpse(weather)</code></pre>
 ## $ wind_speed     &lt;dbl&gt; 3.37, 3.44, 3.30, 3.49, 3.69, 3.73, 3.61, 3.32, 3.40, …
 ## $ wind_direction &lt;dbl&gt; 350.537678, 357.810346, 357.167889, 357.911110, 355.97…
 ## $ rainfall       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
+</div>
+<div id="summarise-weather-data-by-event" class="section level3" number="0.3.4">
+<h3 number="0.3.4"><span class="header-section-number">0.3.4</span> Summarise weather data by event</h3>
+<p>The weather data are now ready for summarising for each event that occured. The resulting columns are:</p>
+<ul>
+<li><p>mws - mean wind speed in meters per second</p></li>
+<li><p>ws_sd - standard deviation of the wind speed</p></li>
+<li><p>mwd - mean wind direction in degrees</p></li>
+<li><p>wd_sd - standard deviation of the wind direction in degrees</p></li>
+<li><p>sum_rain - total rainfall during the event</p></li>
+</ul>
 <pre class="r"><code>weather_summary &lt;-
    weather %&gt;%
    group_by(Location, Rep) %&gt;%
@@ -2257,7 +2263,7 @@ Horsham irrigated
 </div>
 <div id="export-weather-to-cache" class="section level2" number="0.4">
 <h2 number="0.4"><span class="header-section-number">0.4</span> Export weather to cache</h2>
-<p>Save the resulting weather data to the “cache” directory for further use.</p>
+<p>Save the resulting weather data to /cache for further use.</p>
 <pre class="r"><code>write_csv(weather, here(&quot;cache&quot;, &quot;cleaned_weather.csv&quot;))
 write_csv(weather_summary, here(&quot;cache&quot;, &quot;weather_summary.csv&quot;))</code></pre>
 </div>
