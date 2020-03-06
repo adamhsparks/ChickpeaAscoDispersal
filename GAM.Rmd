@@ -20,6 +20,9 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, broom, skimr, devtools, ggpubr, mgcv, extrafont, mgcViz, here)
 
 theme_set(theme_pubclean(base_size = 14))
+
+# load the function to print GAM figures
+source(here("R", "p_gam.R"))
 ```
 
 ```{r import_data, message=FALSE}
@@ -55,6 +58,10 @@ mod1 <-
    )
 
 summary(mod1)
+
+print(p_gam(x = getViz(mod1)) +
+         ggtitle("s(Distance)"),
+      pages = 1)
 ```
 
 ### mod2 - s(Distance) + Precipitation
@@ -67,6 +74,10 @@ mod2 <-
    )
 
 summary(mod2)
+
+print(p_gam(x = getViz(mod2)) +
+         ggtitle("s(Distance) + Precipitation"),
+      pages = 1)
 ```
 
 ### mod3 - s(Distance) + Windspeed
@@ -76,6 +87,10 @@ mod3 <-
        data = dat)
 
 summary(mod3)
+
+print(p_gam(x = getViz(mod3)) +
+         ggtitle("s(Distance) + Windspeed"),
+      pages = 1)
 ```
 
 ### mod4 - s(Distance) + Windspeed + Precipitation
@@ -85,6 +100,10 @@ mod4 <-
        data = dat)
 
 summary(mod4)
+
+print(p_gam(x = getViz(mod4)) +
+         ggtitle("s(Distance) + Windspeed + Precipitation"),
+      pages = 1)
 ```
 
 ### mod5 - s(Distance + Windspeed) + Precipitation
@@ -97,6 +116,11 @@ mod5 <-
    )
 
 summary(mod5)
+
+
+print(p_gam(x = getViz(mod5)) +
+         ggtitle("s(Distance + Windspeed) + Precipitation"),
+      pages = 1)
 ```
 
 ### mod6 - s(Distance) + s(Windspeed) + Precipitation
@@ -109,6 +133,11 @@ mod6 <-
    )
 
 summary(mod6)
+
+
+print(p_gam(x = getViz(mod6)) +
+         ggtitle("s(Distance) + s(Windspeed) + Precipitation"),
+      pages = 1)
 ```
 
 ### mod7 - s(Distance) + s(Windspeed)
@@ -121,6 +150,10 @@ mod7 <-
    )
 
 summary(mod7)
+
+print(p_gam(x = getViz(mod7)) +
+         ggtitle("s(Distance) + s(Windspeed)"),
+      pages = 1)
 ```
 
 ### mod8 - s(Distance) + s(Windspeed) + s(Precipitation)
@@ -133,6 +166,11 @@ mod8 <-
    )
 
 summary(mod8)
+
+
+print(p_gam(x = getViz(mod8)) +
+         ggtitle("s(Distance) + s(Windspeed) + s(Precipitation)"),
+      pages = 1)
 ```
 
 ### mod9 - s(Distance) + s(Precipitation)
@@ -145,6 +183,10 @@ mod9 <-
    )
 
 summary(mod9)
+
+print(p_gam(x = getViz(mod9)) +
+         ggtitle("s(Distance) + s(Precipitation)"),
+      pages = 1)
 ```
 
 ### mod10 - s(Distance) +s(Precipitation) + Windspeed
@@ -157,15 +199,16 @@ mod10 <-
    )
 
 summary(mod10)
+
+print(p_gam(x = getViz(mod10)) +
+         ggtitle("s(Distance) + s(Precipitation) + Windspeed"),
+      pages = 1)
 ```
 
 ### mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
 
-This is the same as `mod8` but using `family = tw()`, see `?family.mgcv` for
-more on the families. The Tweedie distribution is used where the distribution
-has a positive mass at zero, but is continuous unlike the Poisson distribution
-that requires count data. The data visualisation shows clearly that the mean
-pot count data have this shape.
+This is the same as `mod8` but using `family = tw()`, see `?family.mgcv` for more on the families. The Tweedie distribution is used where the distribution has a positive mass at zero, but is continuous unlike the Poisson distribution that requires count data.
+The data visualisation shows clearly that the mean pot count data have this shape.
 
 ```{r fit-mod11.0}
 mod11.0 <-
@@ -178,10 +221,11 @@ mod11.0 <-
    )
 
 summary(mod11.0)
-```
 
-Try fitting the same model using a different shrinkage smoother, `ts` is thin-
-plate splines.
+print(p_gam(x = getViz(mod11.0)) +
+   ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
+   pages = 1)
+```
 
 ### mod11.1 - s(Distance, bs = "ts") + s(Windspeed, bs = "ts") + s(Precipitation, bs = "ts"), family = tw()
 
@@ -196,25 +240,17 @@ mod11.1 <-
    )
 
 summary(mod11.1)
+
+print(
+   p_gam(x = getViz(mod11.1)) +
+      ggtitle(
+         "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()"
+      ),
+   pages = 1
+)
 ```
 
 This model, same structure as `mod11.0`, uses thin-plate splines to shrink the coefficients of the smooth to zero.
-
-### mod12 - s(Distance) + s(Precipitation) + Windspeed, family = tw()
-
-Looking at `mod11.1`, `mws` is not significant as a smoothed term, and we'd
-suspect it was linear anyway, so add it as a linear term only.
-
-```{r fit-mod12}
-mod12 <-
-   gam(
-      mean_pot_count ~ s(distance, k = 5) + s(sum_rain, k = 5) + mws,
-      data = dat,
-      family = tw()
-   )
-
-summary(mod12)
-```
 
 ## Compare the Models
 
@@ -231,8 +267,7 @@ models <- list(mod1 = mod1,
                mod9 = mod9,
                mod10 = mod10,
                mod11.0 = mod11.0,
-               mod11.1 = mod11.1,
-               mod12 = mod12
+               mod11.1 = mod11.1
                )
 map_df(models, glance, .id = "model") %>%
    arrange(AIC)
@@ -252,41 +287,9 @@ enframe(c(
    mod9 = summary(mod9)$r.sq,
    mod10 = summary(mod10)$r.sq,
    mod11.0 = summary(mod11.0)$r.sq,
-   mod11.1 = summary(mod11.1)$r.sq,
-   mod12 = summary(mod12)$r.sq
+   mod11.1 = summary(mod11.1)$r.sq
 )) %>%
    arrange(desc(value))
-```
-
-### Coefficients
-
-```{r coef}
-cat("\nmod1\n")
-coef(mod1)
-cat("\nmod2\n")
-coef(mod2)
-cat("\nmod3\n")
-coef(mod3)
-cat("\nmod4\n")
-coef(mod4)
-cat("\nmod5\n")
-coef(mod5)
-cat("\nmod6\n")
-coef(mod6)
-cat("\nmod7\n")
-coef(mod7)
-cat("\nmod8\n")
-coef(mod8)
-cat("\nmod9\n")
-coef(mod9)
-cat("\nmod10\n")
-coef(mod10)
-cat("\nmod11.0\n")
-coef(mod11.0)
-cat("\nmod11.1\n")
-coef(mod11.1)
-cat("\nmod12\n")
-coef(mod12)
 ```
 
 ### ANOVA
@@ -303,68 +306,31 @@ anova(mod1,
       mod10,
       mod11.0,
       mod11.1,
-      mod12,
       test = "F")
 ```
 
-### Visualise the Models
+### Check Best Model Fit
 
-```{r vis-mods, message=FALSE, warning=FALSE}
-# generic function to print GAMs using mgcViz
-p_gam <- function(x) {
-   plot(x, allTerms = T) +
-      l_points() +
-      l_fitLine(linetype = 1)  +
-      l_ciLine(linetype = 3) +
-      l_ciBar() +
-      l_rug()
-}
+#### Mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
 
-print(p_gam(x = getViz(mod1)) +
-         ggtitle("s(Distance)"),
-      pages = 1)
-print(p_gam(x = getViz(mod2)) +
-         ggtitle("s(Distance) + Precipitation"),
-      pages = 1)
-print(p_gam(x = getViz(mod3)) +
-         ggtitle("s(Distance) + Windspeed"),
-      pages = 1)
-print(p_gam(x = getViz(mod4)) +
-         ggtitle("s(Distance) + Windspeed + Precipitation"),
-      pages = 1)
-print(p_gam(x = getViz(mod5)) +
-         ggtitle("s(Distance + Windspeed) + Precipitation"),
-      pages = 1)
-print(p_gam(x = getViz(mod6)) +
-         ggtitle("s(Distance) + s(Windspeed) + Precipitation"),
-      pages = 1)
-print(p_gam(x = getViz(mod7)) +
-         ggtitle("s(Distance) + s(Windspeed)"),
-      pages = 1)
-print(p_gam(x = getViz(mod8)) +
-         ggtitle("s(Distance) + s(Windspeed) + s(Precipitation)"),
-      pages = 1)
-print(p_gam(x = getViz(mod9)) +
-         ggtitle("s(Distance) + s(Precipitation)"),
-      pages = 1)
-print(p_gam(x = getViz(mod10)) +
-         ggtitle("s(Distance) + s(Precipitation) + Windspeed"),
-      pages = 1)
-print(p_gam(x = getViz(mod11.0)) +
-   ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
-   pages = 1)
-print(
-   p_gam(x = getViz(mod11.1)) +
-      ggtitle(
-         "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()"
-      ),
-   pages = 1
-)
-print(
-   p_gam(x = getViz(mod12)) +
-      ggtitle("s(Distance) + s(Precipitation) + Windspeed, family = tw()"),
-   pages = 1
-)
+```{r mod-check11.0}
+mod11.0_vis <- getViz(mod11.0)
+check(mod11.0_vis,
+      a.qq = list(method = "tnorm", 
+                  a.cipoly = list(fill = "light blue")), 
+      a.respoi = list(size = 0.5), 
+      a.hist = list(bins = 10))
+```
+
+#### Mod11.0 - s(Distance, family = "ts") + s(Windspeed, family = "ts") + s(Precipitation, family = "ts"), family = tw()
+
+```{r mod_check11.1}
+mod11.1_vis <- getViz(mod11.1)
+check(mod11.1_vis,
+      a.qq = list(method = "tnorm", 
+                  a.cipoly = list(fill = "light blue")), 
+      a.respoi = list(size = 0.5), 
+      a.hist = list(bins = 10))
 ```
 
 ```{r save_gam_plot, include=FALSE}
@@ -389,14 +355,6 @@ dev.off()
 
 embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
             options = "-dEPSCrop")
-```
-
-### Check Best Model Fit
-
-#### Mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
-
-```{r mod-check11}
-gam.check(mod11.0)
 ```
 
 ## Thoughts
