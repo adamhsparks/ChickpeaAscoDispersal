@@ -29,7 +29,19 @@ loadfonts(device = "postscript")
 
 ```{r import_data, message=FALSE}
 # import
-lesion <- read_csv(here("cache", "summarised_lesion_data.csv"))
+lesion <- read_csv(here("cache", "summarised_lesion_data.csv")) %>%
+   mutate(SpEv = ordered(factor(
+      SpEv,
+      levels = c(
+         "Horsham Irrg 1",
+         "Horsham Irrg 2",
+         "Horsham Mixd 1",
+         "Horsham Rain 1",
+         "Horsham Rain 2",
+         "Curyo Rain 1"
+      )
+   )))
+
 weather <- read_csv(here("cache", "weather_summary.csv"))
 
 dat <- left_join(lesion, weather, by = c("site" = "Location", "rep" = "Rep"))
