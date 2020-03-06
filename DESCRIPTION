@@ -1,10 +1,7 @@
 Package: ChickpeaAscoDispersal
 Title: Research Compendium for the paper ...
 Version: 0.1
-Authors@R: c(person("Adam H.", "Sparks", email = "adam.sparks@usq.edu.au",
-                     role = c("aut", "cre"),
-                     comment = c(ORCID = "0000-0002-0061-8359")),
-                     person("Ihsan", "Khaliq",
+Authors@R: c(person("Ihsan", "Khaliq",
                      email = "ihsan.khaliq@usq.edu.au",
                      role = "aut"),
                      person("Paul", "Melloy",
@@ -23,7 +20,11 @@ Authors@R: c(person("Adam H.", "Sparks", email = "adam.sparks@usq.edu.au",
                      role = "aut"),
                      person("Kevin", "Moore",
                      email = "kevin.moore@dpi.nsw.gov.au",
-                     role = "aut"))
+                     role = "aut"),
+                     person("Adam H.", "Sparks",
+                     email = "adam.sparks@usq.edu.au",
+                     role = c("aut", "cre"),
+                     comment = c(ORCID = "0000-0002-0061-8359")))
 Description: Documents the workflow and processes involved in the analysis of
    data for the paper ...
 Depends: R (>= 3.1.0)
