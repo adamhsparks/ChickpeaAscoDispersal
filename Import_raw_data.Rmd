@@ -97,9 +97,9 @@ dat <-
          SpEv == "pbc_1" ~ "Horsham Irrg 1",
          SpEv == "pbc_2" ~ "Horsham Irrg 2",
          SpEv == "pbc_3" ~ "Horsham Mixd 1",
-         SpEv == "Horsham_1" ~ "Horsham Dryland 1",
-         SpEv == "Horsham_2" ~ "Horsham Dryland 2",
-         SpEv == "Curyo_1" ~ "Curyo Dryland 1"
+         SpEv == "Horsham_1" ~ "Horsham Rain 1",
+         SpEv == "Horsham_2" ~ "Horsham Rain 2",
+         SpEv == "Curyo_1" ~ "Curyo Rain 1"
       )
    )
 
@@ -110,9 +110,9 @@ dat$SpEv <- ordered(factor(
       "Horsham Irrg 1",
       "Horsham Irrg 2",
       "Horsham Mixd 1",
-      "Horsham Dryland 1",
-      "Horsham Dryland 2",
-      "Curyo Dryland 1"
+      "Horsham Rain 1",
+      "Horsham Rain 2",
+      "Curyo Rain 1"
    )
 ))
 
