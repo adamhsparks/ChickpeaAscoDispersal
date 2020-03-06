@@ -11,7 +11,7 @@ output:
 
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, lubridate, skimr, here, kableExtra)
+pacman::p_load(tidyverse, lubridate, skimr, kableExtra, here)
 ```
 
 Import and select only the weather data necessary for analysis from Curyo and Horsham weather stations.
@@ -124,9 +124,7 @@ Horsham_w <-
 
 Curyo_w <-
    Curyo_w %>%
-   filter(Time %within%
-             events[which(events$site == "Curyo"),
-                    "exposed"]) %>%
+   filter(Time %within% events[which(events$site == "Curyo"), "exposed"]) %>%
    mutate(Location = case_when(Time %within% events[which(events$site == "Curyo"),
                                                     "exposed"] ~ "Curyo")) %>%
    mutate(Rep = case_when(Time %within% events[which(events$site == "Curyo"), "exposed"] ~
@@ -138,7 +136,7 @@ weather <- bind_rows(Curyo_w, Horsham_w)
 
 ### Rename columns and add other calculations
 
-The `Wind Speed - average (km/h)` column is renamed to `mws` (mean wind speed) and converted to metres per second.
+The `Wind Speed - average (km/h)` column is converted to metres per second and renamed `wind_speed`.
 The standard deviation of the wind speed and wind direction are calculated for the data.
 The columns are then reordered by `Location`, `Rep`, `Time` and the weather data.
 

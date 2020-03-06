@@ -477,7 +477,7 @@ summary {
 </div>
 
 <pre class="r"><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)
-pacman::p_load(tidyverse, lubridate, skimr, here, kableExtra)</code></pre>
+pacman::p_load(tidyverse, lubridate, skimr, kableExtra, here)</code></pre>
 <p>Import and select only the weather data necessary for analysis from Curyo and Horsham weather stations. The original data are located in the “data” directory. Dates for events are recorded in the “data/Dispersal experiments dates.csv” file and are used to subset the weather data in this file.</p>
 <p>In this step the data are imported and only the date and time, average windspeed and average wind direction are selected.</p>
 <div id="curyo-weather" class="section level2" number="0.1">
@@ -1399,9 +1399,7 @@ Horsham_w &lt;-
 
 Curyo_w &lt;-
    Curyo_w %&gt;%
-   filter(Time %within%
-             events[which(events$site == &quot;Curyo&quot;),
-                    &quot;exposed&quot;]) %&gt;%
+   filter(Time %within% events[which(events$site == &quot;Curyo&quot;), &quot;exposed&quot;]) %&gt;%
    mutate(Location = case_when(Time %within% events[which(events$site == &quot;Curyo&quot;),
                                                     &quot;exposed&quot;] ~ &quot;Curyo&quot;)) %&gt;%
    mutate(Rep = case_when(Time %within% events[which(events$site == &quot;Curyo&quot;), &quot;exposed&quot;] ~
@@ -1412,7 +1410,7 @@ weather &lt;- bind_rows(Curyo_w, Horsham_w)</code></pre>
 </div>
 <div id="rename-columns-and-add-other-calculations" class="section level3" number="0.3.3">
 <h3 number="0.3.3"><span class="header-section-number">0.3.3</span> Rename columns and add other calculations</h3>
-<p>The <code>Wind Speed - average (km/h)</code> column is renamed to <code>mws</code> (mean wind speed) and converted to metres per second. The standard deviation of the wind speed and wind direction are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
+<p>The <code>Wind Speed - average (km/h)</code> column is converted to metres per second and renamed <code>wind_speed</code>. The standard deviation of the wind speed and wind direction are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
 <pre class="r"><code>weather &lt;-
    weather %&gt;%
    mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)` /
