@@ -359,8 +359,4 @@ embed_fonts("figures/Fig1.eps", outfile = "figures/Fig1.eps",
 
 ## Thoughts
 
-This model, _mod11.0_, 
-`mean_pot_count ~ s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()`,
-lacks enough numbers of basis functions for two of three predictors, `distance`,
-`wsp`, but it's close. Realistically we need to increase the `k` values for
-these predictors, but we're lacking the data to do this.
+This model, _mod11.0_, `mean_pot_count ~ s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()`, is the best performing model. It cannot be used for predictions, but suitably describes the dispersal data we have on hand with the parameters used. More data would be desireable to increase the value of `k` as evidenced in the GAM checks.
