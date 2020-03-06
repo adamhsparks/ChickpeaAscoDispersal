@@ -478,7 +478,7 @@ summary {
 </div>
 
 <pre class="r"><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)
-pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, here)
+pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, scales, here)
 
 theme_set(theme_pubclean(base_size = 14))</code></pre>
 <p>Import and select only the weather data necessary for analysis from Curyo and Horsham weather stations. The original data are located in the “data” directory. Dates for events are recorded in the “data/Dispersal experiments dates.csv” file and are used to subset the weather data in this file.</p>
@@ -2300,16 +2300,7 @@ write_csv(weather_summary, here(&quot;cache&quot;, &quot;weather_summary.csv&quo
 ylim.prim &lt;- c(0, 1.4)
 ylim.sec &lt;- c(0, 12)
 
-library(scales)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;scales&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     discard</code></pre>
-<pre><code>## The following object is masked from &#39;package:readr&#39;:
-## 
-##     col_factor</code></pre>
-<pre class="r"><code>b &lt;- diff(ylim.prim) / diff(ylim.sec)
+b &lt;- diff(ylim.prim) / diff(ylim.sec)
 a &lt;- b * (ylim.prim[1] - ylim.sec[1])
 
 ggplot(data = weather, aes(x = Time, y = rainfall)) +

@@ -11,7 +11,7 @@ output:
 
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, here)
+pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, scales, here)
 
 theme_set(theme_pubclean(base_size = 14))
 ```
@@ -208,8 +208,6 @@ write_csv(weather_summary, here("cache", "weather_summary.csv"))
 # max rainfall set from max clermont rainfall in Apr 2019
 ylim.prim <- c(0, 1.4)
 ylim.sec <- c(0, 12)
-
-library(scales)
 
 b <- diff(ylim.prim) / diff(ylim.sec)
 a <- b * (ylim.prim[1] - ylim.sec[1])
