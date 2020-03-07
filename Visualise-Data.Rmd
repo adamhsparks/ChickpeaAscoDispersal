@@ -111,7 +111,7 @@ dat %>%
 
 ```{r wind, message=FALSE, warning=FALSE, fig.cap=paste0("Windroses showing the windspeed and direction for each event. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
 pw <-
-   with(dat, windrose(wind_speed, wind_direction, SpEv, n_col = 3, col_pal = "YlGnBu", scales = "free_y", legend_title = "Wind speed (m/s)"))
+   with(dat, windrose(wind_speed, wind_direction, SpEv, n_col = 3, col_pal = "D", legend_title = "Wind speed (m/s)"))
 pw + 
    xlab("") + 
    theme_pubclean()
