@@ -15,7 +15,7 @@ knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, clifro, skimr, extrafont, ggpubr, here)
+pacman::p_load(tidyverse, lubridate, clifro, skimr, extrafont, ggpubr, here)
 
 theme_set(theme_pubclean(base_size = 14))
 ```
@@ -42,7 +42,7 @@ lesion <- read_csv(here("cache", "summarised_lesion_data.csv")) %>%
       )
    )))
 
-weather <- read_csv(here("cache", "weather_summary.csv"))
+weather <- read_csv(here("cache", "cleaned_weather.csv"))
 
 dat <- left_join(lesion, weather, by = c("site" = "Location", "rep" = "Rep"))
 
@@ -51,8 +51,8 @@ skim(dat)
 
 ## Visualise Counts per Pot
 
-```{r lesion-count, fig.cap="Density plot of mean lesions counted per pot for all six events.", message=FALSE}
-ggplot(dat, aes(x = mean_pot_count)) +
+```{r lesion-count, fig.cap="Density plot of mean lesions counted per pot for all six events.", message=FALSE, warning=FALSE}
+ggplot(lesion, aes(x = mean_pot_count)) +
    geom_density() +
    xlab("Mean lesion count per pot")
 ```
@@ -60,7 +60,7 @@ ggplot(dat, aes(x = mean_pot_count)) +
 ## Visualise the Dispersal Data
 
 ```{r combined-dispersal, message=FALSE, warning=FALSE, fig.cap="Mean counts of lesions per pot at each station for ten transects at each station for all six events."}
-ggplot(dat, aes(x = distance,
+ggplot(lesion, aes(x = distance,
                 y = mean_pot_count)) +
    geom_count() +
    stat_summary(fun.y = "median",
@@ -87,27 +87,31 @@ embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
 
 ## Visualise the Rainfall and Irrigation Events
 
-```{r rain, message=FALSE, warning=FALSE, fig.cap=paste0("Total precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
-ggplot(data = distinct(dat, SpEv, .keep_all = TRUE),
-       aes(x = fct_rev(SpEv),
-           y = sum_rain,
-           colour = ptype,
-           fill = ptype)) +
-   geom_bar(stat = "identity") +
-   scale_fill_viridis_d() +
-   scale_colour_viridis_d() +
-   ylab("Total precipitation in event (mm)") +
-   xlab("Event") +
-   labs(main = "Rainfall events") +
-   theme(legend.position = "none") +
-   coord_flip()
+```{r rain, message=FALSE, warning=FALSE, fig.cap=paste0("Hourly precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+
+dat %>%
+   group_by(SpEv) %>%
+   mutate(Hour = floor_date(Time, "1 hour")) %>%
+   group_by(SpEv, Hour) %>%
+   summarize(sum(rainfall)) %>%
+   ggplot(aes(x = Hour, y = `sum(rainfall)`)) +
+   geom_col() +
+   scale_x_datetime(
+      "Date (day-month)",
+      date_breaks = "day",
+      date_labels = "%d-%m",
+      date_minor_breaks = "hour",
+      guide = guide_axis(check.overlap = TRUE)
+   ) +
+   ylab("Precipitation (mm)") +
+   facet_wrap(. ~ SpEv, ncol = 3, scales = "free_x")
 ```
 
 ## Visualise the Windspeed and Direction
 
 ```{r wind, message=FALSE, warning=FALSE, fig.cap=paste0("Windroses showing the windspeed and direction for each event. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
 pw <-
-   with(dat, windrose(mws, mwd, SpEv, n_col = 3, col_pal = "YlGnBu"))
+   with(dat, windrose(wind_speed, wind_direction, SpEv, n_col = 3, col_pal = "YlGnBu", scales = "free_y", legend_title = "Wind speed (m/s)"))
 pw + 
    xlab("") + 
    theme_pubclean()
@@ -123,7 +127,7 @@ embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
 
 ```{r polar_coord_transects, message = FALSE, warning=FALSE, fig.cap=paste0("Heatmap showing count of mean lesions per pot at each station along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
 heat_dat <-
-   dat %>%
+   lesion %>%
    group_by(SpEv, degrees) %>%
    mutate(summed_count_pot =
              case_when(distance == 0 ~ sum(mean_pot_count),
