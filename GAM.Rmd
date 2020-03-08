@@ -30,7 +30,7 @@ source(here("R", "p_gam.R"))
 lesion <- read_csv(here("cache", "summarised_lesion_data.csv"))
 weather <- read_csv(here("cache", "weather_summary.csv"))
 
-dat <- left_join(lesion, weather, by = c("site" = "Location", "rep" = "Rep"))
+dat <- left_join(lesion, weather, by = c("site", "rep"))
 ```
 
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
