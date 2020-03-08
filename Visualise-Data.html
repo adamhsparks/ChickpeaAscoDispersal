@@ -483,7 +483,7 @@ lesion &lt;- read_csv(here(&quot;cache&quot;, &quot;summarised_lesion_data.csv&q
 
 weather &lt;- read_csv(here(&quot;cache&quot;, &quot;cleaned_weather.csv&quot;))
 
-dat &lt;- left_join(lesion, weather, by = c(&quot;site&quot; = &quot;Location&quot;, &quot;rep&quot; = &quot;Rep&quot;))
+dat &lt;- left_join(lesion, weather, by = c(&quot;site&quot;, &quot;rep&quot;))
 
 skim(dat)</code></pre>
 <table>
@@ -848,7 +848,7 @@ skim(dat)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Time</td>
+<td align="left">time</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="left">2019-10-09 18:00:00</td>
@@ -905,7 +905,7 @@ embed_fonts(&quot;figures/Fig2.eps&quot;, outfile = &quot;figures/Fig2.eps&quot;
 <h2 number="0.3"><span class="header-section-number">0.3</span> Visualise the Rainfall and Irrigation Events</h2>
 <pre class="r"><code>dat %&gt;%
    group_by(SpEv) %&gt;%
-   mutate(Hour = floor_date(Time, &quot;1 hour&quot;)) %&gt;%
+   mutate(Hour = floor_date(time, &quot;1 hour&quot;)) %&gt;%
    group_by(SpEv, Hour) %&gt;%
    summarize(sum(rainfall)) %&gt;%
    ggplot(aes(x = Hour, y = `sum(rainfall)`)) +

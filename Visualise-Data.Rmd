@@ -44,7 +44,7 @@ lesion <- read_csv(here("cache", "summarised_lesion_data.csv")) %>%
 
 weather <- read_csv(here("cache", "cleaned_weather.csv"))
 
-dat <- left_join(lesion, weather, by = c("site" = "Location", "rep" = "Rep"))
+dat <- left_join(lesion, weather, by = c("site", "rep"))
 
 skim(dat)
 ```
@@ -91,7 +91,7 @@ embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
 
 dat %>%
    group_by(SpEv) %>%
-   mutate(Hour = floor_date(Time, "1 hour")) %>%
+   mutate(Hour = floor_date(time, "1 hour")) %>%
    group_by(SpEv, Hour) %>%
    summarize(sum(rainfall)) %>%
    ggplot(aes(x = Hour, y = `sum(rainfall)`)) +
