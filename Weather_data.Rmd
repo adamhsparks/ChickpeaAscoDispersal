@@ -36,7 +36,7 @@ Curyo_w <-
           'Wind Speed - average (km/h)',
           'Wind Direction - average (º)',
           "Rainfall - (mm)") %>%
-   mutate(Time = dmy_hm(Time)) %>%
+   mutate(Time = dmy_hm(Time, tz = "Australia/Victoria")) %>%
    mutate(Location = "Curyo") %>%
    select(Location, everything())
 ```
@@ -63,7 +63,7 @@ Horsham_w <-
           'Wind Speed - average (km/h)',
           'Wind Direction - average (º)',
           "Rainfall - (mm)") %>%
-   mutate(Time = dmy_hm(Time)) %>%
+   mutate(Time = dmy_hm(Time, tz = "Australia/Victoria")) %>%
    mutate(Location = "Horsham") %>%
    select(Location, everything())
 ```
