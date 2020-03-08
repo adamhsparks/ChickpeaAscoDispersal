@@ -117,19 +117,19 @@ Horsham_irrg <-
          Time %within% events[3, "exposed"] ~ events[[3, "rep"]]
       )
    ) %>%
-   select(Location, Rep, Time, everything())
+   rename(site = Location, rep = Rep, time = Time) %>%
+   select(site, rep, time, everything())
 
 Horsham_rain <-
    Horsham_w %>%
    filter(Time %within% events[4, "exposed"] |
-          Time %within% events[5, "exposed"]) %>%
-   mutate(Location = case_when(
-          Time %within% events[4, "exposed"] ~ events[[4, "site"]],
-          Time %within% events[5, "exposed"] ~ events[[5, "site"]])) %>%
-   mutate(Rep = case_when(
-          Time %within% events[4, "exposed"] ~ events[[4, "rep"]],
-          Time %within% events[5, "exposed"] ~ events[[5, "rep"]],)) %>%
-   select(Location, Rep, Time, everything())
+             Time %within% events[5, "exposed"]) %>%
+   mutate(Location = case_when(Time %within% events[4, "exposed"] ~ events[[4, "site"]],
+                               Time %within% events[5, "exposed"] ~ events[[5, "site"]])) %>%
+   mutate(Rep = case_when(Time %within% events[4, "exposed"] ~ events[[4, "rep"]],
+                          Time %within% events[5, "exposed"] ~ events[[5, "rep"]], )) %>%
+   rename(site = Location, rep = Rep, time = Time) %>%
+   select(site, rep, time, everything())
 
 Curyo_rain <-
    Curyo_w %>%
@@ -138,7 +138,8 @@ Curyo_rain <-
                                                     "exposed"] ~ "Curyo")) %>%
    mutate(Rep = case_when(Time %within% events[which(events$site == "Curyo"), "exposed"] ~
                              events[[which(events$site == "Curyo"), "rep"]])) %>%
-   select(Location, Rep, Time, everything())
+   rename(site = Location, rep = Rep, time = Time) %>%
+   select(site, rep, time, everything())
 
 weather <- bind_rows(Curyo_rain, Horsham_irrg, Horsham_rain)
 ```
@@ -157,8 +158,8 @@ weather <-
    rename(wind_speed = `Wind Speed - average (km/h)`) %>%
    rename(wind_direction = `Wind Direction - average (º)`) %>%
    rename(rainfall = `Rainfall - (mm)`) %>%
-   select(Location, Rep, Time, everything()) %>% 
-   arrange(Location, Rep, Time)
+   select(site, rep, time, everything()) %>% 
+   arrange(site, rep, time)
 
 glimpse(weather)
 ```
@@ -181,7 +182,7 @@ The resulting columns are:
 ```{r summary-weather}
 weather_summary <-
    weather %>%
-   group_by(Location, Rep) %>%
+   group_by(site, rep) %>%
    summarise(
       mws = mean(wind_speed),
       ws_sd = sd(wind_speed),

@@ -1,4 +1,4 @@
-Location,Rep,Time,wind_speed,wind_direction,rainfall
+site,rep,time,wind_speed,wind_direction,rainfall
 Curyo,1,2019-10-15T08:00:00Z,1.8900000000000001,358.936627,0
 Curyo,1,2019-10-15T08:10:00Z,2.4,355.558759,0
 Curyo,1,2019-10-15T08:20:00Z,2.62,356.220186,0
