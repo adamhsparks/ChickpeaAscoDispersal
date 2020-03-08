@@ -479,6 +479,8 @@ summary {
 <pre class="r"><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)
 pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, scales, here)
 
+source(here(&quot;R&quot;, &quot;circular.averaging.R&quot;))
+
 theme_set(theme_pubclean(base_size = 14))</code></pre>
 <p>Import and select only the weather data necessary for analysis from Curyo and Horsham weather stations. The original data are located in the “data” directory. Dates for events are recorded in the “data/Dispersal experiments dates.csv” file and are used to subset the weather data in this file.</p>
 <p>In this step the data are imported and only the date and time, average windspeed and average wind direction are selected.</p>
@@ -1474,8 +1476,7 @@ glimpse(weather)</code></pre>
    summarise(
       mws = mean(wind_speed),
       ws_sd = sd(wind_speed),
-      mwd = mean(wind_direction),
-      wd_sd = sd(wind_direction),
+      mwd = circular.averaging(wind_direction),
       sum_rain = sum(rainfall)
    )
 
@@ -1514,7 +1515,7 @@ Number of rows
 Number of columns
 </td>
 <td style="text-align:left;">
-7
+6
 </td>
 </tr>
 <tr>
@@ -1536,7 +1537,7 @@ Column type frequency:
 numeric
 </td>
 <td style="text-align:left;">
-6
+5
 </td>
 </tr>
 <tr>
@@ -1955,25 +1956,25 @@ Curyo
 1
 </td>
 <td style="text-align:right;">
-164.01
+351.63
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
-164.01
+351.63
 </td>
 <td style="text-align:right;">
-164.01
+351.63
 </td>
 <td style="text-align:right;">
-164.01
+351.63
 </td>
 <td style="text-align:right;">
-164.01
+351.63
 </td>
 <td style="text-align:right;">
-164.01
+351.63
 </td>
 <td style="text-align:left;">
 ▁▁▇▁▁
@@ -1993,25 +1994,25 @@ Horsham dryland
 1
 </td>
 <td style="text-align:right;">
-246.96
+327.44
 </td>
 <td style="text-align:right;">
-12.96
+0.72
 </td>
 <td style="text-align:right;">
-237.79
+326.92
 </td>
 <td style="text-align:right;">
-242.38
+327.18
 </td>
 <td style="text-align:right;">
-246.96
+327.44
 </td>
 <td style="text-align:right;">
-251.54
+327.69
 </td>
 <td style="text-align:right;">
-256.13
+327.95
 </td>
 <td style="text-align:left;">
 ▇▁▁▁▇
@@ -2031,142 +2032,28 @@ Horsham irrigated
 1
 </td>
 <td style="text-align:right;">
-249.34
+276.24
 </td>
 <td style="text-align:right;">
-75.40
+60.18
 </td>
 <td style="text-align:right;">
-195.77
+215.23
 </td>
 <td style="text-align:right;">
-206.23
+246.58
 </td>
 <td style="text-align:right;">
-216.68
+277.93
 </td>
 <td style="text-align:right;">
-276.12
+306.75
 </td>
 <td style="text-align:right;">
 335.56
 </td>
 <td style="text-align:left;">
-▇▁▁▁▃
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-wd_sd
-</td>
-<td style="text-align:left;">
-Curyo
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-169.35
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-169.35
-</td>
-<td style="text-align:right;">
-169.35
-</td>
-<td style="text-align:right;">
-169.35
-</td>
-<td style="text-align:right;">
-169.35
-</td>
-<td style="text-align:right;">
-169.35
-</td>
-<td style="text-align:left;">
-▁▁▇▁▁
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-wd_sd
-</td>
-<td style="text-align:left;">
-Horsham dryland
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-123.66
-</td>
-<td style="text-align:right;">
-6.11
-</td>
-<td style="text-align:right;">
-119.34
-</td>
-<td style="text-align:right;">
-121.50
-</td>
-<td style="text-align:right;">
-123.66
-</td>
-<td style="text-align:right;">
-125.82
-</td>
-<td style="text-align:right;">
-127.98
-</td>
-<td style="text-align:left;">
-▇▁▁▁▇
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-wd_sd
-</td>
-<td style="text-align:left;">
-Horsham irrigated
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-59.61
-</td>
-<td style="text-align:right;">
-46.58
-</td>
-<td style="text-align:right;">
-7.69
-</td>
-<td style="text-align:right;">
-40.56
-</td>
-<td style="text-align:right;">
-73.43
-</td>
-<td style="text-align:right;">
-85.58
-</td>
-<td style="text-align:right;">
-97.72
-</td>
-<td style="text-align:left;">
-▇▁▁▇▇
+▇▁▇▁▇
 </td>
 </tr>
 <tr>

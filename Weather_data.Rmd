@@ -13,6 +13,8 @@ output:
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, scales, here)
 
+source(here("R", "circular.averaging.R"))
+
 theme_set(theme_pubclean(base_size = 14))
 ```
 
@@ -183,8 +185,7 @@ weather_summary <-
    summarise(
       mws = mean(wind_speed),
       ws_sd = sd(wind_speed),
-      mwd = mean(wind_direction),
-      wd_sd = sd(wind_direction),
+      mwd = circular.averaging(wind_direction),
       sum_rain = sum(rainfall)
    )
 
