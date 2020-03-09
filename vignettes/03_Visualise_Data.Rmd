@@ -16,7 +16,7 @@ knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 
 ```{r libraries, message=FALSE}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, lubridate, clifro, skimr, extrafont, ggpubr, here)
+pacman::p_load(tidyverse, lubridate, clifro, viridis, skimr, extrafont, ggpubr, here)
 
 theme_set(theme_pubclean(base_size = 14))
 ```
@@ -124,11 +124,11 @@ pw <-
          wind_direction,
          SpEv,
          n_col = 3,
-         col_pal = "D",
          legend_title = "Wind speed (m/s)"
       )
    )
 pw +
+   scale_fill_viridis_d(name = "Wind Speed (m/s)", direction = -1) +
    xlab("") +
    theme_pubclean()
 
