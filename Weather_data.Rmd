@@ -38,7 +38,7 @@ Curyo_w <-
           'Wind Speed - average (km/h)',
           'Wind Direction - average (º)',
           "Rainfall - (mm)") %>%
-   mutate(Time = dmy_hm(Time, tz = "Australia/Victoria")) %>%
+   mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Curyo") %>%
    select(Location, everything())
 ```
@@ -65,7 +65,7 @@ Horsham_w <-
           'Wind Speed - average (km/h)',
           'Wind Direction - average (º)',
           "Rainfall - (mm)") %>%
-   mutate(Time = dmy_hm(Time, tz = "Australia/Victoria")) %>%
+   mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Horsham") %>%
    select(Location, everything())
 ```
@@ -85,10 +85,8 @@ Event data have dates and times when trap plants were deployed, retrieved and as
 ```{r import-event, message=FALSE}
 events <-
    read_csv(here("data", "Dispersal experiments dates.csv")) %>%
-   mutate(`assessment date` = dmy(`assessment date`,
-                                  tz = "Australia/Victoria")) %>%
-   mutate(exposed = `time out` %--% `time removed`,
-          tz = "Australia/Victoria")
+   mutate(`assessment date` = dmy(`assessment date`)) %>%
+   mutate(exposed = interval(`time out`, `time removed`))
 
 kable(events, format = "html", table.attr = 'class="table table-hover"')
 ```

@@ -497,7 +497,7 @@ theme_set(theme_pubclean(base_size = 14))</code></pre>
           &#39;Wind Speed - average (km/h)&#39;,
           &#39;Wind Direction - average (º)&#39;,
           &quot;Rainfall - (mm)&quot;) %&gt;%
-   mutate(Time = dmy_hm(Time, tz = &quot;Australia/Victoria&quot;)) %&gt;%
+   mutate(Time = dmy_hm(Time)) %&gt;%
    mutate(Location = &quot;Curyo&quot;) %&gt;%
    select(Location, everything())</code></pre>
 </div>
@@ -835,7 +835,7 @@ n_unique
 Time
 </td>
 <td style="text-align:right;">
-6
+0
 </td>
 <td style="text-align:right;">
 1
@@ -847,10 +847,10 @@ Time
 2019-12-06 14:30:00
 </td>
 <td style="text-align:left;">
-2019-07-01 17:30:00
+2019-07-01 18:00:00
 </td>
 <td style="text-align:right;">
-43467
+43473
 </td>
 </tr>
 </tbody>
@@ -872,7 +872,7 @@ Time
           &#39;Wind Speed - average (km/h)&#39;,
           &#39;Wind Direction - average (º)&#39;,
           &quot;Rainfall - (mm)&quot;) %&gt;%
-   mutate(Time = dmy_hm(Time, tz = &quot;Australia/Victoria&quot;)) %&gt;%
+   mutate(Time = dmy_hm(Time)) %&gt;%
    mutate(Location = &quot;Horsham&quot;) %&gt;%
    select(Location, everything())</code></pre>
 </div>
@@ -1210,7 +1210,7 @@ n_unique
 Time
 </td>
 <td style="text-align:right;">
-6
+0
 </td>
 <td style="text-align:right;">
 1
@@ -1222,10 +1222,10 @@ Time
 2019-12-06 14:30:00
 </td>
 <td style="text-align:left;">
-2019-06-10 06:50:00
+2019-06-10 07:20:00
 </td>
 <td style="text-align:right;">
-38699
+38705
 </td>
 </tr>
 </tbody>
@@ -1239,10 +1239,8 @@ Time
 <p>Event data have dates and times when trap plants were deployed, retrieved and assessed for each event.</p>
 <pre class="r"><code>events &lt;-
    read_csv(here(&quot;data&quot;, &quot;Dispersal experiments dates.csv&quot;)) %&gt;%
-   mutate(`assessment date` = dmy(`assessment date`,
-                                  tz = &quot;Australia/Victoria&quot;)) %&gt;%
-   mutate(exposed = `time out` %--% `time removed`,
-          tz = &quot;Australia/Victoria&quot;)
+   mutate(`assessment date` = dmy(`assessment date`)) %&gt;%
+   mutate(exposed = interval(`time out`, `time removed`))
 
 kable(events, format = &quot;html&quot;, table.attr = &#39;class=&quot;table table-hover&quot;&#39;)</code></pre>
 <table class="table table-hover">
@@ -1266,9 +1264,6 @@ assessment date
 <th style="text-align:right;">
 exposed
 </th>
-<th style="text-align:left;">
-tz
-</th>
 </tr>
 </thead>
 <tbody>
@@ -1291,9 +1286,6 @@ Horsham irrigated
 <td style="text-align:right;">
 2019-10-09 18:00:00 UTC–2019-10-10 18:00:00 UTC
 </td>
-<td style="text-align:left;">
-Australia/Victoria
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1313,9 +1305,6 @@ Horsham irrigated
 </td>
 <td style="text-align:right;">
 2019-10-14 18:00:00 UTC–2019-10-15 18:00:00 UTC
-</td>
-<td style="text-align:left;">
-Australia/Victoria
 </td>
 </tr>
 <tr>
@@ -1337,9 +1326,6 @@ Horsham irrigated
 <td style="text-align:right;">
 2019-11-06 18:00:00 UTC–2019-11-07 18:00:00 UTC
 </td>
-<td style="text-align:left;">
-Australia/Victoria
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1359,9 +1345,6 @@ Horsham dryland
 </td>
 <td style="text-align:right;">
 2019-10-15 08:00:00 UTC–2019-10-17 18:00:00 UTC
-</td>
-<td style="text-align:left;">
-Australia/Victoria
 </td>
 </tr>
 <tr>
@@ -1383,9 +1366,6 @@ Horsham dryland
 <td style="text-align:right;">
 2019-11-01 08:00:00 UTC–2019-11-08 18:00:00 UTC
 </td>
-<td style="text-align:left;">
-Australia/Victoria
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1405,9 +1385,6 @@ Curyo
 </td>
 <td style="text-align:right;">
 2019-10-15 08:00:00 UTC–2019-10-17 18:00:00 UTC
-</td>
-<td style="text-align:left;">
-Australia/Victoria
 </td>
 </tr>
 </tbody>
@@ -1479,9 +1456,9 @@ glimpse(weather)</code></pre>
 ## Variables: 6
 ## $ site           &lt;chr&gt; &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, &quot;Curyo&quot;, …
 ## $ rep            &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ time           &lt;dttm&gt; 2019-10-15 19:00:00, 2019-10-15 19:10:00, 2019-10-15 …
-## $ wind_speed     &lt;dbl&gt; 1.89, 2.40, 2.62, 2.74, 2.20, 2.36, 2.54, 2.55, 2.97, …
-## $ wind_direction &lt;dbl&gt; 358.9366, 355.5588, 356.2202, 356.8849, 0.8718, 359.47…
+## $ time           &lt;dttm&gt; 2019-10-15 08:00:00, 2019-10-15 08:10:00, 2019-10-15 …
+## $ wind_speed     &lt;dbl&gt; 3.37, 3.44, 3.30, 3.49, 3.69, 3.73, 3.61, 3.32, 3.40, …
+## $ wind_direction &lt;dbl&gt; 350.5377, 357.8103, 357.1679, 357.9111, 355.9758, 2.40…
 ## $ rainfall       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
 </div>
 <div id="summarise-weather-data-by-event" class="section level3" number="0.3.4">
@@ -1752,25 +1729,25 @@ Curyo
 1
 </td>
 <td style="text-align:right;">
-3.19
+3.58
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
-3.19
+3.58
 </td>
 <td style="text-align:right;">
-3.19
+3.58
 </td>
 <td style="text-align:right;">
-3.19
+3.58
 </td>
 <td style="text-align:right;">
-3.19
+3.58
 </td>
 <td style="text-align:right;">
-3.19
+3.58
 </td>
 <td style="text-align:left;">
 ▁▁▇▁▁
@@ -1790,25 +1767,25 @@ Horsham dryland
 1
 </td>
 <td style="text-align:right;">
-3.24
+3.54
 </td>
 <td style="text-align:right;">
-0.76
+0.64
 </td>
 <td style="text-align:right;">
-2.70
+3.09
 </td>
 <td style="text-align:right;">
-2.97
+3.31
 </td>
 <td style="text-align:right;">
-3.24
+3.54
 </td>
 <td style="text-align:right;">
-3.51
+3.77
 </td>
 <td style="text-align:right;">
-3.78
+4.00
 </td>
 <td style="text-align:left;">
 ▇▁▁▁▇
@@ -1828,25 +1805,25 @@ Horsham irrigated
 1
 </td>
 <td style="text-align:right;">
-3.28
+3.56
 </td>
 <td style="text-align:right;">
 2.58
 </td>
 <td style="text-align:right;">
-1.76
+1.90
 </td>
 <td style="text-align:right;">
-1.79
+2.07
 </td>
 <td style="text-align:right;">
-1.83
+2.23
 </td>
 <td style="text-align:right;">
-4.05
+4.38
 </td>
 <td style="text-align:right;">
-6.27
+6.53
 </td>
 <td style="text-align:left;">
 ▇▁▁▁▃
@@ -1866,25 +1843,25 @@ Curyo
 1
 </td>
 <td style="text-align:right;">
-2.54
+2.23
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
-2.54
+2.23
 </td>
 <td style="text-align:right;">
-2.54
+2.23
 </td>
 <td style="text-align:right;">
-2.54
+2.23
 </td>
 <td style="text-align:right;">
-2.54
+2.23
 </td>
 <td style="text-align:right;">
-2.54
+2.23
 </td>
 <td style="text-align:left;">
 ▁▁▇▁▁
@@ -1904,22 +1881,22 @@ Horsham dryland
 1
 </td>
 <td style="text-align:right;">
-2.42
+2.33
 </td>
 <td style="text-align:right;">
-0.40
+0.55
 </td>
 <td style="text-align:right;">
-2.14
+1.94
 </td>
 <td style="text-align:right;">
-2.28
+2.13
 </td>
 <td style="text-align:right;">
-2.42
+2.33
 </td>
 <td style="text-align:right;">
-2.57
+2.52
 </td>
 <td style="text-align:right;">
 2.71
@@ -1942,25 +1919,25 @@ Horsham irrigated
 1
 </td>
 <td style="text-align:right;">
-1.63
+1.44
 </td>
 <td style="text-align:right;">
-0.79
+0.62
 </td>
 <td style="text-align:right;">
-0.99
+0.91
 </td>
 <td style="text-align:right;">
-1.18
+1.10
 </td>
 <td style="text-align:right;">
-1.38
+1.29
 </td>
 <td style="text-align:right;">
-1.94
+1.71
 </td>
 <td style="text-align:right;">
-2.51
+2.12
 </td>
 <td style="text-align:left;">
 ▇▇▁▁▇
@@ -1980,25 +1957,25 @@ Curyo
 1
 </td>
 <td style="text-align:right;">
-351.63
+353.50
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
-351.63
+353.50
 </td>
 <td style="text-align:right;">
-351.63
+353.50
 </td>
 <td style="text-align:right;">
-351.63
+353.50
 </td>
 <td style="text-align:right;">
-351.63
+353.50
 </td>
 <td style="text-align:right;">
-351.63
+353.50
 </td>
 <td style="text-align:left;">
 ▁▁▇▁▁
@@ -2018,25 +1995,25 @@ Horsham dryland
 1
 </td>
 <td style="text-align:right;">
-327.44
+321.67
 </td>
 <td style="text-align:right;">
-0.72
+15.07
 </td>
 <td style="text-align:right;">
-326.92
+311.02
 </td>
 <td style="text-align:right;">
-327.18
+316.35
 </td>
 <td style="text-align:right;">
-327.44
+321.67
 </td>
 <td style="text-align:right;">
-327.69
+327.00
 </td>
 <td style="text-align:right;">
-327.95
+332.33
 </td>
 <td style="text-align:left;">
 ▇▁▁▁▇
@@ -2056,28 +2033,28 @@ Horsham irrigated
 1
 </td>
 <td style="text-align:right;">
-276.24
+280.34
 </td>
 <td style="text-align:right;">
-60.18
+49.95
 </td>
 <td style="text-align:right;">
-215.23
+234.65
 </td>
 <td style="text-align:right;">
-246.58
+253.68
 </td>
 <td style="text-align:right;">
-277.93
+272.71
 </td>
 <td style="text-align:right;">
-306.75
+303.19
 </td>
 <td style="text-align:right;">
-335.56
+333.67
 </td>
 <td style="text-align:left;">
-▇▁▇▁▇
+▇▇▁▁▇
 </td>
 </tr>
 <tr>
@@ -2170,28 +2147,28 @@ Horsham irrigated
 1
 </td>
 <td style="text-align:right;">
-1.00
+0.20
 </td>
 <td style="text-align:right;">
-0.87
+0.35
 </td>
 <td style="text-align:right;">
 0.00
 </td>
 <td style="text-align:right;">
-0.70
+0.00
 </td>
 <td style="text-align:right;">
-1.40
+0.00
 </td>
 <td style="text-align:right;">
-1.50
+0.30
 </td>
 <td style="text-align:right;">
-1.60
+0.60
 </td>
 <td style="text-align:left;">
-▃▁▁▁▇
+▇▁▁▁▃
 </td>
 </tr>
 </tbody>
