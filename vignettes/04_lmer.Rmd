@@ -15,8 +15,10 @@ vignette: >
 Using the data collected from preliminary studies undertaken by Ihsan, we aim to produce a model when simulates the spread of conidia in a field within the season.  
 
 ```{r libraries, message=FALSE, warning=FALSE}
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, lme4, knitr, here)
+library("tidyverse")
+library("lme4")
+library("knitr")
+library("here")
 ```
 
 ```{r import_data, message=FALSE}

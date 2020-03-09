@@ -15,8 +15,15 @@ knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
 ```{r libraries, message=FALSE}
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, lubridate, clifro, viridis, skimr, extrafont, ggpubr, here)
+library("tidyverse")
+library("lubridate")
+library("skimr")
+library("clifro")
+library("viridis")
+library("ggpubr")
+library("skimr")
+library("extrafont")
+library("here")
 
 theme_set(theme_pubclean(base_size = 14))
 ```

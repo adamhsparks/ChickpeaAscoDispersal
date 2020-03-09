@@ -11,10 +11,13 @@ vignette: >
 ---
 
 ```{r libraries, message=FALSE, warning=FALSE}
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, scales, here)
-
-source(here("R", "circular.averaging.R"))
+library("tidyverse")
+library("lubridate")
+library("skimr")
+library("ggpubr")
+library("kableExtra")
+library("scales")
+library("here")
 
 theme_set(theme_pubclean(base_size = 14))
 ```

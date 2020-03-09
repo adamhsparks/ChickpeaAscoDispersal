@@ -17,13 +17,17 @@ knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
 ## Import Data
 
 ```{r libraries, message=FALSE}
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, broom, skimr, devtools, ggpubr, mgcv, extrafont, mgcViz, here)
+library("tidyverse")
+library("broom")
+library("skimr")
+library("devtools")
+library("ggpubr")
+library("mgcv")
+library("extrafont")
+library("mgcViz")
+library("here")
 
 theme_set(theme_pubclean(base_size = 14))
-
-# load the function to print GAM figures
-source(here("R", "p_gam.R"))
 ```
 
 ```{r import_data, message=FALSE}
