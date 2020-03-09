@@ -26,6 +26,7 @@ library("mgcv")
 library("extrafont")
 library("mgcViz")
 library("here")
+library("ChickpeaAscoDispersal")
 
 theme_set(theme_pubclean(base_size = 14))
 ```

@@ -99,16 +99,21 @@
 <div id="import-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#import-data" class="anchor"></a>Import Data</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"pacman"</span>)) <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"pacman"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>pacman<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span>(tidyverse, broom, skimr, devtools, ggpubr, mgcv, extrafont, mgcViz, here)</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">theme_set</span>(<span class="kw">theme_pubclean</span>(<span class="dt">base_size =</span> <span class="dv">14</span>))</span>
-<span id="cb1-5"><a href="#cb1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># load the function to print GAM figures</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span>(<span class="kw">here</span>(<span class="st">"R"</span>, <span class="st">"p_gam.R"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"broom"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"skimr"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ggpubr"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"mgcv"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"extrafont"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"mgcViz"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"here"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ChickpeaAscoDispersal"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="kw">theme_set</span>(<span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>(<span class="dt">base_size =</span> <span class="dv">14</span>))</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># import</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>lesion &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">here</span>(<span class="st">"inst/cache"</span>, <span class="st">"summarised_lesion_data.csv"</span>))</span>
-<span id="cb2-3"><a href="#cb2-3"></a>weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">here</span>(<span class="st">"inst/cache"</span>, <span class="st">"weather_summary.csv"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2"></a>lesion &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(<span class="st">"inst/cache"</span>, <span class="st">"summarised_lesion_data.csv"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3"></a>weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(<span class="st">"inst/cache"</span>, <span class="st">"weather_summary.csv"</span>))</span>
 <span id="cb2-4"><a href="#cb2-4"></a></span>
 <span id="cb2-5"><a href="#cb2-5"></a>dat &lt;-<span class="st"> </span><span class="kw">left_join</span>(lesion, weather, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"site"</span>, <span class="st">"rep"</span>))</span></code></pre></div>
 </div>
@@ -121,8 +126,8 @@
 <h3 class="hasAnchor">
 <a href="#mod1---sdistance" class="anchor"></a>mod1 - s(Distance)</h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>mod1 &lt;-</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb4-3"><a href="#cb4-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb4-4"><a href="#cb4-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb4-5"><a href="#cb4-5"></a>   )</span>
 <span id="cb4-6"><a href="#cb4-6"></a></span>
@@ -148,7 +153,7 @@
 ## 
 ## R-sq.(adj) =  0.482   Deviance explained = 48.8%
 ## GCV = 0.76522  Scale est. = 0.75394   n = 334</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod1)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod1)) <span class="op">+</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance)"</span>),</span>
 <span id="cb6-3"><a href="#cb6-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod1-1.png" width="1152"></p>
@@ -157,8 +162,8 @@
 <h3 class="hasAnchor">
 <a href="#mod2---sdistance-precipitation" class="anchor"></a>mod2 - s(Distance) + Precipitation</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>mod2 &lt;-</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain<span class="op">+</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb7-3"><a href="#cb7-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain<span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb7-4"><a href="#cb7-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb7-5"><a href="#cb7-5"></a>   )</span>
 <span id="cb7-6"><a href="#cb7-6"></a></span>
@@ -185,7 +190,7 @@
 ## 
 ## R-sq.(adj) =  0.484   Deviance explained = 49.1%
 ## GCV = 0.76443  Scale est. = 0.75086   n = 334</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod2)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod2)) <span class="op">+</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + Precipitation"</span>),</span>
 <span id="cb9-3"><a href="#cb9-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod2-1.png" width="1152"></p>
@@ -194,7 +199,7 @@
 <h3 class="hasAnchor">
 <a href="#mod3---sdistance-windspeed" class="anchor"></a>mod3 - s(Distance) + Windspeed</h3>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>mod3 &lt;-</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="st">   </span><span class="kw">gam</span>(mean_pot_count <span class="op">~</span><span class="st"> </span>mws <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(mean_pot_count <span class="op">~</span><span class="st"> </span>mws <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb10-3"><a href="#cb10-3"></a>       <span class="dt">data =</span> dat)</span>
 <span id="cb10-4"><a href="#cb10-4"></a></span>
 <span id="cb10-5"><a href="#cb10-5"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(mod3)</span></code></pre></div>
@@ -220,7 +225,7 @@
 ## 
 ## R-sq.(adj) =  0.504   Deviance explained = 51.2%
 ## GCV = 0.73389  Scale est. = 0.72086   n = 334</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod3)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod3)) <span class="op">+</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + Windspeed"</span>),</span>
 <span id="cb12-3"><a href="#cb12-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod3-1.png" width="1152"></p>
@@ -229,7 +234,7 @@
 <h3 class="hasAnchor">
 <a href="#mod4---sdistance-windspeed-precipitation" class="anchor"></a>mod4 - s(Distance) + Windspeed + Precipitation</h3>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>mod4 &lt;-</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="st">   </span><span class="kw">gam</span>(mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain <span class="op">+</span><span class="st"> </span>mws <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain <span class="op">+</span><span class="st"> </span>mws <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb13-3"><a href="#cb13-3"></a>       <span class="dt">data =</span> dat)</span>
 <span id="cb13-4"><a href="#cb13-4"></a></span>
 <span id="cb13-5"><a href="#cb13-5"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(mod4)</span></code></pre></div>
@@ -256,7 +261,7 @@
 ## 
 ## R-sq.(adj) =  0.509   Deviance explained = 51.8%
 ## GCV = 0.72844  Scale est. = 0.71333   n = 334</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod4)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod4)) <span class="op">+</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + Windspeed + Precipitation"</span>),</span>
 <span id="cb15-3"><a href="#cb15-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod4-1.png" width="1152"></p>
@@ -265,8 +270,8 @@
 <h3 class="hasAnchor">
 <a href="#mod5---sdistance-windspeed-precipitation" class="anchor"></a>mod5 - s(Distance + Windspeed) + Precipitation</h3>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>mod5 &lt;-</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb16-3"><a href="#cb16-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(distance <span class="op">+</span><span class="st"> </span>mws, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb16-3"><a href="#cb16-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance <span class="op">+</span><span class="st"> </span>mws, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb16-4"><a href="#cb16-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb16-5"><a href="#cb16-5"></a>   )</span></code></pre></div>
 <pre><code>## Warning in term[i] &lt;- attr(terms(reformulate(term[i])), "term.labels"): number
@@ -294,7 +299,7 @@
 ## 
 ## R-sq.(adj) =  0.484   Deviance explained = 49.1%
 ## GCV = 0.76443  Scale est. = 0.75086   n = 334</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod5)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod5)) <span class="op">+</span></span>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance + Windspeed) + Precipitation"</span>),</span>
 <span id="cb20-3"><a href="#cb20-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod5-1.png" width="1152"></p>
@@ -303,8 +308,8 @@
 <h3 class="hasAnchor">
 <a href="#mod6---sdistance-swindspeed-precipitation" class="anchor"></a>mod6 - s(Distance) + s(Windspeed) + Precipitation</h3>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>mod6 &lt;-</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb21-3"><a href="#cb21-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(mws, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb21-3"><a href="#cb21-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span>sum_rain <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(mws, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb21-4"><a href="#cb21-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb21-5"><a href="#cb21-5"></a>   )</span>
 <span id="cb21-6"><a href="#cb21-6"></a></span>
@@ -332,7 +337,7 @@
 ## 
 ## R-sq.(adj) =  0.566   Deviance explained = 57.8%
 ## GCV = 0.64971  Scale est. = 0.63051   n = 334</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod6)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod6)) <span class="op">+</span></span>
 <span id="cb23-2"><a href="#cb23-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + s(Windspeed) + Precipitation"</span>),</span>
 <span id="cb23-3"><a href="#cb23-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod6-1.png" width="1152"></p>
@@ -341,8 +346,8 @@
 <h3 class="hasAnchor">
 <a href="#mod7---sdistance-swindspeed" class="anchor"></a>mod7 - s(Distance) + s(Windspeed)</h3>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>mod7 &lt;-</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb24-3"><a href="#cb24-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(mws, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb24-3"><a href="#cb24-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(mws, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb24-4"><a href="#cb24-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb24-5"><a href="#cb24-5"></a>   )</span>
 <span id="cb24-6"><a href="#cb24-6"></a></span>
@@ -369,7 +374,7 @@
 ## 
 ## R-sq.(adj) =  0.562   Deviance explained = 57.3%
 ## GCV = 0.65392  Scale est. = 0.63659   n = 334</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod7)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod7)) <span class="op">+</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + s(Windspeed)"</span>),</span>
 <span id="cb26-3"><a href="#cb26-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod7-1.png" width="1152"></p>
@@ -378,8 +383,8 @@
 <h3 class="hasAnchor">
 <a href="#mod8---sdistance-swindspeed-sprecipitation" class="anchor"></a>mod8 - s(Distance) + s(Windspeed) + s(Precipitation)</h3>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>mod8 &lt;-</span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb27-3"><a href="#cb27-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(mws, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb27-3"><a href="#cb27-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(mws, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb27-4"><a href="#cb27-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb27-5"><a href="#cb27-5"></a>   )</span>
 <span id="cb27-6"><a href="#cb27-6"></a></span>
@@ -408,7 +413,7 @@
 ## 
 ## R-sq.(adj) =  0.566   Deviance explained = 57.8%
 ## GCV = 0.64966  Scale est. = 0.63051   n = 334</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod8)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod8)) <span class="op">+</span></span>
 <span id="cb29-2"><a href="#cb29-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + s(Windspeed) + s(Precipitation)"</span>),</span>
 <span id="cb29-3"><a href="#cb29-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod8-1.png" width="1152"></p>
@@ -417,8 +422,8 @@
 <h3 class="hasAnchor">
 <a href="#mod9---sdistance-sprecipitation" class="anchor"></a>mod9 - s(Distance) + s(Precipitation)</h3>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>mod9 &lt;-</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb30-3"><a href="#cb30-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb30-3"><a href="#cb30-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb30-4"><a href="#cb30-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb30-5"><a href="#cb30-5"></a>   )</span>
 <span id="cb30-6"><a href="#cb30-6"></a></span>
@@ -445,7 +450,7 @@
 ## 
 ## R-sq.(adj) =  0.515   Deviance explained = 52.4%
 ## GCV = 0.71995  Scale est. = 0.70494   n = 334</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod9)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod9)) <span class="op">+</span></span>
 <span id="cb32-2"><a href="#cb32-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + s(Precipitation)"</span>),</span>
 <span id="cb32-3"><a href="#cb32-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod9-1.png" width="1152"></p>
@@ -454,8 +459,8 @@
 <h3 class="hasAnchor">
 <a href="#mod10---sdistance-sprecipitation-windspeed" class="anchor"></a>mod10 - s(Distance) +s(Precipitation) + Windspeed</h3>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>mod10 &lt;-</span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb33-3"><a href="#cb33-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span>mws,</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb33-3"><a href="#cb33-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span>mws,</span>
 <span id="cb33-4"><a href="#cb33-4"></a>      <span class="dt">data =</span> dat</span>
 <span id="cb33-5"><a href="#cb33-5"></a>   )</span>
 <span id="cb33-6"><a href="#cb33-6"></a></span>
@@ -483,7 +488,7 @@
 ## 
 ## R-sq.(adj) =  0.566   Deviance explained = 57.8%
 ## GCV = 0.64947  Scale est. = 0.6305    n = 334</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod10)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod10)) <span class="op">+</span></span>
 <span id="cb35-2"><a href="#cb35-2"></a><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + s(Precipitation) + Windspeed"</span>),</span>
 <span id="cb35-3"><a href="#cb35-3"></a>      <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod10-1.png" width="1152"></p>
@@ -491,14 +496,14 @@
 <div id="mod11-0---sdistance-swindspeed-sprecipitation-family-tw" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod11-0---sdistance-swindspeed-sprecipitation-family-tw" class="anchor"></a>mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()</h3>
-<p>This is the same as <code>mod8</code> but using <code>family = tw()</code>, see <code>?family.mgcv</code> for more on the families. The Tweedie distribution is used where the distribution has a positive mass at zero, but is continuous unlike the Poisson distribution that requires count data. The data visualisation shows clearly that the mean pot count data have this shape.</p>
+<p>This is the same as <code>mod8</code> but using <code>family = tw()</code>, see <code><a href="https://rdrr.io/pkg/mgcv/man/family.mgcv.html">?family.mgcv</a></code> for more on the families. The Tweedie distribution is used where the distribution has a positive mass at zero, but is continuous unlike the Poisson distribution that requires count data. The data visualisation shows clearly that the mean pot count data have this shape.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>mod11<span class="fl">.0</span> &lt;-</span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb36-3"><a href="#cb36-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb36-4"><a href="#cb36-4"></a><span class="st">         </span><span class="kw">s</span>(mws, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb36-5"><a href="#cb36-5"></a><span class="st">         </span><span class="kw">s</span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>),</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb36-3"><a href="#cb36-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="st">         </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(mws, <span class="dt">k =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="st">         </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>),</span>
 <span id="cb36-6"><a href="#cb36-6"></a>      <span class="dt">data =</span> dat,</span>
-<span id="cb36-7"><a href="#cb36-7"></a>      <span class="dt">family =</span> <span class="kw">tw</span>()</span>
+<span id="cb36-7"><a href="#cb36-7"></a>      <span class="dt">family =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/Tweedie.html">tw</a></span>()</span>
 <span id="cb36-8"><a href="#cb36-8"></a>   )</span>
 <span id="cb36-9"><a href="#cb36-9"></a></span>
 <span id="cb36-10"><a href="#cb36-10"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(mod11<span class="fl">.0</span>)</span></code></pre></div>
@@ -526,7 +531,7 @@
 ## 
 ## R-sq.(adj) =  0.673   Deviance explained = 61.2%
 ## -REML = 309.77  Scale est. = 0.36396   n = 334</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod11<span class="fl">.0</span>)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod11<span class="fl">.0</span>)) <span class="op">+</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">"s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"</span>),</span>
 <span id="cb38-3"><a href="#cb38-3"></a>   <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="05_GAM_files/figure-html/fit-mod11.0-1.png" width="1152"></p>
@@ -535,12 +540,12 @@
 <h3 class="hasAnchor">
 <a href="#mod11-1---sdistance-bs-ts-swindspeed-bs-ts-sprecipitation-bs-ts-family-tw" class="anchor"></a>mod11.1 - s(Distance, bs = “ts”) + s(Windspeed, bs = “ts”) + s(Precipitation, bs = “ts”), family = tw()</h3>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>mod11<span class="fl">.1</span> &lt;-</span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="st">   </span><span class="kw">gam</span>(</span>
-<span id="cb39-3"><a href="#cb39-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(distance, <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">bs =</span> <span class="st">"ts"</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb39-4"><a href="#cb39-4"></a><span class="st">         </span><span class="kw">s</span>(mws, <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">bs =</span> <span class="st">"ts"</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb39-5"><a href="#cb39-5"></a><span class="st">         </span><span class="kw">s</span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">bs =</span> <span class="st">"ts"</span>),</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span>(</span>
+<span id="cb39-3"><a href="#cb39-3"></a>      mean_pot_count <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(distance, <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">bs =</span> <span class="st">"ts"</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="st">         </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(mws, <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">bs =</span> <span class="st">"ts"</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="st">         </span><span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span>(sum_rain, <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">bs =</span> <span class="st">"ts"</span>),</span>
 <span id="cb39-6"><a href="#cb39-6"></a>      <span class="dt">data =</span> dat,</span>
-<span id="cb39-7"><a href="#cb39-7"></a>      <span class="dt">family =</span> <span class="kw">tw</span>()</span>
+<span id="cb39-7"><a href="#cb39-7"></a>      <span class="dt">family =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcv/man/Tweedie.html">tw</a></span>()</span>
 <span id="cb39-8"><a href="#cb39-8"></a>   )</span>
 <span id="cb39-9"><a href="#cb39-9"></a></span>
 <span id="cb39-10"><a href="#cb39-10"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(mod11<span class="fl">.1</span>)</span></code></pre></div>
@@ -568,8 +573,8 @@
 ## 
 ## R-sq.(adj) =  0.671   Deviance explained =   61%
 ## -REML = 322.33  Scale est. = 0.36412   n = 334</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(</span>
-<span id="cb41-2"><a href="#cb41-2"></a>   <span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw">getViz</span>(mod11<span class="fl">.1</span>)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(</span>
+<span id="cb41-2"><a href="#cb41-2"></a>   <span class="kw"><a href="../reference/p_gam.html">p_gam</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod11<span class="fl">.1</span>)) <span class="op">+</span></span>
 <span id="cb41-3"><a href="#cb41-3"></a><span class="st">      </span><span class="kw">ggtitle</span>(</span>
 <span id="cb41-4"><a href="#cb41-4"></a>         <span class="st">"s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')</span><span class="ch">\n</span><span class="st">+ s(Precipitation, bs = 'ts'), family = tw()"</span></span>
 <span id="cb41-5"><a href="#cb41-5"></a>      ),</span>
@@ -706,8 +711,8 @@
 <div id="mod11-0---sdistance-swindspeed-sprecipitation-family-tw-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#mod11-0---sdistance-swindspeed-sprecipitation-family-tw-1" class="anchor"></a>Mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()</h4>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>mod11<span class="fl">.0</span>_vis &lt;-<span class="st"> </span><span class="kw">getViz</span>(mod11<span class="fl">.0</span>)</span>
-<span id="cb48-2"><a href="#cb48-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/PkgUtils.html">check</a></span>(mod11<span class="fl">.0</span>_vis,</span>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>mod11<span class="fl">.0</span>_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod11<span class="fl">.0</span>)</span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="kw"><a href="https://devtools.r-lib.org//reference/check.html">check</a></span>(mod11<span class="fl">.0</span>_vis,</span>
 <span id="cb48-3"><a href="#cb48-3"></a>      <span class="dt">a.qq =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">method =</span> <span class="st">"tnorm"</span>, </span>
 <span id="cb48-4"><a href="#cb48-4"></a>                  <span class="dt">a.cipoly =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">fill =</span> <span class="st">"light blue"</span>)), </span>
 <span id="cb48-5"><a href="#cb48-5"></a>      <span class="dt">a.respoi =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">size =</span> <span class="fl">0.5</span>), </span>
@@ -734,8 +739,8 @@
 <div id="mod11-0---sdistance-family-ts-swindspeed-family-ts-sprecipitation-family-ts-family-tw" class="section level4">
 <h4 class="hasAnchor">
 <a href="#mod11-0---sdistance-family-ts-swindspeed-family-ts-sprecipitation-family-ts-family-tw" class="anchor"></a>Mod11.0 - s(Distance, family = “ts”) + s(Windspeed, family = “ts”) + s(Precipitation, family = “ts”), family = tw()</h4>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>mod11<span class="fl">.1</span>_vis &lt;-<span class="st"> </span><span class="kw">getViz</span>(mod11<span class="fl">.1</span>)</span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/PkgUtils.html">check</a></span>(mod11<span class="fl">.1</span>_vis,</span>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>mod11<span class="fl">.1</span>_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(mod11<span class="fl">.1</span>)</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="kw"><a href="https://devtools.r-lib.org//reference/check.html">check</a></span>(mod11<span class="fl">.1</span>_vis,</span>
 <span id="cb50-3"><a href="#cb50-3"></a>      <span class="dt">a.qq =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">method =</span> <span class="st">"tnorm"</span>, </span>
 <span id="cb50-4"><a href="#cb50-4"></a>                  <span class="dt">a.cipoly =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">fill =</span> <span class="st">"light blue"</span>)), </span>
 <span id="cb50-5"><a href="#cb50-5"></a>      <span class="dt">a.respoi =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">size =</span> <span class="fl">0.5</span>), </span>

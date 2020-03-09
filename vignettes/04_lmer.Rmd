@@ -23,8 +23,8 @@ library("here")
 
 ```{r import_data, message=FALSE}
 # import
-lesion <- read_csv(here("inst/cache", "summarised_lesion_data.csv"))
-weather <- read_csv(here("inst/cache", "weather_summary.csv"))
+lesion <- read_csv(here::here("inst/cache", "summarised_lesion_data.csv"))
+weather <- read_csv(here::here("inst/cache", "weather_summary.csv"))
 
 dat <- left_join(lesion, weather, by = c("site", "rep"))
 ```
