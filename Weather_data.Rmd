@@ -9,7 +9,7 @@ output:
     code_folding: hide
 ---
 
-```{r libraries, message=FALSE}
+```{r libraries, message=FALSE, warning=FALSE}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, lubridate, skimr, ggpubr, kableExtra, scales, here)
 
@@ -85,8 +85,10 @@ Event data have dates and times when trap plants were deployed, retrieved and as
 ```{r import-event, message=FALSE}
 events <-
    read_csv(here("data", "Dispersal experiments dates.csv")) %>%
-   mutate(`assessment date` = dmy(`assessment date`)) %>%
-   mutate(exposed = `time out` %--% `time removed`)
+   mutate(`assessment date` = dmy(`assessment date`,
+                                  tz = "Australia/Victoria")) %>%
+   mutate(exposed = `time out` %--% `time removed`,
+          tz = "Australia/Victoria")
 
 kable(events, format = "html", table.attr = 'class="table table-hover"')
 ```

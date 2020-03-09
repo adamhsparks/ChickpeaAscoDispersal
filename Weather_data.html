@@ -11,7 +11,7 @@
 
 <meta name="author" content="A.H. Sparks and P. Melloy" />
 
-<meta name="date" content="2020-03-08" />
+<meta name="date" content="2020-03-09" />
 
 <title>Weather Data Import and Cleaning</title>
 
@@ -449,7 +449,7 @@ summary {
 
 <h1 class="title toc-ignore">Weather Data Import and Cleaning</h1>
 <h4 class="author">A.H. Sparks and P. Melloy</h4>
-<h4 class="date">2020-03-08</h4>
+<h4 class="date">2020-03-09</h4>
 
 </div>
 
@@ -1239,8 +1239,10 @@ Time
 <p>Event data have dates and times when trap plants were deployed, retrieved and assessed for each event.</p>
 <pre class="r"><code>events &lt;-
    read_csv(here(&quot;data&quot;, &quot;Dispersal experiments dates.csv&quot;)) %&gt;%
-   mutate(`assessment date` = dmy(`assessment date`)) %&gt;%
-   mutate(exposed = `time out` %--% `time removed`)
+   mutate(`assessment date` = dmy(`assessment date`,
+                                  tz = &quot;Australia/Victoria&quot;)) %&gt;%
+   mutate(exposed = `time out` %--% `time removed`,
+          tz = &quot;Australia/Victoria&quot;)
 
 kable(events, format = &quot;html&quot;, table.attr = &#39;class=&quot;table table-hover&quot;&#39;)</code></pre>
 <table class="table table-hover">
@@ -1264,6 +1266,9 @@ assessment date
 <th style="text-align:right;">
 exposed
 </th>
+<th style="text-align:left;">
+tz
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1286,6 +1291,9 @@ Horsham irrigated
 <td style="text-align:right;">
 2019-10-09 18:00:00 UTC–2019-10-10 18:00:00 UTC
 </td>
+<td style="text-align:left;">
+Australia/Victoria
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1305,6 +1313,9 @@ Horsham irrigated
 </td>
 <td style="text-align:right;">
 2019-10-14 18:00:00 UTC–2019-10-15 18:00:00 UTC
+</td>
+<td style="text-align:left;">
+Australia/Victoria
 </td>
 </tr>
 <tr>
@@ -1326,6 +1337,9 @@ Horsham irrigated
 <td style="text-align:right;">
 2019-11-06 18:00:00 UTC–2019-11-07 18:00:00 UTC
 </td>
+<td style="text-align:left;">
+Australia/Victoria
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1345,6 +1359,9 @@ Horsham dryland
 </td>
 <td style="text-align:right;">
 2019-10-15 08:00:00 UTC–2019-10-17 18:00:00 UTC
+</td>
+<td style="text-align:left;">
+Australia/Victoria
 </td>
 </tr>
 <tr>
@@ -1366,6 +1383,9 @@ Horsham dryland
 <td style="text-align:right;">
 2019-11-01 08:00:00 UTC–2019-11-08 18:00:00 UTC
 </td>
+<td style="text-align:left;">
+Australia/Victoria
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1385,6 +1405,9 @@ Curyo
 </td>
 <td style="text-align:right;">
 2019-10-15 08:00:00 UTC–2019-10-17 18:00:00 UTC
+</td>
+<td style="text-align:left;">
+Australia/Victoria
 </td>
 </tr>
 </tbody>
