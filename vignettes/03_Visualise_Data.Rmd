@@ -1,12 +1,13 @@
 ---
-title: "Visualise Data"
+title: "Visualise data"
 author: "A.H. Sparks"
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    number_sections: yes
-    toc: yes
-    code_folding: hide
+   rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{03_visualise_data}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +30,7 @@ loadfonts(device = "postscript")
 
 ```{r import_data, message=FALSE}
 # import
-lesion <- read_csv(here("cache", "summarised_lesion_data.csv")) %>%
+lesion <- read_csv(here("inst/cache", "summarised_lesion_data.csv")) %>%
    mutate(SpEv = ordered(factor(
       SpEv,
       levels = c(
@@ -42,7 +43,7 @@ lesion <- read_csv(here("cache", "summarised_lesion_data.csv")) %>%
       )
    )))
 
-weather <- read_csv(here("cache", "cleaned_weather.csv"))
+weather <- read_csv(here("inst/cache", "cleaned_weather.csv"))
 
 dat <- left_join(lesion, weather, by = c("site", "rep"))
 
@@ -79,10 +80,15 @@ ggplot(lesion, aes(x = distance,
    facet_wrap(. ~ SpEv, ncol = 3)
 
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/Fig2.png")
-ggsave("figures/Fig2.eps")
-embed_fonts("figures/Fig2.eps", outfile = "figures/Fig2.eps",
-            options = "-dEPSCrop")
+ggsave(here("man", "figures/Fig2.png"))
+ggsave(here("man", "figures/Fig2.eps"))
+embed_fonts(
+   here("man",
+        "figures/Fig2.eps"),
+   outfile = here("man",
+                  "figures/Fig2.eps",
+                  options = "-dEPSCrop")
+)
 ```
 
 ## Visualise the Rainfall and Irrigation Events
@@ -127,10 +133,15 @@ pw +
    theme_pubclean()
 
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave("figures/Fig3.png")
-ggsave("figures/Fig3.eps")
-embed_fonts("figures/Fig3.eps", outfile = "figures/Fig3.eps",
-            options = "-dEPSCrop")
+ggsave(here("man", "figures/Fig3.png"))
+ggsave(here("man", "figures/Fig3.eps"))
+embed_fonts(
+   here("man",
+        "figures/Fig3.eps"),
+   outfile = here("man",
+                  "figures/Fig3.eps",
+                  options = "-dEPSCrop")
+)
 ```
 
 ## Heatmap of Lesions Along Transects
@@ -175,8 +186,13 @@ ggplot(data = heat_dat,
    facet_wrap(. ~ SpEv, ncol = 3)
 
 
-ggsave("figures/Fig4.png")
-ggsave("figures/Fig4.eps")
-embed_fonts("figures/Fig4.eps", outfile = "figures/Fig4.eps",
-            options = "-dEPSCrop")
+ggsave(here("man", "figures/Fig4.png"))
+ggsave(here("man", "figures/Fig4.eps"))
+embed_fonts(
+   here("man",
+        "figures/Fig4.eps"),
+   outfile = here("man",
+                  "figures/Fig4.eps",
+                  options = "-dEPSCrop")
+)
 ```

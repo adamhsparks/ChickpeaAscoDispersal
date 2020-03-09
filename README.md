@@ -15,7 +15,7 @@ The goal of this research is to examine the role of _Didymella rabiei_ conidia o
 
 - Jean Galloway, DPIRD, Western Australia
 
-- Kevin Moore, NSW DPI, New South Wales
+- Dr Kevin Moore, NSW DPI, New South Wales
 
 **Project PI:**
 

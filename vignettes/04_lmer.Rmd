@@ -1,12 +1,13 @@
 ---
-title: "Spatial-temporal dispersal of _Ascochyta_ conidia"
+title: "Preliminary lmer models"
 author: "P. Melloy"
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    number_sections: yes
-    toc: yes
-    code_folding: hide
+   rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{04_lmer_models}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ## Aims
@@ -20,8 +21,8 @@ pacman::p_load(tidyverse, lme4, knitr, here)
 
 ```{r import_data, message=FALSE}
 # import
-lesion <- read_csv(here("cache", "summarised_lesion_data.csv"))
-weather <- read_csv(here("cache", "weather_summary.csv"))
+lesion <- read_csv(here("inst/cache", "summarised_lesion_data.csv"))
+weather <- read_csv(here("inst/cache", "weather_summary.csv"))
 
 dat <- left_join(lesion, weather, by = c("site", "rep"))
 ```

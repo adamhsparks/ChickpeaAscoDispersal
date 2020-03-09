@@ -1,33 +1,34 @@
 ---
 title: "Import raw lesion count data"
 author: "A.H. Sparks"
-date: "05/03/2020"
+date: "`r Sys.Date()`"
 output:
-  html_document:
-    number_sections: yes
-    toc: yes
-    code_folding: hide
+   rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{01_lesion_data_import}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ```{r libraries, message=FALSE}
-if (!require("pacman"))
-   install.packages("pacman")
-pacman::p_load(tidyverse, skimr, here)
+library("tidyverse")
+library("skimr")
+library("here")
 ```
 
-This documents the raw data import, calculation of mean lesion values and exports the new data to /cache for further use in visualisation and analysis.
+This vignette documents the raw data import, calculation of mean lesion values and exports the new data to "inst/cache" for further use in visualisation and analysis.
 
-In the first step, the data is imported, the "m" from the `distance` column is dropped and the column is converted to numeric. A new colum, `SpEv` (Spread Event), is created for each location and replicated event at that location. Another new column, `degrees`, is added for each transect to indicate the direction in degrees based on J. Fanning's best information. Lastly the mean pot count, `mean_pot_count` is calculated for each of the transects at each distance, 0, 10, 25, 50 and 75 meters from the plots.
+In the first step, the data is imported, the "m" from the `distance` column is dropped and the column is converted to numeric.
+A new colum, `SpEv` (Spread Event), is created for each location and replicated event at that location. Another new column, `degrees`, is added for each transect to indicate the direction in degrees based on J. Fanning's best information.
+Lastly the mean pot count, `mean_pot_count` is calculated for each of the transects at each distance, 0, 10, 25, 50 and 75 meters from the plots.
 
 After the data are updated, a column for precipitation type, `ptype`, is added and the spread events, `SpEv`, are renamed for clarity and ordered as factors for data visualisation.
 
+## Import and inspect lesion data
+
 ```{r import_data, message=FALSE}
 dat <-
-   read_csv(here("data", "lesion_counts.csv")) %>%
+   read_csv(here("inst/data", "lesion_counts.csv")) %>%
    mutate(site = str_remove(site, " SPA")) %>%
    mutate(distance = as.numeric(str_replace(distance, " m", ""))) %>%
    unite(SpEv, c(site, rep), remove = FALSE) %>%
@@ -103,7 +104,7 @@ dat <-
       )
    )
 
-write_csv(x = dat, path = here("cache", "summarised_lesion_data.csv"))
+write_csv(x = dat, path = here("inst/cache", "/summarised_lesion_data.csv"))
 
 skim(dat)
 ```

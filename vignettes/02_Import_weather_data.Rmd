@@ -3,10 +3,11 @@ title: "Weather Data Import and Cleaning"
 author: "A.H. Sparks and P. Melloy"
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    number_sections: yes
-    toc: yes
-    code_folding: hide
+   rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{02_weather_data_import}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r libraries, message=FALSE, warning=FALSE}
@@ -31,7 +32,7 @@ In this step the data are imported and only the date and time, average windspeed
 ```{r import-Curyo, message=FALSE, warning=FALSE}
 Curyo_w <-
    read_csv(here(
-      "data",
+      "inst/data",
       "Curyo SPA 2019 - Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
    )) %>%
    select(Time,
@@ -57,7 +58,7 @@ skim(Curyo_w)
 Horsham_w <-
    read_csv(
       here(
-         "data",
+         "inst/data",
          "Horsham SPA 2019 - Horsham SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
       )
    ) %>%
@@ -84,7 +85,7 @@ Event data have dates and times when trap plants were deployed, retrieved and as
 
 ```{r import-event, message=FALSE}
 events <-
-   read_csv(here("data", "Dispersal experiments dates.csv")) %>%
+   read_csv(here("inst/data", "Dispersal experiments dates.csv")) %>%
    mutate(`assessment date` = dmy(`assessment date`)) %>%
    mutate(exposed = interval(`time out`, `time removed`))
 
@@ -198,6 +199,6 @@ skim(weather_summary)
 Save the resulting weather data to /cache for further use.
 
 ```{r export-weather, message=FALSE}
-write_csv(weather, here("cache", "cleaned_weather.csv"))
-write_csv(weather_summary, here("cache", "weather_summary.csv"))
+write_csv(weather, here("inst/cache", "cleaned_weather.csv"))
+write_csv(weather_summary, here("inst/cache", "weather_summary.csv"))
 ```
