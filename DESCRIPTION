@@ -29,14 +29,11 @@ Description: Documents the workflow and processes involved in the analysis of
    data for the paper ...
 Depends: R (>= 3.1.0)
 Imports:
-   clifro,
-   ggplot2,
-   methods,
-   mgcv,
-   mgcViz,
-   scales
+   graphics,
+   mgcViz
 Suggests:
    broom,
+   clifro,
    extrafont,
    ggpubr,
    lme4,
