@@ -28,35 +28,6 @@ dat <- left_join(lesion, weather, by = c("site", "rep"))
 ```
 
 
-```{r format_data}
-dbl <-
-  c(
-    "counts_p1",
-    "counts_p2",
-    "counts_p3",
-    "counts_p4",
-    "counts_p5",
-    "mean_count_pot",
-    "precip",
-    "mrain",
-    "mwd",
-    "mws"
-  )
-
-# format lesion counts into double
-As_dat[, dbl] <- lapply(As_dat[, dbl], as.double)
-
-# change distance to continuous variable
-As_dat$dist <- as.numeric(gsub(" m", "", As_dat$distance))
-
-As_dat[, c("site", "distance", "rep")] <-
-  lapply(As_dat[, c("site", "distance", "rep")], as.factor)
-
-class(As_dat$dist)
-
-```
-
-
 From this data we hope to obtain the following.  
   - How far conidia can be dispersed in a spread event  
   - What combination of wind speed / direction / rain effects the dispersal distance.  
