@@ -29,19 +29,22 @@ Description: Documents the workflow and processes involved in the analysis of
    data for the paper ...
 Depends: R (>= 3.1.0)
 Imports:
+   ggplot2,
+   methods,
    mgcv,
-   mgcViz
+   mgcViz,
+   RColorBrewer,
+   scales,
+   viridis
 Suggests:
    broom,
    clifro,
    extrafont,
-   ggplot2,
    ggpubr,
    lme4,
    here,
    kableExtra,
    lubridate,
-   scales,
    skimr
 License: GPL (>= 3)
 RoxygenNote: 7.0.2

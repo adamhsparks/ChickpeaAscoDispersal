@@ -8,13 +8,13 @@
 #'
 #' @examples
 #' library(mgcv)
-#' set.seed(2) ## simulate some data... 
+#' set.seed(2) ## simulate some data...
 #' dat <- gamSim(1,n=400,dist="normal",scale=2)
 #' b <- gam(y~s(x0)+s(x1)+s(x2)+s(x3),data=dat)
 #' p_gam(b)
 
 p_gam <- function(x) {
-   plot(x, allTerms = T) +
+   graphics::plot(x, allTerms = T) +
       mgcViz::l_points() +
       mgcViz::l_fitLine(linetype = 1)  +
       mgcViz::l_ciLine(linetype = 3) +

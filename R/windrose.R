@@ -17,7 +17,7 @@
 #' \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 #' the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
 #' \code{\link[RColorBrewer]{brewer.pal.info}} or discrete palettes from
-#' \code{\link[viridis]{viridis.pal}} colour palettes are recommended for colour
+#' \code{\link[viridis]{viridis_pal}} colour palettes are recommended for colour
 #'  plots.
 #'
 #' @return a \code{ggplot} object.
@@ -202,9 +202,9 @@ windrose = function(speed,
    dir_bin_cuts = seq(dir_bin_width / 2, 360 - dir_bin_width / 2, dir_bin_width)
    dir_intervals = findInterval(c(direction, dir_bin_cuts), dir_bin_cuts)
    dir_intervals[dir_intervals == n_directions] = 0
-   factor_labs = paste(c(tail(dir_bin_cuts, 1), head(dir_bin_cuts, -1)),
+   factor_labs = paste(c(utils::tail(dir_bin_cuts, 1), utils::head(dir_bin_cuts, -1)),
                        dir_bin_cuts, sep = ", ")
-   dir_bin = head(factor(dir_intervals, labels = paste0("(", factor_labs, "]")),
+   dir_bin = head::head(factor(dir_intervals, labels = paste0("(", factor_labs, "]")),
                   -n_directions)
    
    
@@ -213,7 +213,7 @@ windrose = function(speed,
       if (speed_cuts[1] > min(speed, na.rm = TRUE))
          speed_cuts = c(0, speed_cuts)
       
-      if (tail(speed_cuts, 1) < max(speed, na.rm = TRUE))
+      if (utils::tail(speed_cuts, 1) < max(speed, na.rm = TRUE))
          speed_cuts = c(speed_cuts, max(speed, na.rm = TRUE))
       spd_bin = cut(speed, speed_cuts)
    } else

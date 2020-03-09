@@ -83,7 +83,7 @@ in journal articles for example, recommended \code{ggtheme}s are \code{'bw'},
 \code{'linedraw'}, \code{'minimal'} or \code{'classic'} and
 the \code{col_pal} should be \code{'Greys'}. Otherwise, any of the sequential
 \code{\link[RColorBrewer]{brewer.pal.info}} or discrete palettes from
-\code{\link[viridis]{viridis.pal}} colour palettes are recommended for colour
+\code{\link[viridis]{viridis_pal}} colour palettes are recommended for colour
  plots.
 }
 
