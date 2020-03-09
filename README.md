@@ -1,6 +1,7 @@
-% About
 
-The goal of this research is to examine the effects of _Phoma rabiei_ conidia on long distance dispersal of chickpea ascochyta blight in Australia.
+# The role of conidia in long distance dispersal of _Didymella  rabiei_
+
+The goal of this research is to examine the role of _Didymella rabiei_ conidia on long distance dispersal of chickpea ascochyta blight in Australia.
 
 ## Project team
 

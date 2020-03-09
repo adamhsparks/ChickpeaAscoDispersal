@@ -29,18 +29,18 @@ Description: Documents the workflow and processes involved in the analysis of
    data for the paper ...
 Depends: R (>= 3.1.0)
 Imports:
+   mgcv,
+   mgcViz
+Suggests:
    broom,
    clifro,
    extrafont,
    ggplot2,
    ggpubr,
+   lme4,
    here,
    kableExtra,
    lubridate,
-   mgcv,
-   mgcViz,
    scales,
    skimr
-Remotes:
-   adamhsparks/theme.usq
-License: MIT
+License: GPL (>= 3)
