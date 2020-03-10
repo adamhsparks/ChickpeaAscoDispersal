@@ -51,7 +51,7 @@ Curyo_w <-
 
 Curyo_w <- aggregate(Curyo_w[c("ws","wd")], 
                  list(time = cut(as.POSIXct(Curyo_w$time)-1, "hour")),
-                 mean) %>%
+                 circular.averaging) %>%
    mutate(Location = "Curyo")%>%
    mutate(time = as.character(time)) %>%
    mutate(time = ymd_hms(time)) %>%
@@ -94,7 +94,7 @@ Curyo2_w <-
 
 Curyo_alt <- aggregate(Curyo2_w[c("ws","wd")], 
                  list(time = cut(as.POSIXct(Curyo2_w$time)-1, "hour")),
-                 mean) %>%
+                 circular.averaging) %>%
    mutate(time = as.character(time)) %>%
    mutate(Location = "Curyo_alt") %>%
    mutate(time = ymd_hms(time)) %>%
