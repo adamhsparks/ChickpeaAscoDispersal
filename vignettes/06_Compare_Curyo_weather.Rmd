@@ -42,7 +42,7 @@ Curyo_w <-
           'Wind Speed - average (km/h)',
           'Wind Direction - average (º)',
           "Rainfall - (mm)") %>%
-   mutate(Time = dmy_hm(Time)) %>%
+   mutate(time = dmy_hm(Time)) %>%
    mutate(Location = "Curyo") %>%
    select(Location, everything()) %>%
    rename(ws = `Wind Speed - average (km/h)`) %>%
@@ -50,23 +50,24 @@ Curyo_w <-
    rename(rainfall = `Rainfall - (mm)`)
 
 Curyo_w <- aggregate(Curyo_w[c("ws","wd")], 
-                 list(Time = cut(as.POSIXct(Curyo_w$Time)-1, "hour")),
+                 list(time = cut(as.POSIXct(Curyo_w$time)-1, "hour")),
                  mean) %>%
    mutate(Location = "Curyo")%>%
-   mutate(Time = as.character(Time)) %>%
-   mutate(Time = ymd_hms(Time)) %>%
+   mutate(time = as.character(time)) %>%
+   mutate(time = ymd_hms(time)) %>%
    select(Location, everything()) %>%
-   filter(Time %within% ExIn)
+   filter(time %within% ExIn)
 
-unique(Curyo2_w$`Wind Direction`)
 ```
+
+
 ```{r import-Curyo2, message=FALSE, warning=FALSE}
 Curyo2_w <-
    read_csv(here(
       "inst/data",
       "DataFarmer_Data_202031081949847.csv"
    ),skip = 1) %>%
-   mutate(Time = dmy_hm(`Reading Time`)) %>%
+   mutate(time = dmy_hm(`Reading Time`)) %>%
    mutate(Location = "Curyo_alt") %>%
    select(Location, everything()) %>%
    rename(ws = `Wind Speed`) %>%
@@ -92,13 +93,13 @@ Curyo2_w <-
                          wd == "NNW" ~ 337.5))
 
 Curyo_alt <- aggregate(Curyo2_w[c("ws","wd")], 
-                 list(Time = cut(as.POSIXct(Curyo2_w$Time)-1, "hour")),
+                 list(time = cut(as.POSIXct(Curyo2_w$time)-1, "hour")),
                  mean) %>%
-   mutate(Time = as.character(Time)) %>%
+   mutate(time = as.character(time)) %>%
    mutate(Location = "Curyo_alt") %>%
-   mutate(Time = ymd_hms(Time)) %>%
+   mutate(time = ymd_hms(time)) %>%
    select(Location, everything()) %>%
-   filter(Time %within% ExIn)
+   filter(time %within% ExIn)
 
 Curyo_alt
 ```
@@ -130,13 +131,14 @@ for(i in stat.dat$id){
 }
 
 
-weather.vic <- bind_rows(weather.list)
+weather.vic <- bind_rows(weather.list, Curyo_w,Curyo_alt)
+
 
 ```
 
-```{r}
+```{r skim-weather.vic}
 
-
+skim(weather.vic)
 
 ```
 
