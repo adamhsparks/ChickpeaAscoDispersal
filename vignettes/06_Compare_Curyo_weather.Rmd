@@ -16,6 +16,7 @@ library("here")
 library("ChickpeaAscoDispersal")
 library("stationaRy")
 library("bomrang")
+library("clifro")
 theme_set(theme_pubclean(base_size = 14))
 ```
 
@@ -25,12 +26,8 @@ events <-
    read_csv(here("inst/data", "Dispersal experiments dates.csv")) %>%
    mutate(`assessment date` = dmy(`assessment date`)) %>%
    mutate(exposed = interval(`time out`, `time removed`))
-
-evT <- sort(c(events$`time out`,events$`time removed`))
-ExIn <- evT[1] %--% evT[length(evT)]
 ```
 
-I need the function for circular averaging but can't seem to install it? Adam?
 
 ```{r import-Curyo, message=FALSE, warning=FALSE}
 Curyo_w <-
@@ -47,26 +44,24 @@ Curyo_w <-
    select(Location, everything()) %>%
    rename(ws = `Wind Speed - average (km/h)`) %>%
    rename(wd = `Wind Direction - average (º)`) %>%
-   rename(rainfall = `Rainfall - (mm)`)
+   rename(rainfall = `Rainfall - (mm)`) %>% 
+   filter(time %within% events[6, "exposed"])
 
-Curyo_w <- aggregate(Curyo_w[c("ws","wd")], 
-                 list(time = cut(as.POSIXct(Curyo_w$time)-1, "hour")),
-                 circular.averaging) %>%
-   mutate(Location = "Curyo")%>%
+Curyo_w <- aggregate(Curyo_w[c("ws", "wd")],
+                     list(time = cut(as.POSIXct(Curyo_w$time) - 1, "hour")),
+                     circular.averaging) %>%
+   mutate(Location = "Curyo") %>%
    mutate(time = as.character(time)) %>%
    mutate(time = ymd_hms(time)) %>%
-   select(Location, everything()) %>%
-   filter(time %within% ExIn)
-
+   select(Location, everything())
 ```
 
 
 ```{r import-Curyo2, message=FALSE, warning=FALSE}
 Curyo2_w <-
-   read_csv(here(
-      "inst/data",
-      "DataFarmer_Data_202031081949847.csv"
-   ),skip = 1) %>%
+   read_csv(here("inst/data",
+                 "DataFarmer_Data_202031081949847.csv"),
+            skip = 1) %>%
    mutate(time = dmy_hm(`Reading Time`)) %>%
    mutate(Location = "Curyo_alt") %>%
    select(Location, everything()) %>%
@@ -74,71 +69,97 @@ Curyo2_w <-
    rename(wd = `Wind Direction`) %>%
    rename(rh = Humidity) %>%
    rename(temp = Temperature) %>%
-   rename(rainfall = `Rainfall`)%>%
-   mutate(wd = case_when(wd == "N" ~ 0,
-                         wd == "NNE" ~ 22.5,
-                         wd == "NE" ~ 45,
-                         wd == "ENE" ~ 67.5,
-                         wd == "E" ~ 90,
-                         wd == "ESE" ~ 112.5,
-                         wd == "SE" ~ 135,
-                         wd == "SSE" ~ 157.5,
-                         wd == "S" ~ 180,
-                         wd == "SSW" ~ 202.5,
-                         wd == "SW" ~ 225,
-                         wd == "WSW" ~ 247.5,
-                         wd == "W" ~ 270,
-                         wd == "WNW" ~ 292.5,
-                         wd == "NW" ~ 315,
-                         wd == "NNW" ~ 337.5))
+   rename(rainfall = `Rainfall`) %>%
+   mutate(
+      wd = case_when(
+         wd == "N" ~ 0,
+         wd == "NNE" ~ 22.5,
+         wd == "NE" ~ 45,
+         wd == "ENE" ~ 67.5,
+         wd == "E" ~ 90,
+         wd == "ESE" ~ 112.5,
+         wd == "SE" ~ 135,
+         wd == "SSE" ~ 157.5,
+         wd == "S" ~ 180,
+         wd == "SSW" ~ 202.5,
+         wd == "SW" ~ 225,
+         wd == "WSW" ~ 247.5,
+         wd == "W" ~ 270,
+         wd == "WNW" ~ 292.5,
+         wd == "NW" ~ 315,
+         wd == "NNW" ~ 337.5
+      )
+   )
 
-Curyo_alt <- aggregate(Curyo2_w[c("ws","wd")], 
-                 list(time = cut(as.POSIXct(Curyo2_w$time)-1, "hour")),
-                 circular.averaging) %>%
+Curyo_alt <- aggregate(Curyo2_w[c("ws", "wd")],
+                       list(time = cut(as.POSIXct(Curyo2_w$time) - 1, "hour")),
+                       circular.averaging) %>%
    mutate(time = as.character(time)) %>%
    mutate(Location = "Curyo_alt") %>%
    mutate(time = ymd_hms(time)) %>%
-   select(Location, everything()) %>%
-   filter(time %within% ExIn)
+   select(Location, everything()) %>% 
+   filter(time %within% events[6, "exposed"])
 
-Curyo_alt
+skim(Curyo_alt)
 ```
 
 
-
-
-
-```{r get_cuyroData}
+```{r get_cuyroData, message=FALSE}
 curyo_latlong <- c(-35.779312, 142.778332)
 
-stat.dat <- get_station_metadata()%>%
-   dplyr::filter(name %in% sweep_for_stations(curyo_latlong)$name[1:10]) %>%
-   dplyr::filter(id != "949999-00284") # station does causes the import to fail
+stat.dat <- get_station_metadata() %>%
+   filter(name %in% sweep_for_stations(curyo_latlong)$name[1:4])
 
-
-for(i in stat.dat$id){
-   if(i == stat.dat$id[1]){
+for (i in stat.dat$id) {
+   if (i == stat.dat$id[1]) {
       weather.list <- list()
    }
    print(stat.dat$name[which(stat.dat$id == i)])
    
    weather.list[[i]] <-
-      get_met_data(i, years = 2019)%>%
-      filter(time %within% ExIn)%>%
-      mutate(Location = stat.dat$name[which(stat.dat$id == i)])%>%
+      get_met_data(i, years = 2019) %>%
+      filter(time %within% events[6, "exposed"]) %>% 
+      mutate(Location = stat.dat$name[which(stat.dat$id == i)]) %>%
       select(Location, everything())
-
 }
 
-
-weather.vic <- bind_rows(weather.list, Curyo_w,Curyo_alt)
-
-
+weather.vic <- bind_rows(weather.list, Curyo_w, Curyo_alt)
 ```
+
+## Windroses
 
 ```{r skim-weather.vic}
-
 skim(weather.vic)
-
 ```
 
+```{r windrose, message=FALSE}
+pw <-
+   with(
+      weather.vic,
+      windrose(
+         ws,
+         wd,
+         Location,
+         n_col = 4,
+         legend_title = "Wind speed (m/s)"
+      )
+   )
+pw +
+   scale_fill_viridis_d(name = "Wind Speed (m/s)", direction = -1) +
+   xlab("") +
+   theme_pubclean()
+```
+
+## Wind speed correlations
+
+Visually inspect the windspeed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometers away.
+
+```{r ws-correlations}
+ggplot(weather.vic, aes(x = time, y = ws)) +
+   geom_point(aes(shape = Location,
+                  colour = Location),
+              size = 3.5) +
+   scale_colour_viridis_d()
+```
+
+They do seem correlated but not an exact x-y relationship. Local gusts are possible?
