@@ -1,0 +1,91 @@
+---
+title: "06_Compare_Curyo_weather"
+author: "P. Melloy"
+date: "10/03/2020"
+output: html_document
+---
+
+```{r libraries, message=FALSE, warning=FALSE}
+library("tidyverse")
+library("lubridate")
+library("skimr")
+library("ggpubr")
+library("kableExtra")
+library("scales")
+library("here")
+library("ChickpeaAscoDispersal")
+library("stationaRy")
+library("bomrang")
+theme_set(theme_pubclean(base_size = 14))
+```
+
+
+```{r import-event, message=FALSE}
+events <-
+   read_csv(here("inst/data", "Dispersal experiments dates.csv")) %>%
+   mutate(`assessment date` = dmy(`assessment date`)) %>%
+   mutate(exposed = interval(`time out`, `time removed`))
+
+evT <- sort(c(events$`time out`,events$`time removed`))
+ExIn <- evT[1] %--% evT[length(evT)]
+```
+
+I need the function for circular averaging but can't seem to install it? Adam?
+
+```{r import-Curyo, message=FALSE, warning=FALSE}
+Curyo_w <-
+   read_csv(here(
+      "inst/data",
+      "Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
+   )) %>%
+   select(Time,
+          'Wind Speed - average (km/h)',
+          'Wind Direction - average (º)',
+          "Rainfall - (mm)") %>%
+   mutate(Time = dmy_hm(Time)) %>%
+   mutate(Location = "Curyo") %>%
+   select(Location, everything()) %>%
+   rename(ws = `Wind Speed - average (km/h)`) %>%
+   rename(wd = `Wind Direction - average (º)`) %>%
+   rename(rainfall = `Rainfall - (mm)`)
+
+Curyo_w <- aggregate(Curyo_w[c("ws","wd")], 
+                 list(Time = cut(as.POSIXct(Curyo_w$Time)-1, "hour")),
+                 mean) %>%
+   mutate(Location = "Curyo")%>%
+   mutate(Time = as.character(Time)) %>%
+   mutate(Time = ymd_hms(Time)) %>%
+   select(Location, everything()) %>%
+   filter(Time %within% ExIn)
+
+
+```
+
+
+```{r get_cuyroData}
+curyo_latlong <- c(-35.779312, 142.778332)
+
+stat.dat <- get_station_metadata()%>%
+   dplyr::filter(name %in% sweep_for_stations(curyo_latlong)$name[1:10]) %>%
+   dplyr::filter(id != "949999-00284") # station does causes the import to fail
+
+
+for(i in stat.dat$id){
+   if(i == stat.dat$id[1]){
+      weather.list <- list()
+   }
+   print(stat.dat$name[which(stat.dat$id == i)])
+   
+   weather.list[[i]] <-
+      get_met_data(i, years = 2019)%>%
+      filter(time %within% ExIn)%>%
+      mutate(Location = stat.dat$name[which(stat.dat$id == i)])%>%
+      select(Location, everything())
+
+}
+
+
+weather.vic <- bind_rows(weather.list)
+
+```
+
