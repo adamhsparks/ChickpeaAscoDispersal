@@ -58,8 +58,53 @@ Curyo_w <- aggregate(Curyo_w[c("ws","wd")],
    select(Location, everything()) %>%
    filter(Time %within% ExIn)
 
-
+unique(Curyo2_w$`Wind Direction`)
 ```
+```{r import-Curyo2, message=FALSE, warning=FALSE}
+Curyo2_w <-
+   read_csv(here(
+      "inst/data",
+      "DataFarmer_Data_202031081949847.csv"
+   ),skip = 1) %>%
+   mutate(Time = dmy_hm(`Reading Time`)) %>%
+   mutate(Location = "Curyo_alt") %>%
+   select(Location, everything()) %>%
+   rename(ws = `Wind Speed`) %>%
+   rename(wd = `Wind Direction`) %>%
+   rename(rh = Humidity) %>%
+   rename(temp = Temperature) %>%
+   rename(rainfall = `Rainfall`)%>%
+   mutate(wd = case_when(wd == "N" ~ 0,
+                         wd == "NNE" ~ 22.5,
+                         wd == "NE" ~ 45,
+                         wd == "ENE" ~ 67.5,
+                         wd == "E" ~ 90,
+                         wd == "ESE" ~ 112.5,
+                         wd == "SE" ~ 135,
+                         wd == "SSE" ~ 157.5,
+                         wd == "S" ~ 180,
+                         wd == "SSW" ~ 202.5,
+                         wd == "SW" ~ 225,
+                         wd == "WSW" ~ 247.5,
+                         wd == "W" ~ 270,
+                         wd == "WNW" ~ 292.5,
+                         wd == "NW" ~ 315,
+                         wd == "NNW" ~ 337.5))
+
+Curyo_alt <- aggregate(Curyo2_w[c("ws","wd")], 
+                 list(Time = cut(as.POSIXct(Curyo2_w$Time)-1, "hour")),
+                 mean) %>%
+   mutate(Time = as.character(Time)) %>%
+   mutate(Location = "Curyo_alt") %>%
+   mutate(Time = ymd_hms(Time)) %>%
+   select(Location, everything()) %>%
+   filter(Time %within% ExIn)
+
+Curyo_alt
+```
+
+
+
 
 
 ```{r get_cuyroData}
@@ -86,6 +131,12 @@ for(i in stat.dat$id){
 
 
 weather.vic <- bind_rows(weather.list)
+
+```
+
+```{r}
+
+
 
 ```
 
