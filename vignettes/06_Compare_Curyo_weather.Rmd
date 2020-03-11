@@ -59,16 +59,24 @@ Curyo_w <-
    filter(time %within% events[6, "exposed"])
 ```
 
-
 The data we download from Bureau of Meteorology is in one hour increments, so we will aggregate the 10 minute data to one hourly.  
+
 ```{r aggregate_to_1_hour}
-Curyo_w <- aggregate(Curyo_w[c("ws", "wd")],
-                     list(time = cut(as.POSIXct(Curyo_w$time) - 1, "hour")),
-                     circular.averaging) %>%
+Curyo_w <- 
+   Curyo_w %>%
+   mutate(Day = day(time))%>%
+   mutate(Hour = hour(time))%>%
+   group_by(Hour, Day)%>%
+   summarise(ws = mean(ws),
+             wd = circular.averaging(wd))%>%
    mutate(Location = "Curyo") %>%
-   mutate(time = as.character(time)) %>%
-   mutate(time = ymd_hms(time)) %>%
-   select(Location, everything())
+   arrange(Day,Hour)%>%
+   ungroup()%>%
+   mutate(time = seq(
+     from = events[events$site == "Curyo",]$`time out`,
+     to = events[events$site == "Curyo",]$`time removed`,
+     by="hour"))%>%
+   select(Location, time, everything())
 ```
 
 Next we will import data from a second weather station at the Curyo field site approximately 10 km from where our trial took place.  
@@ -104,20 +112,29 @@ Curyo2_w <-
          wd == "NW" ~ 315,
          wd == "NNW" ~ 337.5
       )
-   )
+   )%>%
+   filter(time %within% events[6, "exposed"])
 ```
 
 The alternate Curyo weather station data also need to be aggregated into one hour increments.  
 
 ```{r Curyo_alt_aggregate}
-Curyo_alt <- aggregate(Curyo2_w[c("ws", "wd")],
-                       list(time = cut(as.POSIXct(Curyo2_w$time) - 1, "hour")),
-                       circular.averaging) %>%
-   mutate(time = as.character(time)) %>%
-   mutate(Location = "Curyo_alt") %>%
-   mutate(time = ymd_hms(time)) %>%
-   select(Location, everything()) %>% 
-   filter(time %within% events[6, "exposed"])
+Curyo_alt <- 
+   Curyo2_w %>%
+   mutate(Day = day(time))%>%
+   mutate(Hour = hour(time))%>%
+   group_by(Hour, Day)%>%
+   summarise(ws = mean(ws),
+             wd = circular.averaging(wd))%>%
+   mutate(Location = "Curyo") %>%
+   arrange(Day,Hour)%>%
+   ungroup()%>%
+   mutate(time = seq(
+     from = events[events$site == "Curyo",]$`time out`,
+     to = events[events$site == "Curyo",]$`time removed`,
+     by="hour")[1:58])%>%
+   select(Location, time, everything()) 
+   
 
 skim(Curyo_alt)
 ```
