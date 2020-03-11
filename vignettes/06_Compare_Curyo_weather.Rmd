@@ -31,7 +31,7 @@ events <-
 ```
 
 
-The experimental site Curyo is located approximatley 120 km north-east of Horsham Grains Innovation park (Department of Primary Industries Victoria). Trap plants were placed on transects on vectors rangeing from XX to YY in a north-north-west direction from the ascochyta infested chickpea stubble.
+The experimental site Curyo is located approximately 120 km north-east of Horsham Grains Innovation park (Department of Primary Industries Victoria). Trap plants were placed on transects on vectors ranging from XX to YY in a north-north-west direction from the ascochyta infested chickpea stubble.
 A single rainfall event at the Curyo site to trigger conidial dispersal between `r events[events$site == "Curyo",]$'time out'` and `r events[events$site == "Curyo",]$'time removed'`. However the onsite weather station adjacent to the trial recorded the wind direction as coming from the north, blowing towards the south.  
 
 Conida were recorded travelling up to 75 meters from the infested stubble north, against the wind during the spread event. The collaborating researcher at VDPI confirmed this weather station did not have wind direction calibrated recently.  
@@ -60,7 +60,7 @@ Curyo_w <-
 ```
 
 
-The data we download from Bueru of Meterology is in one hour increments, so we will aggregate the 10 minute data to one hourly.  
+The data we download from Bureau of Meteorology is in one hour increments, so we will aggregate the 10 minute data to one hourly.  
 ```{r aggregate_to_1_hour}
 Curyo_w <- aggregate(Curyo_w[c("ws", "wd")],
                      list(time = cut(as.POSIXct(Curyo_w$time) - 1, "hour")),
@@ -122,7 +122,7 @@ Curyo_alt <- aggregate(Curyo2_w[c("ws", "wd")],
 skim(Curyo_alt)
 ```
 
-We have data from two weather stations in the field, however lets import data from BOM meterological stations nearby. We can use the `bomrang` function `sweep_for_stations()` to find the closest stations to our experimental site. Because `bomrang` only obtains historical daily weather information we need to use another package (`stationaRy`) which can retrieve hourly or 10 minute increment weather data from the same BOM stations. We then use the station name of the BOM stations in the `get_station_metadata` from the `stationaRy` package to obtain weather station ids. We need the ids to inform the function `get_met_data` from which stations we want weather data.  
+We have data from two weather stations in the field, however lets import data from BOM meteorological stations nearby. We can use the `bomrang` function `sweep_for_stations()` to find the closest stations to our experimental site. Because `bomrang` only obtains historical daily weather information we need to use another package (`stationaRy`) which can retrieve hourly or 10 minute increment weather data from the same BOM stations. We then use the station name of the BOM stations in the `get_station_metadata` from the `stationaRy` package to obtain weather station ids. We need the ids to inform the function `get_met_data` from which stations we want weather data.  
 
 The `get_met_data` function needs to be fun through a loop for each station. We place the weather data from each station into a tibble and store it as an element in a list.  
 
@@ -158,7 +158,7 @@ weather.vic <- bind_rows(weather.list, Curyo_w, Curyo_alt)
 skim(weather.vic)
 ```
 
-We can visualise the windspeed and direction for each site using windrose.  
+We can visualise the wind speed and direction for each site using windrose.  
 ```{r windrose, message=FALSE}
 pw <-
    with(
@@ -179,7 +179,7 @@ pw +
 
 ## Wind speed correlations
 
-Visually inspect the windspeed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometers away.
+Visually inspect the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometers away.
 
 ```{r ws-correlations}
 ggplot(weather.vic, aes(x = time, y = ws)) +
