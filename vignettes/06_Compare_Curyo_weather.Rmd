@@ -230,7 +230,8 @@ They do seem correlated but it is not an exact x-y relationship and the Curyo gu
 ## Weather station locations
 Note the coordinates for the alternate Curyo station are not included.
 ```{r weather_station_map, message=FALSE}
-sweep_for_stations(curyo_latlong)[1:4] %>%
+# only take rows 1 and 4. Rows 2, 3 have no data and are not represented in windroses above
+sweep_for_stations(curyo_latlong)[c(1, 4)] %>% 
    select(name, lat, lon) %>%
    bind_rows(tibble(name = "CURYO",
                     lat = curyo_latlong[1],
