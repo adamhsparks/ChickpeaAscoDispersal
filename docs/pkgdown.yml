@@ -7,6 +7,7 @@ articles:
   03_Visualise_Data: 03_Visualise_Data.html
   04_lmer: 04_lmer.html
   05_GAM: 05_GAM.html
+  06_Compare_Curyo_weather: 06_Compare_Curyo_weather.html
 urls:
   reference: https://adamhsparks.github.io/Chickpea_AB_Modelling//reference
   article: https://adamhsparks.github.io/Chickpea_AB_Modelling//articles
