@@ -246,18 +246,28 @@ ggplot(weather.vic, aes(x = time, y = ws)) +
 
 They do seem correlated but it is not an exact x-y relationship and the Curyo gusts are higher than others, but that seems reasonable.
 
-## Create new figure 3 using BCG data
+## Create new figure 3 excluding the Curyo data
+
+Because of the incorrect wind direction data from the Curyo station, a new figure needs to be constructed with the BCG data. This will have wind directions that are more in-line with the actual event, but the speeds are not correct for Curyo.
 
 ```{r new-fig3}
-weather <- read_csv(here("inst/cache", "cleaned_weather.csv")) %>%
-   filter(time %within% events[6, "exposed"]) %>%
-   rename(Location = site,
-          ws = wind_speed,
-          wd = wind_direction) %>%
-   filter(Location != "Curyo")
+# add the SpEv col to the BCG data
+   
+BCG <- 
+   BCG %>% 
+   mutate(rep = 1) %>% 
+   unite(SpEv, c("Location", "rep"), remove = FALSE) %>% 
+   select(SpEv, everything())
 
-w <- bind_rows(weather[, c("Location", "time", "ws", "wd")],
-               BCG[, c("Location", "time", "ws", "wd")])
+weather <- read_csv(here("inst/cache", "cleaned_weather.csv")) %>%
+   rename(ws = wind_speed,
+          wd = wind_direction) %>%
+   filter(site != "Curyo") %>% 
+   unite(SpEv, (c("site", "rep"))) %>% 
+   select(SpEv,everything())
+
+w <- bind_rows(weather[, c("SpEv", "time", "ws", "wd")],
+               BCG[, c("SpEv", "time", "ws", "wd")])
 
 pw <-
    with(
@@ -265,7 +275,7 @@ pw <-
       windrose(
          ws,
          wd,
-         Location,
+         SpEv,
          n_col = 3,
          legend_title = "Wind speed (m/s)"
       )
