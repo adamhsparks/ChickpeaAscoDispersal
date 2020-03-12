@@ -85,7 +85,9 @@ ggplot(lesion, aes(x = distance,
    ylab("Mean lesion count values") +
    xlab("Distance (m)") +
    facet_wrap(. ~ SpEv, ncol = 3)
+```
 
+```{r save-fig2, include=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here("man", "figures/Fig2.png"))
 ggsave(here("man", "figures/Fig2.eps"))
@@ -138,7 +140,9 @@ pw +
    scale_fill_viridis_d(name = "Wind Speed (m/s)", direction = -1) +
    xlab("") +
    theme_pubclean()
+```
 
+```{r save_fig3, include=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here("man", "figures/Fig3.png"))
 ggsave(here("man", "figures/Fig3.eps"))
@@ -150,6 +154,8 @@ embed_fonts(
                   options = "-dEPSCrop")
 )
 ```
+
+When inspecting these data, we noted that the wind direction for Curyo was against the direction of spread along the transects, which lead to further investigation of the weather data. That investigation is detailed in [this analysis](06_Compare_Curyo_weather.html).
 
 ## Heatmap of Lesions Along Transects
 
@@ -191,8 +197,9 @@ ggplot(data = heat_dat,
    ylab("Distance (m)") +
    xlab("Transect") +
    facet_wrap(. ~ SpEv, ncol = 3)
+```
 
-
+```{r save-fig4, include=FALSE}
 ggsave(here("man", "figures/Fig4.png"))
 ggsave(here("man", "figures/Fig4.eps"))
 embed_fonts(
