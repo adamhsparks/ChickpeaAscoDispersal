@@ -156,7 +156,7 @@ We then use the station name of the BOM stations in the `get_station_metadata()`
 We need the ids to inform the function `get_met_data()` from which stations we want weather data.  
 
 The `get_met_data()` function needs to be fun through a loop for each station.
-We place the weather data from each station into a tibble and store it as an element in a list.  
+We place the weather data from each station into a `tibble` and store it as an element in a list.  
 
 ```{r get_cuyroData, message=FALSE}
 curyo_latlong <- c(-35.779312, 142.778332)
@@ -178,18 +178,37 @@ for (i in stat.dat$id) {
 }
 ```
 
-
 Next we bind the data all together in a single tibble called `weather.vic`.  
 
 ```{r bind_met_data}
 weather.vic <- bind_rows(weather.list, Curyo_w, Curyo_alt)
+
+skim(weather.vic)
+```
+
+## Weather station locations
+
+Note the coordinates for the alternate Curyo station, Birchip Group's, are not included.
+
+```{r weather_station_map, message=FALSE}
+# only take rows 1 and 4. Rows 2, 3 have no data and are not represented in windroses above
+sweep_for_stations(curyo_latlong)[c(1, 4)] %>% 
+   select(name, lat, lon) %>%
+   bind_rows(tibble(name = "CURYO",
+                    lat = curyo_latlong[1],
+                    lon = curyo_latlong[2])) %>%
+   leaflet() %>%
+   addTiles() %>%
+   setView(lat = -36,
+           lng = 142.7,
+           zoom = 9) %>%
+   addMarkers(lng = ~ lon,
+              lat = ~ lat,
+              popup = ~ htmlEscape(name)) %>% 
+   addScaleBar()
 ```
 
 ## Windroses
-
-```{r skim-weather.vic}
-skim(weather.vic)
-```
 
 We can visualise the wind speed and direction for each site using windrose.  
 
@@ -227,22 +246,5 @@ ggplot(weather.vic, aes(x = time, y = ws)) +
 
 They do seem correlated but it is not an exact x-y relationship and the Curyo gusts are higher than others, but that seems reasonable.
 
-## Weather station locations
-Note the coordinates for the alternate Curyo station are not included.
-```{r weather_station_map, message=FALSE}
-# only take rows 1 and 4. Rows 2, 3 have no data and are not represented in windroses above
-sweep_for_stations(curyo_latlong)[c(1, 4)] %>% 
-   select(name, lat, lon) %>%
-   bind_rows(tibble(name = "CURYO",
-                    lat = curyo_latlong[1],
-                    lon = curyo_latlong[2])) %>%
-   leaflet() %>%
-   addTiles() %>%
-   setView(lat = -36,
-           lng = 142.7,
-           zoom = 9) %>%
-   addMarkers(lng = ~ lon,
-              lat = ~ lat,
-              popup = ~ htmlEscape(name))
-```
+
 
