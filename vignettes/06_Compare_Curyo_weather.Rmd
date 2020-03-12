@@ -90,12 +90,12 @@ Curyo_w <-
 Next we will import data from a second weather station at the Curyo field site approximately 10&nbsp;kilometres from where our trial took place.
 
 ```{r import-Curyo2, message=FALSE, warning=FALSE}
-Curyo2_w <-
+BCG <-
    read_csv(here("inst/data",
                  "DataFarmer_Data_202031081949847.csv"),
             skip = 1) %>%
    mutate(time = dmy_hm(`Reading Time`)) %>%
-   mutate(Location = "Curyo_alt") %>%
+   mutate(Location = "BCG") %>%
    select(Location, everything()) %>%
    rename(ws = `Wind Speed`) %>%
    rename(wd = `Wind Direction`) %>%
@@ -129,13 +129,13 @@ The alternate Curyo weather station data also need to be aggregated into one hou
 
 ```{r Curyo_alt_aggregate}
 Curyo_alt <-
-   Curyo2_w %>%
+   BCG %>%
    mutate(Day = day(time)) %>%
    mutate(Hour = hour(time)) %>%
    group_by(Hour, Day) %>%
    summarise(ws = mean(ws),
              wd = circular.averaging(wd)) %>%
-   mutate(Location = "BCG") %>%
+   mutate(Location = "BCG*") %>%
    arrange(Day, Hour) %>%
    ungroup() %>%
    mutate(time = seq(
@@ -246,5 +246,47 @@ ggplot(weather.vic, aes(x = time, y = ws)) +
 
 They do seem correlated but it is not an exact x-y relationship and the Curyo gusts are higher than others, but that seems reasonable.
 
+## Create new figure 3 using BCG data
 
+```{r new-fig3}
+weather <- read_csv(here("inst/cache", "cleaned_weather.csv")) %>%
+   filter(time %within% events[6, "exposed"]) %>%
+   rename(Location = site,
+          ws = wind_speed,
+          wd = wind_direction) %>%
+   filter(Location != "Curyo")
+
+w <- bind_rows(weather[, c("Location", "time", "ws", "wd")],
+               BCG[, c("Location", "time", "ws", "wd")])
+
+pw <-
+   with(
+      w,
+      windrose(
+         ws,
+         wd,
+         Location,
+         n_col = 3,
+         legend_title = "Wind speed (m/s)"
+      )
+   )
+pw +
+   scale_fill_viridis_d(name = "Wind Speed (m/s)", direction = -1) +
+   xlab("") +
+   theme_pubclean()
+
+```
+
+```{r save-fig3, include=FALSE}
+# save a .png to refer to while writing and a .eps for publication submission
+ggsave(here("man", "figures/Fig3.png"))
+ggsave(here("man", "figures/Fig3.eps"))
+embed_fonts(
+   here("man",
+        "figures/Fig3.eps"),
+   outfile = here("man",
+                  "figures/Fig3.eps",
+                  options = "-dEPSCrop")
+)
+```
 
