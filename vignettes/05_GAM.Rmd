@@ -43,7 +43,6 @@ dat <- left_join(lesion, weather, by = c("site", "rep"))
 # run only if knitting on new computer/new R installation
 # !!!! Run this in a regular interactive console not this markdown file !!!!
 # this is necessary to embed fonts in .eps files for EJPP
-pacman::p_load(extrafont)
 font_import(pattern = "Arial")
 
 # load the fonts necessary to embed in eps files
