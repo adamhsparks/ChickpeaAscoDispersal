@@ -69,7 +69,7 @@
       <a href="../articles/05_GAM.html">Fit generalised additive models (GAMs) to the data</a>
     </li>
     <li>
-      <a href="../articles/06_Compare_Curyo_weather.html">06_Compare_Curyo_weather</a>
+      <a href="../articles/06_Compare_Curyo_weather.html">Compare Curyo weather</a>
     </li>
   </ul>
 </li>
@@ -526,36 +526,26 @@ Density plot of mean lesions counted per pot for all six events.
 Mean counts of lesions per pot at each station for ten transects at each station for all six events.
 </p>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># save a .png to refer to while writing and a .eps for publication submission</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">ggsave</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>, <span class="st">"figures/Fig2.png"</span>))</span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">ggsave</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>, <span class="st">"figures/Fig2.eps"</span>))</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="kw"><a href="https://rdrr.io/pkg/extrafont/man/embed_fonts.html">embed_fonts</a></span>(</span>
-<span id="cb5-5"><a href="#cb5-5"></a>   <span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6"></a>        <span class="st">"figures/Fig2.eps"</span>),</span>
-<span id="cb5-7"><a href="#cb5-7"></a>   <span class="dt">outfile =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8"></a>                  <span class="st">"figures/Fig2.eps"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9"></a>                  <span class="dt">options =</span> <span class="st">"-dEPSCrop"</span>)</span>
-<span id="cb5-10"><a href="#cb5-10"></a>)</span></code></pre></div>
 </div>
 <div id="visualise-the-rainfall-and-irrigation-events" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualise-the-rainfall-and-irrigation-events" class="anchor"></a>Visualise the Rainfall and Irrigation Events</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dat <span class="op">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(SpEv) <span class="op">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Hour =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span>(time, <span class="st">"1 hour"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(SpEv, Hour) <span class="op">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(rainfall)) <span class="op">%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Hour, <span class="dt">y =</span> <span class="st">`</span><span class="dt">sum(rainfall)</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="st">   </span><span class="kw">geom_col</span>() <span class="op">+</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="st">   </span><span class="kw">scale_x_datetime</span>(</span>
-<span id="cb6-9"><a href="#cb6-9"></a>      <span class="st">"Date (day-month)"</span>,</span>
-<span id="cb6-10"><a href="#cb6-10"></a>      <span class="dt">date_breaks =</span> <span class="st">"day"</span>,</span>
-<span id="cb6-11"><a href="#cb6-11"></a>      <span class="dt">date_labels =</span> <span class="st">"%d-%m"</span>,</span>
-<span id="cb6-12"><a href="#cb6-12"></a>      <span class="dt">date_minor_breaks =</span> <span class="st">"hour"</span>,</span>
-<span id="cb6-13"><a href="#cb6-13"></a>      <span class="dt">guide =</span> <span class="kw">guide_axis</span>(<span class="dt">check.overlap =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb6-14"><a href="#cb6-14"></a>   ) <span class="op">+</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">"Precipitation (mm)"</span>) <span class="op">+</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="st">   </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>SpEv, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">scales =</span> <span class="st">"free_x"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>dat <span class="op">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(SpEv) <span class="op">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Hour =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span>(time, <span class="st">"1 hour"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(SpEv, Hour) <span class="op">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(rainfall)) <span class="op">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Hour, <span class="dt">y =</span> <span class="st">`</span><span class="dt">sum(rainfall)</span><span class="st">`</span>)) <span class="op">+</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="st">   </span><span class="kw">geom_col</span>() <span class="op">+</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="st">   </span><span class="kw">scale_x_datetime</span>(</span>
+<span id="cb5-9"><a href="#cb5-9"></a>      <span class="st">"Date (day-month)"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>      <span class="dt">date_breaks =</span> <span class="st">"day"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11"></a>      <span class="dt">date_labels =</span> <span class="st">"%d-%m"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12"></a>      <span class="dt">date_minor_breaks =</span> <span class="st">"hour"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13"></a>      <span class="dt">guide =</span> <span class="kw">guide_axis</span>(<span class="dt">check.overlap =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb5-14"><a href="#cb5-14"></a>   ) <span class="op">+</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">"Precipitation (mm)"</span>) <span class="op">+</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="st">   </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>SpEv, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">scales =</span> <span class="st">"free_x"</span>)</span></code></pre></div>
 <div class="figure">
 <img src="03_Visualise_Data_files/figure-html/rain-1.png" alt="Hourly precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'" width="902.4"><p class="caption">
 Hourly precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; source of precipitation ‘Irrg’ (irrigation), ‘Rain’ (rainfall) or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’
@@ -565,91 +555,73 @@ Hourly precipitation for each of the six rainfall or irrigation events at two lo
 <div id="visualise-the-windspeed-and-direction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualise-the-windspeed-and-direction" class="anchor"></a>Visualise the Windspeed and Direction</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>pw &lt;-</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>      dat,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>      <span class="kw"><a href="https://docs.ropensci.org/clifro/reference/windrose.html">windrose</a></span>(</span>
-<span id="cb7-5"><a href="#cb7-5"></a>         wind_speed,</span>
-<span id="cb7-6"><a href="#cb7-6"></a>         wind_direction,</span>
-<span id="cb7-7"><a href="#cb7-7"></a>         SpEv,</span>
-<span id="cb7-8"><a href="#cb7-8"></a>         <span class="dt">n_col =</span> <span class="dv">3</span>,</span>
-<span id="cb7-9"><a href="#cb7-9"></a>         <span class="dt">legend_title =</span> <span class="st">"Wind speed (m/s)"</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>      )</span>
-<span id="cb7-11"><a href="#cb7-11"></a>   )</span>
-<span id="cb7-12"><a href="#cb7-12"></a>pw <span class="op">+</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="st">   </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">name =</span> <span class="st">"Wind Speed (m/s)"</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">""</span>) <span class="op">+</span></span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>pw &lt;-</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>      dat,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>      <span class="kw"><a href="https://docs.ropensci.org/clifro/reference/windrose.html">windrose</a></span>(</span>
+<span id="cb6-5"><a href="#cb6-5"></a>         wind_speed,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>         wind_direction,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>         SpEv,</span>
+<span id="cb6-8"><a href="#cb6-8"></a>         <span class="dt">n_col =</span> <span class="dv">3</span>,</span>
+<span id="cb6-9"><a href="#cb6-9"></a>         <span class="dt">legend_title =</span> <span class="st">"Wind speed (m/s)"</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>      )</span>
+<span id="cb6-11"><a href="#cb6-11"></a>   )</span>
+<span id="cb6-12"><a href="#cb6-12"></a>pw <span class="op">+</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="st">   </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">name =</span> <span class="st">"Wind Speed (m/s)"</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">""</span>) <span class="op">+</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>()</span></code></pre></div>
 <div class="figure">
 <img src="03_Visualise_Data_files/figure-html/wind-1.png" alt="Windroses showing the windspeed and direction for each event. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'" width="902.4"><p class="caption">
 Windroses showing the windspeed and direction for each event. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; source of precipitation ‘Irrg’ (irrigation), ‘Rain’ (rainfall) or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’
 </p>
 </div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># save a .png to refer to while writing and a .eps for publication submission</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">ggsave</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>, <span class="st">"figures/Fig3.png"</span>))</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">ggsave</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>, <span class="st">"figures/Fig3.eps"</span>))</span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="kw"><a href="https://rdrr.io/pkg/extrafont/man/embed_fonts.html">embed_fonts</a></span>(</span>
-<span id="cb8-5"><a href="#cb8-5"></a>   <span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>,</span>
-<span id="cb8-6"><a href="#cb8-6"></a>        <span class="st">"figures/Fig3.eps"</span>),</span>
-<span id="cb8-7"><a href="#cb8-7"></a>   <span class="dt">outfile =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8"></a>                  <span class="st">"figures/Fig3.eps"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9"></a>                  <span class="dt">options =</span> <span class="st">"-dEPSCrop"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10"></a>)</span></code></pre></div>
+<p>When inspecting these data, we noted that the wind direction for Curyo was against the direction of spread along the transects, which lead to further investigation of the weather data. That investigation is detailed in <a href="06_Compare_Curyo_weather.html">this analysis</a>.</p>
 </div>
 <div id="heatmap-of-lesions-along-transects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#heatmap-of-lesions-along-transects" class="anchor"></a>Heatmap of Lesions Along Transects</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>heat_dat &lt;-</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="st">   </span>lesion <span class="op">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(SpEv, degrees) <span class="op">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">summed_count_pot =</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>             <span class="kw">case_when</span>(distance <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(mean_pot_count),</span>
-<span id="cb9-6"><a href="#cb9-6"></a>                       <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>mean_pot_count)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(mean_pot_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</span>
-<span id="cb9-8"><a href="#cb9-8"></a></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> heat_dat,</span>
-<span id="cb9-10"><a href="#cb9-10"></a>       <span class="kw">aes</span>(</span>
-<span id="cb9-11"><a href="#cb9-11"></a>          <span class="dt">x =</span> degrees,</span>
-<span id="cb9-12"><a href="#cb9-12"></a>          <span class="dt">y =</span> distance,</span>
-<span id="cb9-13"><a href="#cb9-13"></a>          <span class="dt">colour =</span> summed_count_pot,</span>
-<span id="cb9-14"><a href="#cb9-14"></a>          <span class="dt">size =</span> summed_count_pot</span>
-<span id="cb9-15"><a href="#cb9-15"></a>       )) <span class="op">+</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="st">   </span><span class="kw">geom_count</span>(<span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(heat_dat, distance <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)) <span class="op">+</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="st">   </span><span class="kw">geom_count</span>(<span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(heat_dat, distance <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)) <span class="op">+</span></span>
-<span id="cb9-18"><a href="#cb9-18"></a><span class="st">   </span><span class="kw">scale_colour_viridis_c</span>(</span>
-<span id="cb9-19"><a href="#cb9-19"></a>      <span class="dt">direction =</span> <span class="dv">-1</span>,</span>
-<span id="cb9-20"><a href="#cb9-20"></a>      <span class="dt">name =</span> <span class="st">"n"</span>,</span>
-<span id="cb9-21"><a href="#cb9-21"></a>      <span class="dt">guide =</span> <span class="st">"legend"</span></span>
-<span id="cb9-22"><a href="#cb9-22"></a>   ) <span class="op">+</span></span>
-<span id="cb9-23"><a href="#cb9-23"></a><span class="st">   </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">"x"</span>,</span>
-<span id="cb9-24"><a href="#cb9-24"></a>               <span class="dt">start =</span> <span class="dv">0</span>,</span>
-<span id="cb9-25"><a href="#cb9-25"></a>               <span class="dt">direction =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb9-26"><a href="#cb9-26"></a><span class="st">   </span><span class="kw">scale_size</span>(<span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">8</span>), <span class="dt">name =</span> <span class="st">"n"</span>) <span class="op">+</span></span>
-<span id="cb9-27"><a href="#cb9-27"></a><span class="st">   </span><span class="kw">scale_x_continuous</span>(</span>
-<span id="cb9-28"><a href="#cb9-28"></a>      <span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="dv">180</span>, <span class="dv">270</span>),</span>
-<span id="cb9-29"><a href="#cb9-29"></a>      <span class="dt">expand =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb9-30"><a href="#cb9-30"></a>      <span class="dt">limits =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">360</span>),</span>
-<span id="cb9-31"><a href="#cb9-31"></a>      <span class="dt">labels =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"N"</span>, <span class="st">"E"</span>, <span class="st">"S"</span>, <span class="st">"W"</span>)</span>
-<span id="cb9-32"><a href="#cb9-32"></a>   ) <span class="op">+</span></span>
-<span id="cb9-33"><a href="#cb9-33"></a><span class="st">   </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">75</span>),</span>
-<span id="cb9-34"><a href="#cb9-34"></a>                      <span class="dt">limits =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">75</span>)) <span class="op">+</span></span>
-<span id="cb9-35"><a href="#cb9-35"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">"Distance (m)"</span>) <span class="op">+</span></span>
-<span id="cb9-36"><a href="#cb9-36"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">"Transect"</span>) <span class="op">+</span></span>
-<span id="cb9-37"><a href="#cb9-37"></a><span class="st">   </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>SpEv, <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>heat_dat &lt;-</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">   </span>lesion <span class="op">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(SpEv, degrees) <span class="op">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">summed_count_pot =</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>             <span class="kw">case_when</span>(distance <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(mean_pot_count),</span>
+<span id="cb7-6"><a href="#cb7-6"></a>                       <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>mean_pot_count)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(mean_pot_count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> heat_dat,</span>
+<span id="cb7-10"><a href="#cb7-10"></a>       <span class="kw">aes</span>(</span>
+<span id="cb7-11"><a href="#cb7-11"></a>          <span class="dt">x =</span> degrees,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>          <span class="dt">y =</span> distance,</span>
+<span id="cb7-13"><a href="#cb7-13"></a>          <span class="dt">colour =</span> summed_count_pot,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>          <span class="dt">size =</span> summed_count_pot</span>
+<span id="cb7-15"><a href="#cb7-15"></a>       )) <span class="op">+</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="st">   </span><span class="kw">geom_count</span>(<span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(heat_dat, distance <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="st">   </span><span class="kw">geom_count</span>(<span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(heat_dat, distance <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="st">   </span><span class="kw">scale_colour_viridis_c</span>(</span>
+<span id="cb7-19"><a href="#cb7-19"></a>      <span class="dt">direction =</span> <span class="dv">-1</span>,</span>
+<span id="cb7-20"><a href="#cb7-20"></a>      <span class="dt">name =</span> <span class="st">"n"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21"></a>      <span class="dt">guide =</span> <span class="st">"legend"</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a>   ) <span class="op">+</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="st">   </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">"x"</span>,</span>
+<span id="cb7-24"><a href="#cb7-24"></a>               <span class="dt">start =</span> <span class="dv">0</span>,</span>
+<span id="cb7-25"><a href="#cb7-25"></a>               <span class="dt">direction =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="st">   </span><span class="kw">scale_size</span>(<span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">8</span>), <span class="dt">name =</span> <span class="st">"n"</span>) <span class="op">+</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a><span class="st">   </span><span class="kw">scale_x_continuous</span>(</span>
+<span id="cb7-28"><a href="#cb7-28"></a>      <span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="dv">180</span>, <span class="dv">270</span>),</span>
+<span id="cb7-29"><a href="#cb7-29"></a>      <span class="dt">expand =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb7-30"><a href="#cb7-30"></a>      <span class="dt">limits =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">360</span>),</span>
+<span id="cb7-31"><a href="#cb7-31"></a>      <span class="dt">labels =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"N"</span>, <span class="st">"E"</span>, <span class="st">"S"</span>, <span class="st">"W"</span>)</span>
+<span id="cb7-32"><a href="#cb7-32"></a>   ) <span class="op">+</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="st">   </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">75</span>),</span>
+<span id="cb7-34"><a href="#cb7-34"></a>                      <span class="dt">limits =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">75</span>)) <span class="op">+</span></span>
+<span id="cb7-35"><a href="#cb7-35"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">"Distance (m)"</span>) <span class="op">+</span></span>
+<span id="cb7-36"><a href="#cb7-36"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">"Transect"</span>) <span class="op">+</span></span>
+<span id="cb7-37"><a href="#cb7-37"></a><span class="st">   </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>SpEv, <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure">
 <img src="03_Visualise_Data_files/figure-html/polar_coord_transects-1.png" alt="Heatmap showing count of mean lesions per pot at each station along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'" width="902.4"><p class="caption">
 Heatmap showing count of mean lesions per pot at each station along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; source of precipitation ‘Irrg’ (irrigation), ‘Rain’ (rainfall) or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’
 </p>
 </div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">ggsave</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>, <span class="st">"figures/Fig4.png"</span>))</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">ggsave</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>, <span class="st">"figures/Fig4.eps"</span>))</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="kw"><a href="https://rdrr.io/pkg/extrafont/man/embed_fonts.html">embed_fonts</a></span>(</span>
-<span id="cb10-4"><a href="#cb10-4"></a>   <span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>,</span>
-<span id="cb10-5"><a href="#cb10-5"></a>        <span class="st">"figures/Fig4.eps"</span>),</span>
-<span id="cb10-6"><a href="#cb10-6"></a>   <span class="dt">outfile =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"man"</span>,</span>
-<span id="cb10-7"><a href="#cb10-7"></a>                  <span class="st">"figures/Fig4.eps"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8"></a>                  <span class="dt">options =</span> <span class="st">"-dEPSCrop"</span>)</span>
-<span id="cb10-9"><a href="#cb10-9"></a>)</span></code></pre></div>
 </div>
   </div>
 

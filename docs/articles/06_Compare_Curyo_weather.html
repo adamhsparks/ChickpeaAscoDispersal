@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>06_Compare_Curyo_weather • ChickpeaAscoDispersal</title>
+<title>Compare Curyo weather • ChickpeaAscoDispersal</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="06_Compare_Curyo_weather">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Compare Curyo weather">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -69,7 +69,7 @@
       <a href="../articles/05_GAM.html">Fit generalised additive models (GAMs) to the data</a>
     </li>
     <li>
-      <a href="../articles/06_Compare_Curyo_weather.html">06_Compare_Curyo_weather</a>
+      <a href="../articles/06_Compare_Curyo_weather.html">Compare Curyo weather</a>
     </li>
   </ul>
 </li>
@@ -90,7 +90,7 @@
 <script src="06_Compare_Curyo_weather_files/leaflet-binding-2.0.3/leaflet.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>06_Compare_Curyo_weather</h1>
+      <h1>Compare Curyo weather</h1>
                         <h4 class="author">P. Melloy</h4>
             
             <h4 class="date">10/03/2020</h4>
@@ -120,9 +120,16 @@
 <span id="cb2-2"><a href="#cb2-2"></a><span class="st">   </span><span class="kw">read_csv</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"inst/data"</span>, <span class="st">"Dispersal experiments dates.csv"</span>)) <span class="op">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="st">`</span><span class="dt">assessment date</span><span class="st">`</span> =<span class="st"> </span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="st">`</span><span class="dt">assessment date</span><span class="st">`</span>)) <span class="op">%&gt;%</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">exposed =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/interval.html">interval</a></span>(<span class="st">`</span><span class="dt">time out</span><span class="st">`</span>, <span class="st">`</span><span class="dt">time removed</span><span class="st">`</span>))</span></code></pre></div>
-<p>The experimental site Curyo is located approximately 120 km north-east of Horsham Grains Innovation park (Department of Primary Industries Victoria). Trap plants were placed on transects on vectors ranging from XX to YY in a north-north-west direction from the ascochyta infested chickpea stubble. A single rainfall event at the Curyo site to trigger conidial dispersal between 2019-10-15 08:00:00 and 2019-10-17 18:00:00. However the onsite weather station adjacent to the trial recorded the wind direction as coming from the north, blowing towards the south.</p>
-<p>Conida were recorded travelling up to 75 meters from the infested stubble north, against the wind during the spread event. The collaborating researcher at VDPI confirmed this weather station did not have wind direction calibrated recently.</p>
+<div id="background" class="section level2">
+<h2 class="hasAnchor">
+<a href="#background" class="anchor"></a>Background</h2>
+<p>The experimental site Curyo is located approximately 120 km north-east of Horsham Grains Innovation park (Department of Primary Industries Victoria). Trap plants were placed on transects on vectors from 290˚ to 20˚ in a north-north-west direction from the ascochyta infected chickpea crop. A single rainfall event at the Curyo site to trigger conidial dispersal between 2019-10-15 08:00:00 and 2019-10-17 18:00:00. However the onsite weather station recorded the wind direction as coming from the north, blowing towards the south.</p>
+<p>Conida were recorded travelling up to 75 meters from the infested stubble north, against the wind during the spread event. The collaborating researcher at VDPI confirmed this weather station did not have wind direction calibrated recently.</p>
 <p>This vignette is aimed at comparing the wind direction and wind speed to nearby weather stations.</p>
+</div>
+<div id="data-import" class="section level2">
+<h2 class="hasAnchor">
+<a href="#data-import" class="anchor"></a>Data import</h2>
 <p>First we will import the weather data from the Curyo which we suspect to have inaccurate wind direction. The data will be formatted and filtered to only contain weather data during when the trap plants were exposed in the field.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Curyo_w &lt;-</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="st">   </span><span class="kw">read_csv</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(</span>
@@ -140,7 +147,7 @@
 <span id="cb3-14"><a href="#cb3-14"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">wd =</span> <span class="st">`</span><span class="dt">Wind Direction - average (º)</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
 <span id="cb3-15"><a href="#cb3-15"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">rainfall =</span> <span class="st">`</span><span class="dt">Rainfall - (mm)</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb3-16"><a href="#cb3-16"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/filter.html">filter</a></span>(time <span class="op">%within%</span><span class="st"> </span>events[<span class="dv">6</span>, <span class="st">"exposed"</span>])</span></code></pre></div>
-<p>The data we download from Bureau of Meteorology is in one hour increments, so we will aggregate the 10 minute data to one hourly.</p>
+<p>The data we download from Bureau of Meteorology (BOM) is in one hour increments, so we will aggregate the 10 minute data to one hourly.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>Curyo_w &lt;-</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="st">   </span>Curyo_w <span class="op">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Day =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/day.html">day</a></span>(time)) <span class="op">%&gt;%</span></span>
@@ -157,7 +164,7 @@
 <span id="cb4-14"><a href="#cb4-14"></a>      <span class="dt">by =</span> <span class="st">"hour"</span></span>
 <span id="cb4-15"><a href="#cb4-15"></a>   )) <span class="op">%&gt;%</span></span>
 <span id="cb4-16"><a href="#cb4-16"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/select.html">select</a></span>(Location, time, <span class="kw"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>())</span></code></pre></div>
-<p>Next we will import data from a second weather station at the Curyo field site approximately 10 km from where our trial took place.</p>
+<p>Next we will import data from a second weather station at the Curyo field site approximately 10 kilometres from where our trial took place.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Curyo2_w &lt;-</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="st">   </span><span class="kw">read_csv</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"inst/data"</span>,</span>
 <span id="cb5-3"><a href="#cb5-3"></a>                 <span class="st">"DataFarmer_Data_202031081949847.csv"</span>),</span>
@@ -585,8 +592,8 @@ time
 </td>
 </tr></tbody>
 </table>
-<p>We have data from two weather stations in the field, however lets import data from BOM meteorological stations nearby. We can use the <code>bomrang</code> function <code><a href="https://docs.ropensci.org/bomrang/reference/sweep_for_stations.html">sweep_for_stations()</a></code> to find the closest stations to our experimental site. Because <code>bomrang</code> only obtains historical daily weather information we need to use another package (<code>stationaRy</code>) which can retrieve hourly or 10 minute increment weather data from the same BOM stations. We then use the station name of the BOM stations in the <code>get_station_metadata</code> from the <code>stationaRy</code> package to obtain weather station ids. We need the ids to inform the function <code>get_met_data</code> from which stations we want weather data.</p>
-<p>The <code>get_met_data</code> function needs to be fun through a loop for each station. We place the weather data from each station into a tibble and store it as an element in a list.</p>
+<p>We have data from two weather stations in the field, however lets import data from BOM meteorological stations nearby. We can use the bomrang function <code><a href="https://docs.ropensci.org/bomrang/reference/sweep_for_stations.html">sweep_for_stations()</a></code> to find the closest stations to our experimental site. Because bomrang only obtains historical daily weather information we need to use another package, stationaRy, which can retrieve hourly or 10 minute weather data from the same BOM stations. We then use the station name of the BOM stations in the <code><a href="https://rdrr.io/pkg/stationaRy/man/get_station_metadata.html">get_station_metadata()</a></code> from the <a href="https://cran.r-project.org/package=stationaRy">stationaRy</a> package to obtain weather station IDs. We need the ids to inform the function <code><a href="https://rdrr.io/pkg/stationaRy/man/get_met_data.html">get_met_data()</a></code> from which stations we want weather data.</p>
+<p>The <code><a href="https://rdrr.io/pkg/stationaRy/man/get_met_data.html">get_met_data()</a></code> function needs to be fun through a loop for each station. We place the weather data from each station into a tibble and store it as an element in a list.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>curyo_latlong &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">35.779312</span>, <span class="fl">142.778332</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a>stat.dat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/stationaRy/man/get_station_metadata.html">get_station_metadata</a></span>() <span class="op">%&gt;%</span></span>
@@ -608,6 +615,7 @@ time
 ## [1] "CHARLTON"</code></pre>
 <p>Next we bind the data all together in a single tibble called <code>weather.vic</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>weather.vic &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(weather.list, Curyo_w, Curyo_alt)</span></code></pre></div>
+</div>
 <div id="windroses" class="section level2">
 <h2 class="hasAnchor">
 <a href="#windroses" class="anchor"></a>Windroses</h2>
@@ -1274,8 +1282,8 @@ Windroses for four weather stations at or near the Curyo site. The windstation o
 <span id="cb13-11"><a href="#cb13-11"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addMarkers</a></span>(<span class="dt">lng =</span> <span class="op">~</span><span class="st"> </span>lon,</span>
 <span id="cb13-12"><a href="#cb13-12"></a>              <span class="dt">lat =</span> <span class="op">~</span><span class="st"> </span>lat,</span>
 <span id="cb13-13"><a href="#cb13-13"></a>              <span class="dt">popup =</span> <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/htmltools/man/htmlEscape.html">htmlEscape</a></span>(name))</span></code></pre></div>
-<div id="htmlwidget-6a8c729668603f657846" style="width:700px;height:432.632880098888px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6a8c729668603f657846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[-35.7151,-36.2614,-36.3204,-36.2846,-35.779312],[142.3569,142.405,142.4161,143.3341,142.778332],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["HOPETOUN AIRPORT","WARRACKNABEAL MUSEUM","KELLALAC (WARRACKNABEAL AIRPORT)","CHARLTON","CURYO"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"setView":[[-36,142.7],9,[]],"limits":{"lat":[-36.3204,-35.7151],"lng":[142.3569,143.3341]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d1219a0a8f422211f7a2" style="width:700px;height:432.632880098888px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d1219a0a8f422211f7a2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[-35.7151,-36.2614,-36.3204,-36.2846,-35.779312],[142.3569,142.405,142.4161,143.3341,142.778332],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["HOPETOUN AIRPORT","WARRACKNABEAL MUSEUM","KELLALAC (WARRACKNABEAL AIRPORT)","CHARLTON","CURYO"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"setView":[[-36,142.7],9,[]],"limits":{"lat":[-36.3204,-35.7151],"lng":[142.3569,143.3341]}},"evals":[],"jsHooks":[]}</script>
 </div>
   </div>
 
@@ -1285,7 +1293,9 @@ Windroses for four weather stations at or near the Curyo site. The windstation o
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#windroses">Windroses</a></li>
+<li><a href="#background">Background</a></li>
+      <li><a href="#data-import">Data import</a></li>
+      <li><a href="#windroses">Windroses</a></li>
       <li><a href="#wind-speed-correlations">Wind speed correlations</a></li>
       <li><a href="#weather-station-locations">Weather station locations</a></li>
       </ul>
