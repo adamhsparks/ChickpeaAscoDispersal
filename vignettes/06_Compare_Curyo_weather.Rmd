@@ -62,20 +62,21 @@ Curyo_w <-
 The data we download from Bureau of Meteorology is in one hour increments, so we will aggregate the 10 minute data to one hourly.  
 
 ```{r aggregate_to_1_hour}
-Curyo_w <- 
+Curyo_w <-
    Curyo_w %>%
-   mutate(Day = day(time))%>%
-   mutate(Hour = hour(time))%>%
-   group_by(Hour, Day)%>%
+   mutate(Day = day(time)) %>%
+   mutate(Hour = hour(time)) %>%
+   group_by(Hour, Day) %>%
    summarise(ws = mean(ws),
-             wd = circular.averaging(wd))%>%
+             wd = circular.averaging(wd)) %>%
    mutate(Location = "Curyo") %>%
-   arrange(Day,Hour)%>%
-   ungroup()%>%
+   arrange(Day, Hour) %>%
+   ungroup() %>%
    mutate(time = seq(
-     from = events[events$site == "Curyo",]$`time out`,
-     to = events[events$site == "Curyo",]$`time removed`,
-     by="hour"))%>%
+      from = events[events$site == "Curyo", ]$`time out`,
+      to = events[events$site == "Curyo", ]$`time removed`,
+      by = "hour"
+   )) %>%
    select(Location, time, everything())
 ```
 
@@ -112,29 +113,30 @@ Curyo2_w <-
          wd == "NW" ~ 315,
          wd == "NNW" ~ 337.5
       )
-   )%>%
+   ) %>%
    filter(time %within% events[6, "exposed"])
 ```
 
 The alternate Curyo weather station data also need to be aggregated into one hour increments.  
 
 ```{r Curyo_alt_aggregate}
-Curyo_alt <- 
+Curyo_alt <-
    Curyo2_w %>%
-   mutate(Day = day(time))%>%
-   mutate(Hour = hour(time))%>%
-   group_by(Hour, Day)%>%
+   mutate(Day = day(time)) %>%
+   mutate(Hour = hour(time)) %>%
+   group_by(Hour, Day) %>%
    summarise(ws = mean(ws),
-             wd = circular.averaging(wd))%>%
-   mutate(Location = "Curyo") %>%
-   arrange(Day,Hour)%>%
-   ungroup()%>%
+             wd = circular.averaging(wd)) %>%
+   mutate(Location = "BCG") %>%
+   arrange(Day, Hour) %>%
+   ungroup() %>%
    mutate(time = seq(
-     from = events[events$site == "Curyo",]$`time out`,
-     to = events[events$site == "Curyo",]$`time removed`,
-     by="hour")[1:58])%>%
-   select(Location, time, everything()) 
-   
+      from = events[events$site == "Curyo", ]$`time out`,
+      to = events[events$site == "Curyo", ]$`time removed`,
+      by = "hour"
+   )[1:58]) %>%
+   select(Location, time, everything())
+
 
 skim(Curyo_alt)
 ```
@@ -176,7 +178,8 @@ skim(weather.vic)
 ```
 
 We can visualise the wind speed and direction for each site using windrose.  
-```{r windrose, message=FALSE}
+
+```{r windrose, message=FALSE, fig.cap="Windroses for four weather stations at or near the Curyo site. The windstation on-site is labeled as 'Curyo', the Birchip Cropping Group station which was roughly 10&nbsp;km away is labelled with 'BCG', the remaining two stations are labelled with their respective BOM names, 'CHARLETON' and 'HOPETOUN AIRPORT'."}
 pw <-
    with(
       weather.vic,
@@ -194,11 +197,13 @@ pw +
    theme_pubclean()
 ```
 
+From the windroses, it is apparent that the Curyo weather station is an outlier for direction and possibly windspeed.
+
 ## Wind speed correlations
 
-Visually inspect the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometers away.
+Visually inspect the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away.
 
-```{r ws-correlations}
+```{r ws-correlations, message=FALSE, warning=FALSE}
 ggplot(weather.vic, aes(x = time, y = ws)) +
    geom_point(aes(shape = Location,
                   colour = Location),
@@ -206,25 +211,23 @@ ggplot(weather.vic, aes(x = time, y = ws)) +
    scale_colour_viridis_d()
 ```
 
-They do seem correlated but not an exact x-y relationship. Local gusts are possible?
+They do seem correlated but it is not an exact x-y relationship and the Curyo gusts are higher than others, but that seems reasonable.
 
 ## Weather station locations
 Note the coordinates for the alternate Curyo station are not included.
-```{r weather_station_map }
-sweep_for_stations(curyo_latlong)[1:4]%>%
-   select(name,lat,lon)%>%
+```{r weather_station_map, message=FALSE}
+sweep_for_stations(curyo_latlong)[1:4] %>%
+   select(name, lat, lon) %>%
    bind_rows(tibble(name = "CURYO",
                     lat = curyo_latlong[1],
-                    lon = curyo_latlong[2]))%>%
-   leaflet()%>%
+                    lon = curyo_latlong[2])) %>%
+   leaflet() %>%
    addTiles() %>%
    setView(lat = -36,
            lng = 142.7,
            zoom = 9) %>%
-   addMarkers(
-      lng = ~ lon,
-      lat = ~ lat,
-      popup = ~ htmlEscape(name)
-   )
+   addMarkers(lng = ~ lon,
+              lat = ~ lat,
+              popup = ~ htmlEscape(name))
 ```
 
