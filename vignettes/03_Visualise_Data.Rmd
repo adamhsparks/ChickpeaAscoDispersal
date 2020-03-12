@@ -142,19 +142,6 @@ pw +
    theme_pubclean()
 ```
 
-```{r save_fig3, include=FALSE}
-# save a .png to refer to while writing and a .eps for publication submission
-ggsave(here("man", "figures/Fig3.png"))
-ggsave(here("man", "figures/Fig3.eps"))
-embed_fonts(
-   here("man",
-        "figures/Fig3.eps"),
-   outfile = here("man",
-                  "figures/Fig3.eps",
-                  options = "-dEPSCrop")
-)
-```
-
 When inspecting these data, we noted that the wind direction for Curyo was against the direction of spread along the transects, which lead to further investigation of the weather data. That investigation is detailed in [this analysis](06_Compare_Curyo_weather.html).
 
 ## Heatmap of Lesions Along Transects
