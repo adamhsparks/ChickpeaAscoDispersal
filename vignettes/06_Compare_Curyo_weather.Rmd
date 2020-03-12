@@ -7,6 +7,7 @@ output: html_document
 
 ```{r libraries, message=FALSE, warning=FALSE}
 library("tidyverse")
+library("extrafont")
 library("lubridate")
 library("skimr")
 library("ggpubr")
@@ -22,6 +23,15 @@ library("htmltools")
 theme_set(theme_pubclean(base_size = 14))
 ```
 
+```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
+# run only if knitting on new computer/new R installation
+# !!!! Run this in a regular interactive console not this markdown file !!!!
+# this is necessary to embed fonts in .eps files for EJPP
+font_import(pattern = "Arial")
+
+# load the fonts necessary to embed in eps files
+loadfonts(device = "postscript") 
+```
 
 ```{r import-event, message=FALSE}
 events <-
