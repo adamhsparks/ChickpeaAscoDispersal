@@ -116,7 +116,9 @@
 <span id="cb1-12"><a href="#cb1-12"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"clifro"</span>)</span>
 <span id="cb1-13"><a href="#cb1-13"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"leaflet"</span>)</span>
 <span id="cb1-14"><a href="#cb1-14"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"htmltools"</span>)</span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">theme_set</span>(<span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>(<span class="dt">base_size =</span> <span class="dv">14</span>))</span></code></pre></div>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">theme_set</span>(<span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>(<span class="dt">base_size =</span> <span class="dv">14</span>))</span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">fig.width =</span> <span class="fl">9.4</span>, <span class="dt">fig.height =</span> <span class="fl">9.4</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>events &lt;-</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="st">   </span><span class="kw">read_csv</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"inst/data"</span>, <span class="st">"Dispersal experiments dates.csv"</span>)) <span class="op">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="st">`</span><span class="dt">assessment date</span><span class="st">`</span> =<span class="st"> </span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="st">`</span><span class="dt">assessment date</span><span class="st">`</span>)) <span class="op">%&gt;%</span></span>
@@ -1250,8 +1252,8 @@ time
 <span id="cb10-13"><a href="#cb10-13"></a>              <span class="dt">lat =</span> <span class="op">~</span><span class="st"> </span>lat,</span>
 <span id="cb10-14"><a href="#cb10-14"></a>              <span class="dt">popup =</span> <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/htmltools/man/htmlEscape.html">htmlEscape</a></span>(name)) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb10-15"><a href="#cb10-15"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/leaflet/man/addScaleBar.html">addScaleBar</a></span>()</span></code></pre></div>
-<div id="htmlwidget-7b616f0c6067ab5d95d2" style="width:700px;height:432.632880098888px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7b616f0c6067ab5d95d2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[-35.7151,-36.2846,-35.779312],[142.3569,143.3341,142.778332],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["HOPETOUN AIRPORT","CHARLTON","CURYO"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"topright"}]}],"setView":[[-36,142.7],9,[]],"limits":{"lat":[-36.2846,-35.7151],"lng":[142.3569,143.3341]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c27eeab8318558f015a8" style="width:902.4px;height:902.4px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c27eeab8318558f015a8">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[-35.7151,-36.2846,-35.779312],[142.3569,143.3341,142.778332],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["HOPETOUN AIRPORT","CHARLTON","CURYO"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"topright"}]}],"setView":[[-36,142.7],9,[]],"limits":{"lat":[-36.2846,-35.7151],"lng":[142.3569,143.3341]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="windroses" class="section level2">
 <h2 class="hasAnchor">
@@ -1273,7 +1275,7 @@ time
 <span id="cb11-14"><a href="#cb11-14"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">""</span>) <span class="op">+</span></span>
 <span id="cb11-15"><a href="#cb11-15"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>()</span></code></pre></div>
 <div class="figure">
-<img src="06_Compare_Curyo_weather_files/figure-html/windrose-1.png" alt="Windroses for four weather stations at or near the Curyo site. The windstation on-site is labeled as 'Curyo', the Birchip Cropping Group station which was roughly 10&amp;nbsp;km away is labelled with 'BCG', the remaining two stations are labelled with their respective BOM names, 'CHARLETON' and 'HOPETOUN AIRPORT'." width="700"><p class="caption">
+<img src="06_Compare_Curyo_weather_files/figure-html/windrose-1.png" alt="Windroses for four weather stations at or near the Curyo site. The windstation on-site is labeled as 'Curyo', the Birchip Cropping Group station which was roughly 10&amp;nbsp;km away is labelled with 'BCG', the remaining two stations are labelled with their respective BOM names, 'CHARLETON' and 'HOPETOUN AIRPORT'." width="902.4"><p class="caption">
 Windroses for four weather stations at or near the Curyo site. The windstation on-site is labeled as ‘Curyo’, the Birchip Cropping Group station which was roughly 10 km away is labelled with ‘BCG’, the remaining two stations are labelled with their respective BOM names, ‘CHARLETON’ and ‘HOPETOUN AIRPORT’.
 </p>
 </div>
@@ -1288,7 +1290,7 @@ Windroses for four weather stations at or near the Curyo site. The windstation o
 <span id="cb12-4"><a href="#cb12-4"></a>              <span class="dt">size =</span> <span class="fl">3.5</span>) <span class="op">+</span></span>
 <span id="cb12-5"><a href="#cb12-5"></a><span class="st">   </span><span class="kw">scale_colour_viridis_d</span>()</span></code></pre></div>
 <div class="figure">
-<img src="06_Compare_Curyo_weather_files/figure-html/ws-correlations-1.png" alt="Visual inspection of the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away and two BOM stations 40 to 50 kilometres away." width="700"><p class="caption">
+<img src="06_Compare_Curyo_weather_files/figure-html/ws-correlations-1.png" alt="Visual inspection of the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away and two BOM stations 40 to 50 kilometres away." width="902.4"><p class="caption">
 Visual inspection of the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away and two BOM stations 40 to 50 kilometres away.
 </p>
 </div>
@@ -1330,7 +1332,7 @@ Visual inspection of the wind speed data comparing the Curyo site with the Birch
 <span id="cb15-15"><a href="#cb15-15"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>()</span></code></pre></div>
 <pre><code>## Scale for 'fill' is already present. Adding another scale for 'fill', which
 ## will replace the existing scale.</code></pre>
-<p><img src="06_Compare_Curyo_weather_files/figure-html/new-fig3-1.png" width="700"></p>
+<p><img src="06_Compare_Curyo_weather_files/figure-html/new-fig3-1.png" width="902.4"></p>
 </div>
   </div>
 

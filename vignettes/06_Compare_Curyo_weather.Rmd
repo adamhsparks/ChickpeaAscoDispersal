@@ -26,6 +26,8 @@ library("clifro")
 library("leaflet")
 library("htmltools")
 theme_set(theme_pubclean(base_size = 14))
+
+knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
