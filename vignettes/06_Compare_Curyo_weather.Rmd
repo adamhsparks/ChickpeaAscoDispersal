@@ -1,8 +1,13 @@
 ---
-title: "Compare Curyo weather"
+title: "Compare Curyo wind with alternate sources"
 author: "P. Melloy"
-date: "10/03/2020"
-output: html_document
+date: "`r Sys.Date()`"
+output:
+   rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{06_compare_curyo_wind_data}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r libraries, message=FALSE, warning=FALSE}
@@ -26,6 +31,7 @@ theme_set(theme_pubclean(base_size = 14))
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
 # run only if knitting on new computer/new R installation
 # !!!! Run this in a regular interactive console not this markdown file !!!!
+# You will get an error after knitting or building pkgdown if you haven't done this
 # this is necessary to embed fonts in .eps files for EJPP
 font_import(pattern = "Arial")
 
@@ -73,6 +79,7 @@ Curyo_w <-
    rename(ws = `Wind Speed - average (km/h)`) %>%
    rename(wd = `Wind Direction - average (º)`) %>%
    rename(rainfall = `Rainfall - (mm)`) %>% 
+   mutate(ws = ws / 3.6) %>% # convert from km/h to m/s
    filter(time %within% events[6, "exposed"])
 ```
 
@@ -97,14 +104,15 @@ Curyo_w <-
    select(Location, time, everything())
 ```
 
-Next we will import data from a second weather station at the Curyo field site approximately 10&nbsp;kilometres from where our trial took place.
+Next we will import data from a second weather station operated by the Birchip Ag Group approximately 10&nbsp;kilometres from where our trial took place.
 
-```{r import-Curyo2, message=FALSE, warning=FALSE}
+```{r import-BCG, message=FALSE, warning=FALSE}
 BCG <-
    read_csv(here("inst/data",
                  "DataFarmer_Data_202031081949847.csv"),
             skip = 1) %>%
    mutate(time = dmy_hm(`Reading Time`)) %>%
+   mutate(`Wind Speed` = `Wind Speed` / 3.6) %>% # convert from km/h to m/s
    mutate(Location = "BCG") %>%
    select(Location, everything()) %>%
    rename(ws = `Wind Speed`) %>%
@@ -135,7 +143,7 @@ BCG <-
    filter(time %within% events[6, "exposed"])
 ```
 
-The alternate Curyo weather station data also need to be aggregated into one hour increments.
+The BCG weather station data also need to be aggregated into one hour increments.
 
 ```{r Curyo_alt_aggregate}
 Curyo_alt <-
@@ -145,7 +153,7 @@ Curyo_alt <-
    group_by(Hour, Day) %>%
    summarise(ws = mean(ws),
              wd = circular.averaging(wd)) %>%
-   mutate(Location = "BCG*") %>%
+   mutate(Location = "BCG") %>%
    arrange(Day, Hour) %>%
    ungroup() %>%
    mutate(time = seq(
@@ -198,7 +206,7 @@ skim(weather.vic)
 
 ## Weather station locations
 
-Note the coordinates for the alternate Curyo station, Birchip Group's, are not included.
+Note the coordinates for the BCG data are not included.
 
 ```{r weather_station_map, message=FALSE}
 # only take rows 1 and 4. Rows 2, 3 have no data and are not represented in windroses above
@@ -222,7 +230,7 @@ sweep_for_stations(curyo_latlong)[c(1, 4)] %>%
 
 We can visualise the wind speed and direction for each site using windrose.  
 
-```{r windrose, message=FALSE, fig.cap="Windroses for four weather stations at or near the Curyo site. The windstation on-site is labeled as 'Curyo', the Birchip Cropping Group station which was roughly 10&nbsp;km away is labelled with 'BCG', the remaining two stations are labelled with their respective BOM names, 'CHARLETON' and 'HOPETOUN AIRPORT'."}
+```{r windrose, message=FALSE, warning=FALSE, fig.cap="Windroses for four weather stations at or near the Curyo site. The windstation on-site is labeled as 'Curyo', the Birchip Cropping Group station which was roughly 10&nbsp;km away is labelled with 'BCG', the remaining two stations are labelled with their respective BOM names, 'CHARLETON' and 'HOPETOUN AIRPORT'."}
 pw <-
    with(
       weather.vic,
@@ -244,9 +252,7 @@ From the windroses, it is apparent that the Curyo weather station is an outlier 
 
 ## Wind speed correlations
 
-Visually inspect the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away.
-
-```{r ws-correlations, message=FALSE, warning=FALSE}
+```{r ws-correlations, message=FALSE, warning=FALSE, fig.cap="Visual inspection of the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away and two BOM stations 40 to 50 kilometres away."}
 ggplot(weather.vic, aes(x = time, y = ws)) +
    geom_point(aes(shape = Location,
                   colour = Location),
@@ -254,7 +260,7 @@ ggplot(weather.vic, aes(x = time, y = ws)) +
    scale_colour_viridis_d()
 ```
 
-They do seem correlated but it is not an exact x-y relationship and the Curyo gusts are higher than others, but that seems reasonable.
+A visual inspection suggests that the wind speed from the Curyo weather station is not suspect and can be used in the model.
 
 ## Create new figure 3 excluding the Curyo data
 

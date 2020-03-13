@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compare Curyo weather • ChickpeaAscoDispersal</title>
+<title>Compare Curyo wind with alternate sources • ChickpeaAscoDispersal</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Compare Curyo weather">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Compare Curyo wind with alternate sources">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -69,7 +69,7 @@
       <a href="../articles/05_GAM.html">Fit generalised additive models (GAMs) to the data</a>
     </li>
     <li>
-      <a href="../articles/06_Compare_Curyo_weather.html">Compare Curyo weather</a>
+      <a href="../articles/06_Compare_Curyo_weather.html">Compare Curyo wind with alternate sources</a>
     </li>
   </ul>
 </li>
@@ -90,10 +90,10 @@
 <script src="06_Compare_Curyo_weather_files/leaflet-binding-2.0.3/leaflet.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Compare Curyo weather</h1>
+      <h1>Compare Curyo wind with alternate sources</h1>
                         <h4 class="author">P. Melloy</h4>
             
-            <h4 class="date">10/03/2020</h4>
+            <h4 class="date">2020-03-13</h4>
       
       
       <div class="hidden name"><code>06_Compare_Curyo_weather.Rmd</code></div>
@@ -147,7 +147,8 @@
 <span id="cb3-13"><a href="#cb3-13"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">ws =</span> <span class="st">`</span><span class="dt">Wind Speed - average (km/h)</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">wd =</span> <span class="st">`</span><span class="dt">Wind Direction - average (º)</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
 <span id="cb3-15"><a href="#cb3-15"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">rainfall =</span> <span class="st">`</span><span class="dt">Rainfall - (mm)</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/filter.html">filter</a></span>(time <span class="op">%within%</span><span class="st"> </span>events[<span class="dv">6</span>, <span class="st">"exposed"</span>])</span></code></pre></div>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">ws =</span> ws <span class="op">/</span><span class="st"> </span><span class="fl">3.6</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># convert from km/h to m/s</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/filter.html">filter</a></span>(time <span class="op">%within%</span><span class="st"> </span>events[<span class="dv">6</span>, <span class="st">"exposed"</span>])</span></code></pre></div>
 <p>The data we download from Bureau of Meteorology (BOM) is in one hour increments, so we will aggregate the 10 minute data to one hourly.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>Curyo_w &lt;-</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="st">   </span>Curyo_w <span class="op">%&gt;%</span></span>
@@ -165,41 +166,42 @@
 <span id="cb4-14"><a href="#cb4-14"></a>      <span class="dt">by =</span> <span class="st">"hour"</span></span>
 <span id="cb4-15"><a href="#cb4-15"></a>   )) <span class="op">%&gt;%</span></span>
 <span id="cb4-16"><a href="#cb4-16"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/select.html">select</a></span>(Location, time, <span class="kw"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>())</span></code></pre></div>
-<p>Next we will import data from a second weather station at the Curyo field site approximately 10 kilometres from where our trial took place.</p>
+<p>Next we will import data from a second weather station operated by the Birchip Ag Group approximately 10 kilometres from where our trial took place.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>BCG &lt;-</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="st">   </span><span class="kw">read_csv</span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/Deprecated.html">here</a></span>(<span class="st">"inst/data"</span>,</span>
 <span id="cb5-3"><a href="#cb5-3"></a>                 <span class="st">"DataFarmer_Data_202031081949847.csv"</span>),</span>
 <span id="cb5-4"><a href="#cb5-4"></a>            <span class="dt">skip =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
 <span id="cb5-5"><a href="#cb5-5"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">time =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">dmy_hm</a></span>(<span class="st">`</span><span class="dt">Reading Time</span><span class="st">`</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Location =</span> <span class="st">"BCG"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/select.html">select</a></span>(Location, <span class="kw"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>()) <span class="op">%&gt;%</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">ws =</span> <span class="st">`</span><span class="dt">Wind Speed</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">wd =</span> <span class="st">`</span><span class="dt">Wind Direction</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">rh =</span> Humidity) <span class="op">%&gt;%</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">temp =</span> Temperature) <span class="op">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">rainfall =</span> <span class="st">`</span><span class="dt">Rainfall</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(</span>
-<span id="cb5-14"><a href="#cb5-14"></a>      <span class="dt">wd =</span> <span class="kw">case_when</span>(</span>
-<span id="cb5-15"><a href="#cb5-15"></a>         wd <span class="op">==</span><span class="st"> "N"</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>,</span>
-<span id="cb5-16"><a href="#cb5-16"></a>         wd <span class="op">==</span><span class="st"> "NNE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">22.5</span>,</span>
-<span id="cb5-17"><a href="#cb5-17"></a>         wd <span class="op">==</span><span class="st"> "NE"</span> <span class="op">~</span><span class="st"> </span><span class="dv">45</span>,</span>
-<span id="cb5-18"><a href="#cb5-18"></a>         wd <span class="op">==</span><span class="st"> "ENE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">67.5</span>,</span>
-<span id="cb5-19"><a href="#cb5-19"></a>         wd <span class="op">==</span><span class="st"> "E"</span> <span class="op">~</span><span class="st"> </span><span class="dv">90</span>,</span>
-<span id="cb5-20"><a href="#cb5-20"></a>         wd <span class="op">==</span><span class="st"> "ESE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">112.5</span>,</span>
-<span id="cb5-21"><a href="#cb5-21"></a>         wd <span class="op">==</span><span class="st"> "SE"</span> <span class="op">~</span><span class="st"> </span><span class="dv">135</span>,</span>
-<span id="cb5-22"><a href="#cb5-22"></a>         wd <span class="op">==</span><span class="st"> "SSE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">157.5</span>,</span>
-<span id="cb5-23"><a href="#cb5-23"></a>         wd <span class="op">==</span><span class="st"> "S"</span> <span class="op">~</span><span class="st"> </span><span class="dv">180</span>,</span>
-<span id="cb5-24"><a href="#cb5-24"></a>         wd <span class="op">==</span><span class="st"> "SSW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">202.5</span>,</span>
-<span id="cb5-25"><a href="#cb5-25"></a>         wd <span class="op">==</span><span class="st"> "SW"</span> <span class="op">~</span><span class="st"> </span><span class="dv">225</span>,</span>
-<span id="cb5-26"><a href="#cb5-26"></a>         wd <span class="op">==</span><span class="st"> "WSW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">247.5</span>,</span>
-<span id="cb5-27"><a href="#cb5-27"></a>         wd <span class="op">==</span><span class="st"> "W"</span> <span class="op">~</span><span class="st"> </span><span class="dv">270</span>,</span>
-<span id="cb5-28"><a href="#cb5-28"></a>         wd <span class="op">==</span><span class="st"> "WNW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">292.5</span>,</span>
-<span id="cb5-29"><a href="#cb5-29"></a>         wd <span class="op">==</span><span class="st"> "NW"</span> <span class="op">~</span><span class="st"> </span><span class="dv">315</span>,</span>
-<span id="cb5-30"><a href="#cb5-30"></a>         wd <span class="op">==</span><span class="st"> "NNW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">337.5</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a>      )</span>
-<span id="cb5-32"><a href="#cb5-32"></a>   ) <span class="op">%&gt;%</span></span>
-<span id="cb5-33"><a href="#cb5-33"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/filter.html">filter</a></span>(time <span class="op">%within%</span><span class="st"> </span>events[<span class="dv">6</span>, <span class="st">"exposed"</span>])</span></code></pre></div>
-<p>The alternate Curyo weather station data also need to be aggregated into one hour increments.</p>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="st">`</span><span class="dt">Wind Speed</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Wind Speed</span><span class="st">`</span> <span class="op">/</span><span class="st"> </span><span class="fl">3.6</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># convert from km/h to m/s</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Location =</span> <span class="st">"BCG"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/select.html">select</a></span>(Location, <span class="kw"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>()) <span class="op">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">ws =</span> <span class="st">`</span><span class="dt">Wind Speed</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">wd =</span> <span class="st">`</span><span class="dt">Wind Direction</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">rh =</span> Humidity) <span class="op">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">temp =</span> Temperature) <span class="op">%&gt;%</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/rename.html">rename</a></span>(<span class="dt">rainfall =</span> <span class="st">`</span><span class="dt">Rainfall</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(</span>
+<span id="cb5-15"><a href="#cb5-15"></a>      <span class="dt">wd =</span> <span class="kw">case_when</span>(</span>
+<span id="cb5-16"><a href="#cb5-16"></a>         wd <span class="op">==</span><span class="st"> "N"</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>,</span>
+<span id="cb5-17"><a href="#cb5-17"></a>         wd <span class="op">==</span><span class="st"> "NNE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">22.5</span>,</span>
+<span id="cb5-18"><a href="#cb5-18"></a>         wd <span class="op">==</span><span class="st"> "NE"</span> <span class="op">~</span><span class="st"> </span><span class="dv">45</span>,</span>
+<span id="cb5-19"><a href="#cb5-19"></a>         wd <span class="op">==</span><span class="st"> "ENE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">67.5</span>,</span>
+<span id="cb5-20"><a href="#cb5-20"></a>         wd <span class="op">==</span><span class="st"> "E"</span> <span class="op">~</span><span class="st"> </span><span class="dv">90</span>,</span>
+<span id="cb5-21"><a href="#cb5-21"></a>         wd <span class="op">==</span><span class="st"> "ESE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">112.5</span>,</span>
+<span id="cb5-22"><a href="#cb5-22"></a>         wd <span class="op">==</span><span class="st"> "SE"</span> <span class="op">~</span><span class="st"> </span><span class="dv">135</span>,</span>
+<span id="cb5-23"><a href="#cb5-23"></a>         wd <span class="op">==</span><span class="st"> "SSE"</span> <span class="op">~</span><span class="st"> </span><span class="fl">157.5</span>,</span>
+<span id="cb5-24"><a href="#cb5-24"></a>         wd <span class="op">==</span><span class="st"> "S"</span> <span class="op">~</span><span class="st"> </span><span class="dv">180</span>,</span>
+<span id="cb5-25"><a href="#cb5-25"></a>         wd <span class="op">==</span><span class="st"> "SSW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">202.5</span>,</span>
+<span id="cb5-26"><a href="#cb5-26"></a>         wd <span class="op">==</span><span class="st"> "SW"</span> <span class="op">~</span><span class="st"> </span><span class="dv">225</span>,</span>
+<span id="cb5-27"><a href="#cb5-27"></a>         wd <span class="op">==</span><span class="st"> "WSW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">247.5</span>,</span>
+<span id="cb5-28"><a href="#cb5-28"></a>         wd <span class="op">==</span><span class="st"> "W"</span> <span class="op">~</span><span class="st"> </span><span class="dv">270</span>,</span>
+<span id="cb5-29"><a href="#cb5-29"></a>         wd <span class="op">==</span><span class="st"> "WNW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">292.5</span>,</span>
+<span id="cb5-30"><a href="#cb5-30"></a>         wd <span class="op">==</span><span class="st"> "NW"</span> <span class="op">~</span><span class="st"> </span><span class="dv">315</span>,</span>
+<span id="cb5-31"><a href="#cb5-31"></a>         wd <span class="op">==</span><span class="st"> "NNW"</span> <span class="op">~</span><span class="st"> </span><span class="fl">337.5</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a>      )</span>
+<span id="cb5-33"><a href="#cb5-33"></a>   ) <span class="op">%&gt;%</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/filter.html">filter</a></span>(time <span class="op">%within%</span><span class="st"> </span>events[<span class="dv">6</span>, <span class="st">"exposed"</span>])</span></code></pre></div>
+<p>The BCG weather station data also need to be aggregated into one hour increments.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>Curyo_alt &lt;-</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="st">   </span>BCG <span class="op">%&gt;%</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Day =</span> <span class="kw"><a href="http://lubridate.tidyverse.org/reference/day.html">day</a></span>(time)) <span class="op">%&gt;%</span></span>
@@ -207,7 +209,7 @@
 <span id="cb6-5"><a href="#cb6-5"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(Hour, Day) <span class="op">%&gt;%</span></span>
 <span id="cb6-6"><a href="#cb6-6"></a><span class="st">   </span><span class="kw">summarise</span>(<span class="dt">ws =</span> <span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(ws),</span>
 <span id="cb6-7"><a href="#cb6-7"></a>             <span class="dt">wd =</span> <span class="kw"><a href="../reference/circular.averaging.html">circular.averaging</a></span>(wd)) <span class="op">%&gt;%</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Location =</span> <span class="st">"BCG*"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">Location =</span> <span class="st">"BCG"</span>) <span class="op">%&gt;%</span></span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/arrange.html">arrange</a></span>(Day, Hour) <span class="op">%&gt;%</span></span>
 <span id="cb6-10"><a href="#cb6-10"></a><span class="st">   </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
 <span id="cb6-11"><a href="#cb6-11"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="dt">time =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(</span>
@@ -348,10 +350,10 @@ Location
 1
 </td>
 <td style="text-align:right;">
-4
+3
 </td>
 <td style="text-align:right;">
-4
+3
 </td>
 <td style="text-align:right;">
 0
@@ -431,7 +433,7 @@ Hour
 16.75
 </td>
 <td style="text-align:right;">
-23.0
+23.00
 </td>
 <td style="text-align:left;">
 ▆▇▇▇▆
@@ -466,7 +468,7 @@ Day
 17.00
 </td>
 <td style="text-align:right;">
-17.0
+17.00
 </td>
 <td style="text-align:left;">
 ▅▁▇▁▆
@@ -483,25 +485,25 @@ ws
 1
 </td>
 <td style="text-align:right;">
-7.41
+2.06
 </td>
 <td style="text-align:right;">
-3.67
+1.02
 </td>
 <td style="text-align:right;">
-0.22
+0.06
 </td>
 <td style="text-align:right;">
-4.49
+1.25
 </td>
 <td style="text-align:right;">
-7.75
+2.15
 </td>
 <td style="text-align:right;">
-10.06
+2.80
 </td>
 <td style="text-align:right;">
-15.1
+4.19
 </td>
 <td style="text-align:left;">
 ▃▃▇▅▂
@@ -536,7 +538,7 @@ wd
 270.00
 </td>
 <td style="text-align:right;">
-292.5
+292.50
 </td>
 <td style="text-align:left;">
 ▇▂▇▇▅
@@ -748,7 +750,7 @@ Location
 1.0
 </td>
 <td style="text-align:right;">
-4
+3
 </td>
 <td style="text-align:right;">
 16
@@ -858,7 +860,7 @@ temp
 17.90
 </td>
 <td style="text-align:right;">
-24.70
+24.7
 </td>
 <td style="text-align:left;">
 ▃▇▇▅▂
@@ -893,7 +895,7 @@ wd
 299.84
 </td>
 <td style="text-align:right;">
-360.00
+360.0
 </td>
 <td style="text-align:left;">
 ▂▁▃▇▅
@@ -910,28 +912,28 @@ ws
 0.83
 </td>
 <td style="text-align:right;">
-7.74
+3.31
 </td>
 <td style="text-align:right;">
-6.26
+2.23
 </td>
 <td style="text-align:right;">
 0.00
 </td>
 <td style="text-align:right;">
-3.60
+2.00
 </td>
 <td style="text-align:right;">
-6.62
+3.03
 </td>
 <td style="text-align:right;">
-10.51
+4.10
 </td>
 <td style="text-align:right;">
-31.15
+10.8
 </td>
 <td style="text-align:left;">
-▇▆▂▁▁
+▅▇▂▁▁
 </td>
 </tr>
 <tr>
@@ -963,7 +965,7 @@ atmos_pres
 1013.48
 </td>
 <td style="text-align:right;">
-1016.10
+1016.1
 </td>
 <td style="text-align:left;">
 ▃▇▇▆▃
@@ -998,7 +1000,7 @@ dew_point
 9.65
 </td>
 <td style="text-align:right;">
-13.50
+13.5
 </td>
 <td style="text-align:left;">
 ▁▅▇▇▆
@@ -1033,7 +1035,7 @@ rh
 80.27
 </td>
 <td style="text-align:right;">
-100.00
+100.0
 </td>
 <td style="text-align:left;">
 ▃▇▆▇▇
@@ -1136,7 +1138,7 @@ Hour
 17.00
 </td>
 <td style="text-align:right;">
-23.00
+23.0
 </td>
 <td style="text-align:left;">
 ▆▆▆▇▆
@@ -1171,7 +1173,7 @@ Day
 17.00
 </td>
 <td style="text-align:right;">
-17.00
+17.0
 </td>
 <td style="text-align:left;">
 ▅▁▇▁▆
@@ -1232,7 +1234,7 @@ time
 <div id="weather-station-locations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#weather-station-locations" class="anchor"></a>Weather station locations</h2>
-<p>Note the coordinates for the alternate Curyo station, Birchip Group’s, are not included.</p>
+<p>Note the coordinates for the BCG data are not included.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># only take rows 1 and 4. Rows 2, 3 have no data and are not represented in windroses above</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/sweep_for_stations.html">sweep_for_stations</a></span>(curyo_latlong)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">4</span>)] <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="st">   </span><span class="kw"><a href="https://docs.ropensci.org/bomrang/reference/select.html">select</a></span>(name, lat, lon) <span class="op">%&gt;%</span></span>
@@ -1248,8 +1250,8 @@ time
 <span id="cb10-13"><a href="#cb10-13"></a>              <span class="dt">lat =</span> <span class="op">~</span><span class="st"> </span>lat,</span>
 <span id="cb10-14"><a href="#cb10-14"></a>              <span class="dt">popup =</span> <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/htmltools/man/htmlEscape.html">htmlEscape</a></span>(name)) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb10-15"><a href="#cb10-15"></a><span class="st">   </span><span class="kw"><a href="https://rdrr.io/pkg/leaflet/man/addScaleBar.html">addScaleBar</a></span>()</span></code></pre></div>
-<div id="htmlwidget-7169d4767de89e887590" style="width:700px;height:432.632880098888px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7169d4767de89e887590">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[-35.7151,-36.2846,-35.779312],[142.3569,143.3341,142.778332],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["HOPETOUN AIRPORT","CHARLTON","CURYO"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"topright"}]}],"setView":[[-36,142.7],9,[]],"limits":{"lat":[-36.2846,-35.7151],"lng":[142.3569,143.3341]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7b616f0c6067ab5d95d2" style="width:700px;height:432.632880098888px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7b616f0c6067ab5d95d2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[-35.7151,-36.2846,-35.779312],[142.3569,143.3341,142.778332],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["HOPETOUN AIRPORT","CHARLTON","CURYO"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"topright"}]}],"setView":[[-36,142.7],9,[]],"limits":{"lat":[-36.2846,-35.7151],"lng":[142.3569,143.3341]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="windroses" class="section level2">
 <h2 class="hasAnchor">
@@ -1280,14 +1282,17 @@ Windroses for four weather stations at or near the Curyo site. The windstation o
 <div id="wind-speed-correlations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wind-speed-correlations" class="anchor"></a>Wind speed correlations</h2>
-<p>Visually inspect the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">ggplot</span>(weather.vic, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> ws)) <span class="op">+</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">shape =</span> Location,</span>
 <span id="cb12-3"><a href="#cb12-3"></a>                  <span class="dt">colour =</span> Location),</span>
 <span id="cb12-4"><a href="#cb12-4"></a>              <span class="dt">size =</span> <span class="fl">3.5</span>) <span class="op">+</span></span>
 <span id="cb12-5"><a href="#cb12-5"></a><span class="st">   </span><span class="kw">scale_colour_viridis_d</span>()</span></code></pre></div>
-<p><img src="06_Compare_Curyo_weather_files/figure-html/ws-correlations-1.png" width="700"></p>
-<p>They do seem correlated but it is not an exact x-y relationship and the Curyo gusts are higher than others, but that seems reasonable.</p>
+<div class="figure">
+<img src="06_Compare_Curyo_weather_files/figure-html/ws-correlations-1.png" alt="Visual inspection of the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away and two BOM stations 40 to 50 kilometres away." width="700"><p class="caption">
+Visual inspection of the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away and two BOM stations 40 to 50 kilometres away.
+</p>
+</div>
+<p>A visual inspection suggests that the wind speed from the Curyo weather station is not suspect and can be used in the model.</p>
 </div>
 <div id="create-new-figure-3-excluding-the-curyo-data" class="section level2">
 <h2 class="hasAnchor">
