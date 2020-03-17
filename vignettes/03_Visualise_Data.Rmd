@@ -87,7 +87,7 @@ ggplot(lesion, aes(x = distance,
    facet_wrap(. ~ SpEv, ncol = 3)
 ```
 
-```{r save-fig2, include=FALSE}
+```{r save-fig2, include=FALSE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here("man", "figures/Fig2.png"))
 ggsave(here("man", "figures/Fig2.eps"))
@@ -186,7 +186,7 @@ ggplot(data = heat_dat,
    facet_wrap(. ~ SpEv, ncol = 3)
 ```
 
-```{r save-fig4, include=FALSE}
+```{r save-fig4, include=FALSE, eval=FALSE}
 ggsave(here("man", "figures/Fig4.png"))
 ggsave(here("man", "figures/Fig4.eps"))
 embed_fonts(

@@ -342,7 +342,7 @@ check(mod11.1_vis,
       a.hist = list(bins = 10))
 ```
 
-```{r save_gam_plot, include=FALSE}
+```{r save_gam_plot, include=FALSE, eval=FALSE}
 # generate a new plot.gam object just for the publication (no main title)
 p11.1 <- p_gam(x = getViz(mod11.0))
 
