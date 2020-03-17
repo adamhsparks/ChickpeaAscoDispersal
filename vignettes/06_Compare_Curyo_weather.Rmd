@@ -232,7 +232,7 @@ sweep_for_stations(curyo_latlong)[c(1, 4)] %>%
 
 We can visualise the wind speed and direction for each site using windrose.  
 
-```{r windrose, message=FALSE, warning=FALSE, fig.cap="Windroses for four weather stations at or near the Curyo site. The windstation on-site is labeled as 'Curyo', the Birchip Cropping Group station which was roughly 10&nbsp;km away is labelled with 'BCG', the remaining two stations are labelled with their respective BOM names, 'CHARLETON' and 'HOPETOUN AIRPORT'."}
+```{r windrose, message=FALSE, warning=FALSE, fig.cap="Comparison of wind direction data collected at the Curyo site using the on-site weather station, which was not properly calibrated, and nearby locations, Birchip Group Station’s agriculture farm (BCG) (10 kilometres distant), and Australia BoM weather stations, Hopetoun Airport (39 kilometres) and Charlton (75 kilometres) during the Curyo spread event. BCG’s agriculture farm weather station’s wind direction data were used for the interpretation of conidial dispersal patterns as Curyo’s weather station wind vane was not calibrated."}
 pw <-
    with(
       weather.vic,

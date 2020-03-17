@@ -67,7 +67,7 @@ ggplot(lesion, aes(x = mean_pot_count)) +
 
 ## Visualise the Dispersal Data
 
-```{r combined-dispersal, message=FALSE, warning=FALSE, fig.cap="Mean counts of lesions per pot at each station for ten transects at each station for all six events."}
+```{r combined-dispersal, message=FALSE, warning=FALSE, fig.cap="Mean number of conidia dispersed (counted as lesions) during each spread event. Where ‘n’ indicates mean number of lesions counted on trap plants per pot and is represented by point size. The mean count values are shown on the y-axis and distance dispersed is on the x-axis. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event."}
 ggplot(lesion, aes(x = distance,
                 y = mean_pot_count)) +
    geom_count() +
@@ -124,7 +124,7 @@ dat %>%
 
 ## Visualise the Windspeed and Direction
 
-```{r wind, message=FALSE, warning=FALSE, fig.cap=paste0("Windroses showing the windspeed and direction for each event. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+```{r wind, message=FALSE, warning=FALSE, fig.cap=paste0("Windroses for spread events showing ten-minute wind speed and direction at the two Horsham sites. Curyo wind speed and direction data are not shown due to a weather station calibration issue resulting in incorrect data for wind direction.")}
 pw <-
    with(
       dat,
