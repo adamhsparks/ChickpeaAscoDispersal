@@ -232,7 +232,7 @@ sweep_for_stations(curyo_latlong)[c(1, 4)] %>%
 
 We can visualise the wind speed and direction for each site using windrose.  
 
-```{r windrose, message=FALSE, warning=FALSE, fig.cap="Comparison of wind direction data collected at the Curyo site using the on-site weather station, which was not properly calibrated, and nearby locations, Birchip Group Station’s agriculture farm (BCG) (10 kilometres distant), and Australia BoM weather stations, Hopetoun Airport (39 kilometres) and Charlton (75 kilometres) during the Curyo spread event. BCG’s agriculture farm weather station’s wind direction data were used for the interpretation of conidial dispersal patterns as Curyo’s weather station wind vane was not calibrated."}
+```{r windrose, message=FALSE, warning=FALSE, fig.cap="Comparison of wind direction data collected at the Curyo site using the on-site weather station, which was not properly calibrated, and nearby locations, Birchip Group Station’s agriculture farm (BCG) (10 kilometres distant), and Australia BoM weather stations, Hopetoun Airport (39 kilometres) and Charlton (75 kilometres) during the Curyo spread event. BCG’s agriculture farm weather station’s wind direction data were used for the interpretation of conidial dispersal patterns as Curyo’s weather station wind vane was not calibrated.", fig.width = 9.4, fig.height = 4.7}
 pw <-
    with(
       weather.vic,
@@ -248,6 +248,20 @@ pw +
    scale_fill_viridis_d(name = "Wind Speed (m/s)", direction = -1) +
    xlab("") +
    theme_pubclean()
+```
+
+
+```{r save-figS1, include=FALSE, eval=TRUE}
+# save a .png to refer to while writing and a .eps for publication submission
+ggsave(here("man", "figures/FigS1.png"), width = 9.4, height = 4.7)
+ggsave(here("man", "figures/FigS1.eps"))
+embed_fonts(
+   here("man",
+        "figures/FigS1.eps"),
+   outfile = here("man",
+                  "figures/FigS1.eps",
+                  options = "-dEPSCrop")
+)
 ```
 
 From the windroses, it is apparent that the Curyo weather station is an outlier for direction and possibly windspeed.
