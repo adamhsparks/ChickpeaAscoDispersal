@@ -253,7 +253,12 @@ pw +
 
 ```{r save-figS1, include=FALSE, eval=TRUE}
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave(here("man", "figures/FigS1.png"), width = 9.4, height = 4.7)
+ggsave(
+   here("man", "figures/FigS1.png"),
+   width = 9.4,
+   height = 4.7,
+   units = "in"
+)
 ggsave(here("man", "figures/FigS1.eps"))
 embed_fonts(
    here("man",
