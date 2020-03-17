@@ -43,7 +43,7 @@ loadfonts(device = "postscript")
 
 ```{r import-event, message=FALSE}
 events <-
-   read_csv(here("inst/data", "Dispersal experiments dates.csv")) %>%
+   read_csv(here::here("inst/data", "Dispersal experiments dates.csv")) %>%
    mutate(`assessment date` = dmy(`assessment date`)) %>%
    mutate(exposed = interval(`time out`, `time removed`))
 ```
@@ -67,7 +67,7 @@ The data will be formatted and filtered to only contain weather data during when
 
 ```{r import-Curyo, message=FALSE, warning=FALSE}
 Curyo_w <-
-   read_csv(here(
+   read_csv(here::here(
       "inst/data",
       "Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
    )) %>%
@@ -110,7 +110,7 @@ Next we will import data from a second weather station operated by the Birchip A
 
 ```{r import-BCG, message=FALSE, warning=FALSE}
 BCG <-
-   read_csv(here("inst/data",
+   read_csv(here::here("inst/data",
                  "DataFarmer_Data_202031081949847.csv"),
             skip = 1) %>%
    mutate(time = dmy_hm(`Reading Time`)) %>%
@@ -254,16 +254,16 @@ pw +
 ```{r save-figS1, include=FALSE, eval=TRUE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(
-   here("man", "figures/FigS1.png"),
+   here::here("man", "figures/FigS1.png"),
    width = 9.4,
    height = 4.7,
    units = "in"
 )
-ggsave(here("man", "figures/FigS1.eps"))
+ggsave(here::here("man", "figures/FigS1.eps"))
 embed_fonts(
-   here("man",
+   here::here("man",
         "figures/FigS1.eps"),
-   outfile = here("man",
+   outfile = here::here("man",
                   "figures/FigS1.eps",
                   options = "-dEPSCrop")
 )
@@ -288,7 +288,7 @@ A visual inspection suggests that the wind speed from the Curyo weather station 
 Because of the incorrect wind direction data from the Curyo station, a new figure needs to be constructed with the BCG data. This will have wind directions that are more in-line with the actual event, but the speeds are not correct for Curyo.
 
 ```{r new-fig3}
-weather <- read_csv(here("inst/cache", "cleaned_weather.csv")) %>%
+weather <- read_csv(here::here("inst/cache", "cleaned_weather.csv")) %>%
    rename(ws = wind_speed,
           wd = wind_direction) %>%
    filter(site != "Curyo") %>% 
@@ -315,12 +315,12 @@ pw +
 
 ```{r save-fig3, include=FALSE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave(here("man", "figures/Fig3.png"))
-ggsave(here("man", "figures/Fig3.eps"))
+ggsave(here::here("man", "figures/Fig3.png"))
+ggsave(here::here("man", "figures/Fig3.eps"))
 embed_fonts(
-   here("man",
+   here::here("man",
         "figures/Fig3.eps"),
-   outfile = here("man",
+   outfile = here::here("man",
                   "figures/Fig3.eps",
                   options = "-dEPSCrop")
 )

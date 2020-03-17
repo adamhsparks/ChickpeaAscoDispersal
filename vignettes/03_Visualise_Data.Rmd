@@ -37,7 +37,7 @@ loadfonts(device = "postscript")
 
 ```{r import_data, message=FALSE}
 # import
-lesion <- read_csv(here("inst/cache", "summarised_lesion_data.csv")) %>%
+lesion <- read_csv(here::here("inst/cache", "summarised_lesion_data.csv")) %>%
    mutate(SpEv = ordered(factor(
       SpEv,
       levels = c(
@@ -50,7 +50,7 @@ lesion <- read_csv(here("inst/cache", "summarised_lesion_data.csv")) %>%
       )
    )))
 
-weather <- read_csv(here("inst/cache", "cleaned_weather.csv"))
+weather <- read_csv(here::here("inst/cache", "cleaned_weather.csv"))
 
 dat <- left_join(lesion, weather, by = c("site", "rep"))
 
@@ -89,12 +89,12 @@ ggplot(lesion, aes(x = distance,
 
 ```{r save-fig2, include=FALSE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
-ggsave(here("man", "figures/Fig2.png"))
-ggsave(here("man", "figures/Fig2.eps"))
+ggsave(here::here("man", "figures/Fig2.png"))
+ggsave(here::here("man", "figures/Fig2.eps"))
 embed_fonts(
-   here("man",
+   here::here("man",
         "figures/Fig2.eps"),
-   outfile = here("man",
+   outfile = here::here("man",
                   "figures/Fig2.eps",
                   options = "-dEPSCrop")
 )
@@ -187,12 +187,12 @@ ggplot(data = heat_dat,
 ```
 
 ```{r save-fig4, include=FALSE, eval=FALSE}
-ggsave(here("man", "figures/Fig4.png"))
-ggsave(here("man", "figures/Fig4.eps"))
+ggsave(here::here("man", "figures/Fig4.png"))
+ggsave(here::here("man", "figures/Fig4.eps"))
 embed_fonts(
-   here("man",
+   here::here("man",
         "figures/Fig4.eps"),
-   outfile = here("man",
+   outfile = here::here("man",
                   "figures/Fig4.eps",
                   options = "-dEPSCrop")
 )

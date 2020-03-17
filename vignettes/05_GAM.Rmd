@@ -32,8 +32,8 @@ theme_set(theme_pubclean(base_size = 14))
 
 ```{r import_data, message=FALSE}
 # import
-lesion <- read_csv(here("inst/cache", "summarised_lesion_data.csv"))
-weather <- read_csv(here("inst/cache", "weather_summary.csv"))
+lesion <- read_csv(here::here("inst/cache", "summarised_lesion_data.csv"))
+weather <- read_csv(here::here("inst/cache", "weather_summary.csv"))
 
 dat <- left_join(lesion, weather, by = c("site", "rep"))
 ```
@@ -347,7 +347,7 @@ p11.1 <- p_gam(x = getViz(mod11.0))
 
 # save png and eps files
 png(
-   file = here("man/figures", "Fig1.png"),
+   file = here::here("man/figures", "Fig1.png"),
    width = 480,
    height = 480,
    units = "px",
@@ -356,15 +356,15 @@ png(
 print(p11.1, pages = 1)
 dev.off()
 
-postscript(file = here("man/figures", "Fig1.eps"),
+postscript(file = here::here("man/figures", "Fig1.eps"),
            family = "Arial")
 par(mar = c(5, 3, 2, 2) + 0.1)
 print(p11.1, pages = 1)
 dev.off()
 
 embed_fonts(
-   here("man/figures", "Fig1.eps"),
-   outfile = here("man/figures", "Fig1.eps"),
+   here::here("man/figures", "Fig1.eps"),
+   outfile = here::here("man/figures", "Fig1.eps"),
    options = "-dEPSCrop"
 )
 ```
