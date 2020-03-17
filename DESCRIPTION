@@ -39,6 +39,7 @@ Suggests:
    lme4,
    here,
    kableExtra,
+   knitr,
    lubridate,
    mgcv,
    skimr,
