@@ -213,13 +213,13 @@ print(p_gam(x = getViz(mod10)) +
       pages = 1)
 ```
 
-### mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
+### mod11 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
 
 This is the same as `mod8` but using `family = tw()`, see `?family.mgcv` for more on the families. The Tweedie distribution is used where the distribution has a positive mass at zero, but is continuous unlike the Poisson distribution that requires count data.
 The data visualisation shows clearly that the mean pot count data have this shape.
 
-```{r fit-mod11.0}
-mod11.0 <-
+```{r fit-mod11}
+mod11 <-
    gam(
       mean_pot_count ~ s(distance, k = 5) + 
          s(mws, k = 5) + 
@@ -228,17 +228,19 @@ mod11.0 <-
       family = tw()
    )
 
-summary(mod11.0)
+summary(mod11)
 
-print(p_gam(x = getViz(mod11.0)) +
+print(p_gam(x = getViz(mod11)) +
    ggtitle("s(Distance) + s(Windspeed) + s(Precipitation), family = tw()"),
    pages = 1)
 ```
 
-### mod11.1 - s(Distance, bs = "ts") + s(Windspeed, bs = "ts") + s(Precipitation, bs = "ts"), family = tw()
+### mod12 - s(Distance, bs = "ts") + s(Precipitation, bs = "ts") Windspeed, family = tw()
 
-```{r fit-mod11.1}
-mod11.1 <-
+Try using Windspeed as a linear predictor only.
+
+```{r fit-mod12}
+mod12 <-
    gam(
       mean_pot_count ~ s(distance, k = 5, bs = "ts") + 
          s(mws, k = 5, bs = "ts") + 
@@ -247,10 +249,10 @@ mod11.1 <-
       family = tw()
    )
 
-summary(mod11.1)
+summary(mod12)
 
 print(
-   p_gam(x = getViz(mod11.1)) +
+   p_gam(x = getViz(mod12)) +
       ggtitle(
          "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()"
       ),
@@ -258,7 +260,30 @@ print(
 )
 ```
 
-This model, same structure as `mod11.0`, uses thin-plate splines to shrink the coefficients of the smooth to zero when possible.
+### mod13 - s(Distance, bs = "ts") + s(Windspeed, bs = "ts") + s(Precipitation, bs = "ts"), family = tw()
+
+```{r fit-mod13}
+mod13 <-
+   gam(
+      mean_pot_count ~ s(distance, k = 5, bs = "ts") + 
+         s(mws, k = 5, bs = "ts") + 
+         s(sum_rain, k = 5, bs = "ts"),
+      data = dat,
+      family = tw()
+   )
+
+summary(mod13)
+
+print(
+   p_gam(x = getViz(mod13)) +
+      ggtitle(
+         "s(Distance, bs = 'ts') + s(Windspeed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()"
+      ),
+   pages = 1
+)
+```
+
+This model, same structure as `mod11`, uses thin-plate splines to shrink the coefficients of the smooth to zero when possible.
 
 ## Compare the Models
 
@@ -274,8 +299,9 @@ models <- list(mod1 = mod1,
                mod8 = mod8,
                mod9 = mod9,
                mod10 = mod10,
-               mod11.0 = mod11.0,
-               mod11.1 = mod11.1
+               mod11 = mod11,
+               mod12 = mod12,
+               mod13 = mod13
                )
 map_df(models, glance, .id = "model") %>%
    arrange(AIC)
@@ -294,8 +320,9 @@ enframe(c(
    mod8 = summary(mod8)$r.sq,
    mod9 = summary(mod9)$r.sq,
    mod10 = summary(mod10)$r.sq,
-   mod11.0 = summary(mod11.0)$r.sq,
-   mod11.1 = summary(mod11.1)$r.sq
+   mod11 = summary(mod11)$r.sq,
+   mod12 = summary(mod12)$r.sq,
+   mod13 = summary(mod13)$r.sq
 )) %>%
    arrange(desc(value))
 ```
@@ -312,38 +339,29 @@ anova(mod1,
       mod8,
       mod9,
       mod10,
-      mod11.0,
-      mod11.1,
+      mod11,
+      mod12,
+      mod13,
       test = "F")
 ```
 
 ### Check Best Model Fit
 
-#### Mod11.0 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
+#### mod11 - s(Distance) + s(Windspeed) + s(Precipitation), family = tw()
 
-```{r mod-check11.0}
-mod11.0_vis <- getViz(mod11.0)
-check(mod11.0_vis,
+```{r mod-check11}
+mod11_vis <- getViz(mod11)
+check(mod11_vis,
       a.qq = list(method = "tnorm", 
                   a.cipoly = list(fill = "light blue")), 
       a.respoi = list(size = 0.5), 
       a.hist = list(bins = 10))
 ```
 
-#### Mod11.0 - s(Distance, family = "ts") + s(Windspeed, family = "ts") + s(Precipitation, family = "ts"), family = tw()
-
-```{r mod_check11.1}
-mod11.1_vis <- getViz(mod11.1)
-check(mod11.1_vis,
-      a.qq = list(method = "tnorm", 
-                  a.cipoly = list(fill = "light blue")), 
-      a.respoi = list(size = 0.5), 
-      a.hist = list(bins = 10))
-```
 
 ```{r save_gam_plot, include=FALSE, eval=FALSE}
 # generate a new plot.gam object just for the publication (no main title)
-p11.1 <- p_gam(x = getViz(mod11.0))
+p11 <- p_gam(x = getViz(mod11))
 
 # save png and eps files
 png(
@@ -353,13 +371,13 @@ png(
    units = "px",
    pointsize = 14
 )
-print(p11.1, pages = 1)
+print(p11, pages = 1)
 dev.off()
 
 postscript(file = here::here("man/figures", "Fig1.eps"),
            family = "Arial")
 par(mar = c(5, 3, 2, 2) + 0.1)
-print(p11.1, pages = 1)
+print(p11, pages = 1)
 dev.off()
 
 embed_fonts(
@@ -371,4 +389,4 @@ embed_fonts(
 
 ## Thoughts
 
-This model, _mod11.0_, `mean_pot_count ~ s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()`, is the best performing model. It cannot be used for predictions, but suitably describes the dispersal data we have on hand with the parameters used. More data would be desireable to increase the value of `k` as evidenced in the GAM checks.
+This model, _mod11_, `mean_pot_count ~ s(Distance) + s(Windspeed) + s(Precipitation) - family = tw()`, is the best performing model. It cannot be used for predictions, but suitably describes the dispersal data we have on hand with the parameters used. More data would be desireable to increase the value of `k` as evidenced in the GAM checks.
