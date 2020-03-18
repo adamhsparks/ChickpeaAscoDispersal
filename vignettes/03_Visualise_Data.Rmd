@@ -100,9 +100,9 @@ embed_fonts(
 )
 ```
 
-## Visualise the Rainfall and Irrigation Events
+## Visualise the Rainfall
 
-```{r rain, message=FALSE, warning=FALSE, fig.cap=paste0("Hourly precipitation for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+```{r rain, message=FALSE, warning=FALSE, fig.cap=paste0("Ten-minute precipitation data for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; and whether the site was irrigated, 'Irrg' or rainfed 'Rain' or 'Mixd' (both simultaneously); and event '1', '2' or '3.' Precipitation values, 11&nbsp;mm that were applied, are not shown, only rainfall data are presented.")}
 
 dat %>%
    group_by(SpEv) %>%
