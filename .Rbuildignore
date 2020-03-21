@@ -3,3 +3,4 @@
 .gitignore
 .github
 _pkgdown.yml
+^codemeta\.json$
