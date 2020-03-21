@@ -32,12 +32,12 @@ dat <- left_join(lesion, weather, by = c("site", "rep"))
 
 From this data we hope to obtain the following.
 
-  - How far conidia can be dispersed in a spread event  
+  - How far conidia can be dispersed in a spread event.
 
-  - What combination of wind speed / direction / rain effects the dispersal distance.  
+  - What combination of wind speed / direction / rain effects the dispersal distance.
   
 Due to the lack of reps at some of the distances we will ignore transect as a factor.
-We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.  
+We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.
 
 I will start using `lmer()` to analyse the mean number of lesions per plant at each station.
 A station is defined by a pot containing five chickpea plants.
@@ -46,7 +46,7 @@ The factor distance should be fit as a continuous variable, however because we d
 Site is a categorical variable explaining the trial location.
 Each site may have experienced a different number of spread events, defined by the term `rep` (replicate).
 Rainfall is required for conidia to disperse from the infected focus, and each replicate constitutes either an overhead irrigation event or a natural rainfall event.
-The following table describes the replicates per site and the summary weather data for that event.  
+The following table describes the replicates per site and the summary weather data for that event.
 
 ```{r weather_table, warning=FALSE, message=FALSE, }
 kable(weather, align = "c", caption = "Summary weather data for replicated rain event (rep) per unique site.")
@@ -54,9 +54,9 @@ kable(weather, align = "c", caption = "Summary weather data for replicated rain 
 
 The first models I will look at are asking:
 
-   (i) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site.  
+   (i) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site.
 
-   (ii) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.  
+   (ii) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.
 
 ```{r lmer_mod, message=FALSE}
 mod1 <-
@@ -76,24 +76,24 @@ formula(mod2)
 anova(mod1, mod2)
 ```
 
-A comparison of the two models shows us that `mod2` is much better fit given the lower AIC.  
+A comparison of the two models shows us that `mod2` is much better fit given the lower AIC.
 
-Lets examine the results of this analysis.  
+Lets examine the results of this analysis.
 
 ```{r mod2_summary}
 summary(mod2)
 ```
 
-This analysis shows there is little residual variance compared to the the variation explained by our random effects. 
-Also we can see that the amount of variation explained by site is low.  
-We should test that site is a significant random intercept. 
-We can also note that as the distance increases so does the variance, this could be explained by the fact the spores are only going to travel farther on a bearing that is the same as the wind direction.  
+This analysis shows there is little residual variance compared to the the variation explained by our random effects.
+Also we can see that the amount of variation explained by site is low.
+We should test that site is a significant random intercept.
+We can also note that as the distance increases so does the variance, this could be explained by the fact the spores are only going to travel farther on a bearing that is the same as the wind direction.
 
 ```{r Site_test, message=FALSE}
 # To test site we need to create a variable that describes a spread event regardless of location
 mod3 <-
-  lmer(mean_pot_count ~ as.factor(distance) + (as.factor(distance) |
-                                                 SpEv),
+  lmer(mean_pot_count ~ as.factor(distance) + 
+                                  (as.factor(distance) | SpEv),
        data = dat)
 cat("mod3")
 formula(mod3)
