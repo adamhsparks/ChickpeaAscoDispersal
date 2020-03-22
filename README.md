@@ -1,4 +1,7 @@
-
+ <!-- badges: start -->
+  [![R build status](https://github.com/openplantpathology/Chickpea_AB_Modelling/workflows/R-CMD-check/badge.svg)](https://github.com/openplantpathology/Chickpea_AB_Modelling/actions)
+  <!-- badges: end -->
+  
 # The role of conidia in long distance dispersal of _Ascochyta rabiei_
 
 The goal of this research is to examine the role of _Ascochyta rabiei_ conidia on long distance dispersal of chickpea ascochyta blight in Australia.

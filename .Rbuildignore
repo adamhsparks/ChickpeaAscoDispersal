@@ -4,3 +4,4 @@
 .github
 _pkgdown.yml
 ^codemeta\.json$
+^\.github$

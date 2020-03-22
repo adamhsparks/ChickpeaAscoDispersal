@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "ChickpeaAscoDispersal",
   "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper ...",
@@ -54,7 +57,7 @@
     },
     {
       "@type": "Person",
-      "givenName": "Adam H.",
+      "givenName": "Adam",
       "familyName": "Sparks",
       "email": "adam.sparks@usq.edu.au",
       "@id": "https://orcid.org/0000-0002-0061-8359"
@@ -66,7 +69,7 @@
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": "Adam H.",
+      "givenName": "Adam",
       "familyName": "Sparks",
       "email": "adam.sparks@usq.edu.au",
       "@id": "https://orcid.org/0000-0002-0061-8359"
@@ -269,5 +272,5 @@
   ],
   "codeRepository": "https://github.com/openplantpathology/Chickpea_AB_Modelling",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "6150.026KB"
+  "fileSize": "6150.389KB"
 }

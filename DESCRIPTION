@@ -21,7 +21,7 @@ Authors@R: c(person("Ihsan", "Khaliq",
                      person("Kevin", "Moore",
                      email = "kevin.moore@dpi.nsw.gov.au",
                      role = "aut"),
-                     person("Adam H.", "Sparks",
+                     person("Adam", "Sparks",
                      email = "adam.sparks@usq.edu.au",
                      role = c("aut", "cre"),
                      comment = c(ORCID = "0000-0002-0061-8359")))
