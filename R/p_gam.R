@@ -15,9 +15,12 @@
 #' library("ChickpeaAscoDispersal")
 #' 
 #' # load weather and lesion data and make a simple GAM
-#' 
-#' lesion <- read_csv(here::here("inst/cache", "summarised_lesion_data.csv"))
-#' weather <- read_csv(here::here("inst/cache", "weather_summary.csv"))
+#' lesion <- read_csv(system.file("extdata", "summarised_lesion_counts.csv",
+#'                                package = "ChickpeaAscoDispersal",
+#'                                mustWork = TRUE))
+#' weather <- read_csv(system.file("extdata", "weather_summary.csv",
+#'                                 package = "ChickpeaAscoDispersal",
+#'                                 mustWork = TRUE))
 #' dat <- left_join(lesion, weather, by = c("site", "rep"))
 #' 
 #' mod1 <- gam(

@@ -10,7 +10,7 @@ Documents the workflow and processes involved in the analysis of
    data for the paper ...
 }
 \author{
-\strong{Maintainer}: Adam H. Sparks \email{adam.sparks@usq.edu.au} (\href{https://orcid.org/0000-0002-0061-8359}{ORCID})
+\strong{Maintainer}: Adam Sparks \email{adam.sparks@usq.edu.au} (\href{https://orcid.org/0000-0002-0061-8359}{ORCID})
 
 Authors:
 \itemize{
