@@ -12,7 +12,7 @@ vignette: >
 
 ## Aims
 
-This vignette demonstates the methods of preliminary data analysis. The aims of this document was to explore the pattern of data and understand which factors would affect the distance spores travel during a 'spread event'.  
+This vignette demonstrates and explains our reasoning during preliminary data analysis method. The aims of this document was to explore the conidial dispersal data and understand which factors affect the distance conidia travel during a 'spread event'.  
 
 ```{r libraries, message=FALSE, warning=FALSE}
 library("tidyverse")
@@ -30,16 +30,16 @@ dat <- left_join(lesion, weather, by = c("site", "rep"))
 ```
 
 
-From this data we hope to obtain the following.  
+From this data we hope to interpret the following.  
 
   - How far conidia can be dispersed in a spread event.  
-  - What factors influence conidia dispersal distance.  
+  - What factors influence the dispersal distance of conidia.  
   
-In this experiment there are a number of factors which may influence the spore spread. These include:  
+In this experiment there are a number of factors which may influence conidia spread. These include:  
   * Experimental location (site).  
-  * The time at which a spread event occured (SpEv).  
+  * The time at which a spread event occurred (SpEv).  
     - The factor SpEv would be nested within site.  
-    - This factor may describe variation in the data that varies between SpEv, such as weather and climate variables.  
+    - SpEv factor may describe variation in the data that varies between SpEv, such as weather and climate variables.  
   * Wind speed during the spread event.  
   * Wind direction during the spread event.  
   * Distance the trap plants were placed from the aschochyta infested plots (distance).  
@@ -49,7 +49,7 @@ In this experiment there are a number of factors which may influence the spore s
   
 Due to the lack of reps at some of the distances we will ignore transect as a factor.
 We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.
-Therefore our aim of this analysis will soley focus on the factors which influnce the distance of dispersal.  
+Therefore our aim of this analysis will focus on the factors which influence the distance of conidia dispersal not direction.  
 
 I will start using `lmer()` to analyse the mean number of lesions per plant at each distance.
 The reps at each distance are defined by 'pot', each pot contains five chickpea plants.
