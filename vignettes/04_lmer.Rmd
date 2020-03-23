@@ -12,7 +12,7 @@ vignette: >
 
 ## Aims
 
-Using the data collected from preliminary studies undertaken by Ihsan, we aim to produce a model when simulates the spread of conidia in a field within the season.  
+This vignette demonstates the methods of preliminary data analysis. The aims of this document was to explore the pattern of data and understand which factors would affect the distance spores travel during a 'spread event'.  
 
 ```{r libraries, message=FALSE, warning=FALSE}
 library("tidyverse")
@@ -30,26 +30,38 @@ dat <- left_join(lesion, weather, by = c("site", "rep"))
 ```
 
 
-From this data we hope to obtain the following.
+From this data we hope to obtain the following.  
 
-  - How far conidia can be dispersed in a spread event.
-
-  - What combination of wind speed / direction / rain effects the dispersal distance.
+  - How far conidia can be dispersed in a spread event.  
+  - What factors influence conidia dispersal distance.  
+  
+In this experiment there are a number of factors which may influence the spore spread. These include:  
+  * Experimental location (site).  
+  * The time at which a spread event occured (SpEv).  
+    - The factor SpEv would be nested within site.  
+    - This factor may describe variation in the data that varies between SpEv, such as weather and climate variables.  
+  * Wind speed during the spread event.  
+  * Wind direction during the spread event.  
+  * Distance the trap plants were placed from the aschochyta infested plots (distance).  
+  * The bearing in which the trap plants were placed at distances relative to the infested plots (transect).  
+  * How the spread event was initiated, with sprinkler irrigation or rainfall.  
+  * The quantity of rainfall.  
   
 Due to the lack of reps at some of the distances we will ignore transect as a factor.
 We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.
+Therefore our aim of this analysis will soley focus on the factors which influnce the distance of dispersal.  
 
-I will start using `lmer()` to analyse the mean number of lesions per plant at each station.
-A station is defined by a pot containing five chickpea plants.
-The factor distance should be fit as a continuous variable, however because we don't know if the relationship between mean lesions and distance from the conidia dispersal focus is linear, we will start with distance as a categorical variable.
+I will start using `lmer()` to analyse the mean number of lesions per plant at each distance.
+The reps at each distance are defined by 'pot', each pot contains five chickpea plants.
+The factor distance should be fit as a continuous variable, however because we don't know if the relationship between mean lesions and distance from the conidia dispersal focus is linear or non-linear, we will start with distance as a categorical variable.
 
 Site is a categorical variable explaining the trial location.
-Each site may have experienced a different number of spread events, defined by the term `rep` (replicate).
-Rainfall is required for conidia to disperse from the infected focus, and each replicate constitutes either an overhead irrigation event or a natural rainfall event.
+Each site may have experienced a different number of spread events, defined by the term `SpEv`.
+Rainfall is required for conidia to disperse from the infected focus, and each 'spread event' constitutes either an overhead irrigation event or a natural rainfall event.
 The following table describes the replicates per site and the summary weather data for that event.
 
 ```{r weather_table, warning=FALSE, message=FALSE, }
-kable(weather, align = "c", caption = "Summary weather data for replicated rain event (rep) per unique site.")
+kable(weather, align = "c", caption = "Summary weather data for replicated rain event (spread event) per unique site.")
 ```
 
 The first models I will look at are asking:
@@ -62,14 +74,14 @@ The first models I will look at are asking:
 mod1 <-
   lmer(mean_pot_count ~ as.factor(distance) + (1 | site / SpEv),
        data = dat)
-cat("mod1")
+cat("mod1: ")
 formula(mod1)
 
 mod2 <-
   lmer(mean_pot_count ~ as.factor(distance) + (as.factor(distance) |
                                                  site / SpEv),
        data = dat)
-cat("mod2")
+cat("mod2: ")
 formula(mod2)
 
 # Compare models
@@ -87,15 +99,14 @@ summary(mod2)
 This analysis shows there is little residual variance compared to the the variation explained by our random effects.
 Also we can see that the amount of variation explained by site is low.
 We should test that site is a significant random intercept.
-We can also note that as the distance increases so does the variance, this could be explained by the fact the spores are only going to travel farther on a bearing that is the same as the wind direction.
+We can also note that as the distance increases there are less mean lesions per pot, and the variance increases.
 
 ```{r Site_test, message=FALSE}
-# To test site we need to create a variable that describes a spread event regardless of location
 mod3 <-
   lmer(mean_pot_count ~ as.factor(distance) + 
                                   (as.factor(distance) | SpEv),
        data = dat)
-cat("mod3")
+cat("mod3: ")
 formula(mod3)
 
 # Compare models
@@ -133,7 +144,7 @@ formula(mod5)
 anova(mod4, mod5)
 ```
 
-The model where site is not included remains the better model.
+The model comparison shows no significant difference, therefore we should proceed with the simpler model. Also the model where site is not included remains the better model because of the slightly lower AIC.
 Therefore we can conclude that site is not a contributing factor to the distance spores can travel.  
 
 Finally I want to check the fit of the model when distance is fit as a ordered categorical variable, as we know it is.
