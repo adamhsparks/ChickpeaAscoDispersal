@@ -17,7 +17,6 @@ library("skimr")
 library("ggpubr")
 library("kableExtra")
 library("scales")
-library("here")
 library("ChickpeaAscoDispersal")
 
 theme_set(theme_pubclean(base_size = 14))
@@ -29,7 +28,7 @@ Import and select only the weather data necessary for analysis from Curyo and Ho
 The original data are located in the "data" directory.
 Dates for events are recorded in the "data/Dispersal experiments dates.csv" file and are used to subset the weather data in this file.
 
-### Irrigation amount data
+### Irrigation Amount Data
 
 Dr J. Fanning (AgVic) tested the irrigation system on two separate days, 2020-03-17 and 2020-03-18.
 Following is his e-mail and conclusions.
@@ -53,19 +52,22 @@ Based on this, we elected to use 11&nbsp;mm as the amount of irrigation applied 
 
 These values are added to the data in the [Summarise weather data by event](Summarise weather data by event) code chunk for the raw weather output.
 
-## Curyo weather
+## Curyo Weather Data
 
 In this first step, the data are imported and only the date and time, average windspeed and average wind direction are selected.
 
-### Import Curyo weather
+### Import Curyo Weather Data
 
 ```{r import-Curyo, message=FALSE, warning=FALSE}
 Curyo_w <-
    read_csv(
-      here::here(
-      "inst/data",
-      "Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
-   )) %>%
+      system.file(
+         "extdata",
+         "Curyo_SPA_2019_weather.csv",
+         package = "ChickpeaAscoDispersal",
+         mustWork = TRUE
+      )
+   ) %>%
    select(Time,
           'Wind Speed - average (km/h)',
           'Wind Direction - average (º)',
@@ -75,22 +77,24 @@ Curyo_w <-
    select(Location, everything())
 ```
 
-### Inspect the Curyo data
+### Inspect the Curyo Weather Data
 
 ```{r skim-Curyo}
 skim(Curyo_w)
 ```
 
-## Horsham weather
+## Horsham Weather Data
 
-### Import Horsham weather
+### Import Horsham Weather Data
 
 ```{r import-Horsham, message=FALSE, warning=FALSE}
 Horsham_w <-
    read_csv(
-      here::here(
-         "inst/data",
-         "Horsham SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
+      system.file(
+         "extdata",
+         "Horsham_SPA_2019_weather.csv",
+         package = "ChickpeaAscoDispersal",
+         mustWork = TRUE
       )
    ) %>%
    select(Time,
@@ -102,34 +106,41 @@ Horsham_w <-
    select(Location, everything())
 ```
 
-### Inspect Horsham data
+### Inspect Horsham Weather Data
 
 ```{r skim-Horsham}
 skim(Horsham_w)
 ```
 
-## Merge and filter the data for events
+## Merge and Filter the Data for Events
 
-### Import the event data
+### Create the Event Data
 
 Event data have dates and times when trap plants were deployed, retrieved and assessed for each event.
 
 ```{r import-event, message=FALSE}
 events <-
-   read_csv(here::here("inst/data", "Dispersal experiments dates.csv")) %>%
+   read_csv(
+      system.file(
+         "extdata",
+         "Dispersal_experiment_dates.csv",
+         package = "ChickpeaAscoDispersal",
+         mustWork = TRUE
+      )
+   ) %>%
    mutate(`assessment date` = dmy(`assessment date`)) %>%
    mutate(exposed = interval(`time out`, `time removed`))
 
 kable(events, format = "html", table.attr = 'class="table table-hover"')
 ```
 
-### Filter and merge the locations' the data
+### Filter and Merge the Locations' Data
 
 Filter the data removing any dates that do not have "event" data necessary for analysis.
 Because events overlap at Horsham, the dryland and irrigated sites are handled separately first, then combined.
 To do this, first `filter()`, then use `case_when()` to match the dates and times with the `events` data frame and create new variables to indicate which replicate and location, which is used to determine an event in the data.
 
-#### Horsham irrigated
+#### Horsham Irrigated
 
 ```{r filter-Horsham-irrig}
 Horsham_irrg <-
@@ -155,7 +166,7 @@ Horsham_irrg <-
    select(site, rep, time, everything())
 ```
 
-#### Horsham rain
+#### Horsham Rain
 
 ```{r filter-Horsham-rain}
 Horsham_rain <-
@@ -170,7 +181,7 @@ Horsham_rain <-
    select(site, rep, time, everything())
 ```
 
-#### Curyo rain
+#### Curyo Rain
 
 ```{r filter-Curyo-rain}
 Curyo_rain <-
@@ -186,27 +197,28 @@ Curyo_rain <-
 weather <- bind_rows(Curyo_rain, Horsham_irrg, Horsham_rain)
 ```
 
-### Rename columns and add other calculations
+### Rename Columns and Add Other Calculations
 
 The `Wind Speed - average (km/h)` column is converted to metres per second and renamed `wind_speed`.
 The standard deviation of the wind speed and wind direction are calculated for the data.
 The columns are then reordered by `Location`, `Rep`, `Time` and the weather data.
 
 ```{r rename-and-sd}
-weather <-
+cleaned_weather <-
    weather %>%
    mutate(`Wind Speed - average (km/h)` = `Wind Speed - average (km/h)` /
              3.6) %>%
    rename(wind_speed = `Wind Speed - average (km/h)`) %>%
    rename(wind_direction = `Wind Direction - average (º)`) %>%
    rename(rainfall = `Rainfall - (mm)`) %>%
-   select(site, rep, time, everything()) %>% 
-   arrange(site, rep, time)
+   select(site, rep, time, everything()) %>%
+   arrange(site, rep, time) %>% 
+   mutate_at(vars(site, rep), factor)
 
-glimpse(weather)
+glimpse(cleaned_weather)
 ```
 
-### Summarise weather data by event
+### Summarise Weather Data by Event
 
 The weather data are now ready for summarising for each event that occured.
 The resulting columns are:
@@ -222,8 +234,8 @@ The resulting columns are:
 * sum_rain - total rainfall and irrigation (if applicable) during the event
 
 ```{r summary-weather}
-weather_summary <-
-   weather %>%
+summary_weather <-
+   cleaned_weather %>%
    group_by(site, rep) %>%
    summarise(
       mws = mean(wind_speed),
@@ -236,14 +248,17 @@ weather_summary <-
          case_when(site == "Horsham irrigated" ~ sum_rain + 11,
                    TRUE ~ sum_rain))
 
-skim(weather_summary)
+kable(summary_weather,
+      align = "c",
+      caption = "Summary weather data for replicated rain event (spread event) per unique site.")
 ```
 
-## Export weather to cache
+## Save Weather Data
 
-Save the resulting weather data to /cache for further use.
+Save weather data for use in visualisation and modelling.
+This only needs to be done once.
 
-```{r export-weather, message=FALSE}
-write_csv(weather, here::here("inst/cache", "cleaned_weather.csv"))
-write_csv(weather_summary, here::here("inst/cache", "weather_summary.csv"))
+```{r save-lesion-counts, eval=FALSE}
+save(cleaned_weather, file = "./data/cleaned_weather.rda")
+save(summary_weather, file = "./data/summary_weather.rda")
 ```

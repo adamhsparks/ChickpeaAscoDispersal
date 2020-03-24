@@ -1,6 +1,6 @@
 ---
 title: "Compare Curyo wind with alternate sources"
-author: "P. Melloy"
+author: "P. Melloy and A. H. Sparks"
 date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
@@ -12,19 +12,19 @@ vignette: >
 
 ```{r libraries, message=FALSE, warning=FALSE}
 library("tidyverse")
-library("extrafont")
-library("lubridate")
 library("skimr")
+library("extrafont")
 library("ggpubr")
 library("kableExtra")
 library("scales")
-library("here")
 library("ChickpeaAscoDispersal")
 library("stationaRy")
 library("bomrang")
 library("clifro")
 library("leaflet")
 library("htmltools")
+library("lubridate")
+
 theme_set(theme_pubclean(base_size = 14))
 
 knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
@@ -43,7 +43,14 @@ loadfonts(device = "postscript")
 
 ```{r import-event, message=FALSE}
 events <-
-   read_csv(here::here("inst/data", "Dispersal experiments dates.csv")) %>%
+   read_csv(
+      system.file(
+         "extdata",
+         "Dispersal_experiment_dates.csv",
+         package = "ChickpeaAscoDispersal",
+         mustWork = TRUE
+      )
+   ) %>%
    mutate(`assessment date` = dmy(`assessment date`)) %>%
    mutate(exposed = interval(`time out`, `time removed`))
 ```
@@ -53,56 +60,61 @@ events <-
 The experimental site Curyo is located approximately 120 km north-east of Horsham Grains Innovation park (Department of Primary Industries Victoria).
 Trap plants were placed on transects on vectors from 290˚ to 20˚ in a north-north-west direction from the ascochyta infected chickpea crop.
 A single rainfall event at the Curyo site to trigger conidial dispersal between `r events[events$site == "Curyo",]$'time out'` and `r events[events$site == "Curyo",]$'time removed'`.
-However the onsite weather station recorded the wind direction as coming from the north, blowing towards the south.  
+However the onsite weather station recorded the wind direction as coming from the north, blowing towards the south.
 
 Conida were recorded travelling up to 75&nbsp;meters from the infested stubble north, against the wind during the spread event.
-The collaborating researcher at VDPI confirmed this weather station did not have wind direction calibrated recently.  
+The collaborating researcher at VDPI confirmed this weather station did not have wind direction calibrated recently.
 
-This vignette is aimed at comparing the wind direction and wind speed to nearby weather stations.  
+This vignette is aimed at comparing the wind direction and wind speed to nearby weather stations.
 
 ## Data import
 
 First we will import the weather data from the Curyo which we suspect to have inaccurate wind direction.
-The data will be formatted and filtered to only contain weather data during when the trap plants were exposed in the field.   
+The data will be formatted and filtered to only contain weather data during when the trap plants were exposed in the field.
 
 ```{r import-Curyo, message=FALSE, warning=FALSE}
 Curyo_w <-
-   read_csv(here::here(
-      "inst/data",
-      "Curyo SPA 2019 - Buffer 0 - 01-01-2019 to 06-12-2019.csv"
-   )) %>%
+   read_csv(
+      system.file(
+         "extdata",
+         "Curyo_SPA_2019_weather.csv",
+         package = "ChickpeaAscoDispersal",
+         mustWork = TRUE
+      )
+   ) %>%
    select(Time,
           'Wind Speed - average (km/h)',
           'Wind Direction - average (º)',
           "Rainfall - (mm)") %>%
-   mutate(time = dmy_hm(Time)) %>%
+   mutate(Time = dmy_hm(Time)) %>%
    mutate(Location = "Curyo") %>%
-   select(Location, everything()) %>%
+   select(Location, everything()) %>% 
    rename(ws = `Wind Speed - average (km/h)`) %>%
    rename(wd = `Wind Direction - average (º)`) %>%
    rename(rainfall = `Rainfall - (mm)`) %>% 
-   mutate(ws = ws / 3.6) %>% # convert from km/h to m/s
-   filter(time %within% events[6, "exposed"])
+   mutate(ws = ws / 3.6) %>%  # convert from km/h to m/s
+   filter(Time %within% events[6, "exposed"])
 ```
 
-The data we download from Bureau of Meteorology (BOM) is in one hour increments, so we will aggregate the 10 minute data to one hourly.  
+The data we download from Bureau of Meteorology (BOM) is in one hour increments, so we will aggregate the 10 minute data to one hourly.
 
 ```{r aggregate_to_1_hour}
 Curyo_w <-
    Curyo_w %>%
-   mutate(Day = day(time)) %>%
-   mutate(Hour = hour(time)) %>%
+   mutate(Day = day(Time)) %>%
+   mutate(Hour = hour(Time)) %>%
    group_by(Hour, Day) %>%
    summarise(ws = mean(ws),
              wd = circular.averaging(wd)) %>%
    mutate(Location = "Curyo") %>%
    arrange(Day, Hour) %>%
    ungroup() %>%
-   mutate(time = seq(
+   mutate(Time = seq(
       from = events[events$site == "Curyo", ]$`time out`,
       to = events[events$site == "Curyo", ]$`time removed`,
       by = "hour"
    )) %>%
+   rename(time = Time) %>% 
    select(Location, time, everything())
 ```
 
@@ -110,9 +122,14 @@ Next we will import data from a second weather station operated by the Birchip A
 
 ```{r import-BCG, message=FALSE, warning=FALSE}
 BCG <-
-   read_csv(here::here("inst/data",
-                 "DataFarmer_Data_202031081949847.csv"),
-            skip = 1) %>%
+ read_csv(
+      system.file(
+         "extdata",
+         "BCG_weather_data.csv",
+         package = "ChickpeaAscoDispersal",
+         mustWork = TRUE
+      ),
+   skip = 1) %>%
    mutate(time = dmy_hm(`Reading Time`)) %>%
    mutate(`Wind Speed` = `Wind Speed` / 3.6) %>% # convert from km/h to m/s
    mutate(Location = "BCG") %>%
@@ -181,29 +198,29 @@ We place the weather data from each station into a `tibble` and store it as an e
 ```{r get_cuyroData, message=FALSE}
 curyo_latlong <- c(-35.779312, 142.778332)
 
-stat.dat <- get_station_metadata() %>%
+stat_dat <- get_station_metadata() %>%
    filter(name %in% sweep_for_stations(curyo_latlong)$name[1:4])
 
-for (i in stat.dat$id) {
-   if (i == stat.dat$id[1]) {
-      weather.list <- list()
+for (i in stat_dat$id) {
+   if (i == stat_dat$id[1]) {
+      BOM_weather_list <- list()
    }
-   print(stat.dat$name[which(stat.dat$id == i)])
+   print(stat_dat$name[which(stat_dat$id == i)])
    
-   weather.list[[i]] <-
+   BOM_weather_list[[i]] <-
       get_met_data(i, years = 2019) %>%
-      filter(time %within% events[6, "exposed"]) %>% 
-      mutate(Location = stat.dat$name[which(stat.dat$id == i)]) %>%
+      filter(time %within% events[6, "exposed"]) %>%
+      mutate(Location = stat_dat$name[which(stat_dat$id == i)]) %>%
       select(Location, everything())
 }
 ```
 
-Next we bind the data all together in a single tibble called `weather.vic`.  
+Next we bind the data all together in a single tibble called `weather_vic`.
 
 ```{r bind_met_data}
-weather.vic <- bind_rows(weather.list, Curyo_w, Curyo_alt)
+weather_vic <- bind_rows(BOM_weather_list, Curyo_w, Curyo_alt)
 
-skim(weather.vic)
+skim(weather_vic)
 ```
 
 ## Weather station locations
@@ -230,12 +247,12 @@ sweep_for_stations(curyo_latlong)[c(1, 4)] %>%
 
 ## Windroses
 
-We can visualise the wind speed and direction for each site using windrose.  
+We can visualise the wind speed and direction for each site using wind rose.
 
-```{r windrose, message=FALSE, warning=FALSE, fig.cap="Comparison of wind direction data collected at the Curyo site using the on-site weather station, which was not properly calibrated, and nearby locations, Birchip Group Station’s agriculture farm (BCG) (10 kilometres distant), and Australia BoM weather stations, Hopetoun Airport (39 kilometres) and Charlton (75 kilometres) during the Curyo spread event. BCG’s agriculture farm weather station’s wind direction data were used for the interpretation of conidial dispersal patterns as Curyo’s weather station wind vane was not calibrated.", fig.width = 9.4, fig.height = 4.7}
+```{r wind-rose, message=FALSE, warning=FALSE, fig.cap="Comparison of wind direction data collected at the Curyo site using the on-site weather station, which was not properly calibrated, and nearby locations, Birchip Group Station’s agriculture farm (BCG) (10 kilometres distant), and Australia BoM weather stations, Hopetoun Airport (39 kilometres) and Charlton (75 kilometres) during the Curyo spread event. BCG’s agriculture farm weather station’s wind direction data were used for the interpretation of conidial dispersal patterns as Curyo’s weather station wind vane was not calibrated.", fig.width = 9.4, fig.height = 4.7}
 pw <-
    with(
-      weather.vic,
+      weather_vic,
       windrose(
          ws,
          wd,
@@ -271,10 +288,10 @@ embed_fonts(
 
 From the windroses, it is apparent that the Curyo weather station is an outlier for direction and possibly windspeed.
 
-## Wind speed correlations
+## Wind Speed Correlations
 
 ```{r ws-correlations, message=FALSE, warning=FALSE, fig.cap="Visual inspection of the wind speed data comparing the Curyo site with the Birchip Cropping Group data from 10 kilometres away and two BOM stations 40 to 50 kilometres away."}
-ggplot(weather.vic, aes(x = time, y = ws)) +
+ggplot(weather_vic, aes(x = time, y = ws)) +
    geom_point(aes(shape = Location,
                   colour = Location),
               size = 3.5) +
@@ -283,34 +300,31 @@ ggplot(weather.vic, aes(x = time, y = ws)) +
 
 A visual inspection suggests that the wind speed from the Curyo weather station is not suspect and can be used in the model.
 
-## Create new figure 3 excluding the Curyo data
+## Create New Figure 3 Excluding the Curyo Data
 
-Because of the incorrect wind direction data from the Curyo station, a new figure needs to be constructed with the BCG data. This will have wind directions that are more in-line with the actual event, but the speeds are not correct for Curyo.
+Because of the incorrect wind direction data from the Curyo station, a new figure needs to be constructed with the BCG data.
+This will have wind directions that are more in-line with the actual event, but the speeds are not correct for Curyo.
 
 ```{r new-fig3}
-weather <- read_csv(here::here("inst/cache", "cleaned_weather.csv")) %>%
+cleaned_weather <-
+   cleaned_weather %>%
    rename(ws = wind_speed,
           wd = wind_direction) %>%
-   filter(site != "Curyo") %>% 
-   unite(SpEv, (c("site", "rep"))) %>% 
-   select(SpEv,everything())
+   filter(site != "Curyo") %>%
+   unite(SpEv, (c("site", "rep"))) %>%
+   select(SpEv, everything())
 
 pw <-
-   with(
-      weather,
-      windrose(
-         ws,
-         wd,
-         SpEv,
-         n_col = 3,
-         legend_title = "Wind speed (m/s)"
-      )
-   )
+   with(cleaned_weather,
+        windrose(ws,
+                 wd,
+                 SpEv,
+                 n_col = 3,
+                 legend_title = "Wind speed (m/s)"))
 pw +
    scale_fill_viridis_d(name = "Wind Speed (m/s)", direction = -1) +
    xlab("") +
    theme_pubclean()
-
 ```
 
 ```{r save-fig3, include=FALSE, eval=FALSE}
@@ -319,10 +333,10 @@ ggsave(here::here("man", "figures/Fig3.png"))
 ggsave(here::here("man", "figures/Fig3.eps"))
 embed_fonts(
    here::here("man",
-        "figures/Fig3.eps"),
+              "figures/Fig3.eps"),
    outfile = here::here("man",
-                  "figures/Fig3.eps",
-                  options = "-dEPSCrop")
+                        "figures/Fig3.eps",
+                        options = "-dEPSCrop")
 )
 ```
 

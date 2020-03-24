@@ -18,17 +18,8 @@ This vignette demonstrates and explains our reasoning during preliminary data an
 library("tidyverse")
 library("lme4")
 library("knitr")
-library("here")
+library("ChickpeaAscoDispersal")
 ```
-
-```{r import_data, message=FALSE}
-# import
-lesion <- read_csv(here::here("inst/cache", "summarised_lesion_data.csv"))
-weather <- read_csv(here::here("inst/cache", "weather_summary.csv"))
-
-dat <- left_join(lesion, weather, by = c("site", "rep"))
-```
-
 
 From this data we hope to interpret the following.  
 
@@ -61,7 +52,7 @@ Rainfall is required for conidia to disperse from the infected focus, and each '
 The following table describes the replicates per site and the summary weather data for that event.
 
 ```{r weather_table, warning=FALSE, message=FALSE, }
-kable(weather, align = "c", caption = "Summary weather data for replicated rain event (spread event) per unique site.")
+kable(summary_weather, align = "c", caption = "Summary weather data for replicated rain event (spread event) per unique site.")
 ```
 
 The first models I will look at are asking:
@@ -71,6 +62,8 @@ The first models I will look at are asking:
    (ii) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.
 
 ```{r lmer_mod, message=FALSE}
+dat <- left_join(lesion_counts, cleaned_weather, by = c("site", "rep"))
+
 mod1 <-
   lmer(mean_pot_count ~ as.factor(distance) + (1 | site / SpEv),
        data = dat)

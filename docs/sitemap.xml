@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//index.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/ChickpeaAscoDispersal-package.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/circular.averaging.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/p_gam.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/01_Import_raw_data.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/02_Import_weather_data.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/03_Visualise_Data.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/04_lmer.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/05_GAM.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/06_Compare_Curyo_weather.html</loc>
+  </url>
+</urlset>

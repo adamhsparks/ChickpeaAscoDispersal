@@ -5,15 +5,14 @@ date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{01_lesion_data_import}
+  %\VignetteIndexEntry{01_lesion_counts_import}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r libraries, message=FALSE}
 library("tidyverse")
-library("skimr")
-library("here")
+library("knitr")
 ```
 
 This vignette documents the raw data import, calculation of mean lesion values and exports the new data to "inst/cache" for further use in visualisation and analysis.
@@ -24,11 +23,18 @@ Lastly the mean pot count, `mean_pot_count` is calculated for each of the transe
 
 After the data are updated, a column for precipitation type, `ptype`, is added and the spread events, `SpEv`, are renamed for clarity and ordered as factors for data visualisation.
 
-## Import and inspect lesion data
+## Import and Inspect Lesion Data
 
 ```{r import_data, message=FALSE}
-dat <-
-   read_csv(here("inst/data", "lesion_counts.csv")) %>%
+lesion_counts <-
+   read_csv(
+      system.file(
+         "extdata",
+         "lesion_counts.csv",
+         package = "ChickpeaAscoDispersal",
+         mustWork = TRUE
+      )
+   ) %>%
    mutate(site = str_remove(site, " SPA")) %>%
    mutate(distance = as.numeric(str_replace(distance, " m", ""))) %>%
    unite(SpEv, c(site, rep), remove = FALSE) %>%
@@ -66,17 +72,7 @@ dat <-
          site == "pbc" & transect == 10 ~ 135
       )
    ) %>%
-   mutate(mean_pot_count = rowMeans(select(., counts_p1:counts_p5), na.rm = TRUE)) %>%
-   mutate_at(vars(site, rep, station, transect, plant_no, pot_no, SpEv),
-             factor)
-
-# create new variables for the type of precipitation event
-# rename the site names to align with the cleaned weather data
-# create new variables for each event (location by replicate number at that location)
-
-dat <-
-   dat %>%
-      mutate(
+   mutate(
       ptype = case_when(
          SpEv == "pbc_1" ~ "irrigation",
          SpEv == "pbc_2" ~ "irrigation",
@@ -91,7 +87,7 @@ dat <-
          site == "pbc" ~ "Horsham irrigated",
          site == "Horsham" ~ "Horsham dryland",
          site == "Curyo" ~ "Curyo"
-      ) 
+      )
    ) %>%
    mutate(
       SpEv = case_when(
@@ -102,9 +98,18 @@ dat <-
          SpEv == "Horsham_2" ~ "Horsham Rain 2",
          SpEv == "Curyo_1" ~ "Curyo Rain 1"
       )
-   )
+   ) %>%
+   mutate_at(vars(SpEv, site, rep), factor) %>%
+   mutate(mean_pot_count = rowMeans(select(., counts_p1:counts_p5),
+                                    na.rm = TRUE)) %>% 
+   arrange(SpEv, transect, distance)
 
-write_csv(x = dat, path = here("inst/cache", "/summarised_lesion_data.csv"))
+kable(lesion_counts)
+```
 
-skim(dat)
+Save lesion count data for use in visualisation and modelling.
+This only needs to be done once.
+
+```{r save-lesion-counts, eval=FALSE}
+save(lesion_counts, file = "./data/lesion_counts.rda")
 ```

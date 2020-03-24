@@ -19,18 +19,11 @@ Generic function to print GAMs using mgcViz
 # load necessary libraries
 library("tidyverse")
 library("mgcv")
-library("here")
 library("mgcViz")
 library("ChickpeaAscoDispersal")
 
-# load weather and lesion data and make a simple GAM
-lesion <- read_csv(system.file("extdata", "summarised_lesion_counts.csv",
-                               package = "ChickpeaAscoDispersal",
-                               mustWork = TRUE))
-weather <- read_csv(system.file("extdata", "weather_summary.csv",
-                                package = "ChickpeaAscoDispersal",
-                                mustWork = TRUE))
-dat <- left_join(lesion, weather, by = c("site", "rep"))
+# these data are automatically loaded
+dat <- left_join(lesion_counts, summary_weather, by = c("site", "rep"))
 
 mod1 <- gam(
   mean_pot_count ~ s(distance, k = 5),

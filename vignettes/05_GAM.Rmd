@@ -24,18 +24,17 @@ library("ggpubr")
 library("mgcv")
 library("extrafont")
 library("mgcViz")
-library("here")
 library("ChickpeaAscoDispersal")
 
 theme_set(theme_pubclean(base_size = 14))
 ```
 
-```{r import_data, message=FALSE}
-# import
-lesion <- read_csv(here::here("inst/cache", "summarised_lesion_data.csv"))
-weather <- read_csv(here::here("inst/cache", "weather_summary.csv"))
+## Create Data Set for GAMs
 
-dat <- left_join(lesion, weather, by = c("site", "rep"))
+Join the `lesion_counts` data and the `weather_summary` data to create `dat` for creating GAMs.
+
+```{r import_data, message=FALSE}
+dat <- left_join(lesion_counts, weather_summary, by = c("site", "rep"))
 ```
 
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
