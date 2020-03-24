@@ -102,6 +102,7 @@ lesion_counts <-
    mutate_at(vars(SpEv, site, rep), factor) %>%
    mutate(mean_pot_count = rowMeans(select(., counts_p1:counts_p5),
                                     na.rm = TRUE)) %>% 
+   select(-dist_stat) %>% 
    arrange(SpEv, transect, distance)
 
 kable(lesion_counts)
