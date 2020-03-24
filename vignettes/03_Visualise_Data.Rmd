@@ -149,12 +149,14 @@ ggplot(data = heat_dat,
    scale_colour_viridis_c(
       direction = -1,
       name = "n",
-      guide = "legend"
+      guide = "legend",
+      breaks = c(1,5,10,15,20)
    ) +
    coord_polar(theta = "x",
                start = 0,
                direction = 1) +
-   scale_size(range = c(2, 8), name = "n") +
+   scale_size(range = c(2, 8), name = "n", 
+              breaks = c(1,5,10,15,20)) +
    scale_x_continuous(
       breaks = c(0, 90, 180, 270),
       expand = c(0, 0),
