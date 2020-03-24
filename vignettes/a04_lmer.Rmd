@@ -27,15 +27,24 @@ From this data we hope to interpret the following.
   - What factors influence the dispersal distance of conidia.  
   
 In this experiment there are a number of factors which may influence conidia spread. These include:  
-  * Experimental location (site).  
+  * Experimental location (site).
+  
   * The time at which a spread event occurred (SpEv).  
+  
     - The factor SpEv would be nested within site.  
+  
     - SpEv factor may describe variation in the data that varies between SpEv, such as weather and climate variables.  
+  
   * Wind speed during the spread event.  
+  
   * Wind direction during the spread event.  
+  
   * Distance the trap plants were placed from the aschochyta infested plots (distance).  
+  
   * The bearing in which the trap plants were placed at distances relative to the infested plots (transect).  
+  
   * How the spread event was initiated, with sprinkler irrigation or rainfall.  
+  
   * The quantity of rainfall.  
   
 Due to the lack of reps at some of the distances we will ignore transect as a factor.
