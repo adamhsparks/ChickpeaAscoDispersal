@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{06_compare_curyo_wind_data}
+  %\VignetteIndexEntry{compare_curyo_wind_data}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---

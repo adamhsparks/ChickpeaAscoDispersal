@@ -9,3 +9,12 @@ figures:
   dev.args: []
   fig.ext: png
   fig.retina: 2
+articles:
+- title: Analysis Workflow
+  contents:
+  - lesion_counts_import
+  - weather_data_import
+  - visualise_data
+  - lmer_model
+  - GAM
+  - compare_curyo_wind_data

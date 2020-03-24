@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{04_lmer_models}
+  %\VignetteIndexEntry{lmer_model}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---

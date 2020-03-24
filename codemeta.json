@@ -255,7 +255,7 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 3.1.0"
+      "version": ">= 3.5.0"
     },
     {
       "@type": "SoftwareApplication",
@@ -277,5 +277,5 @@
   ],
   "codeRepository": "https://github.com/openplantpathology/Chickpea_AB_Modelling",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "6529.466KB"
+  "fileSize": "5061.625KB"
 }
