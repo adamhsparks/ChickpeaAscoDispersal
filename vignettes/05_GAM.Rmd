@@ -31,10 +31,10 @@ theme_set(theme_pubclean(base_size = 14))
 
 ## Create Data Set for GAMs
 
-Join the `lesion_counts` data and the `weather_summary` data to create `dat` for creating GAMs.
+Join the `lesion_counts` data and the `summary_weather` data to create `dat` for creating GAMs.
 
 ```{r import_data, message=FALSE}
-dat <- left_join(lesion_counts, weather_summary, by = c("site", "rep"))
+dat <- left_join(lesion_counts, summary_weather, by = c("site", "rep"))
 ```
 
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
