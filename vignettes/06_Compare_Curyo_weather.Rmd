@@ -1,5 +1,5 @@
 ---
-title: "Compare Curyo wind with alternate sources"
+title: "Compare Curyo Wind with Alternate Sources"
 author: "P. Melloy and A. H. Sparks"
 date: "`r Sys.Date()`"
 output:
