@@ -10,24 +10,33 @@
     <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/circular.averaging.html</loc>
   </url>
   <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/cleaned_weather.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/lesion_counts.html</loc>
+  </url>
+  <url>
     <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/p_gam.html</loc>
   </url>
   <url>
-    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/01_Import_raw_data.html</loc>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//reference/summary_weather.html</loc>
   </url>
   <url>
-    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/02_Import_weather_data.html</loc>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/a01_Import_raw_data.html</loc>
   </url>
   <url>
-    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/03_Visualise_Data.html</loc>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/a02_Import_weather_data.html</loc>
   </url>
   <url>
-    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/04_lmer.html</loc>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/a03_Visualise_data.html</loc>
   </url>
   <url>
-    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/05_GAM.html</loc>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/a04_lmer.html</loc>
   </url>
   <url>
-    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/06_Compare_Curyo_weather.html</loc>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/a05_GAM.html</loc>
+  </url>
+  <url>
+    <loc>https://adamhsparks.github.io/Chickpea_AB_Modelling//articles/a06_Compare_Curyo_weather.html</loc>
   </url>
 </urlset>
