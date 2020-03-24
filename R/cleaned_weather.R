@@ -1,6 +1,7 @@
 #' Cleaned Weather Data from Horsham and Curyo
 #'
-#' A dataset of weather data from on-site weather stations at Horsham and Curyo.
+#' A dataset of ten-minute observation weather data from on-site weather
+#'  stations at Horsham and Curyo.
 #'
 #' @format A \code{data.frame} with 2202 rows and 6 variables:
 #' \describe{

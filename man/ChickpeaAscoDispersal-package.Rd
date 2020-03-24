@@ -22,5 +22,10 @@ Authors:
   \item Kevin Moore \email{kevin.moore@dpi.nsw.gov.au}
 }
 
+Other contributors:
+\itemize{
+  \item GRDC Project USQ1903-003RTX [funder]
+}
+
 }
 \keyword{internal}
