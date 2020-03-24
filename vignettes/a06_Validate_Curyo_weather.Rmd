@@ -57,7 +57,7 @@ events <-
 
 ## Background
 
-During the experimental analysis as the data were being visualised, [a03_Visualise_data](see data visualisation), it became apparent that the Curyo wind data were perhaps incorrect due to the wind vane of the station not being properly calibrated.
+During the experimental analysis as the data were being visualised, [a03_Visualise_data.html](see data visualisation), it became apparent that the Curyo wind data were perhaps incorrect due to the wind vane of the station not being properly calibrated.
 The onsite weather station recorded the wind direction as coming from the north, blowing towards the south.
 However, conida were recorded travelling up to 75&nbsp;meters from the infested stubble north, against the wind during the spread event.
 The Dr. Fanning confirmed this weather station did not have the wind vane calibrated recently.
