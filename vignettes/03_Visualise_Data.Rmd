@@ -134,7 +134,7 @@ heat_dat <-
    group_by(SpEv, degrees) %>%
    mutate(summed_count_pot =
              case_when(distance == 0 ~ sum(mean_pot_count),
-                       TRUE ~ mean_pot_count)) %>% 
+                       TRUE ~ mean_pot_count)) %>%
    filter(mean_pot_count > 0)
 
 ggplot(data = heat_dat,
@@ -150,13 +150,16 @@ ggplot(data = heat_dat,
       direction = -1,
       name = "n",
       guide = "legend",
-      breaks = c(1,5,10,15,20)
+      breaks = c(1, 5, 10, 15, 20)
    ) +
    coord_polar(theta = "x",
                start = 0,
                direction = 1) +
-   scale_size(range = c(2, 8), name = "n", 
-              breaks = c(1,5,10,15,20)) +
+   scale_size(
+      range = c(2, 8),
+      name = "n",
+      breaks = c(1, 5, 10, 15, 20)
+   ) +
    scale_x_continuous(
       breaks = c(0, 90, 180, 270),
       expand = c(0, 0),
