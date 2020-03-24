@@ -24,7 +24,8 @@ Authors@R: c(person("Ihsan", "Khaliq",
                      person("Adam", "Sparks",
                      email = "adam.sparks@usq.edu.au",
                      role = c("aut", "cre"),
-                     comment = c(ORCID = "0000-0002-0061-8359")))
+                     comment = c(ORCID = "0000-0002-0061-8359"),
+                     person("GRDC Project USQ1903-003RTX", role = "fnd")))
 Description: Documents the workflow and processes involved in the analysis of
    data for the paper ...
 Depends: R (>= 3.1.0)
