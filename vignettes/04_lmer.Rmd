@@ -62,7 +62,7 @@ The first models I will look at are asking:
    (ii) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.
 
 ```{r lmer_mod, message=FALSE}
-dat <- left_join(lesion_counts, cleaned_weather, by = c("site", "rep"))
+dat <- left_join(lesion_counts, summary_weather, by = c("site", "rep"))
 
 mod1 <-
   lmer(mean_pot_count ~ as.factor(distance) + (1 | site / SpEv),
