@@ -65,7 +65,12 @@
   ],
   "contributor": {},
   "copyrightHolder": {},
-  "funder": {},
+  "funder": [
+    {
+      "@type": "Organization",
+      "name": "GRDC Project USQ1903-003RTX"
+    }
+  ],
   "maintainer": [
     {
       "@type": "Person",
@@ -271,5 +276,6 @@
     }
   ],
   "codeRepository": "https://github.com/openplantpathology/Chickpea_AB_Modelling",
-  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md"
+  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
+  "fileSize": "6529.224KB"
 }
