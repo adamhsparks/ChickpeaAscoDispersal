@@ -16,4 +16,4 @@
 #'    millimetres}
 #' }
 #' @source Dr Joshua Fanning, AgricultureVictoria, Horsham, Vic, AUS
-"cleaned_weather"
+"summary_weather"

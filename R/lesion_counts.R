@@ -30,4 +30,4 @@
 #'    observations}
 #' }
 #' @source GRDC Project USQ1903-003-RTX
-"cleaned_weather"
+"lesion_counts"
