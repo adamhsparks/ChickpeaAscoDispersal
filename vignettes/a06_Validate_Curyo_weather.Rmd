@@ -1,11 +1,11 @@
 ---
-title: "Compare Curyo Wind with Alternate Sources"
+title: "Validate Curyo Wind with Alternate Sources"
 author: "P. Melloy and A. H. Sparks"
 date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{compare_curyo_wind_data}
+  %\VignetteIndexEntry{validate_curyo_wind_data}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---
@@ -57,13 +57,10 @@ events <-
 
 ## Background
 
-The experimental site Curyo is located approximately 120 km north-east of Horsham Grains Innovation park (Department of Primary Industries Victoria).
-Trap plants were placed on transects on vectors from 290˚ to 20˚ in a north-north-west direction from the ascochyta infected chickpea crop.
-A single rainfall event at the Curyo site to trigger conidial dispersal between `r events[events$site == "Curyo",]$'time out'` and `r events[events$site == "Curyo",]$'time removed'`.
-However the onsite weather station recorded the wind direction as coming from the north, blowing towards the south.
-
-Conida were recorded travelling up to 75&nbsp;meters from the infested stubble north, against the wind during the spread event.
-The collaborating researcher at VDPI confirmed this weather station did not have wind direction calibrated recently.
+During the experimental analysis as the data were being visualised, [a03_Visualise_data](see data visualisation), it became apparent that the Curyo wind data were perhaps incorrect due to the wind vane of the station not being properly calibrated.
+The onsite weather station recorded the wind direction as coming from the north, blowing towards the south.
+However, conida were recorded travelling up to 75&nbsp;meters from the infested stubble north, against the wind during the spread event.
+The Dr. Fanning confirmed this weather station did not have the wind vane calibrated recently.
 
 This vignette is aimed at comparing the wind direction and wind speed to nearby weather stations.
 
@@ -96,7 +93,7 @@ Curyo_w <-
    filter(Time %within% events[6, "exposed"])
 ```
 
-The data we download from Bureau of Meteorology (BOM) is in one hour increments, so we will aggregate the 10 minute data to one hourly.
+Because the data that we download from Bureau of Meteorology (BOM) will be in one hour increments, we will aggregate the 10 minute data to one hourly.
 
 ```{r aggregate_to_1_hour}
 Curyo_w <-
@@ -118,7 +115,7 @@ Curyo_w <-
    select(Location, time, everything())
 ```
 
-Next we will import data from a second weather station operated by the Birchip Ag Group approximately 10&nbsp;kilometres from where our trial took place.
+Next we will import data from a second weather station operated by the Birchip Ag Group approximately 10&nbsp;kilometres from where our trial took place that Dr. Fanning was able to provide for comparison.
 
 ```{r import-BCG, message=FALSE, warning=FALSE}
 BCG <-
@@ -162,7 +159,7 @@ BCG <-
    filter(time %within% events[6, "exposed"])
 ```
 
-The BCG weather station data also need to be aggregated into one hour increments.
+The BCG weather station data also need to be aggregated into one hour increments as well.
 
 ```{r Curyo_alt_aggregate}
 Curyo_alt <-
@@ -186,7 +183,7 @@ Curyo_alt <-
 skim(Curyo_alt)
 ```
 
-We have data from two weather stations in the field, however lets import data from BOM meteorological stations nearby.
+We have data from two weather stations now. However, let's import data from BOM meteorological stations nearby.
 We can use the bomrang function `sweep_for_stations()` to find the closest stations to our experimental site.
 Because bomrang only obtains historical daily weather information we need to use another package, stationaRy, which can retrieve hourly or 10 minute weather data from the same BOM stations.
 We then use the station name of the BOM stations in the `get_station_metadata()` from the [stationaRy](https://cran.r-project.org/package=stationaRy) package to obtain weather station IDs.
@@ -247,7 +244,7 @@ sweep_for_stations(curyo_latlong)[c(1, 4)] %>%
 
 ## Windroses
 
-We can visualise the wind speed and direction for each site using wind rose.
+We can visualise the wind speed and direction for each site using wind roses.
 
 ```{r wind-rose, message=FALSE, warning=FALSE, fig.cap="Comparison of wind direction data collected at the Curyo site using the on-site weather station, which was not properly calibrated, and nearby locations, Birchip Group Station’s agriculture farm (BCG) (10 kilometres distant), and Australia BoM weather stations, Hopetoun Airport (39 kilometres) and Charlton (75 kilometres) during the Curyo spread event. BCG’s agriculture farm weather station’s wind direction data were used for the interpretation of conidial dispersal patterns as Curyo’s weather station wind vane was not calibrated.", fig.width = 9.4, fig.height = 4.7}
 pw <-
@@ -286,7 +283,7 @@ embed_fonts(
 )
 ```
 
-From the windroses, it is apparent that the Curyo weather station is an outlier for direction and possibly windspeed.
+From the wind roses, it is apparent that the Curyo weather station is an outlier for direction and possibly windspeed.
 
 ## Wind Speed Correlations
 
@@ -339,4 +336,3 @@ embed_fonts(
                         options = "-dEPSCrop")
 )
 ```
-
