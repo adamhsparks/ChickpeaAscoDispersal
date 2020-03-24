@@ -1,5 +1,5 @@
 ---
-title: "Visualise data"
+title: "Visualise Data"
 author: "A.H. Sparks"
 date: "`r Sys.Date()`"
 output:
