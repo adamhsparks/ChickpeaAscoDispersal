@@ -12,7 +12,7 @@ vignette: >
 
 ## Aims
 
-This vignette demonstrates and explains our reasoning during preliminary data analysis method. The aims of this document was to explore the conidial dispersal data and understand which factors affect the distance conidia travel during a 'spread event'.  
+This vignette demonstrates and explains our reasoning during preliminary data analysis method. The aims of this document were to explore the role of 'site' on conidial dispersal.  
 
 ```{r libraries, message=FALSE, warning=FALSE}
 library("tidyverse")
@@ -23,8 +23,7 @@ library("ChickpeaAscoDispersal")
 
 From this data we hope to interpret the following.  
 
-  - How far conidia can be dispersed in a spread event.  
-  - What factors influence the dispersal distance of conidia.  
+  - Did experimental location, 'site', affect conidial dispersal.  
   
 In this experiment there are a number of factors which may influence conidia spread. These include:  
   * Experimental location (site).
@@ -48,131 +47,56 @@ In this experiment there are a number of factors which may influence conidia spr
   * The quantity of rainfall.  
   
 Due to the lack of reps at some of the distances we will ignore transect as a factor.
-We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.
-Therefore our aim of this analysis will focus on the factors which influence the distance of conidia dispersal not direction.  
+We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.  
 
 I will start using `lmer()` to analyse the mean number of lesions per plant at each distance.
 The reps at each distance are defined by 'pot', each pot contains five chickpea plants.
-The factor distance should be fit as a continuous variable, however because we don't know if the relationship between mean lesions and distance from the conidia dispersal focus is linear or non-linear, we will start with distance as a categorical variable.
+The factor distance is fit as a continuous variable.  
 
 Site is a categorical variable explaining the trial location.
 Each site may have experienced a different number of spread events, defined by the term `SpEv`.
-Rainfall is required for conidia to disperse from the infected focus, and each 'spread event' constitutes either an overhead irrigation event or a natural rainfall event.
-The following table describes the replicates per site and the summary weather data for that event.
-
-```{r weather_table, warning=FALSE, message=FALSE, }
-kable(summary_weather, align = "c", caption = "Summary weather data for replicated rain event (spread event) per unique site.")
-```
+Rainfall is required for conidia to disperse from the infected focus, and each 'spread event' constitutes either an overhead irrigation event or a natural rainfall event.  
 
 The first models I will look at are asking:
 
-   (i) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site.
+   (i) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.
+   (ii) What is the estimated mean lesions per plant as each distance from the focus, given that distance is dependant on the conditions of each spread event.
 
-   (ii) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.
-
-```{r lmer_mod, message=FALSE}
+```{r lmer_mod1, message=FALSE}
 dat <- left_join(lesion_counts, summary_weather, by = c("site", "rep"))
 
 mod1 <-
-  lmer(mean_pot_count ~ as.factor(distance) + (1 | site / SpEv),
+  lmer(mean_pot_count ~ distance + (distance | site / SpEv),
        data = dat)
+
 cat("mod1: ")
 formula(mod1)
 
+summary(mod1)
+
+```
+
+Let's examine the model without 'site' to test if the model is a worse fit.
+
+```{r lmer_mod2}
 mod2 <-
-  lmer(mean_pot_count ~ as.factor(distance) + (as.factor(distance) |
-                                                 site / SpEv),
+  lmer(mean_pot_count ~ distance + 
+                                  (distance | SpEv),
        data = dat)
+
 cat("mod2: ")
 formula(mod2)
 
 # Compare models
 anova(mod1, mod2)
+
 ```
+A comparison of the two models shows us that `mod2` is much better fit given the lower AIC and that there is no significant difference in the models. Following a reductive approach we should remove site from the model.
 
-A comparison of the two models shows us that `mod2` is much better fit given the lower AIC.
-
-Lets examine the results of this analysis.
-
-```{r mod2_summary}
+```{r mod2}
 summary(mod2)
 ```
 
-This analysis shows there is little residual variance compared to the the variation explained by our random effects.
-Also we can see that the amount of variation explained by site is low.
-We should test that site is a significant random intercept.
 We can also note that as the distance increases there are less mean lesions per pot, and the variance increases.
 
-```{r Site_test, message=FALSE}
-mod3 <-
-  lmer(mean_pot_count ~ as.factor(distance) + 
-                                  (as.factor(distance) | SpEv),
-       data = dat)
-cat("mod3: ")
-formula(mod3)
-
-# Compare models
-anova(mod2, mod3)
-```
-
-Site is not a significant factor and we can use spread event variable instead.
-We will use `mod3` in the following analysis.
-This is shown by the lower AIC for `mod3` and that the `site/SpEv` nesting is not significant on the chi-squared test of models.
-We should check this is consistent for when distance is a continuous variable.  
-
-
-```{r continuous_test, message=FALSE}
-# To test continous distance
-mod4 <- lmer(mean_pot_count ~ distance + (distance | SpEv),
-             data = dat)
-cat("mod4")
-formula(mod4)
-
-# Compare models
-anova(mod3, mod4)
-```
-
-`mod 3` remains a better model compared to a model where distance is defined as continuous variable this probably relates to the non-linear relationship of `distance` and `mean lesions per pot`.
-For completeness lets test the nesting of `site` and `SpEv` when distance is continuous.
-
-```{r continuous_nesting_test}
-# To test continous distance
-mod5 <- lmer(mean_pot_count ~ distance + (distance | site / SpEv),
-             data = dat)
-cat("mod5")
-formula(mod5)
-
-# Compare models
-anova(mod4, mod5)
-```
-
-The model comparison shows no significant difference, therefore we should proceed with the simpler model. Also the model where site is not included remains the better model because of the slightly lower AIC.
-Therefore we can conclude that site is not a contributing factor to the distance spores can travel.  
-
-Finally I want to check the fit of the model when distance is fit as a ordered categorical variable, as we know it is.
-In the shape of the regression is tested against polynomials for non-linear terms.
-
-```{r ordered_factor_test}
-# To test continous distance
-mod6 <-
-  lmer(mean_pot_count ~ ordered(distance) + (ordered(distance) |
-                                               SpEv),
-       data = dat)
-cat("mod6")
-formula(mod6)
-
-# Compare models
-anova(mod3, mod6)
-```
-
-This last test shows `mod6` is a "better" model however the fit does not improve by much, because there is the same AIC.
-It also reinforces our suspicion that the relationship between number of lesions per pot and distance from the inoculumn focus is non-linear.
-
-```{r model_summary}
-summary(mod6)
-```
-
-The fixed effects give us the mean number of lesions per plant at distance zero (intercept) and this is significantly different from zero.
-We can also see the mean number of lesions decreases as distance from the focus increases.  
-
-From here we should continue with a generalised additive model (GAM), which can handle non-linear terms better than a linear model with polynomials.
+From here we should continue with a generalised additive model (GAM), which can handle non-linear terms better than a linear model.
