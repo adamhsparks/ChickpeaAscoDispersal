@@ -3,7 +3,8 @@ Title: Research Compendium for the paper ...
 Version: 0.1
 Authors@R: c(person("Ihsan", "Khaliq",
                      email = "ihsan.khaliq@usq.edu.au",
-                     role = "aut"),
+                     role = "aut",
+                     comment = c(ORCID = "0000-0003-4171-0917")),
                      person("Paul", "Melloy",
                      email = "paul.melloy@usq.edu.au",
                      role = "aut",
@@ -25,7 +26,10 @@ Authors@R: c(person("Ihsan", "Khaliq",
                      email = "adam.sparks@usq.edu.au",
                      role = c("aut", "cre"),
                      comment = c(ORCID = "0000-0002-0061-8359")),
-                     person("GRDC Project USQ1903-003RTX", role = "fnd"))
+                     person("GRDC Project USQ1903-003RTX", role = "fnd"),
+                     person("Agriculture Victoria and GRDC co-investment project DAV00150,
+                     role = c("fnd", "dtc")),
+                     person("The Birchip Cropping Group", role = "dtc")
 Description: Documents the workflow and processes involved in the analysis of
    data for the paper ...
 Depends: R (>= 3.5.0)
