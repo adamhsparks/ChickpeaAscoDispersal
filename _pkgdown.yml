@@ -1,8 +1,8 @@
 title: ChickpeaAscoDispersal
-url: https://adamhsparks.github.io/Chickpea_AB_Modelling/
+url: https://adamhsparks.github.io/ChickpeaAscoDispersal/
 template:
   params:
-    bootswatch: yeti
+    bootswatch: journal
 figures:
   dev: grDevices::png
   dpi: 96
