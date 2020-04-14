@@ -265,7 +265,7 @@ pw +
 ```
 
 
-```{r save-figS1, include=FALSE, eval=TRUE}
+```{r save-figS1, include=FALSE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(
    here::here("man", "figures/FigS1.png"),
