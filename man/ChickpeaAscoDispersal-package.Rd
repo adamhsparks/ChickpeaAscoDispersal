@@ -14,7 +14,7 @@ Documents the workflow and processes involved in the analysis of
 
 Authors:
 \itemize{
-  \item Ihsan Khaliq \email{ihsan.khaliq@usq.edu.au}
+  \item Ihsan Khaliq \email{ihsan.khaliq@usq.edu.au} (\href{https://orcid.org/0000-0003-4171-0917}{ORCID})
   \item Paul Melloy \email{paul.melloy@usq.edu.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID})
   \item Daniel Burrell \email{daniel.burrell@usq.edu.au}
   \item Joshua Fanning \email{joshua.fanning@agriculture.vic.gov.au} (\href{https://orcid.org/0000-0002-7730-8498}{ORCID})
@@ -25,6 +25,8 @@ Authors:
 Other contributors:
 \itemize{
   \item GRDC Project USQ1903-003RTX [funder]
+  \item Agriculture Victoria and GRDC co-investment project DAV00150 [funder, data contributor]
+  \item The Birchip Cropping Group [data contributor]
 }
 
 }
