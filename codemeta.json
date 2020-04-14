@@ -109,6 +109,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "bomrang",
+      "name": "bomrang",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=bomrang"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "clifro",
       "name": "clifro",
       "provider": {
@@ -291,5 +303,5 @@
   ],
   "codeRepository": "https://github.com/openplantpathology/Chickpea_AB_Modelling",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "4782.712KB"
+  "fileSize": "4782.711KB"
 }

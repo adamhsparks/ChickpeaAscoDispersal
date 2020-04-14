@@ -38,6 +38,7 @@ Imports:
    mgcViz
 Suggests:
    broom,
+   bomrang,
    clifro,
    extrafont,
    ggpubr,
