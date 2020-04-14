@@ -42,6 +42,7 @@ Suggests:
    clifro,
    extrafont,
    ggpubr,
+   leaflet,
    lme4,
    here,
    kableExtra,
