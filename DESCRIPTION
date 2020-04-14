@@ -27,9 +27,9 @@ Authors@R: c(person("Ihsan", "Khaliq",
                      role = c("aut", "cre"),
                      comment = c(ORCID = "0000-0002-0061-8359")),
                      person("GRDC Project USQ1903-003RTX", role = "fnd"),
-                     person("Agriculture Victoria and GRDC co-investment project DAV00150,
+                     person("Agriculture Victoria and GRDC co-investment project DAV00150",
                      role = c("fnd", "dtc")),
-                     person("The Birchip Cropping Group", role = "dtc")
+                     person("The Birchip Cropping Group", role = "dtc"))
 Description: Documents the workflow and processes involved in the analysis of
    data for the paper ...
 Depends: R (>= 3.5.0)

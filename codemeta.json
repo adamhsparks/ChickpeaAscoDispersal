@@ -21,7 +21,8 @@
       "@type": "Person",
       "givenName": "Ihsan",
       "familyName": "Khaliq",
-      "email": "ihsan.khaliq@usq.edu.au"
+      "email": "ihsan.khaliq@usq.edu.au",
+      "@id": "https://orcid.org/0000-0003-4171-0917"
     },
     {
       "@type": "Person",
@@ -63,12 +64,25 @@
       "@id": "https://orcid.org/0000-0002-0061-8359"
     }
   ],
-  "contributor": {},
+  "contributor": [
+    {
+      "@type": "Organization",
+      "name": "Agriculture Victoria and GRDC co-investment project DAV00150"
+    },
+    {
+      "@type": "Organization",
+      "name": "The Birchip Cropping Group"
+    }
+  ],
   "copyrightHolder": {},
   "funder": [
     {
       "@type": "Organization",
       "name": "GRDC Project USQ1903-003RTX"
+    },
+    {
+      "@type": "Organization",
+      "name": "Agriculture Victoria and GRDC co-investment project DAV00150"
     }
   ],
   "maintainer": [
@@ -276,5 +290,6 @@
     }
   ],
   "codeRepository": "https://github.com/openplantpathology/Chickpea_AB_Modelling",
-  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md"
+  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
+  "fileSize": "4782.712KB"
 }
