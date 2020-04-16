@@ -30,7 +30,7 @@ theme_set(theme_pubclean(base_size = 14))
 knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
-```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
+```{r fonts, include=TRUE, message=FALSE, eval=FALSE}
 # run only if knitting on new computer/new R installation
 # !!!! Run this in a regular interactive console not this markdown file !!!!
 # You will get an error after knitting or building pkgdown if you haven't done this
@@ -59,7 +59,7 @@ events <-
 
 During the experimental analysis as the data were being visualised, [a03_Visualise_data.html](see data visualisation), it became apparent that the Curyo wind data were perhaps incorrect due to the wind vane of the station not being properly calibrated.
 The onsite weather station recorded the wind direction as coming from the north, blowing towards the south.
-However, conida were recorded travelling up to 75&nbsp;meters from the infested stubble north, against the wind during the spread event.
+However, conidia were recorded travelling up to 75&nbsp;meters from the infested stubble north, against the wind during the spread event.
 The Dr. Fanning confirmed this weather station did not have the wind vane calibrated recently.
 
 This vignette is aimed at comparing the wind direction and wind speed to nearby weather stations.
@@ -283,7 +283,7 @@ embed_fonts(
 )
 ```
 
-From the wind roses, it is apparent that the Curyo weather station is an outlier for direction and possibly windspeed.
+From the wind roses, it is apparent that the Curyo weather station is an outlier for direction and possibly wind speed.
 
 ## Wind Speed Correlations
 
@@ -303,13 +303,28 @@ Because of the incorrect wind direction data from the Curyo station, a new figur
 This will have wind directions that are more in-line with the actual event, but the speeds are not correct for Curyo.
 
 ```{r new-fig3}
-cleaned_weather <-
+# The cleaned weather data is autoloaded with the ChickpeaAscoDispersal file
+# that was created in "Import weather data".
+# Remove Curyo to create a corrected Figure 3, minus Curyo
+
+cleaned_weather <- 
    cleaned_weather %>%
-   rename(ws = wind_speed,
-          wd = wind_direction) %>%
    filter(site != "Curyo") %>%
    unite(SpEv, (c("site", "rep"))) %>%
-   select(SpEv, everything())
+   rename(ws = wind_speed,
+          wd = wind_direction) %>%
+   mutate(
+      SpEv = case_when(
+         SpEv == "Horsham irrigated_1" ~ "Horsham Irrg 1",
+         SpEv == "Horsham irrigated_2" ~ "Horsham Irrg 2",
+         SpEv == "Horsham irrigated_3" ~ "Horsham Mixd 1",
+         SpEv == "Horsham dryland_1" ~ "Horsham Rain 1",
+         SpEv == "Horsham dryland_2" ~ "Horsham Rain 2"
+      )
+   ) %>%
+   mutate_at(vars(SpEv), factor)
+
+# create figure 3
 
 pw <-
    with(cleaned_weather,
@@ -324,15 +339,15 @@ pw +
    theme_pubclean()
 ```
 
-```{r save-fig3, include=FALSE, eval=FALSE}
+```{r save-fig3, include=TRUE, eval=TRUE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here::here("man", "figures/Fig3.png"))
 ggsave(here::here("man", "figures/Fig3.eps"))
 embed_fonts(
-   here::here("man",
+   file = here::here("man",
               "figures/Fig3.eps"),
    outfile = here::here("man",
-                        "figures/Fig3.eps",
-                        options = "-dEPSCrop")
+                        "figures/Fig3.eps"),
+   options = "-dEPSCrop"
 )
 ```

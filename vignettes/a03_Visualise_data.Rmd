@@ -66,16 +66,16 @@ ggplot(lesion_counts, aes(x = distance,
    facet_wrap(. ~ SpEv, ncol = 3)
 ```
 
-```{r save-fig2, include=FALSE, eval=FALSE}
+```{r save-fig2, include=TRUE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here::here("man", "figures/Fig2.png"))
 ggsave(here::here("man", "figures/Fig2.eps"))
 embed_fonts(
-   here::here("man",
-        "figures/Fig2.eps"),
+   file = here::here("man",
+                     "figures/Fig2.eps"),
    outfile = here::here("man",
-                  "figures/Fig2.eps",
-                  options = "-dEPSCrop")
+                        "figures/Fig2.eps"),
+   options = "-dEPSCrop"
 )
 ```
 
@@ -103,7 +103,7 @@ dat %>%
    facet_wrap(. ~ SpEv, ncol = 3, scales = "free_x")
 ```
 
-## Visualise the Windspeed and Direction
+## Visualise the Wind Speed and Direction
 
 ```{r wind, message=FALSE, warning=FALSE, fig.cap=paste0("Windroses for spread events showing ten-minute wind speed and direction at the two Horsham sites. Curyo wind speed and direction data are not shown due to a weather station calibration issue resulting in incorrect data for wind direction.")}
 pw <-
@@ -177,10 +177,10 @@ ggplot(data = heat_dat,
 ggsave(here::here("man", "figures/Fig4.png"))
 ggsave(here::here("man", "figures/Fig4.eps"))
 embed_fonts(
-   here::here("man",
-        "figures/Fig4.eps"),
+   file = here::here("man",
+                     "figures/Fig4.eps"),
    outfile = here::here("man",
-                  "figures/Fig4.eps",
-                  options = "-dEPSCrop")
+                        "figures/Fig4.eps"),
+   options = "-dEPSCrop"
 )
 ```
