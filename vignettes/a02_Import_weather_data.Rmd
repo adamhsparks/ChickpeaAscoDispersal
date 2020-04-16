@@ -54,7 +54,7 @@ These values are added to the data in the [Summarise weather data by event](Summ
 
 ## Curyo Weather Data
 
-In this first step, the data are imported and only the date and time, average windspeed and average wind direction are selected.
+In this first step, the data are imported and only the date and time, average wind speed and average wind direction are selected.
 
 ### Import Curyo Weather Data
 
@@ -220,7 +220,7 @@ glimpse(cleaned_weather)
 
 ### Summarise Weather Data by Event
 
-The weather data are now ready for summarising for each event that occured.
+The weather data are now ready for summarising for each event that occurred.
 The resulting columns are:
 
 * mws - mean wind speed in meters per second
