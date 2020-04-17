@@ -6,7 +6,7 @@
   "@type": "SoftwareSourceCode",
   "identifier": "ChickpeaAscoDispersal",
   "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper ...",
-  "name": "ChickpeaAscoDispersal: Research Compendium for the paper ...",
+  "name": "ChickpeaAscoDispersal: Research Compendium for the Paper ...",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.1",
   "programmingLanguage": {
@@ -265,6 +265,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "tidyverse",
       "name": "tidyverse",
       "provider": {
@@ -313,7 +325,7 @@
       "sameAs": "https://CRAN.R-project.org/package=mgcViz"
     }
   ],
-  "codeRepository": "https://github.com/openplantpathology/Chickpea_AB_Modelling",
+  "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "4782.713KB"
+  "fileSize": "5221.928KB"
 }

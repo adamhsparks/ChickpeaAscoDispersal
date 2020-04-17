@@ -1,5 +1,5 @@
 Package: ChickpeaAscoDispersal
-Title: Research Compendium for the paper ...
+Title: Research Compendium for the Paper ...
 Version: 0.1
 Authors@R: c(person("Ihsan", "Khaliq",
                      email = "ihsan.khaliq@usq.edu.au",
@@ -51,6 +51,7 @@ Suggests:
    mgcv,
    skimr,
    stationaRy,
+   testthat,
    tidyverse,
    viridis
 License: GPL (>= 3)
@@ -58,3 +59,4 @@ RoxygenNote: 7.1.0
 Encoding: UTF-8
 VignetteBuilder: knitr
 LazyData: true
+URL: https://github.com/adamhsparks/ChickpeaAscoDispersal
