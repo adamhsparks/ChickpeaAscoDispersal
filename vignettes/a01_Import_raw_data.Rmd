@@ -15,7 +15,7 @@ library("tidyverse")
 library("knitr")
 ```
 
-This vignette documents the raw data import, calculation of mean lesion values and exports the new data to "inst/cache" for further use in visualisation and analysis.
+This vignette documents the raw data import, calculation of mean lesion values and exports the new data to "data/lesion_counts.rda" for further use in visualisation and analysis.
 
 In the first step, the data is imported, the "m" from the `distance` column is dropped and the column is converted to numeric.
 A new column, `SpEv` (Spread Event), is created for each location and replicated event at that location. Another new column, `degrees`, is added for each transect to indicate the direction in degrees based on J. Fanning's best information.
@@ -112,5 +112,5 @@ Save lesion count data for use in visualisation and modelling.
 This only needs to be done once.
 
 ```{r save-lesion-counts, eval=FALSE}
-save(lesion_counts, file = "./data/lesion_counts.rda")
+save(lesion_counts, file = "../data/lesion_counts.rda")
 ```
