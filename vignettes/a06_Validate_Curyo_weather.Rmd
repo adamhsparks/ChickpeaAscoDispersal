@@ -189,7 +189,7 @@ Because bomrang only obtains historical daily weather information we need to use
 We then use the station name of the BOM stations in the `get_station_metadata()` from the [stationaRy](https://cran.r-project.org/package=stationaRy) package to obtain weather station IDs.
 We need the ids to inform the function `get_met_data()` from which stations we want weather data.  
 
-The `get_met_data()` function needs to be fun through a loop for each station.
+The `get_met_data()` function needs to be run through a loop for each station.
 We place the weather data from each station into a `tibble` and store it as an element in a list.  
 
 ```{r get_cuyroData, message=FALSE}
