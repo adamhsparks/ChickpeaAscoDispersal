@@ -50,6 +50,7 @@ ggplot(lesion_counts, aes(x = m_lesions)) +
 ggplot(lesion_counts, aes(x = distance,
                 y = m_lesions)) +
    geom_count() +
+   scale_size(breaks = 1:9)+
    stat_summary(fun.y = "median",
                 geom = "line",
                 na.rm = TRUE) +
