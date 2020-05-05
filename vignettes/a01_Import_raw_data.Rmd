@@ -19,7 +19,7 @@ This vignette documents the raw data import, calculation of mean lesion values a
 
 In the first step, the data is imported, the "m" from the `distance` column is dropped and the column is converted to numeric.
 A new column, `SpEv` (Spread Event), is created for each location and replicated event at that location. Another new column, `degrees`, is added for each transect to indicate the direction in degrees based on J. Fanning's best information.
-Lastly the mean pot count, `mean_pot_count` is calculated for each of the transects at each distance, 0, 10, 25, 50 and 75 meters from the plots.
+Lastly the mean lesions counted per plant within the pot, `mean_pot_count` is calculated for each of the transects at each distance, 0, 10, 25, 50 and 75 meters from the plots.
 
 After the data are updated, a column for precipitation type, `ptype`, is added and the spread events, `SpEv`, are renamed for clarity and ordered as factors for data visualisation.
 
