@@ -52,7 +52,7 @@ Due to the lack of replicated pots at some of the distances we will ignore trans
 We know wind direction will influence our results and we will need to accept that adds variation for which we may not be able to account for statistically.
 
 I will start using `lmer()` to analyse the mean number of lesions per plant at each distance.
-The reps at each distance are defined by 'pot', each pot contains five chickpea plants.
+The reps at each distance are defined by 'pot', each pot contains three to five chickpea plants.
 The factor distance is fit as a continuous variable.  
 
 Site is a categorical variable explaining the trial location.
@@ -69,7 +69,7 @@ dat <-
   left_join(lesion_counts, summary_weather, by = c("site", "rep"))
 
 mod1 <-
-  lmer(mean_pot_count ~ distance + (distance | site / SpEv),
+  lmer(m_lesions ~ distance + (distance | site / SpEv),
        data = dat)
 
 cat("mod1: ")
@@ -82,7 +82,7 @@ Let's examine the model without 'site' to test if the model is a worse fit.
 
 ```{r lmer_mod2}
 mod2 <-
-  lmer(mean_pot_count ~ distance +
+  lmer(m_lesions ~ distance +
          (distance | SpEv),
        data = dat)
 

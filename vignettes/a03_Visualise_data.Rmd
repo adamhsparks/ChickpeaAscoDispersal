@@ -38,17 +38,17 @@ loadfonts(device = "postscript")
 
 ## Visualise Counts per Pot
 
-```{r lesion-count, fig.cap="Density plot of mean lesions counted per pot for all six events.", message=FALSE, warning=FALSE}
-ggplot(lesion_counts, aes(x = mean_pot_count)) +
+```{r lesion-count, fig.cap="Density plot of mean lesions counted per plant for all six events.", message=FALSE, warning=FALSE}
+ggplot(lesion_counts, aes(x = m_lesions)) +
    geom_density() +
-   xlab("Mean lesion count per pot")
+   xlab("Mean lesion count per plant")
 ```
 
 ## Visualise the Dispersal Data
 
-```{r combined-dispersal, message=FALSE, warning=FALSE, fig.cap="Mean number of conidia dispersed (counted as lesions) per pot during each spread event. Where ‘n’ indicates mean number of lesions counted on trap plants per pot and is represented by point size. The mean count values are shown on the y-axis and distance dispersed is on the x-axis. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event."}
+```{r combined-dispersal, message=FALSE, warning=FALSE, fig.cap="Mean number of conidia dispersed (counted as lesions) per plant during each spread event. Where the mean lesions per plant for each pot is shown on the y-axis and distance dispersed is on the x-axis. ‘n’ indicates the count of pots with the same mean lesions per trap plant, and is represented by point size. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event."}
 ggplot(lesion_counts, aes(x = distance,
-                y = mean_pot_count)) +
+                y = m_lesions)) +
    geom_count() +
    stat_summary(fun.y = "median",
                 geom = "line",
@@ -128,14 +128,14 @@ That investigation is detailed in [this analysis](06_Validate_Curyo_weather.html
 
 ## Heatmap of Lesions Along Transects
 
-```{r polar_coord_transects, message = FALSE, warning=FALSE, fig.cap=paste0("Heatmap showing count of mean lesions per pot at each station along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
+```{r polar_coord_transects, message = FALSE, warning=FALSE, fig.cap=paste0("Heatmap showing count of mean lesions per plant for each pot along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'")}
 heat_dat <-
    lesion_counts %>%
    group_by(SpEv, degrees) %>%
    mutate(summed_count_pot =
-             case_when(distance == 0 ~ sum(mean_pot_count),
-                       TRUE ~ mean_pot_count)) %>%
-   filter(mean_pot_count > 0)
+             case_when(distance == 0 ~ sum(m_lesions),
+                       TRUE ~ m_lesions)) %>%
+   filter(m_lesions > 0)
 
 ggplot(data = heat_dat,
        aes(
