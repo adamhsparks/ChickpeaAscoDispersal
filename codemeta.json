@@ -160,7 +160,7 @@
       "@type": "SoftwareApplication",
       "identifier": "ggpubr",
       "name": "ggpubr",
-      "version": ">= 0.3.0",
+      "version": ">= 0.2.5",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -341,5 +341,5 @@
   ],
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "4764.116KB"
+  "fileSize": "4764.118KB"
 }

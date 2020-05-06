@@ -42,7 +42,7 @@ Suggests:
    clifro,
    extrafont,
    ggplot2 (>= 3.3.0),
-   ggpubr (>= 0.3.0),
+   ggpubr (>= 0.2.5),
    leaflet,
    lme4,
    here,
