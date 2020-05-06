@@ -2,13 +2,16 @@
   [![R build status](https://github.com/adamhsparks/ChickpeaAscoDispersal/workflows/R-CMD-check/badge.svg)](https://github.com/adamhsparks/ChickpeaAscoDispersal/actions) [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
   <!-- badges: end -->
   
-# The role of conidia in long distance dispersal of _Ascochyta rabiei_
+# The role of conidia in the dispersal of _Ascochyta rabiei_
 
-The goal of this research is to examine the role of _Ascochyta rabiei_ conidia on moderate distance (>1m, <1km) dispersal of chickpea ascochyta blight in Australia.
+The goal of this research is to examine the role of _Ascochyta rabiei_ conidia dispersal of chickpea ascochyta blight in Australia.
+
+A user-friendly website of this research compendium is available here, <https://adamhsparks.github.io/ChickpeaAscoDispersal/>.
+Interested parties may wish to view the data analysis and visulasation pipeline as well as model fitting, these are available under the "Articles" menu item of the webpage.
 
 ## Project team
 
-- Dr Ihsan Khaliq, University of Southern Queensland, Queensland
+- Dr Ihsanul Khaliq, University of Southern Queensland, Queensland
 
 - Dr Paul Melloy, University of Southern Queensland, Queensland
 
