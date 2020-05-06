@@ -4,10 +4,17 @@
 \name{ChickpeaAscoDispersal-package}
 \alias{ChickpeaAscoDispersal}
 \alias{ChickpeaAscoDispersal-package}
-\title{ChickpeaAscoDispersal: Research Compendium for the paper ...}
+\title{ChickpeaAscoDispersal: Research Compendium for the Paper ...}
 \description{
 Documents the workflow and processes involved in the analysis of
    data for the paper ...
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/adamhsparks/ChickpeaAscoDispersal}
+}
+
 }
 \author{
 \strong{Maintainer}: Adam Sparks \email{adam.sparks@usq.edu.au} (\href{https://orcid.org/0000-0002-0061-8359}{ORCID})

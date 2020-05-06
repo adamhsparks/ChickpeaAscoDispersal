@@ -20,16 +20,15 @@ A \code{data.frame} with 336 rows and 17 variables:
    stations were placed}
   \item{plant_no}{Number identifying a given plant in a pot}
   \item{pot_no}{Number identifying a given pot}
-  \item{counts_p1}{Total recorded number of lesions in a given pot}
-  \item{counts_p2}{Total recorded number of lesions in a given pot}
-  \item{counts_p3}{Total recorded number of lesions in a given pot}
-  \item{counts_p4}{Total recorded number of lesions in a given pot}
-  \item{counts_p5}{Total recorded number of lesions in a given pot}
+  \item{counts_p1}{Total recorded number of lesions on a given plant within the specified pot}
+  \item{counts_p2}{Total recorded number of lesions on a given plant within the specified pot}
+  \item{counts_p3}{Total recorded number of lesions on a given plant within the specified pot}
+  \item{counts_p4}{Total recorded number of lesions on a given plant within the specified pot}
+  \item{counts_p5}{Total recorded number of lesions on a given plant within the specified pot}
   \item{degrees}{Compass degrees for a given transect}
   \item{ptype}{Type of precipitation for an event, one of three, 
   \code{rainfall}, \code{irrigation} or \code{mixed}}
-  \item{mean_pot_count}{Mean value of lesion counts per pot for that row of
-   observations}
+  \item{mean_pot_count}{Mean value of lesion counts per plant in the specified pot}
 }
 }
 \source{
