@@ -26,7 +26,6 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: macOS-r-4.0-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: macOS-r-4.0-1-
-
       - name: Install dependencies
         run: |
           install.packages("remotes")
