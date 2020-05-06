@@ -1,7 +1,7 @@
 
 #' Generic function to print GAMs using mgcViz
 #'
-#' @param x a GAM object created by `[mgcv]gam()`
+#' @param x a GAM object created by \code{\link[mgcv]{gam}}
 #'
 #' @return a `ggplot2` graph object of the GAM
 #' @export p_gam
@@ -17,7 +17,7 @@
 #' dat <- left_join(lesion_counts, summary_weather, by = c("site", "rep"))
 #' 
 #' mod1 <- gam(
-#'   mean_pot_count ~ s(distance, k = 5),
+#'   m_lesions ~ s(distance, k = 5),
 #'   data = dat
 #' )
 #' 
