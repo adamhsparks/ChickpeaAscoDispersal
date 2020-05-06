@@ -6,25 +6,37 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-18.04
-    env:
-      # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: TRUE
+    runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+
       - uses: r-lib/actions/setup-r@master
+
       - uses: r-lib/actions/setup-pandoc@master
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: macOS-r-4.0-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: macOS-r-4.0-1-
+
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install libftgl2 libcgal-dev libglu1-mesa-dev libx11-dev libfreetype6-dev libcurl4-openssl-dev libgdal-dev
-          Rscript -e 'install.packages("remotes")' \
-                  -e 'remotes::install_deps(dependencies = TRUE)' \
-                  -e 'remotes::install_github("r-lib/pkgdown")'
-      
+          install.packages("remotes")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_dev("pkgdown")
+        shell: Rscript {0}
+
       - name: Install package
         run: R CMD INSTALL .
-        
+
       - name: Deploy package
         run: pkgdown::deploy_to_branch(new_process = FALSE)
         shell: Rscript {0}
