@@ -339,7 +339,7 @@ pw +
    theme_pubclean()
 ```
 
-```{r save-fig3, include=TRUE, eval=TRUE}
+```{r save-fig3, include=TRUE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here::here("man", "figures/Fig3.png"))
 ggsave(here::here("man", "figures/Fig3.eps"))
