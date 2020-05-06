@@ -17,14 +17,12 @@ knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
 ## Import Data
 
 ```{r libraries, message=FALSE}
+library("ChickpeaAscoDispersal")
 library("tidyverse")
 library("broom")
-library("skimr")
 library("ggpubr")
 library("mgcv")
-library("extrafont")
 library("mgcViz")
-library("ChickpeaAscoDispersal")
 
 theme_set(theme_pubclean(base_size = 14))
 ```

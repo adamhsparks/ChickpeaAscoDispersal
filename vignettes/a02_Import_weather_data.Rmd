@@ -11,13 +11,13 @@ vignette: >
 ---
 
 ```{r libraries, message=FALSE, warning=FALSE}
+library("ChickpeaAscoDispersal")
 library("tidyverse")
 library("lubridate")
 library("skimr")
 library("ggpubr")
 library("kableExtra")
 library("scales")
-library("ChickpeaAscoDispersal")
 
 theme_set(theme_pubclean(base_size = 14))
 ```

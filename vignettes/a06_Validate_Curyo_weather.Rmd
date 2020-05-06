@@ -1,6 +1,6 @@
 ---
 title: "Validate Curyo Wind with Alternate Sources"
-author: "P. Melloy and A. H. Sparks"
+author: "P. Melloy and A.H. Sparks"
 date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
@@ -13,7 +13,6 @@ vignette: >
 ```{r libraries, message=FALSE, warning=FALSE}
 library("tidyverse")
 library("skimr")
-library("extrafont")
 library("ggpubr")
 library("kableExtra")
 library("scales")
@@ -31,14 +30,16 @@ knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```
 
 ```{r fonts, include=TRUE, message=FALSE, eval=FALSE}
-# run only if knitting on new computer/new R installation
-# !!!! Run this in a regular interactive console not this markdown file !!!!
-# You will get an error after knitting or building pkgdown if you haven't done this
+# run only if knitting on new computer
 # this is necessary to embed fonts in .eps files for EJPP
-font_import(pattern = "Arial")
+library("extrafont")
 
-# load the fonts necessary to embed in eps files
-loadfonts(device = "postscript") 
+if (.Platform$OS.type == "windows") {
+   font_import(pattern = "arial", prompt = FALSE)
+   loadfonts(device = "postscript", quiet = TRUE)
+} else {
+   font_import(pattern = "Arial", prompt = FALSE)
+ 
 ```
 
 ```{r import-event, message=FALSE}

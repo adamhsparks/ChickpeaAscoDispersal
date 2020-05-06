@@ -17,11 +17,9 @@ knitr::opts_chunk$set(fig.width = 9.4, fig.height = 9.4)
 ```{r libraries, message=FALSE}
 library("tidyverse")
 library("lubridate")
-library("skimr")
 library("clifro")
 library("viridis")
 library("ggpubr")
-library("skimr")
 library("here")
 library("ChickpeaAscoDispersal")
 
