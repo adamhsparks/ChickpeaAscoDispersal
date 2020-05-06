@@ -41,10 +41,17 @@ dat <- left_join(lesion_counts, summary_weather, by = c("site", "rep"))
 # run only if knitting on new computer/new R installation
 # !!!! Run this in a regular interactive console not this markdown file !!!!
 # this is necessary to embed fonts in .eps files for EJPP
-font_import(pattern = "Arial")
+# run only if knitting on new computer
+# this is necessary to embed fonts in .eps files for EJPP
+library("extrafont")
 
-# load the fonts necessary to embed in eps files
-loadfonts(device = "postscript") 
+if (.Platform$OS.type == "windows") {
+   font_import(pattern = "arial", prompt = FALSE)
+   loadfonts(device = "postscript", quiet = TRUE)
+} else {
+   font_import(pattern = "Arial", prompt = FALSE)
+   loadfonts(device = "postscript", quiet = TRUE)
+}
 ```
 
 ## Fit GAMs
