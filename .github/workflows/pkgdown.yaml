@@ -15,8 +15,9 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
       - name: Install dependencies
-        run: sudo apt update && sudo apt install libftgl2 libcgal-dev libglu1-mesa-dev libx11-dev libfreetype6-dev
         run: |
+          sudo apt update
+          sudo apt install libftgl2 libcgal-dev libglu1-mesa-dev libx11-dev libfreetype6-dev
           Rscript -e 'install.packages("remotes")' \
                   -e 'remotes::install_deps(dependencies = TRUE)' \
                   -e 'remotes::install_github("jimhester/pkgdown@github-actions-deploy")'
