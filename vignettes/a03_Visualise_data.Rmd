@@ -32,7 +32,7 @@ theme_set(theme_pubclean(base_size = 14))
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
 # run only if knitting on new computer
 # this is necessary to embed fonts in .eps files for EJPP
-font_import(pattern = "Arial")
+font_import(pattern = "arial")
 loadfonts(device = "postscript") 
 ```
 
@@ -67,7 +67,7 @@ ggplot(lesion_counts, aes(x = distance,
    facet_wrap(. ~ SpEv, ncol = 3)
 ```
 
-```{r save-fig2, include=TRUE, eval=FALSE}
+```{r save-fig2, include=FALSE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here::here("man", "figures/Fig2.png"))
 ggsave(here::here("man", "figures/Fig2.eps"))
@@ -78,6 +78,8 @@ embed_fonts(
                         "figures/Fig2.eps"),
    options = "-dEPSCrop"
 )
+# If you are trying to run this chunk and it fails, please install GhostScript on your machine
+# Installation instructions are available in "GhostScript_Installation directions_Windows10.txt"
 ```
 
 ## Visualise the Rainfall
@@ -184,4 +186,6 @@ embed_fonts(
                         "figures/Fig4.eps"),
    options = "-dEPSCrop"
 )
+# If you are trying to run this chunk and it fails, please install GhostScript on your machine
+# Installation instructions are available in "GhostScript_Installation directions_Windows10.txt"
 ```
