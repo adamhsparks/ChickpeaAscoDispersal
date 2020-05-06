@@ -61,3 +61,4 @@ Encoding: UTF-8
 VignetteBuilder: knitr
 LazyData: true
 URL: https://github.com/adamhsparks/ChickpeaAscoDispersal
+BugReports: https://github.com/adamhsparks/ChickpeaAscoDispersal/issues
