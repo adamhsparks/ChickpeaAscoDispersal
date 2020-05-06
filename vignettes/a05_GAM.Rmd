@@ -67,7 +67,7 @@ set.seed(27)
 ```{r fit-mod1}
 mod1 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5),
+      m_lesions ~ s(distance, k = 5),
       data = dat
    )
 
@@ -83,7 +83,7 @@ print(p_gam(x = getViz(mod1)) +
 ```{r fit-mod2}
 mod2 <-
    gam(
-      mean_pot_count ~ sum_rain+ s(distance, k = 5),
+      m_lesions ~ sum_rain+ s(distance, k = 5),
       data = dat
    )
 
@@ -97,7 +97,7 @@ print(p_gam(x = getViz(mod2)) +
 ### mod3 - s(Distance) + Wind speed
 ```{r fit-mod3}
 mod3 <-
-   gam(mean_pot_count ~ mws + s(distance, k = 5),
+   gam(m_lesions ~ mws + s(distance, k = 5),
        data = dat)
 
 summary(mod3)
@@ -110,7 +110,7 @@ print(p_gam(x = getViz(mod3)) +
 ### mod4 - s(Distance) + Wind speed + Precipitation
 ```{r fit-mod4}
 mod4 <-
-   gam(mean_pot_count ~ sum_rain + mws + s(distance, k = 5),
+   gam(m_lesions ~ sum_rain + mws + s(distance, k = 5),
        data = dat)
 
 summary(mod4)
@@ -125,7 +125,7 @@ print(p_gam(x = getViz(mod4)) +
 ```{r fit-mod5}
 mod5 <-
    gam(
-      mean_pot_count ~ sum_rain + s(distance + mws, k = 5),
+      m_lesions ~ sum_rain + s(distance + mws, k = 5),
       data = dat
    )
 
@@ -142,7 +142,7 @@ print(p_gam(x = getViz(mod5)) +
 ```{r fit-mod6}
 mod6 <-
    gam(
-      mean_pot_count ~ sum_rain + s(distance, k = 5) + s(mws, k = 5),
+      m_lesions ~ sum_rain + s(distance, k = 5) + s(mws, k = 5),
       data = dat
    )
 
@@ -159,7 +159,7 @@ print(p_gam(x = getViz(mod6)) +
 ```{r fit-mod7}
 mod7 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5) + s(mws, k = 5),
+      m_lesions ~ s(distance, k = 5) + s(mws, k = 5),
       data = dat
    )
 
@@ -175,7 +175,7 @@ print(p_gam(x = getViz(mod7)) +
 ```{r fit-mod8}
 mod8 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
+      m_lesions ~ s(distance, k = 5) + s(mws, k = 5) + s(sum_rain, k = 5),
       data = dat
    )
 
@@ -192,7 +192,7 @@ print(p_gam(x = getViz(mod8)) +
 ```{r fit-mod9}
 mod9 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5) + s(sum_rain, k = 5),
+      m_lesions ~ s(distance, k = 5) + s(sum_rain, k = 5),
       data = dat
    )
 
@@ -208,7 +208,7 @@ print(p_gam(x = getViz(mod9)) +
 ```{r fit-mod10}
 mod10 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5) + s(sum_rain, k = 5) + mws,
+      m_lesions ~ s(distance, k = 5) + s(sum_rain, k = 5) + mws,
       data = dat
    )
 
@@ -227,7 +227,7 @@ The data visualisation shows clearly that the mean pot count data have this shap
 ```{r fit-mod11}
 mod11 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5) + 
+      m_lesions ~ s(distance, k = 5) + 
          s(mws, k = 5) + 
          s(sum_rain, k = 5),
       data = dat,
@@ -243,12 +243,12 @@ print(p_gam(x = getViz(mod11)) +
 
 ### mod12 - s(Distance, bs = "ts") + s(Precipitation, bs = "ts") Wind speed, family = tw()
 
-Try using Wind speed as a linear predictor only.
+Try using wind speed as a linear predictor only.
 
 ```{r fit-mod12}
 mod12 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5, bs = "ts") + 
+      m_lesions ~ s(distance, k = 5, bs = "ts") + 
          s(mws, k = 5, bs = "ts") + 
          s(sum_rain, k = 5, bs = "ts"),
       data = dat,
@@ -271,7 +271,7 @@ print(
 ```{r fit-mod13}
 mod13 <-
    gam(
-      mean_pot_count ~ s(distance, k = 5, bs = "ts") + 
+      m_lesions ~ s(distance, k = 5, bs = "ts") + 
          s(mws, k = 5, bs = "ts") + 
          s(sum_rain, k = 5, bs = "ts"),
       data = dat,
@@ -395,4 +395,4 @@ embed_fonts(
 
 ## Thoughts
 
-This model, _mod11_, `mean_pot_count ~ s(Distance) + s(WindSpeed) + s(Precipitation) - family = tw()`, is the best performing model. It cannot be used for predictions, but suitably describes the dispersal data we have on hand with the parameters used. More data would be desirable to increase the value of `k` as evidenced in the GAM checks.
+This model, _mod11_, `m_lesions ~ s(Distance) + s(WindSpeed) + s(Precipitation) - family = tw()`, is the best performing model. It cannot be used for predictions, but suitably describes the dispersal data we have on hand with the parameters used. More data would be desirable to increase the value of `k` as evidenced in the GAM checks.
