@@ -20,7 +20,7 @@ jobs:
           sudo apt-get install libftgl2 libcgal-dev libglu1-mesa-dev libx11-dev libfreetype6-dev libcurl4-openssl-dev libgdal-dev
           Rscript -e 'install.packages("remotes")' \
                   -e 'remotes::install_deps(dependencies = TRUE)' \
-                  -e 'remotes::install_github("jimhester/pkgdown@github-actions-deploy")'
+                  -e 'remotes::install_dev("pkgdown")'
       
       - name: Install package
         run: R CMD INSTALL .
