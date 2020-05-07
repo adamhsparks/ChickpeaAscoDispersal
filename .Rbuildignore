@@ -7,3 +7,4 @@ _pkgdown.yml
 ^\.github$
 ^docs
 ^inst\Windows_GS_Install.txt
+Dockerfile
