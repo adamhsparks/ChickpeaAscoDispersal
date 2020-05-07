@@ -19,7 +19,12 @@ The aims of this document were to explore the role of 'site' on conidial dispers
 library("ChickpeaAscoDispersal")
 library("tidyverse")
 library("lme4")
-library("knitr")
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 12, fig.height = 9)
+knitr::opts_knit$set(progress = TRUE, verbose = TRUE)
 ```
 
 From this data we hope to interpret the following.
