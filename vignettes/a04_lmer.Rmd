@@ -16,15 +16,15 @@ This vignette demonstrates and explains our reasoning during preliminary data an
 The aims of this document were to explore the role of 'site' on conidial dispersal.
 
 ```{r libraries, message=FALSE, warning=FALSE}
+library("ChickpeaAscoDispersal")
 library("tidyverse")
 library("lme4")
 library("knitr")
-library("ChickpeaAscoDispersal")
 ```
 
 From this data we hope to interpret the following.
 
-  - Did experimental location, 'site', affect conidial dispersal.
+  - Did experimental location (site) affect conidial dispersal.
   
 In this experiment there are a number of factors which may influence conidia spread. These include:
 
