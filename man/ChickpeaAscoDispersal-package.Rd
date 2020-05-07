@@ -4,24 +4,26 @@
 \name{ChickpeaAscoDispersal-package}
 \alias{ChickpeaAscoDispersal}
 \alias{ChickpeaAscoDispersal-package}
-\title{ChickpeaAscoDispersal: Research Compendium for the Paper ...}
+\title{ChickpeaAscoDispersal: Research Compendium for the Paper 'The role of conidia in the dispersal of Ascochyta rabiei'}
 \description{
 Documents the workflow and processes involved in the analysis of
-   data for the paper ...
+   data for the paper 'The role of conidia in the dispersal of Ascochyta
+    rabiei'.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/adamhsparks/ChickpeaAscoDispersal}
+  \item Report bugs at \url{https://github.com/adamhsparks/ChickpeaAscoDispersal/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Adam Sparks \email{adam.sparks@usq.edu.au} (\href{https://orcid.org/0000-0002-0061-8359}{ORCID})
+\strong{Maintainer}: Adam H. Sparks \email{adam.sparks@usq.edu.au} (\href{https://orcid.org/0000-0002-0061-8359}{ORCID})
 
 Authors:
 \itemize{
-  \item Ihsan Khaliq \email{ihsan.khaliq@usq.edu.au} (\href{https://orcid.org/0000-0003-4171-0917}{ORCID})
+  \item Ihsanul Khaliq \email{ihsan.khaliq@usq.edu.au} (\href{https://orcid.org/0000-0003-4171-0917}{ORCID})
   \item Paul Melloy \email{paul.melloy@usq.edu.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID})
   \item Daniel Burrell \email{daniel.burrell@usq.edu.au}
   \item Joshua Fanning \email{joshua.fanning@agriculture.vic.gov.au} (\href{https://orcid.org/0000-0002-7730-8498}{ORCID})

@@ -66,7 +66,7 @@ Rainfall is required for conidia to disperse from the infected focus, and each '
 
 The first models I will look at are asking:
 
-   (i) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependant on the spread event at each site.
+   (i) What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependent on the spread event at each site.
    (ii) What is the estimated mean lesions per plant as each distance from the focus, given that distance is dependant on the conditions of each spread event.
 
 ```{r lmer_mod1, message=FALSE}

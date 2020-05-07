@@ -7,7 +7,7 @@
 The goal of this research is to examine the role of _Ascochyta rabiei_ conidia dispersal of chickpea ascochyta blight in Australia.
 
 A user-friendly website of this research compendium is available here, <https://adamhsparks.github.io/ChickpeaAscoDispersal/>.
-Interested parties may wish to view the data analysis and visulasation pipeline as well as model fitting, these are available under the "Articles" menu item of the webpage.
+Interested parties may wish to view the data analysis and visualisation pipeline as well as model fitting, these are available under the "Articles" menu item of the webpage.
 
 ## Project team
 
@@ -27,16 +27,15 @@ Interested parties may wish to view the data analysis and visulasation pipeline 
 
 - Associate Professor Adam H. Sparks, University of Southern Queensland, Queensland
 
-## Methodology
+## Abstract
 
-Considerations about sampling, study design, randomization, factors, response variables, etc.
-
+_Ascochyta rabiei_ asexual spores (conidia) were assumed to spread over short distances (~10 m) in combination of rain and strong wind. We investigated the potential distance of conidial spread in three rainfall and three sprinkler irrigation events. Chickpea trap plants were distributed at the distances of 0, 10, 25, 50 and 75 m from infested chickpea plots before scheduled irrigation and forecast rainfall events. Trap plants were transferred to a controlled temperature room (20 °C) for 48 h (100% humidity) after being exposed in the field for 2–6 days for rainfall events, and for one day for irrigation events. After 48 h incubation period, trap plants were transferred to a glasshouse (20 °C) to allow lesion development. Lesions on all plant parts were counted after two weeks, which gave an estimate of the number of conidia released and the distance travelled. Trap plants at all distances were infected in all sprinkler irrigation and rainfall events. The highest number of lesions on trap plants were recorded closest to the infested plots – the numbers decreased as the distance from the infested plots increased. There was a positive relationship between the amount of rainfall and the number of lesions recorded on trap plants. A generalised additive model was developed that efficiently described spatial patterns of conidial spread. With further development, the model can be used to predict the spread of _A. rabiei_. This is the first systematic study to show that conidia distribute _A. rabiei_ over longer distances than previously reported.
 
 ## Citation
 
 Please cite this research compendium as:  
 
-> Authors, . Title of compendium. Online at https://doi.org/xxx/xxx
+> Ihsanul Khaliq, Paul Melloy, Daniel Burrell, Joshua Fanning, Jean Galloway, Kevin Moore, Adam H. Sparks, . ChickpeaAscoDispersal: A research compendium to accompany 'The role of conidia in the dispersal of _Ascochyta rabiei_'. Online at https://doi.org/10.5281/zenodo.3810827 
 
 ## Licences
 

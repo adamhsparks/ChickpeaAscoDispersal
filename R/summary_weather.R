@@ -10,7 +10,7 @@
 #'    event for a given site}
 #'   \item{mws}{Mean wind speed for the event}
 #'   \item{ws_sd}{Standard deviation of the wind speed for the event}
-#'   \item{mwd}{Mean recorded wind direction in compass degrees as calcuated by
+#'   \item{mwd}{Mean recorded wind direction in compass degrees as calculated by
 #'    \code{circular.averaging()}}
 #'   \item{sum_rain}{Sum total of recorded precipitation for the event in
 #'    millimetres}
