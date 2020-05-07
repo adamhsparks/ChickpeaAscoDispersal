@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "ChickpeaAscoDispersal",
-  "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper 'The role of conidia in the dispersal of Ascochyta rabiei'",
+  "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper 'The role of conidia in the dispersal of Ascochyta\n    rabiei'.",
   "name": "ChickpeaAscoDispersal: Research Compendium for the Paper 'The role of conidia in the dispersal of Ascochyta rabiei'",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.1.2",
@@ -341,7 +341,54 @@
   ],
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "4764.528KB",
+  "fileSize": "4765.738KB",
   "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
-  "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable"
+  "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Ihsanul",
+          "familyName": "Khaliq"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Paul",
+          "familyName": "Melloy"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Daniel",
+          "familyName": "Burrell"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Joshua",
+          "familyName": "Fanning"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Jean",
+          "familyName": "Galloway"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Kevin",
+          "familyName": "Moore"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Adam H.",
+          "familyName": "Sparks"
+        }
+      ],
+      "name": "{ChickpeaAscoDispersal}: A research compendium to accompany 'The role of conidia in the dispersal of Ascochyta rabiei'",
+      "identifier": "10.5281/zenodo.3810827",
+      "url": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
+      "@id": "https://doi.org/10.5281/zenodo.3810827",
+      "sameAs": "https://doi.org/10.5281/zenodo.3810827"
+    }
+  ]
 }
