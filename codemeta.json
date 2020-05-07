@@ -8,7 +8,7 @@
   "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper ...",
   "name": "ChickpeaAscoDispersal: Research Compendium for the Paper ...",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1",
+  "version": "0.1.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -341,6 +341,7 @@
   ],
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "4764.217KB",
-  "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues"
+  "fileSize": "4764.447KB",
+  "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
+  "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable"
 }

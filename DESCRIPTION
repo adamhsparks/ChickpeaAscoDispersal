@@ -1,6 +1,6 @@
 Package: ChickpeaAscoDispersal
 Title: Research Compendium for the Paper ...
-Version: 0.1
+Version: 0.1.1
 Authors@R: c(person("Ihsan", "Khaliq",
                      email = "ihsan.khaliq@usq.edu.au",
                      role = "aut",
