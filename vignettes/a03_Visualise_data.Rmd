@@ -27,7 +27,22 @@ theme_set(theme_pubclean(base_size = 14))
 ```
 
 ```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
-# run only if knitting on new computer
+# Note that GhostScript needs to be installed at the system level for the PS files to be generated.
+# MacOS users can use `brew cask install ghostscript`
+# 
+# Windows users can follow these directions:
+# 1.	Go to the GhostScript website (https://www.ghostscript.com/download/gsdnld.html)
+# 2.	Download the windows installer suitable for your machine
+# 3.	Run the installer file which you downloaded and follow the prompts
+# 4.	After running the installer click the windows "Start" button and type "Edit environment variables for your account" and open
+# 5.	In the tab 'advanced' click the button at the bottom 'Enviroment Variables...'
+# 6.	Under 'System variables' find the variable 'Path', select 'Path' and click the 'Edit' button
+# 7. 	Select a new line and copy the ghostscript 'bin' folder location into the field.
+# 7.1	If you installed ghostscript to the default folder location; then the folder location will likely be "C:\Program Files\gs\gs9.52\bin", the verison number (9.52) may differ.
+# 8.	Save and exit the enviromental variables window
+
+
+# This chunk is then run only if knitting on new computer that the files have not been generated on
 # this is necessary to embed fonts in .eps files for EJPP
 library("extrafont")
 
@@ -52,9 +67,9 @@ ggplot(lesion_counts, aes(x = m_lesions)) +
 
 ```{r combined-dispersal, message=FALSE, warning=FALSE, fig.cap="Mean number of conidia dispersed (counted as lesions) per plant during each spread event. Where the mean lesions per plant for each pot is shown on the y-axis and distance dispersed is on the x-axis. ‘n’ indicates the count of pots with the same mean lesions per trap plant, and is represented by point size. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event."}
 ggplot(lesion_counts, aes(x = distance,
-                y = m_lesions)) +
+                          y = m_lesions)) +
    geom_count() +
-   scale_size(breaks = 1:9)+
+   scale_size(breaks = c(1, 2, 4, 8)) +
    stat_summary(fun.y = "median",
                 geom = "line",
                 na.rm = TRUE) +
@@ -75,15 +90,13 @@ ggplot(lesion_counts, aes(x = distance,
 # save a .png to refer to while writing and a .eps for publication submission
 ggsave(here::here("man", "figures/Fig2.png"))
 ggsave(here::here("man", "figures/Fig2.eps"))
-embed_fonts(
+extrafont::embed_fonts(
    file = here::here("man",
                      "figures/Fig2.eps"),
    outfile = here::here("man",
                         "figures/Fig2.eps"),
    options = "-dEPSCrop"
 )
-# If you are trying to run this chunk and it fails, please install GhostScript on your machine
-# Installation instructions are available in "GhostScript_Installation directions_Windows10.txt"
 ```
 
 ## Visualise the Rainfall
@@ -183,13 +196,11 @@ ggplot(data = heat_dat,
 ```{r save-fig4, include=FALSE, eval=FALSE}
 ggsave(here::here("man", "figures/Fig4.png"))
 ggsave(here::here("man", "figures/Fig4.eps"))
-embed_fonts(
+extrafont::embed_fonts(
    file = here::here("man",
                      "figures/Fig4.eps"),
    outfile = here::here("man",
                         "figures/Fig4.eps"),
    options = "-dEPSCrop"
 )
-# If you are trying to run this chunk and it fails, please install GhostScript on your machine
-# Installation instructions are available in "GhostScript_Installation directions_Windows10.txt"
 ```
