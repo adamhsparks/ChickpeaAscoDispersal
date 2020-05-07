@@ -1,5 +1,5 @@
  <!-- badges: start -->
-  [![R build status](https://github.com/adamhsparks/ChickpeaAscoDispersal/workflows/R-CMD-check/badge.svg)](https://github.com/adamhsparks/ChickpeaAscoDispersal/actions) [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
   <!-- badges: end -->
   
 # The role of conidia in the dispersal of _Ascochyta rabiei_
