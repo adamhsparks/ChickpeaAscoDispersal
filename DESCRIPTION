@@ -63,4 +63,4 @@ VignetteBuilder: knitr
 LazyData: true
 URL: https://github.com/adamhsparks/ChickpeaAscoDispersal
 BugReports: https://github.com/adamhsparks/ChickpeaAscoDispersal/issues
-DOI: 10.5281/zenodo.3810827
+DOI: 10.5281/zenodo.3810826

@@ -35,7 +35,7 @@ _Ascochyta rabiei_ asexual spores (conidia) were assumed to spread over short di
 
 Please cite this research compendium as:  
 
-> Ihsanul Khaliq, Paul Melloy, Daniel Burrell, Joshua Fanning, Jean Galloway, Kevin Moore, Adam H. Sparks, . ChickpeaAscoDispersal: A research compendium to accompany 'The role of conidia in the dispersal of _Ascochyta rabiei_'. Online at https://doi.org/10.5281/zenodo.3810827 
+> Ihsanul Khaliq, Paul Melloy, Daniel Burrell, Joshua Fanning, Jean Galloway, Kevin Moore, Adam H. Sparks, . ChickpeaAscoDispersal: A research compendium to accompany 'The role of conidia in the dispersal of _Ascochyta rabiei_'. Online at https://doi.org/10.5281/zenodo.3810826.
 
 ## Licences
 
