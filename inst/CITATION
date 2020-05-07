@@ -1,0 +1,22 @@
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{ChickpeaAscoDispersal}: A research compendium to accompany 'The role of conidia in the dispersal of Ascochyta rabiei'",
+         author = c(person("Ihsanul", "Khaliq"),
+                    person("Paul", "Melloy"),
+                    person("Daniel", "Burrell"),
+                    person("Joshua", "Fanning"),
+                    person("Jean", "Galloway"),
+                    person("Kevin", "Moore"),
+                    person("Adam H.", "Sparks")),
+         year = year,
+         note = note,
+         url = "https://github.com/adamhsparks/ChickpeaAscoDispersal",
+         DOI = "10.5281/zenodo.3810827")
+
+textVersion =
+  paste0("Ihsanul Khaliq, Paul Melloy, Daniel Burrell, Joshua Fanning, Jean Galloway, Kevin Moore, Adam H. Sparks (",
+         year,
+         "). ChickpeaAscoDispersal: A research compendium to accompany 'The role of conidia in the dispersal of Ascochyta rabiei",
+         note, ". DOI: 10.5281/zenodo.3810827")
