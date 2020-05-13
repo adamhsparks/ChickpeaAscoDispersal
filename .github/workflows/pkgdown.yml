@@ -6,7 +6,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -16,15 +16,14 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
       
-      - name: Install brew packages
+      - name: Install system libs
         run: |
-          brew install cairo libgit2 pkg-config
-          brew cask install XQuartz
+          sudo apt-get update
+          sudo apt-get install libx11-dev
 
       - name: Query dependencies
         run: |
           install.packages('remotes')
-          install.packages('rgl')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
