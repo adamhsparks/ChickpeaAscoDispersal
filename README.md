@@ -9,6 +9,8 @@ The goal of this research is to examine the role of _Ascochyta rabiei_ conidia d
 A user-friendly website of this research compendium is available here, <https://adamhsparks.github.io/ChickpeaAscoDispersal/>.
 Interested parties may wish to view the data analysis and visualisation pipeline as well as model fitting, these are available under the "Articles" menu item of the webpage.
 
+A preprint of this paper is available from: <https://doi.org/10.1101/2020.05.12.091827> and is included in "analysis/paper/".
+
 ## Project team
 
 - Dr Ihsanul Khaliq, University of Southern Queensland, Queensland
