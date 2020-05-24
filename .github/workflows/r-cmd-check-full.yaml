@@ -38,8 +38,8 @@ jobs:
       - name: Brew and macOS config
         if: runner.os == 'macOS'
         run: |
-          brew cask install xquartz
           export DISPLAY=:99
+          brew cask install xquartz
           brew install udunits
           brew install gdal
           cat <<EOT >> .Renviron
@@ -47,6 +47,8 @@ jobs:
           PROJ_LIB=/usr/local/opt/proj/share/proj/
           # for installing XML package from source
           XML_CONFIG=/usr/local/opt/libxml2/bin/xml2-config
+          # for rgl to supress warnings
+          RGL_USE_NULL = TRUE
           EOT
           cat <<EOT >> .Rprofile
           config_args <- c("sf" = "--with-proj-lib=/usr/local/lib/", "rgdal" = "--with-proj-lib=/usr/local/lib/ --with-proj-include=/usr/local/include/")
