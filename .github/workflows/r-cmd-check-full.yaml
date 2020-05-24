@@ -41,6 +41,7 @@ jobs:
           brew install pkg-config
           brew install udunits
           brew install gdal
+          brew cask install xquartz
           cat <<EOT >> .Renviron
           PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
           PROJ_LIB=/usr/local/opt/proj/share/proj/
