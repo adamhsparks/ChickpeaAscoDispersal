@@ -39,6 +39,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew cask install xquartz
+          export DISPLAY=:99
           brew install udunits
           brew install gdal
           cat <<EOT >> .Renviron
