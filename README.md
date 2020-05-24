@@ -1,5 +1,6 @@
  <!-- badges: start -->
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) [![DOI](https://zenodo.org/badge/241245286.svg)](https://zenodo.org/badge/latestdoi/241245286)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adamhsparks/ChickpeaAscoDispersal/master)
   <!-- badges: end -->
   
 # The role of conidia in the dispersal of _Ascochyta rabiei_
