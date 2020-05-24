@@ -9,3 +9,5 @@ _pkgdown.yml
 ^inst\Windows_GS_Install.txt
 Dockerfile
 ^analysis$
+^\.ccache$
+^tic\.R$
