@@ -87,7 +87,7 @@ jobs:
       - name: Install rgl for macOS
         if: runner.os == 'macOS'
         run: |
-          Rscript -e "install.packages('rgl', type = "source")
+          Rscript -e "install.packages('rgl', type = 'source')"
       
       - name: Check
         env:
