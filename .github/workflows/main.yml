@@ -186,9 +186,15 @@ jobs:
         run: |
           Rscript -e "tic::before_deploy()"
 
-      - name: "[Stage] Deploy"
+      - name: "[Stage] Deploy macOS and Linux"
+      if: runner.os != "windows"
         run: |
           export DISPLAY=:99 # for rgl
+          Rscript -e "tic::deploy()"
+          
+      - name: "[Stage] Deploy Windows"
+        if: runner.os == "windows"
+        run: |
           Rscript -e "tic::deploy()"
 
       - name: "[Stage] After Deploy"
