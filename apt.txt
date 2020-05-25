@@ -1,4 +1,3 @@
 libx11-dev
-libmesa-common-dev
 libglu1-mesa-dev
 freeglut3-dev
