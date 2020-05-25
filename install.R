@@ -1,23 +1,19 @@
 # Installs packages in "Suggests" for binderhub
-install.packages(
-   c(
-      "broom",
-      "bomrang",
-      "clifro",
-      "extrafont",
-      "ggplot2",
-      "ggpubr",
-      "leaflet",
-      "lme4",
-      "here",
-      "kableExtra",
-      "knitr",
-      "lubridate",
-      "mgcv",
-      "skimr",
-      "stationaRy",
-      "testthat",
-      "tidyverse",
-      "viridis"
-   )
-)
+install.packages("broom")
+install.packages("bomrang")
+install.packages("clifro")
+install.packages("extrafont")
+install.packages("ggplot2")
+install.packages("ggpubr")
+install.packages("leaflet")
+install.packages("lme4")
+install.packages("here")
+install.packages("kableExtra")
+install.packages("knitr")
+install.packages("lubridate")
+install.packages("mgcv")
+install.packages("skimr")
+install.packages("stationaRy")
+install.packages("testthat")
+install.packages("tidyverse")
+install.packages("viridis")
