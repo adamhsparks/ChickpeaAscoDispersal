@@ -8,27 +8,39 @@
 The goal of this research is to examine the role of _Ascochyta rabiei_ conidia dispersal of chickpea ascochyta blight in Australia.
 
 A user-friendly website of this research compendium is available here, <https://adamhsparks.github.io/ChickpeaAscoDispersal/>.
-Interested parties may wish to view the data analysis and visualisation pipeline as well as model fitting, these are available under the "Articles" menu item of the webpage.
+Interested parties may wish to view the data analysis and visualisation pipeline as well as model fitting, these are available under the "Articles" menu item of the [web page](https://adamhsparks.github.io/ChickpeaAscoDispersal/).
 
 A preprint of this paper is available from: <https://doi.org/10.1101/2020.05.12.091827> and is included in "analysis/paper/".
 
+## Reproducibility
+
+A binder instance is provided of this repository so that you may run the code and recreate the full analysis in your web browser.
+Clicking on the [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adamhsparks/ChickpeaAscoDispersal/master?urlpath=rstudio) button will launch an RStudio Server session in your browser window.
+From there, in the lower-right window pane, navigate to "vignettes". The vignettes detail the analysis work done in this project in full.
+Opening any one of them and clicking "Knit" at the top of your RStudio session will regenerate the full HTML document, which are also available under the "Articles" menu item of the [web page](https://adamhsparks.github.io/ChickpeaAscoDispersal/).
+You may use this to interactively explore the code that was used to perform the analysis and explore the data from this project.
+
+## Data availability
+
+All data from this work are included in this repository and R package in the "inst/extdata" folder but also archived and documented with Zenodo, [10.5281/zenodo.3842293](https://doi.org/10.5281/zenodo.3842293), for reuse.
+
 ## Project team
 
-- Dr Ihsanul Khaliq, University of Southern Queensland, Queensland
+- Dr Ihsanul Khaliq, University of Southern Queensland, Centre for Crop Health, Toowoomba, Queensland 4350, Australia
 
-- Dr Paul Melloy, University of Southern Queensland, Queensland
+- Dr Joshua Fanning, Agriculture Victoria, Horsham, Victoria, 3401, Australia
 
-- Daniel Burrell, University of Southern Queensland, Queensland
+- Dr Paul Melloy, University of Southern Queensland, Centre for Crop Health, Toowoomba, Queensland 4350, Australia
 
-- Dr Joshua Fanning, Agriculture Victoria, Victoria
+- Jean Galloway, Department of Primary Industries and Regional Development (DPIRD), Northam, WA, 6401, Australia
 
-- Jean Galloway, DPIRD, Western Australia
+- Dr Kevin Moore, New South Wales Department of Primary Industries, 4 Marsden Park Rd, Tamworth, NSW, 2340, Australia
 
-- Dr Kevin Moore, NSW DPI, New South Wales
+- Daniel Burrell, University of Southern Queensland, Centre for Crop Health, Toowoomba, Queensland 4350, Australia
 
 **Project PI:**
 
-- Associate Professor Adam H. Sparks, University of Southern Queensland, Queensland
+- Associate Professor Adam H. Sparks, University of Southern Queensland, Centre for Crop Health, Toowoomba, Queensland 4350, Australia
 
 ## Abstract
 
