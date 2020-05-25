@@ -1,13 +1,14 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-.gitignore
-.github
+^\.gitignore$
 _pkgdown.yml
 ^codemeta\.json$
 ^\.github$
 ^docs
 ^inst\Windows_GS_Install.txt
-Dockerfile
 ^analysis$
 ^\.ccache$
 ^tic\.R$
+^apt\.txt$
+^install\.R$
+^runtime\.txt$
