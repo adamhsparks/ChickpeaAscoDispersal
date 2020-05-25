@@ -54,7 +54,7 @@ Please cite this research compendium as:
 
 ## Licences
 
-Data: [CC-0](https://creativecommons.org/publicdomain/zero/1.0/) attribution requested in reuse  
+Data: [CC-BY-4.0 International](http://creativecommons.org/licenses/by/4.0/legalcode) attribution requested in reuse  
 Manuscript: [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)  
 Code: [GPL (>= 3)](https://opensource.org/licenses/GPL-3.0)
 Year: 2020, copyright holder: University of Southern Queensland (USQ) and Grains Research and Development Corporation (GRDC)
