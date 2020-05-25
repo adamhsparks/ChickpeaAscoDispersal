@@ -34,7 +34,7 @@ Authors@R: c(person("Ihsanul", "Khaliq",
                      person("The Birchip Cropping Group", role = "dtc"))
 Description: Documents the workflow and processes involved in the analysis of
    data for the paper 'The role of conidia in the dispersal of Ascochyta
-    rabiei'.
+   rabiei'.
 Depends: R (>= 3.5.0)
 Imports:
    graphics,

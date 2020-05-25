@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "ChickpeaAscoDispersal",
-  "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper 'The role of conidia in the dispersal of Ascochyta\n    rabiei'.",
+  "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper 'The role of conidia in the dispersal of Ascochyta\n   rabiei'.",
   "name": "ChickpeaAscoDispersal: Research Compendium for the Paper 'The role of conidia in the dispersal of Ascochyta rabiei'",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.1.3",
@@ -343,7 +343,7 @@
   ],
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "4558.478KB",
+  "fileSize": "4558.477KB",
   "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable",
   "citation": [
