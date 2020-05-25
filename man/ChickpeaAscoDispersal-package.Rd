@@ -24,11 +24,11 @@ Useful links:
 Authors:
 \itemize{
   \item Ihsanul Khaliq \email{ihsan.khaliq@usq.edu.au} (\href{https://orcid.org/0000-0003-4171-0917}{ORCID})
-  \item Paul Melloy \email{paul.melloy@usq.edu.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID})
-  \item Daniel Burrell \email{daniel.burrell@usq.edu.au}
   \item Joshua Fanning \email{joshua.fanning@agriculture.vic.gov.au} (\href{https://orcid.org/0000-0002-7730-8498}{ORCID})
+  \item Paul Melloy \email{paul.melloy@usq.edu.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID})
   \item Jean Galloway \email{jean.galloway@dpird.wa.gov.au}
-  \item Kevin Moore \email{kevin.moore@dpi.nsw.gov.au}
+  \item Kevin Moore \email{kevin.moore@dpi.nsw.gov.au} (\href{https://orcid.org/0000-0001-9643-6885}{ORCID})
+  \item Daniel Burrell \email{daniel.burrell@usq.edu.au} (\href{https://orcid.org/0000-0002-9173-651X}{ORCID})
 }
 
 Other contributors:
