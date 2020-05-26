@@ -96,7 +96,14 @@
       "@id": "https://orcid.org/0000-0002-0061-8359"
     }
   ],
-  "softwareSuggestions": [
+  "softwareSuggestions": [],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "broom",
@@ -170,6 +177,11 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=ggpubr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "graphics",
+      "name": "graphics"
     },
     {
       "@type": "SoftwareApplication",
@@ -257,6 +269,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "mgcViz",
+      "name": "mgcViz",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=mgcViz"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "skimr",
       "name": "skimr",
       "provider": {
@@ -316,34 +340,9 @@
       "sameAs": "https://CRAN.R-project.org/package=viridis"
     }
   ],
-  "softwareRequirements": [
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": ">= 3.5.0"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "graphics",
-      "name": "graphics"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "mgcViz",
-      "name": "mgcViz",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=mgcViz"
-    }
-  ],
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
-  "fileSize": "4558.477KB",
+  "fileSize": "4558.485KB",
   "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable",
   "citation": [
@@ -392,5 +391,6 @@
       "@id": "https://doi.org/10.5281/zenodo.3810827",
       "sameAs": "https://doi.org/10.5281/zenodo.3810827"
     }
-  ]
+  ],
+  "contIntegration": "https://codecov.io/gh/adamhsparks/ChickpeaAscoDispersal"
 }
