@@ -1,6 +1,6 @@
 on:
   push:
-    branches: master
+    branches: main
 
 name: pkgdown
 
@@ -8,7 +8,7 @@ jobs:
   pkgdown:
     runs-on: macOS-latest
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.CHICKPEAASCODISPERSAL_PAT }}
     steps:
       - uses: actions/checkout@v2
 
