@@ -8,7 +8,7 @@ COPY --chown=rstudio . /home/rstudio/ChickpeaAscoDispersal
 
 # install system-level libs
 RUN apt-get update && \
-    apt-get install -y libudunits2-dev libgdal-dev libmesa-dev && \
+    apt-get install -y libudunits2-dev libgdal-dev libglu1-mesa-dev && \
     rm -r /var/lib/apt/lists/*
 
 # go into the repo directory
