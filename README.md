@@ -32,11 +32,11 @@ All data from this work are included in this repository and R package in the "in
 
 - Dr Paul Melloy, University of Southern Queensland, Centre for Crop Health, Toowoomba, Queensland 4350, Australia
 
-- Jean Galloway, Department of Primary Industries and Regional Development (DPIRD), Northam, WA, 6401, Australia
+- Ms Jean Galloway, Department of Primary Industries and Regional Development (DPIRD), Northam, WA, 6401, Australia
 
 - Dr Kevin Moore, New South Wales Department of Primary Industries, 4 Marsden Park Rd, Tamworth, NSW, 2340, Australia
 
-- Daniel Burrell, University of Southern Queensland, Centre for Crop Health, Toowoomba, Queensland 4350, Australia
+- Mr Daniel Burrell, University of Southern Queensland, Centre for Crop Health, Toowoomba, Queensland 4350, Australia
 
 **Project PI:**
 

@@ -35,6 +35,7 @@ Other contributors:
 \itemize{
   \item GRDC Project USQ1903-003RTX [funder]
   \item Agriculture Victoria and GRDC co-investment project DAV00150 [funder, data contributor]
+  \item GRDC Project DJP1097-001RTX [funder]
   \item The Birchip Cropping Group [data contributor]
 }
 
