@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{validate_curyo_wind_data}
+  %\VignetteIndexEntry{Validate Curyo Wind with Alternate Sources}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,6 +23,7 @@ library("clifro")
 library("leaflet")
 library("htmltools")
 library("lubridate")
+library("ggplot2")
 
 theme_set(theme_pubclean(base_size = 14))
 
@@ -39,7 +40,6 @@ if (.Platform$OS.type == "windows") {
    loadfonts(device = "postscript", quiet = TRUE)
 } else {
    font_import(pattern = "Arial", prompt = FALSE)
- 
 ```
 
 ```{r import-event, message=FALSE}
@@ -59,7 +59,7 @@ events <-
 ## Background
 
 During the experimental analysis as the data were being visualised, [a03_Visualise_data.html](see data visualisation), it became apparent that the Curyo wind data were perhaps incorrect due to the wind vane of the station not being properly calibrated.
-The onsite weather station recorded the wind direction as coming from the north, blowing towards the south.
+The on-site weather station recorded the wind direction as coming from the north, blowing towards the south.
 However, conidia were recorded travelling up to 75&nbsp;meters from the infested stubble north, against the wind during the spread event.
 The Dr. Fanning confirmed this weather station did not have the wind vane calibrated recently.
 
@@ -96,7 +96,7 @@ Curyo_w <-
 
 Because the data that we download from Bureau of Meteorology (BOM) will be in one hour increments, we will aggregate the 10 minute data to one hourly.
 
-```{r aggregate_to_1_hour}
+```{r aggregate_to_1_hour, message=FALSE}
 Curyo_w <-
    Curyo_w %>%
    mutate(Day = day(Time)) %>%
@@ -162,7 +162,7 @@ BCG <-
 
 The BCG weather station data also need to be aggregated into one hour increments as well.
 
-```{r Curyo_alt_aggregate}
+```{r Curyo_alt_aggregate, message=FALSE}
 Curyo_alt <-
    BCG %>%
    mutate(Day = day(time)) %>%
@@ -216,7 +216,9 @@ for (i in stat_dat$id) {
 Next we bind the data all together in a single tibble called `weather_vic`.
 
 ```{r bind_met_data}
-weather_vic <- bind_rows(BOM_weather_list, Curyo_w, Curyo_alt)
+weather_vic <- bind_rows(BOM_weather_list)
+
+weather_vic <- bind_rows(weather_vic, Curyo_w, Curyo_alt)
 
 skim(weather_vic)
 ```
