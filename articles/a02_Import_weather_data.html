@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ChickpeaAscoDispersal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -91,13 +91,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="a02_Import_weather_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Weather Data Import and Cleaning</h1>
                         <h4 class="author">A.H. Sparks and P. Melloy</h4>
             
-            <h4 class="date">2020-05-26</h4>
+            <h4 class="date">2020-06-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a02_Import_weather_data.Rmd"><code>vignettes/a02_Import_weather_data.Rmd</code></a></small>
       <div class="hidden name"><code>a02_Import_weather_data.Rmd</code></div>
@@ -106,15 +106,17 @@
 
     
     
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ChickpeaAscoDispersal"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyverse"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"lubridate"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"skimr"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ggpubr"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"kableExtra"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"scales"</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal">"ChickpeaAscoDispersal"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="http://lubridate.tidyverse.org">"lubridate"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://docs.ropensci.org/skimr">"skimr"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://rpkgs.datanovia.com/ggpubr">"ggpubr"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="http://haozhu233.github.io/kableExtra">"kableExtra"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://scales.r-lib.org">"scales"</a></span>)
 
-<span class="fu">theme_set</span>(<span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>(<span class="kw">base_size</span> <span class="kw">=</span> <span class="fl">14</span>))</pre></body></html></div>
+<span class="fu">theme_set</span>(<span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubclean</a></span>(base_size = <span class="fl">14</span>))
+</pre></div>
 <div id="weather-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#weather-data" class="anchor"></a>Weather data</h3>
@@ -149,27 +151,31 @@
 <div id="import-curyo-weather-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#import-curyo-weather-data" class="anchor"></a>Import Curyo Weather Data</h3>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">Curyo_w</span> <span class="kw">&lt;-</span>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">Curyo_w</span> <span class="op">&lt;-</span>
    <span class="fu">read_csv</span>(
       <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(
          <span class="st">"extdata"</span>,
          <span class="st">"Curyo_SPA_2019_weather.csv"</span>,
-         <span class="kw">package</span> <span class="kw">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,
-         <span class="kw">mustWork</span> <span class="kw">=</span> <span class="fl">TRUE</span>
+         package = <span class="st">"ChickpeaAscoDispersal"</span>,
+         mustWork = <span class="fl">TRUE</span>
       )
-   ) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">Time</span>,
+   ) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">Time</span>,
           <span class="st">'Wind Speed - average (km/h)'</span>,
           <span class="st">'Wind Direction - average (º)'</span>,
-          <span class="st">"Rainfall - (mm)"</span>) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Time</span> <span class="kw">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">dmy_hm</a></span>(<span class="no">Time</span>)) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Location</span> <span class="kw">=</span> <span class="st">"Curyo"</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">Location</span>, <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>())</pre></body></html></div>
+          <span class="st">"Rainfall - (mm)"</span>) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Time = <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">dmy_hm</a></span>(<span class="kw">Time</span>)) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Location = <span class="st">"Curyo"</span>) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">Location</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span>())
+</pre></div>
 </div>
 <div id="inspect-the-curyo-weather-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#inspect-the-curyo-weather-data" class="anchor"></a>Inspect the Curyo Weather Data</h3>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span>(<span class="no">Curyo_w</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span>(<span class="kw">Curyo_w</span>)
+</pre></div>
 <table class="table table table-condensed">
 <caption>
 Data summary
@@ -517,27 +523,31 @@ Time
 <div id="import-horsham-weather-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#import-horsham-weather-data" class="anchor"></a>Import Horsham Weather Data</h3>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">Horsham_w</span> <span class="kw">&lt;-</span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">Horsham_w</span> <span class="op">&lt;-</span>
    <span class="fu">read_csv</span>(
       <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(
          <span class="st">"extdata"</span>,
          <span class="st">"Horsham_SPA_2019_weather.csv"</span>,
-         <span class="kw">package</span> <span class="kw">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,
-         <span class="kw">mustWork</span> <span class="kw">=</span> <span class="fl">TRUE</span>
+         package = <span class="st">"ChickpeaAscoDispersal"</span>,
+         mustWork = <span class="fl">TRUE</span>
       )
-   ) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">Time</span>,
+   ) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">Time</span>,
           <span class="st">'Wind Speed - average (km/h)'</span>,
           <span class="st">'Wind Direction - average (º)'</span>,
-          <span class="st">"Rainfall - (mm)"</span>) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Time</span> <span class="kw">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">dmy_hm</a></span>(<span class="no">Time</span>)) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Location</span> <span class="kw">=</span> <span class="st">"Horsham"</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">Location</span>, <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>())</pre></body></html></div>
+          <span class="st">"Rainfall - (mm)"</span>) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Time = <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">dmy_hm</a></span>(<span class="kw">Time</span>)) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Location = <span class="st">"Horsham"</span>) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">Location</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span>())
+</pre></div>
 </div>
 <div id="inspect-horsham-weather-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#inspect-horsham-weather-data" class="anchor"></a>Inspect Horsham Weather Data</h3>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span>(<span class="no">Horsham_w</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span>(<span class="kw">Horsham_w</span>)
+</pre></div>
 <table class="table table table-condensed">
 <caption>
 Data summary
@@ -886,19 +896,21 @@ Time
 <h3 class="hasAnchor">
 <a href="#create-the-event-data" class="anchor"></a>Create the Event Data</h3>
 <p>Event data have dates and times when trap plants were deployed, retrieved and assessed for each event.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">events</span> <span class="kw">&lt;-</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">events</span> <span class="op">&lt;-</span>
    <span class="fu">read_csv</span>(
       <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(
          <span class="st">"extdata"</span>,
          <span class="st">"Dispersal_experiment_dates.csv"</span>,
-         <span class="kw">package</span> <span class="kw">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,
-         <span class="kw">mustWork</span> <span class="kw">=</span> <span class="fl">TRUE</span>
+         package = <span class="st">"ChickpeaAscoDispersal"</span>,
+         mustWork = <span class="fl">TRUE</span>
       )
-   ) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">`assessment date`</span> <span class="kw">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="no">`assessment date`</span>)) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">exposed</span> <span class="kw">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/interval.html">interval</a></span>(<span class="no">`time out`</span>, <span class="no">`time removed`</span>))
+   ) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(`assessment date` = <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="kw">`assessment date`</span>)) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(exposed = <span class="fu"><a href="http://lubridate.tidyverse.org/reference/interval.html">interval</a></span>(<span class="kw">`time out`</span>, <span class="kw">`time removed`</span>))
 
-<span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/reexports.html">kable</a></span>(<span class="no">events</span>, <span class="kw">format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">table.attr</span> <span class="kw">=</span> <span class="st">'class="table table-hover"'</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">events</span>, format = <span class="st">"html"</span>, table.attr = <span class="st">'class="table table-hover"'</span>)
+</pre></div>
 <table class="table table table-hover">
 <thead><tr>
 <th style="text-align:left;">
@@ -1051,74 +1063,82 @@ Curyo
 <div id="horsham-irrigated" class="section level4">
 <h4 class="hasAnchor">
 <a href="#horsham-irrigated" class="anchor"></a>Horsham Irrigated</h4>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">Horsham_irrg</span> <span class="kw">&lt;-</span>
-   <span class="no">Horsham_w</span> <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">1</span>, <span class="st">"exposed"</span>] <span class="kw">|</span>
-             <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">2</span>, <span class="st">"exposed"</span>] <span class="kw">|</span>
-             <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">3</span>, <span class="st">"exposed"</span>]) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(
-      <span class="kw">Location</span> <span class="kw">=</span> <span class="fu">case_when</span>(
-         <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">1</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">1</span>, <span class="st">"site"</span>]],
-         <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">2</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">2</span>, <span class="st">"site"</span>]],
-         <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">3</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">3</span>, <span class="st">"site"</span>]]
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">Horsham_irrg</span> <span class="op">&lt;-</span>
+   <span class="kw">Horsham_w</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">1</span>, <span class="st">"exposed"</span>] <span class="op">|</span>
+             <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">2</span>, <span class="st">"exposed"</span>] <span class="op">|</span>
+             <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">3</span>, <span class="st">"exposed"</span>]) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(
+      Location = <span class="fu">case_when</span>(
+         <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">1</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">1</span>, <span class="st">"site"</span>]],
+         <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">2</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">2</span>, <span class="st">"site"</span>]],
+         <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">3</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">3</span>, <span class="st">"site"</span>]]
       )
-   ) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(
-      <span class="kw">Rep</span> <span class="kw">=</span> <span class="fu">case_when</span>(
-         <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">1</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">1</span>, <span class="st">"rep"</span>]],
-         <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">2</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">2</span>, <span class="st">"rep"</span>]],
-         <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">3</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">3</span>, <span class="st">"rep"</span>]]
+   ) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(
+      Rep = <span class="fu">case_when</span>(
+         <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">1</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">1</span>, <span class="st">"rep"</span>]],
+         <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">2</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">2</span>, <span class="st">"rep"</span>]],
+         <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">3</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">3</span>, <span class="st">"rep"</span>]]
       )
-   ) <span class="kw">%&gt;%</span>
-   <span class="fu">rename</span>(<span class="kw">site</span> <span class="kw">=</span> <span class="no">Location</span>, <span class="kw">rep</span> <span class="kw">=</span> <span class="no">Rep</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="no">Time</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">site</span>, <span class="no">rep</span>, <span class="no">time</span>, <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>())</pre></body></html></div>
+   ) <span class="op">%&gt;%</span>
+   <span class="fu">rename</span>(site = <span class="kw">Location</span>, rep = <span class="kw">Rep</span>, time = <span class="kw">Time</span>) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">site</span>, <span class="kw">rep</span>, <span class="kw">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span>())
+</pre></div>
 </div>
 <div id="horsham-rain" class="section level4">
 <h4 class="hasAnchor">
 <a href="#horsham-rain" class="anchor"></a>Horsham Rain</h4>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">Horsham_rain</span> <span class="kw">&lt;-</span>
-   <span class="no">Horsham_w</span> <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">4</span>, <span class="st">"exposed"</span>] <span class="kw">|</span>
-             <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">5</span>, <span class="st">"exposed"</span>]) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Location</span> <span class="kw">=</span> <span class="fu">case_when</span>(<span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">4</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">4</span>, <span class="st">"site"</span>]],
-                               <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">5</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">5</span>, <span class="st">"site"</span>]])) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Rep</span> <span class="kw">=</span> <span class="fu">case_when</span>(<span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">4</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">4</span>, <span class="st">"rep"</span>]],
-                          <span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fl">5</span>, <span class="st">"exposed"</span>] ~ <span class="no">events</span><span class="kw">[[</span><span class="fl">5</span>, <span class="st">"rep"</span>]], )) <span class="kw">%&gt;%</span>
-   <span class="fu">rename</span>(<span class="kw">site</span> <span class="kw">=</span> <span class="no">Location</span>, <span class="kw">rep</span> <span class="kw">=</span> <span class="no">Rep</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="no">Time</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">site</span>, <span class="no">rep</span>, <span class="no">time</span>, <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>())</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">Horsham_rain</span> <span class="op">&lt;-</span>
+   <span class="kw">Horsham_w</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">4</span>, <span class="st">"exposed"</span>] <span class="op">|</span>
+             <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">5</span>, <span class="st">"exposed"</span>]) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Location = <span class="fu">case_when</span>(<span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">4</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">4</span>, <span class="st">"site"</span>]],
+                               <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">5</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">5</span>, <span class="st">"site"</span>]])) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Rep = <span class="fu">case_when</span>(<span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">4</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">4</span>, <span class="st">"rep"</span>]],
+                          <span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fl">5</span>, <span class="st">"exposed"</span>] <span class="op">~</span> <span class="kw">events</span>[[<span class="fl">5</span>, <span class="st">"rep"</span>]], )) <span class="op">%&gt;%</span>
+   <span class="fu">rename</span>(site = <span class="kw">Location</span>, rep = <span class="kw">Rep</span>, time = <span class="kw">Time</span>) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">site</span>, <span class="kw">rep</span>, <span class="kw">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span>())
+</pre></div>
 </div>
 <div id="curyo-rain" class="section level4">
 <h4 class="hasAnchor">
 <a href="#curyo-rain" class="anchor"></a>Curyo Rain</h4>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">Curyo_rain</span> <span class="kw">&lt;-</span>
-   <span class="no">Curyo_w</span> <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">events</span>$<span class="no">site</span> <span class="kw">==</span> <span class="st">"Curyo"</span>), <span class="st">"exposed"</span>]) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Location</span> <span class="kw">=</span> <span class="fu">case_when</span>(<span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">events</span>$<span class="no">site</span> <span class="kw">==</span> <span class="st">"Curyo"</span>),
-                                                    <span class="st">"exposed"</span>] ~ <span class="st">"Curyo"</span>)) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">Rep</span> <span class="kw">=</span> <span class="fu">case_when</span>(<span class="no">Time</span> <span class="kw">%within%</span> <span class="no">events</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">events</span>$<span class="no">site</span> <span class="kw">==</span> <span class="st">"Curyo"</span>), <span class="st">"exposed"</span>] ~
-                             <span class="no">events</span><span class="kw">[[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">events</span>$<span class="no">site</span> <span class="kw">==</span> <span class="st">"Curyo"</span>), <span class="st">"rep"</span>]])) <span class="kw">%&gt;%</span>
-   <span class="fu">rename</span>(<span class="kw">site</span> <span class="kw">=</span> <span class="no">Location</span>, <span class="kw">rep</span> <span class="kw">=</span> <span class="no">Rep</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="no">Time</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">site</span>, <span class="no">rep</span>, <span class="no">time</span>, <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>())
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">Curyo_rain</span> <span class="op">&lt;-</span>
+   <span class="kw">Curyo_w</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">events</span><span class="op">$</span><span class="kw">site</span> <span class="op">==</span> <span class="st">"Curyo"</span>), <span class="st">"exposed"</span>]) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Location = <span class="fu">case_when</span>(<span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">events</span><span class="op">$</span><span class="kw">site</span> <span class="op">==</span> <span class="st">"Curyo"</span>),
+                                                    <span class="st">"exposed"</span>] <span class="op">~</span> <span class="st">"Curyo"</span>)) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(Rep = <span class="fu">case_when</span>(<span class="kw">Time</span> <span class="op">%within%</span> <span class="kw">events</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">events</span><span class="op">$</span><span class="kw">site</span> <span class="op">==</span> <span class="st">"Curyo"</span>), <span class="st">"exposed"</span>] <span class="op">~</span>
+                             <span class="kw">events</span>[[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">events</span><span class="op">$</span><span class="kw">site</span> <span class="op">==</span> <span class="st">"Curyo"</span>), <span class="st">"rep"</span>]])) <span class="op">%&gt;%</span>
+   <span class="fu">rename</span>(site = <span class="kw">Location</span>, rep = <span class="kw">Rep</span>, time = <span class="kw">Time</span>) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">site</span>, <span class="kw">rep</span>, <span class="kw">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span>())
 
-<span class="no">weather</span> <span class="kw">&lt;-</span> <span class="fu">bind_rows</span>(<span class="no">Curyo_rain</span>, <span class="no">Horsham_irrg</span>, <span class="no">Horsham_rain</span>)</pre></body></html></div>
+<span class="kw">weather</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span>(<span class="kw">Curyo_rain</span>, <span class="kw">Horsham_irrg</span>, <span class="kw">Horsham_rain</span>)
+</pre></div>
 </div>
 </div>
 <div id="rename-columns-and-add-other-calculations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rename-columns-and-add-other-calculations" class="anchor"></a>Rename Columns and Add Other Calculations</h3>
 <p>The <code>Wind Speed - average (km/h)</code> column is converted to metres per second and renamed <code>wind_speed</code>. The standard deviation of the wind speed and wind direction are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">cleaned_weather</span> <span class="kw">&lt;-</span>
-   <span class="no">weather</span> <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="kw">`Wind Speed - average (km/h)`</span> <span class="kw">=</span> <span class="no">`Wind Speed - average (km/h)`</span> /
-             <span class="fl">3.6</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">rename</span>(<span class="kw">wind_speed</span> <span class="kw">=</span> <span class="no">`Wind Speed - average (km/h)`</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">rename</span>(<span class="kw">wind_direction</span> <span class="kw">=</span> <span class="no">`Wind Direction - average (º)`</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">rename</span>(<span class="kw">rainfall</span> <span class="kw">=</span> <span class="no">`Rainfall - (mm)`</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">select</span>(<span class="no">site</span>, <span class="no">rep</span>, <span class="no">time</span>, <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/reexports.html">everything</a></span>()) <span class="kw">%&gt;%</span>
-   <span class="fu">arrange</span>(<span class="no">site</span>, <span class="no">rep</span>, <span class="no">time</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="no">site</span>, <span class="no">rep</span>), <span class="no">factor</span>)
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="kw">cleaned_weather</span> <span class="op">&lt;-</span>
+   <span class="kw">weather</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(`Wind Speed - average (km/h)` = <span class="kw">`Wind Speed - average (km/h)`</span> <span class="op">/</span>
+             <span class="fl">3.6</span>) <span class="op">%&gt;%</span>
+   <span class="fu">rename</span>(wind_speed = <span class="kw">`Wind Speed - average (km/h)`</span>) <span class="op">%&gt;%</span>
+   <span class="fu">rename</span>(wind_direction = <span class="kw">`Wind Direction - average (º)`</span>) <span class="op">%&gt;%</span>
+   <span class="fu">rename</span>(rainfall = <span class="kw">`Rainfall - (mm)`</span>) <span class="op">%&gt;%</span>
+   <span class="fu">select</span>(<span class="kw">site</span>, <span class="kw">rep</span>, <span class="kw">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span>()) <span class="op">%&gt;%</span>
+   <span class="fu">arrange</span>(<span class="kw">site</span>, <span class="kw">rep</span>, <span class="kw">time</span>) <span class="op">%&gt;%</span> 
+   <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="kw">site</span>, <span class="kw">rep</span>), <span class="kw">factor</span>)
 
-<span class="fu">glimpse</span>(<span class="no">cleaned_weather</span>)</pre></body></html></div>
+<span class="fu">glimpse</span>(<span class="kw">cleaned_weather</span>)
+</pre></div>
 <pre><code>## Rows: 2,202
 ## Columns: 6
 ## $ site           &lt;fct&gt; Curyo, Curyo, Curyo, Curyo, Curyo, Curyo, Curyo, Curyo…
@@ -1139,23 +1159,27 @@ Curyo
 <li><p>wd_sd - standard deviation of the wind direction in degrees</p></li>
 <li><p>sum_rain - total rainfall and irrigation (if applicable) during the event</p></li>
 </ul>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">summary_weather</span> <span class="kw">&lt;-</span>
-   <span class="no">cleaned_weather</span> <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">group_by</a></span>(<span class="no">site</span>, <span class="no">rep</span>) <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">summary_weather</span> <span class="op">&lt;-</span>
+   <span class="kw">cleaned_weather</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">site</span>, <span class="kw">rep</span>) <span class="op">%&gt;%</span>
    <span class="fu">summarise</span>(
-      <span class="kw">mws</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">wind_speed</span>),
-      <span class="kw">ws_sd</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">wind_speed</span>),
-      <span class="kw">mwd</span> <span class="kw">=</span> <span class="fu"><a href="../reference/circular.averaging.html">circular.averaging</a></span>(<span class="no">wind_direction</span>),
-      <span class="kw">sum_rain</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">rainfall</span>)
-   ) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/ggpubr/man/reexports.html">mutate</a></span>(<span class="co"># add the 11 mm of irrigation to the summary</span>
-      <span class="kw">sum_rain</span> <span class="kw">=</span>
-         <span class="fu">case_when</span>(<span class="no">site</span> <span class="kw">==</span> <span class="st">"Horsham irrigated"</span> ~ <span class="no">sum_rain</span> + <span class="fl">11</span>,
-                   <span class="fl">TRUE</span> ~ <span class="no">sum_rain</span>))
-
-<span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/reexports.html">kable</a></span>(<span class="no">summary_weather</span>,
-      <span class="kw">align</span> <span class="kw">=</span> <span class="st">"c"</span>,
-      <span class="kw">caption</span> <span class="kw">=</span> <span class="st">"Summary weather data for replicated rain event (spread event) per unique site."</span>)</pre></body></html></div>
+      mws = <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">wind_speed</span>),
+      ws_sd = <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="kw">wind_speed</span>),
+      mwd = <span class="fu"><a href="../reference/circular.averaging.html">circular.averaging</a></span>(<span class="kw">wind_direction</span>),
+      sum_rain = <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">rainfall</span>)
+   ) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="co"># add the 11 mm of irrigation to the summary</span>
+      sum_rain =
+         <span class="fu">case_when</span>(<span class="kw">site</span> <span class="op">==</span> <span class="st">"Horsham irrigated"</span> <span class="op">~</span> <span class="kw">sum_rain</span> <span class="op">+</span> <span class="fl">11</span>,
+                   <span class="fl">TRUE</span> <span class="op">~</span> <span class="kw">sum_rain</span>))
+</pre></div>
+<pre><code>## `summarise()` regrouping output by 'site' (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">summary_weather</span>,
+      align = <span class="st">"c"</span>,
+      caption = <span class="st">"Summary weather data for replicated rain event (spread event) per unique site."</span>)
+</pre></div>
 <table class="table">
 <caption>
 Summary weather data for replicated rain event (spread event) per unique site.
@@ -1309,8 +1333,10 @@ Horsham irrigated
 <h2 class="hasAnchor">
 <a href="#save-weather-data" class="anchor"></a>Save Weather Data</h2>
 <p>Save weather data for use in visualisation and modelling. This only needs to be done once.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">cleaned_weather</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">"./data/cleaned_weather.rda"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">summary_weather</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">"./data/summary_weather.rda"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="kw">cleaned_weather</span>, file = <span class="st">"./data/cleaned_weather.rda"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="kw">summary_weather</span>, file = <span class="st">"./data/summary_weather.rda"</span>)
+</pre></div>
 </div>
   </div>
 
@@ -1325,7 +1351,7 @@ Horsham irrigated
 
 
       <footer><div class="copyright">
-  <p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150.</p>
+  <p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150, GRDC Project DJP1097-001RTX.</p>
 </div>
 
 <div class="pkgdown">

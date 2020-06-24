@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ChickpeaAscoDispersal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -91,13 +91,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="a04_lmer_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Preliminary lmer models</h1>
                         <h4 class="author">P. Melloy</h4>
             
-            <h4 class="date">2020-05-26</h4>
+            <h4 class="date">2020-06-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a04_lmer.Rmd"><code>vignettes/a04_lmer.Rmd</code></a></small>
       <div class="hidden name"><code>a04_lmer.Rmd</code></div>
@@ -110,9 +110,11 @@
 <h2 class="hasAnchor">
 <a href="#aims" class="anchor"></a>Aims</h2>
 <p>This vignette demonstrates and explains our reasoning during preliminary data analysis method. The aims of this document were to explore the role of ‘site’ on conidial dispersal.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ChickpeaAscoDispersal"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyverse"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"lme4"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal">"ChickpeaAscoDispersal"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://github.com/lme4/lme4">"lme4"</a></span>)
+</pre></div>
 <p>From this data we hope to interpret the following.</p>
 <ul>
 <li>Did experimental location (site) affect conidial dispersal.</li>
@@ -142,18 +144,24 @@
 <li>What is the estimated mean lesions per plant as each distance from the focus, given that the conditions of each spread event is nested within each site and the distance the spore travels is dependent on the spread event at each site.</li>
 <li>What is the estimated mean lesions per plant as each distance from the focus, given that distance is dependant on the conditions of each spread event.</li>
 </ol>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">dat</span> <span class="kw">&lt;-</span>
-  <span class="fu">left_join</span>(<span class="no">lesion_counts</span>, <span class="no">summary_weather</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"site"</span>, <span class="st">"rep"</span>))
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">dat</span> <span class="op">&lt;-</span>
+  <span class="fu">left_join</span>(<span class="kw">lesion_counts</span>, <span class="kw">summary_weather</span>, by = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"site"</span>, <span class="st">"rep"</span>))
 
-<span class="no">mod1</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">m_lesions</span> ~ <span class="no">distance</span> + (<span class="no">distance</span> <span class="kw">|</span> <span class="no">site</span> / <span class="no">SpEv</span>),
-       <span class="kw">data</span> <span class="kw">=</span> <span class="no">dat</span>)
+<span class="kw">mod1</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">m_lesions</span> <span class="op">~</span> <span class="kw">distance</span> <span class="op">+</span> (<span class="kw">distance</span> <span class="op">|</span> <span class="kw">site</span> <span class="op">/</span> <span class="kw">SpEv</span>),
+       data = <span class="kw">dat</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="st">"mod1: "</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="st">"mod1: "</span>)
+</pre></div>
 <pre><code>## mod1:</code></pre>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span>(<span class="no">mod1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span>(<span class="kw">mod1</span>)
+</pre></div>
 <pre><code>## m_lesions ~ distance + (distance | site/SpEv)</code></pre>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">mod1</span>)
+</pre></div>
 <pre><code>## Linear mixed model fit by REML ['lmerMod']
 ## Formula: m_lesions ~ distance + (distance | site/SpEv)
 ##    Data: dat
@@ -184,17 +192,25 @@
 ## convergence code: 0
 ## boundary (singular) fit: see ?isSingular</code></pre>
 <p>Let’s examine the model without ‘site’ to test if the model is a worse fit.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">mod2</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">m_lesions</span> ~ <span class="no">distance</span> +
-         (<span class="no">distance</span> <span class="kw">|</span> <span class="no">SpEv</span>),
-       <span class="kw">data</span> <span class="kw">=</span> <span class="no">dat</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">mod2</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">m_lesions</span> <span class="op">~</span> <span class="kw">distance</span> <span class="op">+</span>
+         (<span class="kw">distance</span> <span class="op">|</span> <span class="kw">SpEv</span>),
+       data = <span class="kw">dat</span>)
+</pre></div>
 <pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="st">"mod2: "</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="st">"mod2: "</span>)
+</pre></div>
 <pre><code>## mod2:</code></pre>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span>(<span class="no">mod2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span>(<span class="kw">mod2</span>)
+</pre></div>
 <pre><code>## m_lesions ~ distance + (distance | SpEv)</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># Compare models</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span>(<span class="no">mod1</span>, <span class="no">mod2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="co"># Compare models</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span>(<span class="kw">mod1</span>, <span class="kw">mod2</span>)
+</pre></div>
 <pre><code>## refitting model(s) with ML (instead of REML)</code></pre>
 <pre><code>## Data: dat
 ## Models:
@@ -204,7 +220,9 @@
 ## mod2    6 889.71 912.58 -438.85   877.71                     
 ## mod1    9 895.45 929.75 -438.72   877.45 0.2606  3     0.9673</code></pre>
 <p>A comparison of the two models shows us that <code>mod2</code> is much better fit given the lower AIC and that there is no significant difference in the models. Following a reductive approach we should remove site from the model.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">mod2</span>)
+</pre></div>
 <pre><code>## Linear mixed model fit by REML ['lmerMod']
 ## Formula: m_lesions ~ distance + (distance | SpEv)
 ##    Data: dat
@@ -248,7 +266,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150.</p>
+  <p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150, GRDC Project DJP1097-001RTX.</p>
 </div>
 
 <div class="pkgdown">
