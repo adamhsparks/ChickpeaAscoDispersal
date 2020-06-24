@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{02_weather_data_import}
+  %\VignetteIndexEntry{Weather Data Import and Cleaning}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
 ---
