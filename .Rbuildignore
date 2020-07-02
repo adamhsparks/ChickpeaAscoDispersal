@@ -12,3 +12,4 @@ _pkgdown.yml
 ^apt\.txt$
 ^install\.R$
 ^runtime\.txt$
+Dockerfile

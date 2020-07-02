@@ -188,10 +188,10 @@ We have data from two weather stations now. However, let's import data from BOM 
 We can use the bomrang function `sweep_for_stations()` to find the closest stations to our experimental site.
 Because bomrang only obtains historical daily weather information we need to use another package, stationaRy, which can retrieve hourly or 10 minute weather data from the same BOM stations.
 We then use the station name of the BOM stations in the `get_station_metadata()` from the [stationaRy](https://cran.r-project.org/package=stationaRy) package to obtain weather station IDs.
-We need the ids to inform the function `get_met_data()` from which stations we want weather data.  
+We need the ids to inform the function `get_met_data()` from which stations we want weather data.
 
 The `get_met_data()` function needs to be run through a loop for each station.
-We place the weather data from each station into a `tibble` and store it as an element in a list.  
+We place the weather data from each station into a `tibble` and store it as an element in a list.
 
 ```{r get_cuyroData, message=FALSE}
 curyo_latlong <- c(-35.779312, 142.778332)
@@ -266,7 +266,6 @@ pw +
    xlab("") +
    theme_pubclean()
 ```
-
 
 ```{r save-figS1, include=FALSE, eval=FALSE}
 # save a .png to refer to while writing and a .eps for publication submission

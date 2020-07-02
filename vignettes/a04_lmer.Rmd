@@ -97,6 +97,7 @@ formula(mod2)
 # Compare models
 anova(mod1, mod2)
 ```
+
 A comparison of the two models shows us that `mod2` is much better fit given the lower AIC and that there is no significant difference in the models. Following a reductive approach we should remove site from the model.
 
 ```{r mod2}
