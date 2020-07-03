@@ -240,6 +240,8 @@ summary_weather <-
    summarise(
       mws = mean(wind_speed),
       ws_sd = sd(wind_speed),
+      max_ws = max(wind_speed),
+      min_ws = min(wind_speed),
       mwd = circular.averaging(wind_direction),
       sum_rain = sum(rainfall)
    ) %>%
