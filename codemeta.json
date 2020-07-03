@@ -12,10 +12,10 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.1 (2020-06-06)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "author": [
     {
       "@type": "Person",
@@ -346,7 +346,7 @@
   ],
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/main/README.md",
-  "fileSize": "4558.728KB",
+  "fileSize": "4956.329KB",
   "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable",
   "citation": [
