@@ -186,7 +186,7 @@ ggplot(data = heat_dat,
       limits = c(0, 360),
       labels = c("N", "E", "S", "W")
    ) +
-   scale_y_continuous(breaks = c(0, 10, 20, 50, 75),
+   scale_y_continuous(breaks = c(0, 10, 25, 50, 75),
                       limits = c(0, 75)) +
    ylab("Distance (m)") +
    xlab("Transect") +
