@@ -97,7 +97,7 @@
       <h1 data-toc-skip>Weather Data Import and Cleaning</h1>
                         <h4 class="author">A.H. Sparks and P. Melloy</h4>
             
-            <h4 class="date">2020-07-02</h4>
+            <h4 class="date">2020-07-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a02_Import_weather_data.Rmd"><code>vignettes/a02_Import_weather_data.Rmd</code></a></small>
       <div class="hidden name"><code>a02_Import_weather_data.Rmd</code></div>
@@ -1166,6 +1166,8 @@ Curyo
    <span class="fu">summarise</span>(
       mws = <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">wind_speed</span>),
       ws_sd = <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="kw">wind_speed</span>),
+      max_ws = <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">wind_speed</span>),
+      min_ws = <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="kw">wind_speed</span>),
       mwd = <span class="fu"><a href="../reference/circular.averaging.html">circular.averaging</a></span>(<span class="kw">wind_direction</span>),
       sum_rain = <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">rainfall</span>)
    ) <span class="op">%&gt;%</span>
@@ -1198,6 +1200,12 @@ mws
 ws_sd
 </th>
 <th style="text-align:center;">
+max_ws
+</th>
+<th style="text-align:center;">
+min_ws
+</th>
+<th style="text-align:center;">
 mwd
 </th>
 <th style="text-align:center;">
@@ -1217,6 +1225,12 @@ Curyo
 </td>
 <td style="text-align:center;">
 2.2302100
+</td>
+<td style="text-align:center;">
+9.41
+</td>
+<td style="text-align:center;">
+0.00
 </td>
 <td style="text-align:center;">
 353.5045
@@ -1239,6 +1253,12 @@ Horsham dryland
 1.9379332
 </td>
 <td style="text-align:center;">
+7.61
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+<td style="text-align:center;">
 311.0201
 </td>
 <td style="text-align:center;">
@@ -1257,6 +1277,12 @@ Horsham dryland
 </td>
 <td style="text-align:center;">
 2.7133595
+</td>
+<td style="text-align:center;">
+11.24
+</td>
+<td style="text-align:center;">
+0.00
 </td>
 <td style="text-align:center;">
 332.3283
@@ -1279,6 +1305,12 @@ Horsham irrigated
 0.9050266
 </td>
 <td style="text-align:center;">
+4.01
+</td>
+<td style="text-align:center;">
+0.35
+</td>
+<td style="text-align:center;">
 234.6542
 </td>
 <td style="text-align:center;">
@@ -1299,6 +1331,12 @@ Horsham irrigated
 1.2895001
 </td>
 <td style="text-align:center;">
+4.16
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+<td style="text-align:center;">
 272.7072
 </td>
 <td style="text-align:center;">
@@ -1317,6 +1355,12 @@ Horsham irrigated
 </td>
 <td style="text-align:center;">
 2.1241262
+</td>
+<td style="text-align:center;">
+11.24
+</td>
+<td style="text-align:center;">
+2.75
 </td>
 <td style="text-align:center;">
 333.6699

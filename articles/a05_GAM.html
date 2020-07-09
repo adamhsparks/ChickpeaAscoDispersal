@@ -97,7 +97,7 @@
       <h1 data-toc-skip>Fit Generalised Additive Models (GAMs) to the Dispersal Data</h1>
                         <h4 class="author">A.H. Sparks</h4>
             
-            <h4 class="date">2020-07-02</h4>
+            <h4 class="date">2020-07-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a05_GAM.Rmd"><code>vignettes/a05_GAM.Rmd</code></a></small>
       <div class="hidden name"><code>a05_GAM.Rmd</code></div>
@@ -715,28 +715,35 @@
 <span class="fu">map_df</span>(<span class="kw">models</span>, <span class="kw">glance</span>, .id = <span class="st">"model"</span>) <span class="op">%&gt;%</span>
    <span class="fu">arrange</span>(<span class="kw">AIC</span>)
 </pre></div>
-<pre><code>## # A tibble: 13 x 7
-##    model    df logLik   AIC   BIC deviance df.residual
-##    &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
-##  1 mod11  9.30  -320.  663.  709.     141.        325.
-##  2 mod12  8.02  -334.  689.  729.     145.        326.
-##  3 mod13  8.02  -334.  689.  729.     145.        326.
-##  4 mod8   9.80  -392.  805.  847.     204.        324.
-##  5 mod10  9.70  -392.  806.  846.     205.        324.
-##  6 mod6   9.86  -392.  806.  847.     204.        324.
-##  7 mod7   8.85  -394.  808.  845.     207.        325.
-##  8 mod9   8.84  -396.  812.  849.     210.        325.
-##  9 mod4   6.93  -411.  837.  868.     229.        327.
-## 10 mod3   5.93  -416.  846.  873.     236.        328.
-## 11 mod2   5.93  -417.  848.  874.     237.        328.
-## 12 mod5   5.93  -417.  848.  874.     237.        328.
-## 13 mod1   4.93  -424.  860.  883.     248.        329.</code></pre>
+<pre><code>## Warning: `...` is not empty.
+## 
+## We detected these problematic arguments:
+## * `needs_dots`
+## 
+## These dots only exist to allow future extensions and should be empty.
+## Did you misspecify an argument?</code></pre>
+<pre><code>## # A tibble: 13 x 8
+##    model    df logLik   AIC   BIC deviance df.residual  nobs
+##    &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;
+##  1 mod11  9.30  -320.  663.  709.     141.        325.   334
+##  2 mod12  8.02  -334.  689.  729.     145.        326.   334
+##  3 mod13  8.02  -334.  689.  729.     145.        326.   334
+##  4 mod8   9.80  -392.  805.  847.     204.        324.   334
+##  5 mod10  9.70  -392.  806.  846.     205.        324.   334
+##  6 mod6   9.86  -392.  806.  847.     204.        324.   334
+##  7 mod7   8.85  -394.  808.  845.     207.        325.   334
+##  8 mod9   8.84  -396.  812.  849.     210.        325.   334
+##  9 mod4   6.93  -411.  837.  868.     229.        327.   334
+## 10 mod3   5.93  -416.  846.  873.     236.        328.   334
+## 11 mod2   5.93  -417.  848.  874.     237.        328.   334
+## 12 mod5   5.93  -417.  848.  874.     237.        328.   334
+## 13 mod1   4.93  -424.  860.  883.     248.        329.   334</code></pre>
 </div>
 <div id="r2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#r2" class="anchor"></a>R<sup>2</sup>
 </h3>
-<div class="sourceCode" id="cb48"><pre class="downlit">
+<div class="sourceCode" id="cb49"><pre class="downlit">
 <span class="fu">enframe</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
    mod1 = <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">mod1</span>)<span class="op">$</span><span class="kw">r.sq</span>,
    mod2 = <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">mod2</span>)<span class="op">$</span><span class="kw">r.sq</span>,
@@ -754,6 +761,13 @@
 )) <span class="op">%&gt;%</span>
    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="kw">value</span>))
 </pre></div>
+<pre><code>## Warning: `...` is not empty.
+## 
+## We detected these problematic arguments:
+## * `needs_dots`
+## 
+## These dots only exist to allow future extensions and should be empty.
+## Did you misspecify an argument?</code></pre>
 <pre><code>## # A tibble: 13 x 2
 ##    name  value
 ##    &lt;chr&gt; &lt;dbl&gt;
@@ -774,7 +788,7 @@
 <div id="anova" class="section level3">
 <h3 class="hasAnchor">
 <a href="#anova" class="anchor"></a>ANOVA</h3>
-<div class="sourceCode" id="cb50"><pre class="downlit">
+<div class="sourceCode" id="cb52"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span>(<span class="kw">mod1</span>,
       <span class="kw">mod2</span>,
       <span class="kw">mod3</span>,
@@ -832,7 +846,7 @@
 <div id="mod11---sdistance-swind-speed-sprecipitation-family-tw-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#mod11---sdistance-swind-speed-sprecipitation-family-tw-1" class="anchor"></a>mod11 - s(Distance) + s(Wind Speed) + s(Precipitation), family = tw()</h4>
-<div class="sourceCode" id="cb52"><pre class="downlit">
+<div class="sourceCode" id="cb54"><pre class="downlit">
 <span class="kw">mod11_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(<span class="kw">mod11</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/PkgUtils.html">check</a></span>(<span class="kw">mod11_vis</span>,
       a.qq = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(method = <span class="st">"tnorm"</span>, 
@@ -858,7 +872,7 @@
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><img src="a05_GAM_files/figure-html/mod-check11-1.png" width="1152"></p>
-<div class="sourceCode" id="cb54"><pre class="downlit">
+<div class="sourceCode" id="cb56"><pre class="downlit">
 <span class="co"># generate a new plot.gam object just for the publication (no main title)</span>
 <span class="kw">p11</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_gam.html">p_gam</a></span>(x = <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span>(<span class="kw">mod11</span>))
 
