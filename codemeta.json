@@ -12,7 +12,6 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.2",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.0.2 (2020-06-22)",
@@ -346,7 +345,7 @@
   ],
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/main/README.md",
-  "fileSize": "4956.329KB",
+  "fileSize": "20897.972KB",
   "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable",
   "citation": [
@@ -395,6 +394,5 @@
       "@id": "https://doi.org/10.5281/zenodo.3810827",
       "sameAs": "https://doi.org/10.5281/zenodo.3810827"
     }
-  ],
-  "contIntegration": "https://codecov.io/gh/adamhsparks/ChickpeaAscoDispersal"
+  ]
 }
