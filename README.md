@@ -20,6 +20,14 @@ From there, in the lower-right window pane, navigate to "vignettes". The vignett
 Opening any one of them and clicking "Knit" at the top of your RStudio session will regenerate the full HTML document, which are also available under the "Articles" menu item of the [web page](https://adamhsparks.github.io/ChickpeaAscoDispersal/).
 You may use this to interactively explore the code that was used to perform the analysis and explore the data from this project.
 
+Otherwise you can also run it locally using Docker.
+```
+docker pull adamhsparks/chickpea_asco_dispersal
+docker run -d -p 8787:8787
+```
+
+Once installed, open a browser window and go to `localhost:8787`, log in with `rstudio` and password `rstudio`.
+
 ## Data availability
 
 All data from this work are included in this repository and R package in the "inst/extdata" folder but also archived and documented with Zenodo, [10.5281/zenodo.3842293](https://doi.org/10.5281/zenodo.3842293), for reuse.
