@@ -108,6 +108,10 @@
 <h2 class="hasAnchor">
 <a href="#reproducibility" class="anchor"></a>Reproducibility</h2>
 <p>A binder instance is provided of this repository so that you may run the code and recreate the full analysis in your web browser. Clicking on the <a href="https://mybinder.org/v2/gh/adamhsparks/ChickpeaAscoDispersal/main?urlpath=rstudio"><img src="https://mybinder.org/badge_logo.svg" alt="Binder"></a> button will launch an RStudio Server session in your browser window. From there, in the lower-right window pane, navigate to “vignettes”. The vignettes detail the analysis work done in this project in full. Opening any one of them and clicking “Knit” at the top of your RStudio session will regenerate the full HTML document, which are also available under the “Articles” menu item of the <a href="https://adamhsparks.github.io/ChickpeaAscoDispersal/">web page</a>. You may use this to interactively explore the code that was used to perform the analysis and explore the data from this project.</p>
+<p>Otherwise you can also run it locally using Docker.</p>
+<pre><code>docker pull adamhsparks/chickpea_asco_dispersal
+docker run -d -p 8787:8787</code></pre>
+<p>Once installed, open a browser window and go to <code>localhost:8787</code>, log in with <code>rstudio</code> and password <code>rstudio</code>.</p>
 </div>
 <div id="data-availability" class="section level2">
 <h2 class="hasAnchor">
@@ -207,7 +211,7 @@ Code: <a href="https://opensource.org/licenses/GPL-3.0">GPL (&gt;= 3)</a> Year: 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
