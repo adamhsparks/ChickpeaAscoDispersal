@@ -11,3 +11,4 @@ jobs:
         name: adamhsparks/chickpea_asco_dispersal
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        tags: "latest"
