@@ -1,7 +1,6 @@
  <!-- badges: start -->
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) [![DOI](https://zenodo.org/badge/241245286.svg)](https://zenodo.org/badge/latestdoi/241245286)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adamhsparks/ChickpeaAscoDispersal/main?urlpath=rstudio)
-  <!-- badges: end -->
+<!-- badges: end -->
   
 # The role of conidia in the dispersal of _Ascochyta rabiei_
 
@@ -14,20 +13,15 @@ A preprint of this paper is available from: <https://doi.org/10.1101/2020.05.12.
 
 ## Reproducibility
 
-A binder instance is provided of this repository so that you may run the code and recreate the full analysis in your web browser.
-Clicking on the [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adamhsparks/ChickpeaAscoDispersal/main?urlpath=rstudio) button will launch an RStudio Server session in your browser window.
-From there, in the lower-right window pane, navigate to "vignettes". The vignettes detail the analysis work done in this project in full.
-Opening any one of them and clicking "Knit" at the top of your RStudio session will regenerate the full HTML document, which are also available under the "Articles" menu item of the [web page](https://adamhsparks.github.io/ChickpeaAscoDispersal/).
-You may use this to interactively explore the code that was used to perform the analysis and explore the data from this project.
-
-Otherwise you can also run it locally using Docker.
+This analysis is packaged a fully complete Docker instance.
+To get started, install Docker for your respective OS, https://docs.docker.com/get-docker/, and run the following commands.
 
 ```
-docker pull adamhsparks/chickpea_asco_dispersal
-docker run -p 8787:8787 -d adamhsparks/chickpea_asco_dispersal
+docker pull adamhsparks/chickpea_asco_dispersal:main
+docker run -p 8787:8787 -d adamhsparks/chickpea_asco_dispersal:main
 ```
 
-Once installed, open a browser window and go to `localhost:8787`, log in with `rstudio` and password `rstudio`.
+Once the image is running, open a browser window and go to `localhost:8787`, log in with `rstudio` and password `rstudio`.
 
 ## Data availability
 
