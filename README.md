@@ -17,8 +17,8 @@ This analysis is packaged a fully complete Docker instance.
 To get started, install Docker for your respective OS, https://docs.docker.com/get-docker/, and run the following commands.
 
 ```
-docker pull adamhsparks/chickpea_asco_dispersal:main
-docker run -p 8787:8787 -d adamhsparks/chickpea_asco_dispersal:main
+docker pull adamhsparks/chickpea_asco_dispersal
+docker run -p 8787:8787 -d adamhsparks/chickpea_asco_dispersal
 ```
 
 Once the image is running, open a browser window and go to `localhost:8787`, log in with `rstudio` and password `rstudio`.
