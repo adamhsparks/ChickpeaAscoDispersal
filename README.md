@@ -21,9 +21,10 @@ Opening any one of them and clicking "Knit" at the top of your RStudio session w
 You may use this to interactively explore the code that was used to perform the analysis and explore the data from this project.
 
 Otherwise you can also run it locally using Docker.
+
 ```
 docker pull adamhsparks/chickpea_asco_dispersal
-docker run -d -p 8787:8787
+docker run -p 8787:8787 -d adamhsparks/chickpea_asco_dispersal
 ```
 
 Once installed, open a browser window and go to `localhost:8787`, log in with `rstudio` and password `rstudio`.
