@@ -23,6 +23,11 @@ docker run -p 8787:8787 -d adamhsparks/chickpea_asco_dispersal:main
 
 Once the image is running, open a browser window and go to `localhost:8787`, log in with `rstudio` and password `rstudio`.
 
+From there, the files are available in the "ChickpeaAscoDispersal" folder shown in the lower right-hand window pane.
+The paper is located in "analysis/paper".
+The vignettes, located in "vignettes" detail the data processing, weather data validation and and modelling work.
+These files can be opened and run interactively or knit using the "knit" button in RStudio to recreate the full analysis.
+
 ## Data availability
 
 All data from this work are included in this repository and R package in the "inst/extdata" folder but also archived and documented with Zenodo, [10.5281/zenodo.3842293](https://doi.org/10.5281/zenodo.3842293), for reuse.
