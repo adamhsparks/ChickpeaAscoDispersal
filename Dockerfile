@@ -16,3 +16,6 @@ RUN . /etc/environment \
   \
  # build this compendium package
   && R -e "devtools::install('home/rstudio/ChickpeaAscoDispersal', dep=TRUE)"
+
+# Become normal user again
+USER ${NB_USER}
