@@ -96,7 +96,7 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<p><!-- badges: start --> <a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a> <a href="https://zenodo.org/badge/latestdoi/241245286"><img src="https://zenodo.org/badge/241245286.svg" alt="DOI"></a> <a href="https://mybinder.org/v2/gh/adamhsparks/ChickpeaAscoDispersal/main?urlpath=rstudio"><img src="https://mybinder.org/badge_logo.svg" alt="Binder"></a> <!-- badges: end --></p>
+<p><!-- badges: start --> <a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a> <a href="https://zenodo.org/badge/latestdoi/241245286"><img src="https://zenodo.org/badge/241245286.svg" alt="DOI"></a> <!-- badges: end --></p>
 <div id="the-role-of-conidia-in-the-dispersal-of-ascochyta-rabiei" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#the-role-of-conidia-in-the-dispersal-of-ascochyta-rabiei" class="anchor"></a>The role of conidia in the dispersal of <em>Ascochyta rabiei</em>
@@ -107,11 +107,11 @@
 <div id="reproducibility" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reproducibility" class="anchor"></a>Reproducibility</h2>
-<p>A binder instance is provided of this repository so that you may run the code and recreate the full analysis in your web browser. Clicking on the <a href="https://mybinder.org/v2/gh/adamhsparks/ChickpeaAscoDispersal/main?urlpath=rstudio"><img src="https://mybinder.org/badge_logo.svg" alt="Binder"></a> button will launch an RStudio Server session in your browser window. From there, in the lower-right window pane, navigate to “vignettes”. The vignettes detail the analysis work done in this project in full. Opening any one of them and clicking “Knit” at the top of your RStudio session will regenerate the full HTML document, which are also available under the “Articles” menu item of the <a href="https://adamhsparks.github.io/ChickpeaAscoDispersal/">web page</a>. You may use this to interactively explore the code that was used to perform the analysis and explore the data from this project.</p>
-<p>Otherwise you can also run it locally using Docker.</p>
+<p>This analysis is packaged a fully complete Docker instance. To get started, install Docker for your respective OS, <a href="https://docs.docker.com/get-docker/" class="uri">https://docs.docker.com/get-docker/</a>, and run the following commands.</p>
 <pre><code>docker pull adamhsparks/chickpea_asco_dispersal
-docker run -d -p 8787:8787</code></pre>
-<p>Once installed, open a browser window and go to <code>localhost:8787</code>, log in with <code>rstudio</code> and password <code>rstudio</code>.</p>
+docker run -p 8787:8787 -d adamhsparks/chickpea_asco_dispersal</code></pre>
+<p>Once the image is running, open a browser window and go to <code>localhost:8787</code>, log in with <code>rstudio</code> and password <code>rstudio</code>.</p>
+<p>From there, the files are available in the “ChickpeaAscoDispersal” folder shown in the lower right-hand window pane. The paper is located in “analysis/paper”. The vignettes, located in “vignettes” detail the data processing, weather data validation and and modelling work. These files can be opened and run interactively or knit using the “knit” button in RStudio to recreate the full analysis.</p>
 </div>
 <div id="data-availability" class="section level2">
 <h2 class="hasAnchor">
