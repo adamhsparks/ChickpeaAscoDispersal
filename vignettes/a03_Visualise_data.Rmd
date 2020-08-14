@@ -35,11 +35,11 @@ theme_set(theme_pubclean(base_size = 14))
 # 2.	Download the windows installer suitable for your machine
 # 3.	Run the installer file which you downloaded and follow the prompts
 # 4.	After running the installer click the windows "Start" button and type "Edit environment variables for your account" and open
-# 5.	In the tab 'advanced' click the button at the bottom 'Enviroment Variables...'
+# 5.	In the tab 'Advanced' click the button at the bottom 'Enviroment Variables...'
 # 6.	Under 'System variables' find the variable 'Path', select 'Path' and click the 'Edit' button
-# 7. 	Select a new line and copy the ghostscript 'bin' folder location into the field.
-# 7.1	If you installed ghostscript to the default folder location; then the folder location will likely be "C:\Program Files\gs\gs9.52\bin", the verison number (9.52) may differ.
-# 8.	Save and exit the enviromental variables window
+# 7. 	Select a new line and copy the Ghostscript 'bin' folder location into the field.
+# 7.1	If you installed ghostscript to the default folder location; then the folder location will likely be "C:\Program Files\gs\gs9.52\bin", the version number (9.52) may differ.
+# 8.	Save and exit the environmental variables window
 
 
 # This chunk is then run only if knitting on new computer that the files have not been generated on
