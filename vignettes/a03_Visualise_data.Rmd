@@ -143,7 +143,7 @@ pw +
    theme_pubclean()
 ```
 
-When inspecting these data, we noted that the wind direction for Curyo was against the direction of spread along the transects, which lead to further investigation of the weather data.
+When inspecting these data, we noted that the wind direction for Curyo was against the direction of spread along the transects, which led to further investigation of the weather data.
 That investigation is detailed in [this analysis](06_Validate_Curyo_weather.html).
 
 ## Heatmap of Lesions Along Transects
