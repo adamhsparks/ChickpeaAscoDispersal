@@ -17,7 +17,7 @@ knitr::opts_knit$set(progress = TRUE, verbose = TRUE)
 
 ## Import Data
 
-```{r libraries, message=FALSE, echo=FALSE}
+```{r libraries, message=FALSE, echo=TRUE, warning=FALSE}
 library("ChickpeaAscoDispersal")
 library("tidyverse")
 library("broom")
