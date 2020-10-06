@@ -193,7 +193,7 @@ ggplot(data = heat_dat,
    facet_wrap(. ~ SpEv, ncol = 3)
 ```
 
-```{r save-fig4, include=FALSE, eval=FALSE}
+```{r save-fig4, include=FALSE, eval=TRUE}
 ggsave(here::here("man", "figures/Fig4.png"))
 ggsave(here::here("man", "figures/Fig4.eps"))
 extrafont::embed_fonts(

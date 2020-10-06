@@ -336,7 +336,9 @@ pw <-
                  n_col = 3,
                  legend_title = "Wind speed (m/s)"))
 pw +
-   scale_fill_viridis_d(name = "Wind Speed (m/s)", direction = -1) +
+   scale_fill_viridis_d(name = "Wind Speed (m/s)",
+                        direction = -1,
+                        labels = c("A", "B", "C", "D", "E")) +
    xlab("") +
    theme_pubclean()
 ```
