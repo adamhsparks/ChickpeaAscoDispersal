@@ -9,12 +9,14 @@ The goal of this research is to examine the role of _Ascochyta rabiei_ conidia d
 A user-friendly website of this research compendium is available here, <https://adamhsparks.github.io/ChickpeaAscoDispersal/>.
 Interested parties may wish to view the data analysis and visualisation pipeline as well as model fitting, these are available under the "Articles" menu item of the [web page](https://adamhsparks.github.io/ChickpeaAscoDispersal/).
 
-A preprint of this paper is available from: <https://doi.org/10.1101/2020.05.12.091827> and is included in "analysis/paper/".
+A preprint of this paper is available from BioRxiv: <https://doi.org/10.1101/2020.05.12.091827> and is included in "analysis/paper/".
+
+The published paper is available from the European Journal of Plant Pathology: <https://doi.org/10.1007/s10658-020-02126-2>.
 
 ## Reproducibility
 
 This analysis is packaged a fully complete Docker instance.
-To get started, install Docker for your respective OS, https://docs.docker.com/get-docker/, and run the following commands.
+To get started, install Docker for your respective OS, <https://docs.docker.com/get-docker/>, and run the following commands.
 
 ```
 docker pull adamhsparks/chickpea_asco_dispersal

@@ -8,7 +8,7 @@
 \description{
 Documents the workflow and processes involved in the analysis of
    data for the paper 'The role of conidia in the dispersal of Ascochyta
-   rabiei'.
+   rabiei', <https://doi.org/10.1007/s10658-020-02126-2>.
 }
 \seealso{
 Useful links:
