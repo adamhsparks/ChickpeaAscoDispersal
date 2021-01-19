@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -77,7 +77,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -91,13 +91,13 @@
 
       
 
-      </header><script src="a03_Visualise_data_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><script src="a03_Visualise_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualise Data</h1>
                         <h4 class="author">A.H. Sparks</h4>
             
-            <h4 class="date">2020-10-09</h4>
+            <h4 class="date">2021-01-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a03_Visualise_data.Rmd"><code>vignettes/a03_Visualise_data.Rmd</code></a></small>
       <div class="hidden name"><code>a03_Visualise_data.Rmd</code></div>
@@ -106,23 +106,23 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://lubridate.tidyverse.org">"lubridate"</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org">"lubridate"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/clifro/">"clifro"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/sjmgarnier/viridis">"viridis"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://rpkgs.datanovia.com/ggpubr/">"ggpubr"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/krlmlr/here">"here"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://here.r-lib.org/">"here"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal">"ChickpeaAscoDispersal"</a></span><span class="op">)</span>
 
-<span class="fu">theme_set</span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="fu">theme_set</span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div id="visualise-counts-per-pot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualise-counts-per-pot" class="anchor"></a>Visualise Counts per Pot</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Mean lesion count per plant"</span><span class="op">)</span></pre></div>
+   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Mean lesion count per plant"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/lesion-count-1.png" alt="Density plot of mean lesions counted per plant for all six events." width="902.4"><p class="caption">
 Density plot of mean lesions counted per plant for all six events.
@@ -132,8 +132,8 @@ Density plot of mean lesions counted per plant for all six events.
 <div id="visualise-the-dispersal-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualise-the-dispersal-data" class="anchor"></a>Visualise the Dispersal Data</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">distance</span>,
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">distance</span>,
                           y <span class="op">=</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">geom_count</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">scale_size</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -150,7 +150,7 @@ Density plot of mean lesions counted per plant for all six events.
    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.window.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">ylab</span><span class="op">(</span><span class="st">"Mean lesion count values"</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">xlab</span><span class="op">(</span><span class="st">"Distance (m)"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
+   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/combined-dispersal-1.png" alt="Mean number of conidia dispersed (counted as lesions) per plant during each spread event. Where the mean lesions per plant for each pot is shown on the y-axis and distance dispersed is on the x-axis. ‘n’ indicates the count of pots with the same mean lesions per trap plant, and is represented by point size. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event." width="902.4"><p class="caption">
 Mean number of conidia dispersed (counted as lesions) per plant during each spread event. Where the mean lesions per plant for each pot is shown on the y-axis and distance dispersed is on the x-axis. ‘n’ indicates the count of pots with the same mean lesions per trap plant, and is represented by point size. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event.
@@ -160,8 +160,8 @@ Mean number of conidia dispersed (counted as lesions) per plant during each spre
 <div id="visualise-the-rainfall" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualise-the-rainfall" class="anchor"></a>Visualise the Rainfall</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="va">cleaned_weather</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"rep"</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="va">cleaned_weather</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"rep"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">dat</span> <span class="op">%&gt;%</span>
    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SpEv</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -178,7 +178,7 @@ Mean number of conidia dispersed (counted as lesions) per plant during each spre
       guide <span class="op">=</span> <span class="fu">guide_axis</span><span class="op">(</span>check.overlap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
    <span class="op">)</span> <span class="op">+</span>
    <span class="fu">ylab</span><span class="op">(</span><span class="st">"Precipitation (mm)"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></pre></div>
+   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/rain-1.png" alt="Ten-minute precipitation data for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; and whether the site was irrigated, 'Irrg' or rainfed 'Rain' or 'Mixd' (both simultaneously); and event '1', '2' or '3.' Precipitation values, 11&amp;nbsp;mm that were applied, are not shown, only rainfall data are presented." width="902.4"><p class="caption">
 Ten-minute precipitation data for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; and whether the site was irrigated, ‘Irrg’ or rainfed ‘Rain’ or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’ Precipitation values, 11 mm that were applied, are not shown, only rainfall data are presented.
@@ -188,8 +188,8 @@ Ten-minute precipitation data for each of the six rainfall or irrigation events 
 <div id="visualise-the-wind-speed-and-direction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualise-the-wind-speed-and-direction" class="anchor"></a>Visualise the Wind Speed and Direction</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">pw</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pw</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span>
       <span class="va">dat</span>,
       <span class="fu"><a href="https://docs.ropensci.org/clifro/reference/windrose.html">windrose</a></span><span class="op">(</span>
@@ -203,7 +203,7 @@ Ten-minute precipitation data for each of the six rainfall or irrigation events 
 <span class="va">pw</span> <span class="op">+</span>
    <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Wind Speed (m/s)"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+   <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/wind-1.png" alt="Windroses for spread events showing ten-minute wind speed and direction at the two Horsham sites. Curyo wind speed and direction data are not shown due to a weather station calibration issue resulting in incorrect data for wind direction." width="902.4"><p class="caption">
 Windroses for spread events showing ten-minute wind speed and direction at the two Horsham sites. Curyo wind speed and direction data are not shown due to a weather station calibration issue resulting in incorrect data for wind direction.
@@ -214,8 +214,8 @@ Windroses for spread events showing ten-minute wind speed and direction at the t
 <div id="heatmap-of-lesions-along-transects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#heatmap-of-lesions-along-transects" class="anchor"></a>Heatmap of Lesions Along Transects</h2>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">heat_dat</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">heat_dat</span> <span class="op">&lt;-</span>
    <span class="va">lesion_counts</span> <span class="op">%&gt;%</span>
    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SpEv</span>, <span class="va">degrees</span><span class="op">)</span> <span class="op">%&gt;%</span>
    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>summed_count_pot <span class="op">=</span>
@@ -256,7 +256,7 @@ Windroses for spread events showing ten-minute wind speed and direction at the t
                       limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">ylab</span><span class="op">(</span><span class="st">"Distance (m)"</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">xlab</span><span class="op">(</span><span class="st">"Transect"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
+   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/polar_coord_transects-1.png" alt="Heatmap showing count of mean lesions per plant for each pot along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'" width="902.4"><p class="caption">
 Heatmap showing count of mean lesions per plant for each pot along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; source of precipitation ‘Irrg’ (irrigation), ‘Rain’ (rainfall) or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’

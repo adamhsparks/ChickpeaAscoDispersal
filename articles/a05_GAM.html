@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -77,7 +77,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -91,13 +91,13 @@
 
       
 
-      </header><script src="a05_GAM_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><script src="a05_GAM_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Fit Generalised Additive Models (GAMs) to the Dispersal Data</h1>
                         <h4 class="author">A.H. Sparks</h4>
             
-            <h4 class="date">2020-10-09</h4>
+            <h4 class="date">2021-01-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a05_GAM.Rmd"><code>vignettes/a05_GAM.Rmd</code></a></small>
       <div class="hidden name"><code>a05_GAM.Rmd</code></div>
@@ -109,41 +109,41 @@
 <div id="import-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#import-data" class="anchor"></a>Import Data</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal">"ChickpeaAscoDispersal"</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal">"ChickpeaAscoDispersal"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://broom.tidymodels.org/">"broom"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://rpkgs.datanovia.com/ggpubr/">"ggpubr"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"mgcv"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mfasiolo/mgcViz">"mgcViz"</a></span><span class="op">)</span>
 
-<span class="fu">theme_set</span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="fu">theme_set</span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="create-data-set-for-gams" class="section level2">
 <h2 class="hasAnchor">
 <a href="#create-data-set-for-gams" class="anchor"></a>Create Data Set for GAMs</h2>
 <p>Join the <code>lesion_counts</code> data and the <code>summary_weather</code> data to create <code>dat</code> for creating GAMs.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">dat</span> <span class="op">&lt;-</span>
-   <span class="fu">left_join</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="va">summary_weather</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"rep"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span>
+   <span class="fu">left_join</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="va">summary_weather</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"rep"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="fit-gams" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fit-gams" class="anchor"></a>Fit GAMs</h2>
 <p>For reproducibility purposes, use <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">27</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">27</span><span class="op">)</span></code></pre></div>
 <div id="mod1---sdistance" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod1---sdistance" class="anchor"></a>mod1 - s(Distance)</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">mod1</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod1</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
       data <span class="op">=</span> <span class="va">dat</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -165,23 +165,23 @@
 ## 
 ## R-sq.(adj) =  0.482   Deviance explained = 48.8%
 ## GCV = 0.76522  Scale est. = 0.75394   n = 334</code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance)"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod1-1.png" width="1152"></p>
 </div>
 <div id="mod2---sdistance-precipitation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod2---sdistance-precipitation" class="anchor"></a>mod2 - s(Distance) + Precipitation</h3>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">mod2</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod2</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="va">sum_rain</span><span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
       data <span class="op">=</span> <span class="va">dat</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -204,21 +204,21 @@
 ## 
 ## R-sq.(adj) =  0.502   Deviance explained =   51%
 ## GCV = 0.7366  Scale est. = 0.72352   n = 334</code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + Precipitation"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod2-1.png" width="1152"></p>
 </div>
 <div id="mod3---sdistance-wind-speed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod3---sdistance-wind-speed" class="anchor"></a>mod3 - s(Distance) + Wind speed</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">mod3</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod3</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span><span class="va">m_lesions</span> <span class="op">~</span> <span class="va">mws</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
        data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -241,21 +241,21 @@
 ## 
 ## R-sq.(adj) =  0.504   Deviance explained = 51.2%
 ## GCV = 0.73389  Scale est. = 0.72086   n = 334</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + Wind speed"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod3-1.png" width="1152"></p>
 </div>
 <div id="mod4---sdistance-wind-speed-precipitation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod4---sdistance-wind-speed-precipitation" class="anchor"></a>mod4 - s(Distance) + Wind speed + Precipitation</h3>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">mod4</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod4</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span><span class="va">m_lesions</span> <span class="op">~</span> <span class="va">sum_rain</span> <span class="op">+</span> <span class="va">mws</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
        data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod4</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod4</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -279,25 +279,25 @@
 ## 
 ## R-sq.(adj) =  0.519   Deviance explained = 52.8%
 ## GCV = 0.71426  Scale est. = 0.69944   n = 334</code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + Wind speed + Precipitation"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod4-1.png" width="1152"></p>
 </div>
 <div id="mod5---sdistance-wind-speed-precipitation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod5---sdistance-wind-speed-precipitation" class="anchor"></a>mod5 - s(Distance + Wind Speed) + Precipitation</h3>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">mod5</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod5</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="va">sum_rain</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span> <span class="op">+</span> <span class="va">mws</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
       data <span class="op">=</span> <span class="va">dat</span>
-   <span class="op">)</span></pre></div>
+   <span class="op">)</span></code></pre></div>
 <pre><code>## Warning in term[i] &lt;- attr(terms(reformulate(term[i])), "term.labels"): number
 ## of items to replace is not a multiple of replacement length</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -320,23 +320,23 @@
 ## 
 ## R-sq.(adj) =  0.502   Deviance explained =   51%
 ## GCV = 0.7366  Scale est. = 0.72352   n = 334</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance + Wind Speed) + Precipitation"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod5-1.png" width="1152"></p>
 </div>
 <div id="mod6---sdistance-swind-speed-precipitation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod6---sdistance-swind-speed-precipitation" class="anchor"></a>mod6 - s(Distance) + s(Wind Speed) + Precipitation</h3>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="va">mod6</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod6</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="va">sum_rain</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">mws</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
       data <span class="op">=</span> <span class="va">dat</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod6</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod6</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -352,31 +352,31 @@
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##               edf Ref.df     F  p-value    
-## s(distance) 3.938  3.997 93.81  &lt; 2e-16 ***
-## s(mws)      3.926  3.995 12.66 9.89e-10 ***
+##               edf Ref.df     F p-value    
+## s(distance) 3.938  3.997 93.81  &lt;2e-16 ***
+## s(mws)      3.926  3.995 12.66  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.566   Deviance explained = 57.8%
 ## GCV = 0.6497  Scale est. = 0.63051   n = 334</code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + s(Wind Speed) + Precipitation"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod6-1.png" width="1152"></p>
 </div>
 <div id="mod7---sdistance-swind-speed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod7---sdistance-swind-speed" class="anchor"></a>mod7 - s(Distance) + s(Wind Speed)</h3>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="va">mod7</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod7</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">mws</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
       data <span class="op">=</span> <span class="va">dat</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod7</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod7</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -391,31 +391,31 @@
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##               edf Ref.df     F  p-value    
-## s(distance) 3.937  3.997 92.96  &lt; 2e-16 ***
-## s(mws)      3.917  3.995 16.04 6.03e-12 ***
+##               edf Ref.df     F p-value    
+## s(distance) 3.937  3.997 92.96  &lt;2e-16 ***
+## s(mws)      3.917  3.995 16.04  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.562   Deviance explained = 57.3%
 ## GCV = 0.65392  Scale est. = 0.63659   n = 334</code></pre>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod7</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod7</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + s(Wind Speed)"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod7-1.png" width="1152"></p>
 </div>
 <div id="mod8---sdistance-swind-speed-sprecipitation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod8---sdistance-swind-speed-sprecipitation" class="anchor"></a>mod8 - s(Distance) + s(Wind Speed) + s(Precipitation)</h3>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="va">mod8</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod8</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">mws</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">sum_rain</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
       data <span class="op">=</span> <span class="va">dat</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod8</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod8</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -433,30 +433,30 @@
 ## Approximate significance of smooth terms:
 ##               edf Ref.df      F p-value    
 ## s(distance) 3.938  3.997 93.805  &lt;2e-16 ***
-## s(mws)      1.666  1.761  1.356  0.3332    
-## s(sum_rain) 3.192  3.219  3.298  0.0112 *  
+## s(mws)      1.666  1.761  1.356  0.3404    
+## s(sum_rain) 3.192  3.219  3.298  0.0113 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.566   Deviance explained = 57.8%
 ## GCV = 0.64956  Scale est. = 0.63051   n = 334</code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + s(Wind Speed) + s(Precipitation)"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod8-1.png" width="1152"></p>
 </div>
 <div id="mod9---sdistance-sprecipitation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod9---sdistance-sprecipitation" class="anchor"></a>mod9 - s(Distance) + s(Precipitation)</h3>
-<div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="va">mod9</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod9</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">sum_rain</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
       data <span class="op">=</span> <span class="va">dat</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod9</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod9</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -471,31 +471,31 @@
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##               edf Ref.df     F  p-value    
-## s(distance) 3.936  3.997 91.78  &lt; 2e-16 ***
-## s(sum_rain) 3.901  3.991 15.19 5.39e-11 ***
+##               edf Ref.df     F p-value    
+## s(distance) 3.936  3.997 91.78  &lt;2e-16 ***
+## s(sum_rain) 3.901  3.991 15.19  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.557   Deviance explained = 56.7%
 ## GCV = 0.66195  Scale est. = 0.64444   n = 334</code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod9</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod9</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + s(Precipitation)"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod9-1.png" width="1152"></p>
 </div>
 <div id="mod10---sdistance-sprecipitation-wind-speed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod10---sdistance-sprecipitation-wind-speed" class="anchor"></a>mod10 - s(Distance) +s(Precipitation) + Wind speed</h3>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="va">mod10</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod10</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">sum_rain</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="va">mws</span>,
       data <span class="op">=</span> <span class="va">dat</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod10</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod10</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -511,26 +511,26 @@
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##               edf Ref.df     F  p-value    
-## s(distance) 3.937  3.997 93.76  &lt; 2e-16 ***
-## s(sum_rain) 3.764  3.944 13.68 1.49e-08 ***
+##               edf Ref.df     F p-value    
+## s(distance) 3.937  3.997 93.76  &lt;2e-16 ***
+## s(sum_rain) 3.764  3.944 13.68  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.566   Deviance explained = 57.8%
 ## GCV = 0.64968  Scale est. = 0.63081   n = 334</code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
          <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + s(Precipitation) + Wind speed"</span><span class="op">)</span>,
-      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+      pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod10-1.png" width="1152"></p>
 </div>
 <div id="mod11---sdistance-swind-speed-sprecipitation-family-tw" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod11---sdistance-swind-speed-sprecipitation-family-tw" class="anchor"></a>mod11 - s(Distance) + s(Wind Speed) + s(Precipitation), family = tw()</h3>
 <p>This is the same as <code>mod8</code> but using <code>family = tw()</code>, see <code><a href="https://rdrr.io/pkg/mgcv/man/family.mgcv.html">?family.mgcv</a></code> for more on the families. The Tweedie distribution is used where the distribution has a positive mass at zero, but is continuous unlike the Poisson distribution that requires count data. The data visualisation shows clearly that the mean pot count data have this shape.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="va">mod11</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod11</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> 
          <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">mws</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> 
@@ -539,7 +539,7 @@
       family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/Tweedie.html">tw</a></span><span class="op">(</span><span class="op">)</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod11</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod11</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: Tweedie(p=1.044) 
 ## Link function: log 
@@ -557,25 +557,25 @@
 ## Approximate significance of smooth terms:
 ##               edf Ref.df       F p-value    
 ## s(distance) 3.496  3.855 123.776 &lt; 2e-16 ***
-## s(mws)      1.992  2.092   0.824 0.45063    
-## s(sum_rain) 2.812  2.879   5.493 0.00163 ** 
+## s(mws)      1.992  2.092   0.824 0.45080    
+## s(sum_rain) 2.812  2.879   5.493 0.00168 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.674   Deviance explained = 61.2%
 ## -REML = 309.96  Scale est. = 0.36397   n = 334</code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod11</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod11</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
    <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"s(Distance) + s(Wind Speed) + s(Precipitation), family = tw()"</span><span class="op">)</span>,
-   pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+   pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod11-1.png" width="1152"></p>
 </div>
 <div id="mod12---sdistance-bs-ts-sprecipitation-bs-ts-wind-speed-family-tw" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod12---sdistance-bs-ts-sprecipitation-bs-ts-wind-speed-family-tw" class="anchor"></a>mod12 - s(Distance, bs = “ts”) + s(Precipitation, bs = “ts”) Wind speed, family = tw()</h3>
 <p>Try using wind speed as a linear predictor only.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="va">mod12</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod12</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span>, bs <span class="op">=</span> <span class="st">"ts"</span><span class="op">)</span> <span class="op">+</span> 
          <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">mws</span>, k <span class="op">=</span> <span class="fl">5</span>, bs <span class="op">=</span> <span class="st">"ts"</span><span class="op">)</span> <span class="op">+</span> 
@@ -584,7 +584,7 @@
       family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/Tweedie.html">tw</a></span><span class="op">(</span><span class="op">)</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod12</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod12</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: Tweedie(p=1.044) 
 ## Link function: log 
@@ -600,30 +600,30 @@
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##                edf Ref.df       F  p-value    
-## s(distance) 3.2481      4 117.664  &lt; 2e-16 ***
-## s(mws)      0.9088      4   2.403 0.000269 ***
-## s(sum_rain) 2.8645      4  15.752 2.32e-13 ***
+##                edf Ref.df       F p-value    
+## s(distance) 3.2481      4 117.664 &lt; 2e-16 ***
+## s(mws)      0.9088      4   2.403 0.00027 ***
+## s(sum_rain) 2.8645      4  15.752 &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.657   Deviance explained =   60%
 ## -REML = 319.36  Scale est. = 0.36504   n = 334</code></pre>
-<div class="sourceCode" id="cb41"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span>
    <span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod12</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
       <span class="fu">ggtitle</span><span class="op">(</span>
          <span class="st">"s(Distance, bs = 'ts') + s(Wind speed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()"</span>
       <span class="op">)</span>,
    pages <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span></pre></div>
+<span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod12-1.png" width="1152"></p>
 </div>
 <div id="mod13---sdistance-bs-ts-swind-speed-bs-ts-sprecipitation-bs-ts-family-tw" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mod13---sdistance-bs-ts-swind-speed-bs-ts-sprecipitation-bs-ts-family-tw" class="anchor"></a>mod13 - s(Distance, bs = “ts”) + s(Wind speed, bs = “ts”) + s(Precipitation, bs = “ts”), family = tw()</h3>
-<div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="va">mod13</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod13</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span>
       <span class="va">m_lesions</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">distance</span>, k <span class="op">=</span> <span class="fl">5</span>, bs <span class="op">=</span> <span class="st">"ts"</span><span class="op">)</span> <span class="op">+</span> 
          <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">mws</span>, k <span class="op">=</span> <span class="fl">5</span>, bs <span class="op">=</span> <span class="st">"ts"</span><span class="op">)</span> <span class="op">+</span> 
@@ -632,7 +632,7 @@
       family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/Tweedie.html">tw</a></span><span class="op">(</span><span class="op">)</span>
    <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Family: Tweedie(p=1.044) 
 ## Link function: log 
@@ -648,23 +648,23 @@
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##                edf Ref.df       F  p-value    
-## s(distance) 3.2481      4 117.664  &lt; 2e-16 ***
-## s(mws)      0.9088      4   2.403 0.000269 ***
-## s(sum_rain) 2.8645      4  15.752 2.32e-13 ***
+##                edf Ref.df       F p-value    
+## s(distance) 3.2481      4 117.664 &lt; 2e-16 ***
+## s(mws)      0.9088      4   2.403 0.00027 ***
+## s(sum_rain) 2.8645      4  15.752 &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.657   Deviance explained =   60%
 ## -REML = 319.36  Scale est. = 0.36504   n = 334</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit">
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span>
    <span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod13</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
       <span class="fu">ggtitle</span><span class="op">(</span>
          <span class="st">"s(Distance, bs = 'ts') + s(Wind speed, bs = 'ts')\n+ s(Precipitation, bs = 'ts'), family = tw()"</span>
       <span class="op">)</span>,
    pages <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span></pre></div>
+<span class="op">)</span></code></pre></div>
 <p><img src="a05_GAM_files/figure-html/fit-mod13-1.png" width="1152"></p>
 <p>This model, same structure as <code>mod11</code>, uses thin-plate splines to shrink the coefficients of the smooth to zero when possible.</p>
 </div>
@@ -675,8 +675,8 @@
 <div id="aic-bic" class="section level3">
 <h3 class="hasAnchor">
 <a href="#aic-bic" class="anchor"></a>AIC, BIC</h3>
-<div class="sourceCode" id="cb45"><pre class="downlit">
-<span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mod1 <span class="op">=</span> <span class="va">mod1</span>,
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mod1 <span class="op">=</span> <span class="va">mod1</span>,
                mod2 <span class="op">=</span> <span class="va">mod2</span>,
                mod3 <span class="op">=</span> <span class="va">mod3</span>,
                mod4 <span class="op">=</span> <span class="va">mod4</span>,
@@ -691,7 +691,7 @@
                mod13 <span class="op">=</span> <span class="va">mod13</span>
                <span class="op">)</span>
 <span class="fu">map_df</span><span class="op">(</span><span class="va">models</span>, <span class="va">glance</span>, .id <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">arrange</span><span class="op">(</span><span class="va">AIC</span><span class="op">)</span></pre></div>
+   <span class="fu">arrange</span><span class="op">(</span><span class="va">AIC</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 13 x 8
 ##    model    df logLik   AIC   BIC deviance df.residual  nobs
 ##    &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;
@@ -713,8 +713,8 @@
 <h3 class="hasAnchor">
 <a href="#r2" class="anchor"></a>R<sup>2</sup>
 </h3>
-<div class="sourceCode" id="cb47"><pre class="downlit">
-<span class="fu">enframe</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">enframe</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
    mod1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span><span class="op">$</span><span class="va">r.sq</span>,
    mod2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span><span class="op">$</span><span class="va">r.sq</span>,
    mod3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span><span class="op">$</span><span class="va">r.sq</span>,
@@ -729,7 +729,7 @@
    mod12 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod12</span><span class="op">)</span><span class="op">$</span><span class="va">r.sq</span>,
    mod13 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13</span><span class="op">)</span><span class="op">$</span><span class="va">r.sq</span>
 <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></pre></div>
+   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 13 x 2
 ##    name  value
 ##    &lt;chr&gt; &lt;dbl&gt;
@@ -750,8 +750,8 @@
 <div id="anova" class="section level3">
 <h3 class="hasAnchor">
 <a href="#anova" class="anchor"></a>ANOVA</h3>
-<div class="sourceCode" id="cb49"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod1</span>,
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod1</span>,
       <span class="va">mod2</span>,
       <span class="va">mod3</span>,
       <span class="va">mod4</span>,
@@ -764,7 +764,7 @@
       <span class="va">mod11</span>,
       <span class="va">mod12</span>,
       <span class="va">mod13</span>,
-      test <span class="op">=</span> <span class="st">"F"</span><span class="op">)</span></pre></div>
+      test <span class="op">=</span> <span class="st">"F"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model  1: m_lesions ~ s(distance, k = 5)
@@ -793,7 +793,7 @@
 ## 6     324.01     204.37  3.99643310    33.00    22.6848 &lt; 2.2e-16 ***
 ## 7     325.01     206.98 -1.00079323    -2.61     7.1714 0.0077719 ** 
 ## 8     324.02     204.41  0.98506967     2.57     7.1679 0.0080600 ** 
-## 9     325.01     209.55 -0.98925006    -5.13    14.2593 0.0002005 ***
+## 9     325.01     209.55 -0.98925005    -5.13    14.2593 0.0002005 ***
 ## 10    324.06     204.57  0.95381798     4.98    14.3389 0.0002324 ***
 ## 11    323.65     639.85  0.41008504  -435.28                         
 ## 12    324.67     667.45 -1.02520618   -27.60    73.9641 &lt; 2.2e-16 ***
@@ -807,17 +807,17 @@
 <div id="mod11---sdistance-swind-speed-sprecipitation-family-tw-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#mod11---sdistance-swind-speed-sprecipitation-family-tw-1" class="anchor"></a>mod11 - s(Distance) + s(Wind Speed) + s(Precipitation), family = tw()</h4>
-<div class="sourceCode" id="cb51"><pre class="downlit">
-<span class="va">mod11_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod11</span><span class="op">)</span>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod11_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod11</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/PkgUtils.html">check</a></span><span class="op">(</span><span class="va">mod11_vis</span>,
       a.qq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"tnorm"</span>, 
                   a.cipoly <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"light blue"</span><span class="op">)</span><span class="op">)</span>, 
       a.respoi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, 
-      a.hist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></pre></div>
+      a.hist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Method: REML   Optimizer: outer newton
 ## full convergence after 8 iterations.
-## Gradient range [-4.288903e-07,2.610574e-07]
+## Gradient range [-4.289034e-07,2.610574e-07]
 ## (score 309.9554 &amp; scale 0.3639671).
 ## Hessian positive definite, eigenvalue range [0.3685077,2978.832].
 ## Model rank =  13 / 13 
@@ -832,13 +832,13 @@
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><img src="a05_GAM_files/figure-html/mod-check11-1.png" width="1152"></p>
-<div class="sourceCode" id="cb53"><pre class="downlit">
-<span class="co"># generate a new plot.gam object just for the publication (no main title)</span>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># generate a new plot.gam object just for the publication (no main title)</span>
 <span class="va">p11</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_gam.html">p_gam</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcViz/man/getViz.html">getViz</a></span><span class="op">(</span><span class="va">mod11</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># save png and eps files</span>
 <span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span>
-   file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.png"</span><span class="op">)</span>,
+   file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.png"</span><span class="op">)</span>,
    width <span class="op">=</span> <span class="fl">640</span>,
    height <span class="op">=</span> <span class="fl">640</span>,
    units <span class="op">=</span> <span class="st">"px"</span>,
@@ -847,17 +847,17 @@
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">p11</span>, pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/grDevices/postscript.html">postscript</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.eps"</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/r/grDevices/postscript.html">postscript</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.eps"</span><span class="op">)</span>,
            family <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.1</span><span class="op">)</span>
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">p11</span>, pages <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu">embed_fonts</span><span class="op">(</span>
-   file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.eps"</span><span class="op">)</span>,
-   outfile <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.eps"</span><span class="op">)</span>,
+   file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.eps"</span><span class="op">)</span>,
+   outfile <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"man/figures"</span>, <span class="st">"Fig1.eps"</span><span class="op">)</span>,
    options <span class="op">=</span> <span class="st">"-dEPSCrop"</span>
-<span class="op">)</span></pre></div>
+<span class="op">)</span></code></pre></div>
 </div>
 </div>
 </div>
