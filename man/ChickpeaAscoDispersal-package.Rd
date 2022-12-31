@@ -6,9 +6,7 @@
 \alias{ChickpeaAscoDispersal-package}
 \title{ChickpeaAscoDispersal: Research Compendium for the Paper 'The role of conidia in the dispersal of Ascochyta rabiei'}
 \description{
-Documents the workflow and processes involved in the analysis of
-   data for the paper 'The role of conidia in the dispersal of Ascochyta
-   rabiei', <https://doi.org/10.1007/s10658-020-02126-2>.
+Documents the workflow and processes involved in the analysis of data for the paper 'The role of conidia in the dispersal of Ascochyta rabiei', \url{https://doi.org/10.1007/s10658-020-02126-2}.
 }
 \seealso{
 Useful links:

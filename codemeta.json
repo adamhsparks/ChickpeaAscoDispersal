@@ -1,20 +1,19 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "ChickpeaAscoDispersal",
-  "description": "Documents the workflow and processes involved in the analysis of\n   data for the paper 'The role of conidia in the dispersal of Ascochyta\n   rabiei'.",
+  "description": "Documents the workflow and processes involved in the analysis of data for the paper 'The role of conidia in the dispersal of Ascochyta rabiei', <https://doi.org/10.1007/s10658-020-02126-2>.",
   "name": "ChickpeaAscoDispersal: Research Compendium for the Paper 'The role of conidia in the dispersal of Ascochyta rabiei'",
+  "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
+  "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
   "author": [
     {
       "@type": "Person",
@@ -75,7 +74,6 @@
       "name": "The Birchip Cropping Group"
     }
   ],
-  "copyrightHolder": {},
   "funder": [
     {
       "@type": "Organization",
@@ -99,15 +97,14 @@
       "@id": "https://orcid.org/0000-0002-0061-8359"
     }
   ],
-  "softwareSuggestions": [],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5.0"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "broom",
       "name": "broom",
@@ -119,19 +116,13 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=broom"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "bomrang",
       "name": "bomrang",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=bomrang"
+      "sameAs": "https://github.com/rOpenSci/bomrang"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "clifro",
       "name": "clifro",
@@ -143,7 +134,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=clifro"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "extrafont",
       "name": "extrafont",
@@ -155,7 +146,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=extrafont"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -168,7 +159,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "ggpubr",
       "name": "ggpubr",
@@ -181,12 +172,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggpubr"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "graphics",
       "name": "graphics"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "leaflet",
       "name": "leaflet",
@@ -198,7 +189,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=leaflet"
     },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "lme4",
       "name": "lme4",
@@ -210,7 +201,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lme4"
     },
-    {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "here",
       "name": "here",
@@ -222,7 +213,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=here"
     },
-    {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "kableExtra",
       "name": "kableExtra",
@@ -234,7 +225,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=kableExtra"
     },
-    {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
@@ -246,7 +237,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
     },
-    {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -258,7 +249,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    {
+    "15": {
       "@type": "SoftwareApplication",
       "identifier": "mgcv",
       "name": "mgcv",
@@ -270,7 +261,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=mgcv"
     },
-    {
+    "16": {
       "@type": "SoftwareApplication",
       "identifier": "mgcViz",
       "name": "mgcViz",
@@ -282,7 +273,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=mgcViz"
     },
-    {
+    "17": {
       "@type": "SoftwareApplication",
       "identifier": "skimr",
       "name": "skimr",
@@ -294,7 +285,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=skimr"
     },
-    {
+    "18": {
       "@type": "SoftwareApplication",
       "identifier": "stationaRy",
       "name": "stationaRy",
@@ -306,7 +297,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stationaRy"
     },
-    {
+    "19": {
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
@@ -318,7 +309,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     },
-    {
+    "20": {
       "@type": "SoftwareApplication",
       "identifier": "tidyverse",
       "name": "tidyverse",
@@ -330,7 +321,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyverse"
     },
-    {
+    "21": {
       "@type": "SoftwareApplication",
       "identifier": "viridis",
       "name": "viridis",
@@ -341,13 +332,10 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=viridis"
-    }
-  ],
-  "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
-  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/main/README.md",
-  "fileSize": "20897.972KB",
-  "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
-  "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable",
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "12555.65KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -391,8 +379,11 @@
       "name": "{ChickpeaAscoDispersal}: A research compendium to accompany 'The role of conidia in the dispersal of Ascochyta rabiei'",
       "identifier": "10.5281/zenodo.3810827",
       "url": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
+      "description": "R package version 1.0.0",
       "@id": "https://doi.org/10.5281/zenodo.3810827",
       "sameAs": "https://doi.org/10.5281/zenodo.3810827"
     }
-  ]
+  ],
+  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/main/README.md",
+  "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable"
 }
