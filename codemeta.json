@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
   "author": [
     {
       "@type": "Person",
@@ -335,7 +335,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "12555.65KB",
+  "fileSize": "12555.649KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -379,7 +379,7 @@
       "name": "{ChickpeaAscoDispersal}: A research compendium to accompany 'The role of conidia in the dispersal of Ascochyta rabiei'",
       "identifier": "10.5281/zenodo.3810827",
       "url": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
-      "description": "R package version 1.0.0",
+      "description": "R package version 1.0.1",
       "@id": "https://doi.org/10.5281/zenodo.3810827",
       "sameAs": "https://doi.org/10.5281/zenodo.3810827"
     }
