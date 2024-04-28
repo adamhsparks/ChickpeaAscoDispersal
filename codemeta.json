@@ -336,7 +336,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "12557.204KB",
+  "fileSize": "12557.203KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -385,6 +385,6 @@
       "sameAs": "https://doi.org/10.5281/zenodo.3810827"
     }
   ],
-  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/main/README.md",
+  "readme": "https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/README.md",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#stable"
 }
