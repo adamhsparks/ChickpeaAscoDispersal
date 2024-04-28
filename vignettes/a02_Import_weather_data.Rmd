@@ -231,7 +231,7 @@ glimpse(cleaned_weather)
 The weather data are now ready for summarising for each event that occurred.
 The resulting columns are:
 
-* mws - mean wind speed in meters per second
+* mws - mean wind speed in metres per second
 
 * ws_sd - standard deviation of the wind speed
 
