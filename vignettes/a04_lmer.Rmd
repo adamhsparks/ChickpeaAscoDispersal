@@ -47,7 +47,7 @@ In this experiment there are a number of factors which may influence conidia spr
 
   * Wind direction during the spread event.
 
-  * Distance the trap plants were placed from the aschochyta infested plots (distance).
+  * Distance the trap plants were placed from the ascochyta infested plots (distance).
 
   * The bearing in which the trap plants were placed at distances relative to the infested plots (transect).
 
