@@ -8,6 +8,8 @@ vignette: >
   %\VignetteIndexEntry{Import Raw Lesion Count Data}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{knitr}
 ---
 
 ```{r libraries, message=FALSE}

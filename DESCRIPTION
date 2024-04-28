@@ -38,21 +38,22 @@ Description: Documents the workflow and processes involved in the analysis of
    rabiei', <https://doi.org/10.1007/s10658-020-02126-2>.
 Depends: R (>= 3.5.0)
 Imports:
+   graphics,
+   mgcViz
+Suggests:
    broom,
    bomrang,
    clifro,
    extrafont,
-   ggplot2 (>= 3.3.0),
    ggpubr (>= 0.2.5),
-   graphics,
-   leaflet,
-   lme4,
    here,
    kableExtra,
    knitr,
+   leaflet,
+   lme4,
    lubridate,
    mgcv,
-   mgcViz,
+   scales,
    skimr,
    stationaRy,
    testthat,

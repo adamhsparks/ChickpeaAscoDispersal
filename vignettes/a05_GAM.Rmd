@@ -8,6 +8,9 @@ vignette: >
   %\VignetteIndexEntry{Fit Generalised Additive Models (GAMs) to the Dispersal Data}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{ggpubr}
+  %\VignetteDepends{mgcv}
 ---
 
 ```{r setup, include=FALSE}
@@ -334,23 +337,7 @@ enframe(c(
    arrange(desc(value))
 ```
 
-### ANOVA
-```{r anova}
-anova(mod1,
-      mod2,
-      mod3,
-      mod4,
-      mod5,
-      mod6,
-      mod7,
-      mod8,
-      mod9,
-      mod10,
-      mod11,
-      mod12,
-      mod13,
-      test = "F")
-```
+> **NOTE** The original work had an `anova.gam()` to compare the models. Somehow, somewhere it seems that changes have been made and current versions of the R packages don't allow an ANOVA comparison for GAMs that use `family = tw()`, so this portion has been removed from this vignette. -ahs 2024-04-28
 
 ### Check Best Model Fit
 

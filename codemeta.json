@@ -97,14 +97,8 @@
       "@id": "https://orcid.org/0000-0002-0061-8359"
     }
   ],
-  "softwareRequirements": {
-    "1": {
-      "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": ">= 3.5.0"
-    },
-    "2": {
+  "softwareSuggestions": [
+    {
       "@type": "SoftwareApplication",
       "identifier": "broom",
       "name": "broom",
@@ -116,13 +110,13 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=broom"
     },
-    "3": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "bomrang",
       "name": "bomrang",
       "sameAs": "https://github.com/rOpenSci/bomrang"
     },
-    "4": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "clifro",
       "name": "clifro",
@@ -134,7 +128,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=clifro"
     },
-    "5": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "extrafont",
       "name": "extrafont",
@@ -146,20 +140,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=extrafont"
     },
-    "6": {
-      "@type": "SoftwareApplication",
-      "identifier": "ggplot2",
-      "name": "ggplot2",
-      "version": ">= 3.3.0",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
-    },
-    "7": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "ggpubr",
       "name": "ggpubr",
@@ -172,36 +153,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggpubr"
     },
-    "8": {
-      "@type": "SoftwareApplication",
-      "identifier": "graphics",
-      "name": "graphics"
-    },
-    "9": {
-      "@type": "SoftwareApplication",
-      "identifier": "leaflet",
-      "name": "leaflet",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=leaflet"
-    },
-    "10": {
-      "@type": "SoftwareApplication",
-      "identifier": "lme4",
-      "name": "lme4",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=lme4"
-    },
-    "11": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "here",
       "name": "here",
@@ -213,7 +165,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=here"
     },
-    "12": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "kableExtra",
       "name": "kableExtra",
@@ -225,7 +177,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=kableExtra"
     },
-    "13": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
@@ -237,7 +189,31 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
     },
-    "14": {
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "leaflet",
+      "name": "leaflet",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=leaflet"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "lme4",
+      "name": "lme4",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=lme4"
+    },
+    {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -249,7 +225,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "15": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "mgcv",
       "name": "mgcv",
@@ -261,19 +237,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=mgcv"
     },
-    "16": {
+    {
       "@type": "SoftwareApplication",
-      "identifier": "mgcViz",
-      "name": "mgcViz",
+      "identifier": "scales",
+      "name": "scales",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=mgcViz"
+      "sameAs": "https://CRAN.R-project.org/package=scales"
     },
-    "17": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "skimr",
       "name": "skimr",
@@ -285,7 +261,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=skimr"
     },
-    "18": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "stationaRy",
       "name": "stationaRy",
@@ -297,7 +273,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stationaRy"
     },
-    "19": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
@@ -309,7 +285,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     },
-    "20": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "tidyverse",
       "name": "tidyverse",
@@ -321,7 +297,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyverse"
     },
-    "21": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "viridis",
       "name": "viridis",
@@ -332,10 +308,35 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=viridis"
+    }
+  ],
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "graphics",
+      "name": "graphics"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
+      "identifier": "mgcViz",
+      "name": "mgcViz",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=mgcViz"
     },
     "SystemRequirements": null
   },
-  "fileSize": "12555.649KB",
+  "fileSize": "12556.573KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",

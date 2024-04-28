@@ -8,6 +8,17 @@ vignette: >
   %\VignetteIndexEntry{Validate Curyo Wind with Alternate Sources}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{skimr}
+  %\VignetteDepends{ggpubr}
+  %\VignetteDepends{kableExtra}
+  %\VignetteDepends{scales}
+  %\VignetteDepends{stationaRy}
+  %\VignetteDepends{bomrang}
+  %\VignetteDepends{clifro}
+  %\VignetteDepends{leaflet}
+  %\VignetteDepends{htmltools}
+  %\VignetteDepends{lubridate}
 ---
 
 ```{r libraries, message=FALSE, warning=FALSE}
@@ -23,7 +34,6 @@ library("clifro")
 library("leaflet")
 library("htmltools")
 library("lubridate")
-library("ggplot2")
 
 theme_set(theme_pubclean(base_size = 14))
 

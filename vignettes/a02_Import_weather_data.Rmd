@@ -8,6 +8,12 @@ vignette: >
   %\VignetteIndexEntry{Weather Data Import and Cleaning}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{ggpubr}
+  %\VignetteDepends{kableExtra}
+  %\VignetteDepends{lubridate}
+  %\VignetteDepends{scales}
+  %\VignetteDepends{skimr}
 ---
 
 ### Load Libraries for This Exercise

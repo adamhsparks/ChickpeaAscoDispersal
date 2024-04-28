@@ -8,6 +8,11 @@ vignette: >
   %\VignetteIndexEntry{Visualise Data}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{lubridate}
+  %\VignetteDepends{clifro}
+  %\VignetteDepends{ggpubr}
+  %\VignetteDepends{here}
 ---
 
 ```{r setup, include=FALSE}

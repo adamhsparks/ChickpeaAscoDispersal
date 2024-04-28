@@ -8,6 +8,8 @@ vignette: >
   %\VignetteIndexEntry{Preliminary lmer models}
   %\VignetteEngine{knitr::rmarkdown_notangle}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{lme4}
 ---
 
 ## Aims
