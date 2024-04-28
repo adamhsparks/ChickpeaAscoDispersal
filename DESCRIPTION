@@ -1,6 +1,6 @@
 Package: ChickpeaAscoDispersal
 Title: Research Compendium for the Paper 'The role of conidia in the dispersal of Ascochyta rabiei'
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(person("Ihsanul", "Khaliq",
                      email = "ihsan.khaliq@usq.edu.au",
                      role = "aut",
