@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weather Data Import and Cleaning • ChickpeaAscoDispersal</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ChickpeaAscoDispersal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/">
+  <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,49 +87,62 @@
 
       
 
-      </header><script src="a02_Import_weather_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Weather Data Import and Cleaning</h1>
-                        <h4 class="author">A.H. Sparks and P. Melloy</h4>
+                        <h4 data-toc-skip class="author">A.H. Sparks and
+P. Melloy</h4>
             
-            <h4 class="date">2021-01-19</h4>
+            <h4 data-toc-skip class="date">2024-04-28</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a02_Import_weather_data.Rmd"><code>vignettes/a02_Import_weather_data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/HEAD/vignettes/a02_Import_weather_data.Rmd" class="external-link"><code>vignettes/a02_Import_weather_data.Rmd</code></a></small>
       <div class="hidden name"><code>a02_Import_weather_data.Rmd</code></div>
 
     </div>
 
     
     
-<div id="load-libraries-for-this-exercise" class="section level3">
-<h3 class="hasAnchor">
-<a href="#load-libraries-for-this-exercise" class="anchor"></a>Load Libraries for This Exercise</h3>
+<div class="section level3">
+<h3 id="load-libraries-for-this-exercise">Load Libraries for This Exercise<a class="anchor" aria-label="anchor" href="#load-libraries-for-this-exercise"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal">"ChickpeaAscoDispersal"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org">"lubridate"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/skimr">"skimr"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://rpkgs.datanovia.com/ggpubr/">"ggpubr"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://haozhu233.github.io/kableExtra/">"kableExtra"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://scales.r-lib.org">"scales"</a></span><span class="op">)</span>
-
-<span class="fu">theme_set</span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal" class="external-link">"ChickpeaAscoDispersal"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org" class="external-link">"tidyverse"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org" class="external-link">"lubridate"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/skimr/" class="external-link">"skimr"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">"ggpubr"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://haozhu233.github.io/kableExtra/" class="external-link">"kableExtra"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://scales.r-lib.org" class="external-link">"scales"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html" class="external-link">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="weather-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#weather-data" class="anchor"></a>Weather data</h3>
-<p>Import and select only the weather data necessary for analysis from Curyo and Horsham weather stations. The original data are located in the “data” directory. Dates for events are recorded in the “data/Dispersal experiments dates.csv” file and are used to subset the weather data in this file.</p>
+<div class="section level3">
+<h3 id="weather-data">Weather data<a class="anchor" aria-label="anchor" href="#weather-data"></a>
+</h3>
+<p>Import and select only the weather data necessary for analysis from
+Curyo and Horsham weather stations. The original data are located in the
+“data” directory. Dates for events are recorded in the “data/Dispersal
+experiments dates.csv” file and are used to subset the weather data in
+this file.</p>
 </div>
-<div id="irrigation-amount-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#irrigation-amount-data" class="anchor"></a>Irrigation Amount Data</h3>
-<p>Dr J. Fanning (AgVic) tested the irrigation system on two separate days, 2020-03-17 and 2020-03-18. Following is his e-mail and conclusions.</p>
+<div class="section level3">
+<h3 id="irrigation-amount-data">Irrigation Amount Data<a class="anchor" aria-label="anchor" href="#irrigation-amount-data"></a>
+</h3>
+<p>Dr J. Fanning (AgVic) tested the irrigation system on two separate
+days, 2020-03-17 and 2020-03-18. Following is his e-mail and
+conclusions.</p>
 <blockquote>
-<p>This is based on the following I have checked the irrigation schedules and I irrigated for 90 minutes each time for these experiments. When I irrigated it was usually below 10kph.</p>
+<p>This is based on the following I have checked the irrigation
+schedules and I irrigated for 90 minutes each time for these
+experiments. When I irrigated it was usually below 10kph.</p>
 </blockquote>
 <blockquote>
-<p>The team have run the test once yesterday morning and once this morning. It is difficult, as the wind has not been dropping down to 0-5kph and there is no wind breaks out there. Based on the forecast this will be the best we can get for at least the length of the forecast ahead.</p>
+<p>The team have run the test once yesterday morning and once this
+morning. It is difficult, as the wind has not been dropping down to
+0-5kph and there is no wind breaks out there. Based on the forecast this
+will be the best we can get for at least the length of the forecast
+ahead.</p>
 </blockquote>
 <blockquote>
 <p>First test showed 0.12mm per min, with 10-15kph wind</p>
@@ -142,773 +151,462 @@
 <p>Second test showed 0.13mm per min with 10-20kph wind</p>
 </blockquote>
 <blockquote>
-<p>Even with the variability I am confident in these figures as the wind is mainly changing where is being irrigated rather than the amount based on the testing. Less irrigation into the wind. We have a Northerly wind currently where as it was westerly when we irrigated so wind would have been blowing with the length of the sprinkler system so to speak. With the piping running East/West. The attached picture is orientated with North to the top of the page so shows the length running east/west which I feels reduces the variability in irrigation.</p>
+<p>Even with the variability I am confident in these figures as the wind
+is mainly changing where is being irrigated rather than the amount based
+on the testing. Less irrigation into the wind. We have a Northerly wind
+currently where as it was westerly when we irrigated so wind would have
+been blowing with the length of the sprinkler system so to speak. With
+the piping running East/West. The attached picture is orientated with
+North to the top of the page so shows the length running east/west which
+I feels reduces the variability in irrigation.</p>
 </blockquote>
-<p>Based on this, we elected to use 11 mm as the amount of irrigation applied during the spread events at Horsham.</p>
-<p>These values are added to the data in the <a href="Summarise%20weather%20data%20by%20event">Summarise weather data by event</a> code chunk for the raw weather output.</p>
+<p>Based on this, we elected to use 11 mm as the amount of irrigation
+applied during the spread events at Horsham.</p>
+<p>These values are added to the data in the <a href="Summarise%20weather%20data%20by%20event">Summarise weather data by
+event</a> code chunk for the raw weather output.</p>
 </div>
-<div id="curyo-weather-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#curyo-weather-data" class="anchor"></a>Curyo Weather Data</h2>
-<p>In this first step, the data are imported and only the date and time, average wind speed and average wind direction are selected.</p>
-<div id="import-curyo-weather-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#import-curyo-weather-data" class="anchor"></a>Import Curyo Weather Data</h3>
+<div class="section level2">
+<h2 id="curyo-weather-data">Curyo Weather Data<a class="anchor" aria-label="anchor" href="#curyo-weather-data"></a>
+</h2>
+<p>In this first step, the data are imported and only the date and time,
+average wind speed and average wind direction are selected.</p>
+<div class="section level3">
+<h3 id="import-curyo-weather-data">Import Curyo Weather Data<a class="anchor" aria-label="anchor" href="#import-curyo-weather-data"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Curyo_w</span> <span class="op">&lt;-</span>
-   <span class="fu">read_csv</span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>
-         <span class="st">"extdata"</span>,
-         <span class="st">"Curyo_SPA_2019_weather.csv"</span>,
-         package <span class="op">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,
-         mustWork <span class="op">=</span> <span class="cn">TRUE</span>
-      <span class="op">)</span>
-   <span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">Time</span>,
-          <span class="st">'Wind Speed - average (km/h)'</span>,
-          <span class="st">'Wind Direction - average (º)'</span>,
-          <span class="st">"Rainfall - (mm)"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Time <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">dmy_hm</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="st">"Curyo"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">Location</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Curyo_w</span> <span class="op">&lt;-</span></span>
+<span>   <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>         <span class="st">"extdata"</span>,</span>
+<span>         <span class="st">"Curyo_SPA_2019_weather.csv"</span>,</span>
+<span>         package <span class="op">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,</span>
+<span>         mustWork <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>      <span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Time</span>,</span>
+<span>          <span class="st">'Wind Speed - average (km/h)'</span>,</span>
+<span>          <span class="st">'Wind Direction - average (º)'</span>,</span>
+<span>          <span class="st">"Rainfall - (mm)"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Time <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hm</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="st">"Curyo"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Location</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="inspect-the-curyo-weather-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inspect-the-curyo-weather-data" class="anchor"></a>Inspect the Curyo Weather Data</h3>
+<div class="section level3">
+<h3 id="inspect-the-curyo-weather-data">Inspect the Curyo Weather Data<a class="anchor" aria-label="anchor" href="#inspect-the-curyo-weather-data"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">Curyo_w</span><span class="op">)</span></code></pre></div>
-<table class="table table table-condensed">
-<caption>
-Data summary
-</caption>
-<thead><tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-</th>
-</tr></thead>
+<code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html" class="external-link">skim</a></span><span class="op">(</span><span class="va">Curyo_w</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Data summary</caption>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Name
-</td>
-<td style="text-align:left;">
-Curyo_w
-</td>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Curyo_w</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Number of rows
-</td>
-<td style="text-align:left;">
-43473
-</td>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">43473</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Number of columns
-</td>
-<td style="text-align:left;">
-5
-</td>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">5</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-_______________________
-</td>
-<td style="text-align:left;">
-</td>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Column type frequency:
-</td>
-<td style="text-align:left;">
-</td>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
 </tr>
-<tr>
-<td style="text-align:left;">
-character
-</td>
-<td style="text-align:left;">
-1
-</td>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-numeric
-</td>
-<td style="text-align:left;">
-3
-</td>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">3</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-POSIXct
-</td>
-<td style="text-align:left;">
-1
-</td>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">1</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-________________________
-</td>
-<td style="text-align:left;">
-</td>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Group variables
-</td>
-<td style="text-align:left;">
-None
-</td>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Variable type: character</strong></p>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:right;">
-min
-</th>
-<th style="text-align:right;">
-max
-</th>
-<th style="text-align:right;">
-empty
-</th>
-<th style="text-align:right;">
-n_unique
-</th>
-<th style="text-align:right;">
-whitespace
-</th>
+<colgroup>
+<col width="19%">
+<col width="13%">
+<col width="19%">
+<col width="5%">
+<col width="5%">
+<col width="8%">
+<col width="12%">
+<col width="15%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
 </tr></thead>
-<tbody><tr>
-<td style="text-align:left;">
-Location
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
+<tbody><tr class="odd">
+<td align="left">Location</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
 </tr></tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
-<table class="table">
-<thead><tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:right;">
-mean
-</th>
-<th style="text-align:right;">
-sd
-</th>
-<th style="text-align:right;">
-p0
-</th>
-<th style="text-align:right;">
-p25
-</th>
-<th style="text-align:right;">
-p50
-</th>
-<th style="text-align:right;">
-p75
-</th>
-<th style="text-align:right;">
-p100
-</th>
-<th style="text-align:left;">
-hist
-</th>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="28%">
+<col width="9%">
+<col width="13%">
+<col width="6%">
+<col width="6%">
+<col width="2%">
+<col width="4%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+<col width="5%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Wind Speed - average (km/h)
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-9.33
-</td>
-<td style="text-align:right;">
-7.46
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3.85
-</td>
-<td style="text-align:right;">
-7.78
-</td>
-<td style="text-align:right;">
-13.46
-</td>
-<td style="text-align:right;">
-55.30
-</td>
-<td style="text-align:left;">
-▇▃▁▁▁
-</td>
+<tr class="odd">
+<td align="left">Wind Speed - average (km/h)</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">9.33</td>
+<td align="right">7.46</td>
+<td align="right">0</td>
+<td align="right">3.85</td>
+<td align="right">7.78</td>
+<td align="right">13.46</td>
+<td align="right">55.30</td>
+<td align="left">▇▃▁▁▁</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Wind Direction - average (º)
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-165.15
-</td>
-<td style="text-align:right;">
-142.04
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-7.85
-</td>
-<td style="text-align:right;">
-158.55
-</td>
-<td style="text-align:right;">
-307.60
-</td>
-<td style="text-align:right;">
-359.89
-</td>
-<td style="text-align:left;">
-▇▁▁▃▆
-</td>
+<tr class="even">
+<td align="left">Wind Direction - average (º)</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">165.15</td>
+<td align="right">142.04</td>
+<td align="right">0</td>
+<td align="right">7.85</td>
+<td align="right">158.55</td>
+<td align="right">307.60</td>
+<td align="right">359.89</td>
+<td align="left">▇▁▁▃▆</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Rainfall - (mm)
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.01
-</td>
-<td style="text-align:right;">
-0.07
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0.00
-</td>
-<td style="text-align:right;">
-0.00
-</td>
-<td style="text-align:right;">
-0.00
-</td>
-<td style="text-align:right;">
-3.80
-</td>
-<td style="text-align:left;">
-▇▁▁▁▁
-</td>
+<tr class="odd">
+<td align="left">Rainfall - (mm)</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.01</td>
+<td align="right">0.07</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">3.80</td>
+<td align="left">▇▁▁▁▁</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Variable type: POSIXct</strong></p>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:left;">
-min
-</th>
-<th style="text-align:left;">
-max
-</th>
-<th style="text-align:left;">
-median
-</th>
-<th style="text-align:right;">
-n_unique
-</th>
+<colgroup>
+<col width="13%">
+<col width="9%">
+<col width="13%">
+<col width="18%">
+<col width="18%">
+<col width="18%">
+<col width="8%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
 </tr></thead>
-<tbody><tr>
-<td style="text-align:left;">
-Time
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-2019-01-22 12:40:00
-</td>
-<td style="text-align:left;">
-2019-12-06 14:30:00
-</td>
-<td style="text-align:left;">
-2019-07-01 18:00:00
-</td>
-<td style="text-align:right;">
-43473
-</td>
+<tbody><tr class="odd">
+<td align="left">Time</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2019-01-22 12:40:00</td>
+<td align="left">2019-12-06 14:30:00</td>
+<td align="left">2019-07-01 18:00:00</td>
+<td align="right">43473</td>
 </tr></tbody>
 </table>
 </div>
 </div>
-<div id="horsham-weather-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#horsham-weather-data" class="anchor"></a>Horsham Weather Data</h2>
-<div id="import-horsham-weather-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#import-horsham-weather-data" class="anchor"></a>Import Horsham Weather Data</h3>
+<div class="section level2">
+<h2 id="horsham-weather-data">Horsham Weather Data<a class="anchor" aria-label="anchor" href="#horsham-weather-data"></a>
+</h2>
+<div class="section level3">
+<h3 id="import-horsham-weather-data">Import Horsham Weather Data<a class="anchor" aria-label="anchor" href="#import-horsham-weather-data"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Horsham_w</span> <span class="op">&lt;-</span>
-   <span class="fu">read_csv</span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>
-         <span class="st">"extdata"</span>,
-         <span class="st">"Horsham_SPA_2019_weather.csv"</span>,
-         package <span class="op">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,
-         mustWork <span class="op">=</span> <span class="cn">TRUE</span>
-      <span class="op">)</span>
-   <span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">Time</span>,
-          <span class="st">'Wind Speed - average (km/h)'</span>,
-          <span class="st">'Wind Direction - average (º)'</span>,
-          <span class="st">"Rainfall - (mm)"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Time <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">dmy_hm</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="st">"Horsham"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">Location</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Horsham_w</span> <span class="op">&lt;-</span></span>
+<span>   <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>         <span class="st">"extdata"</span>,</span>
+<span>         <span class="st">"Horsham_SPA_2019_weather.csv"</span>,</span>
+<span>         package <span class="op">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,</span>
+<span>         mustWork <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>      <span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Time</span>,</span>
+<span>          <span class="st">'Wind Speed - average (km/h)'</span>,</span>
+<span>          <span class="st">'Wind Direction - average (º)'</span>,</span>
+<span>          <span class="st">"Rainfall - (mm)"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Time <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hm</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="st">"Horsham"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Location</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="inspect-horsham-weather-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inspect-horsham-weather-data" class="anchor"></a>Inspect Horsham Weather Data</h3>
+<div class="section level3">
+<h3 id="inspect-horsham-weather-data">Inspect Horsham Weather Data<a class="anchor" aria-label="anchor" href="#inspect-horsham-weather-data"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">Horsham_w</span><span class="op">)</span></code></pre></div>
-<table class="table table table-condensed">
-<caption>
-Data summary
-</caption>
-<thead><tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-</th>
-</tr></thead>
+<code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html" class="external-link">skim</a></span><span class="op">(</span><span class="va">Horsham_w</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Data summary</caption>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Name
-</td>
-<td style="text-align:left;">
-Horsham_w
-</td>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Horsham_w</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Number of rows
-</td>
-<td style="text-align:left;">
-38705
-</td>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">38705</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Number of columns
-</td>
-<td style="text-align:left;">
-5
-</td>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">5</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-_______________________
-</td>
-<td style="text-align:left;">
-</td>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Column type frequency:
-</td>
-<td style="text-align:left;">
-</td>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
 </tr>
-<tr>
-<td style="text-align:left;">
-character
-</td>
-<td style="text-align:left;">
-1
-</td>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-numeric
-</td>
-<td style="text-align:left;">
-3
-</td>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">3</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-POSIXct
-</td>
-<td style="text-align:left;">
-1
-</td>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">1</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-________________________
-</td>
-<td style="text-align:left;">
-</td>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Group variables
-</td>
-<td style="text-align:left;">
-None
-</td>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Variable type: character</strong></p>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:right;">
-min
-</th>
-<th style="text-align:right;">
-max
-</th>
-<th style="text-align:right;">
-empty
-</th>
-<th style="text-align:right;">
-n_unique
-</th>
-<th style="text-align:right;">
-whitespace
-</th>
+<colgroup>
+<col width="19%">
+<col width="13%">
+<col width="19%">
+<col width="5%">
+<col width="5%">
+<col width="8%">
+<col width="12%">
+<col width="15%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
 </tr></thead>
-<tbody><tr>
-<td style="text-align:left;">
-Location
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
+<tbody><tr class="odd">
+<td align="left">Location</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
 </tr></tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
-<table class="table">
-<thead><tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:right;">
-mean
-</th>
-<th style="text-align:right;">
-sd
-</th>
-<th style="text-align:right;">
-p0
-</th>
-<th style="text-align:right;">
-p25
-</th>
-<th style="text-align:right;">
-p50
-</th>
-<th style="text-align:right;">
-p75
-</th>
-<th style="text-align:right;">
-p100
-</th>
-<th style="text-align:left;">
-hist
-</th>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="28%">
+<col width="9%">
+<col width="13%">
+<col width="6%">
+<col width="6%">
+<col width="2%">
+<col width="5%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+<col width="5%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Wind Speed - average (km/h)
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-8.16
-</td>
-<td style="text-align:right;">
-6.98
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2.77
-</td>
-<td style="text-align:right;">
-6.37
-</td>
-<td style="text-align:right;">
-12.13
-</td>
-<td style="text-align:right;">
-49.39
-</td>
-<td style="text-align:left;">
-▇▃▁▁▁
-</td>
+<tr class="odd">
+<td align="left">Wind Speed - average (km/h)</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">8.16</td>
+<td align="right">6.98</td>
+<td align="right">0</td>
+<td align="right">2.77</td>
+<td align="right">6.37</td>
+<td align="right">12.13</td>
+<td align="right">49.39</td>
+<td align="left">▇▃▁▁▁</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Wind Direction - average (º)
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-164.14
-</td>
-<td style="text-align:right;">
-133.97
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-15.19
-</td>
-<td style="text-align:right;">
-160.41
-</td>
-<td style="text-align:right;">
-292.59
-</td>
-<td style="text-align:right;">
-359.89
-</td>
-<td style="text-align:left;">
-▇▂▁▅▆
-</td>
+<tr class="even">
+<td align="left">Wind Direction - average (º)</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">164.14</td>
+<td align="right">133.97</td>
+<td align="right">0</td>
+<td align="right">15.19</td>
+<td align="right">160.41</td>
+<td align="right">292.59</td>
+<td align="right">359.89</td>
+<td align="left">▇▂▁▅▆</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Rainfall - (mm)
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.01
-</td>
-<td style="text-align:right;">
-0.07
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0.00
-</td>
-<td style="text-align:right;">
-0.00
-</td>
-<td style="text-align:right;">
-0.00
-</td>
-<td style="text-align:right;">
-6.80
-</td>
-<td style="text-align:left;">
-▇▁▁▁▁
-</td>
+<tr class="odd">
+<td align="left">Rainfall - (mm)</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.01</td>
+<td align="right">0.07</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">6.80</td>
+<td align="left">▇▁▁▁▁</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Variable type: POSIXct</strong></p>
 <table class="table">
-<thead><tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:left;">
-min
-</th>
-<th style="text-align:left;">
-max
-</th>
-<th style="text-align:left;">
-median
-</th>
-<th style="text-align:right;">
-n_unique
-</th>
+<colgroup>
+<col width="14%">
+<col width="10%">
+<col width="14%">
+<col width="11%">
+<col width="20%">
+<col width="20%">
+<col width="9%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
 </tr></thead>
-<tbody><tr>
-<td style="text-align:left;">
-Time
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-2019-01-01
-</td>
-<td style="text-align:left;">
-2019-12-06 14:30:00
-</td>
-<td style="text-align:left;">
-2019-06-10 07:20:00
-</td>
-<td style="text-align:right;">
-38705
-</td>
+<tbody><tr class="odd">
+<td align="left">Time</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2019-01-01</td>
+<td align="left">2019-12-06 14:30:00</td>
+<td align="left">2019-06-10 07:20:00</td>
+<td align="right">38705</td>
 </tr></tbody>
 </table>
 </div>
 </div>
-<div id="merge-and-filter-the-data-for-events" class="section level2">
-<h2 class="hasAnchor">
-<a href="#merge-and-filter-the-data-for-events" class="anchor"></a>Merge and Filter the Data for Events</h2>
-<div id="create-the-event-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-the-event-data" class="anchor"></a>Create the Event Data</h3>
-<p>Event data have dates and times when trap plants were deployed, retrieved and assessed for each event.</p>
+<div class="section level2">
+<h2 id="merge-and-filter-the-data-for-events">Merge and Filter the Data for Events<a class="anchor" aria-label="anchor" href="#merge-and-filter-the-data-for-events"></a>
+</h2>
+<div class="section level3">
+<h3 id="create-the-event-data">Create the Event Data<a class="anchor" aria-label="anchor" href="#create-the-event-data"></a>
+</h3>
+<p>Event data have dates and times when trap plants were deployed,
+retrieved and assessed for each event.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">events</span> <span class="op">&lt;-</span>
-   <span class="fu">read_csv</span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>
-         <span class="st">"extdata"</span>,
-         <span class="st">"Dispersal_experiment_dates.csv"</span>,
-         package <span class="op">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,
-         mustWork <span class="op">=</span> <span class="cn">TRUE</span>
-      <span class="op">)</span>
-   <span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`assessment date` <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">`assessment date`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>exposed <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/interval.html">interval</a></span><span class="op">(</span><span class="va">`time out`</span>, <span class="va">`time removed`</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">events</span>, format <span class="op">=</span> <span class="st">"html"</span>, table.attr <span class="op">=</span> <span class="st">'class="table table-hover"'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">events</span> <span class="op">&lt;-</span></span>
+<span>   <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>         <span class="st">"extdata"</span>,</span>
+<span>         <span class="st">"Dispersal_experiment_dates.csv"</span>,</span>
+<span>         package <span class="op">=</span> <span class="st">"ChickpeaAscoDispersal"</span>,</span>
+<span>         mustWork <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>      <span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>`assessment date` <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">dmy</a></span><span class="op">(</span><span class="va">`assessment date`</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>exposed <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/interval.html" class="external-link">interval</a></span><span class="op">(</span><span class="va">`time out`</span>, <span class="va">`time removed`</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">events</span>, format <span class="op">=</span> <span class="st">"html"</span>, table.attr <span class="op">=</span> <span class="st">'class="table table-hover"'</span><span class="op">)</span></span></code></pre></div>
 <table class="table table table-hover">
 <thead><tr>
 <th style="text-align:left;">
@@ -1054,324 +752,236 @@ Curyo
 </tbody>
 </table>
 </div>
-<div id="filter-and-merge-the-locations-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#filter-and-merge-the-locations-data" class="anchor"></a>Filter and Merge the Locations’ Data</h3>
-<p>Filter the data removing any dates that do not have “event” data necessary for analysis. Because events overlap at Horsham, the dryland and irrigated sites are handled separately first, then combined. To do this, first <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>, then use <code>case_when()</code> to match the dates and times with the <code>events</code> data frame and create new variables to indicate which replicate and location, which is used to determine an event in the data.</p>
-<div id="horsham-irrigated" class="section level4">
-<h4 class="hasAnchor">
-<a href="#horsham-irrigated" class="anchor"></a>Horsham Irrigated</h4>
+<div class="section level3">
+<h3 id="filter-and-merge-the-locations-data">Filter and Merge the Locations’ Data<a class="anchor" aria-label="anchor" href="#filter-and-merge-the-locations-data"></a>
+</h3>
+<p>Filter the data removing any dates that do not have “event” data
+necessary for analysis. Because events overlap at Horsham, the dryland
+and irrigated sites are handled separately first, then combined. To do
+this, first <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>, then use <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code> to
+match the dates and times with the <code>events</code> data frame and
+create new variables to indicate which replicate and location, which is
+used to determine an event in the data.</p>
+<div class="section level4">
+<h4 id="horsham-irrigated">Horsham Irrigated<a class="anchor" aria-label="anchor" href="#horsham-irrigated"></a>
+</h4>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Horsham_irrg</span> <span class="op">&lt;-</span>
-   <span class="va">Horsham_w</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">|</span>
-             <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">|</span>
-             <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">3</span>, <span class="st">"exposed"</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
-      Location <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
-         <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">1</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span>,
-         <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">2</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span>,
-         <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">3</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">3</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span>
-      <span class="op">)</span>
-   <span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
-      Rep <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
-         <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">1</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>,
-         <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">2</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>,
-         <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">3</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">3</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>
-      <span class="op">)</span>
-   <span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">rename</span><span class="op">(</span>site <span class="op">=</span> <span class="va">Location</span>, rep <span class="op">=</span> <span class="va">Rep</span>, time <span class="op">=</span> <span class="va">Time</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Horsham_irrg</span> <span class="op">&lt;-</span></span>
+<span>   <span class="va">Horsham_w</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">|</span></span>
+<span>             <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">|</span></span>
+<span>             <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">3</span>, <span class="st">"exposed"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>      Location <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>         <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">1</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>         <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">2</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>         <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">3</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">3</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span></span>
+<span>      <span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>      Rep <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>         <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">1</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>         <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">2</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>         <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">3</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">3</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span></span>
+<span>      <span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>site <span class="op">=</span> <span class="va">Location</span>, rep <span class="op">=</span> <span class="va">Rep</span>, time <span class="op">=</span> <span class="va">Time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="horsham-rain" class="section level4">
-<h4 class="hasAnchor">
-<a href="#horsham-rain" class="anchor"></a>Horsham Rain</h4>
+<div class="section level4">
+<h4 id="horsham-rain">Horsham Rain<a class="anchor" aria-label="anchor" href="#horsham-rain"></a>
+</h4>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Horsham_rain</span> <span class="op">&lt;-</span>
-   <span class="va">Horsham_w</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">4</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">|</span>
-             <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">5</span>, <span class="st">"exposed"</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">4</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">4</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span>,
-                               <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">5</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">5</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Rep <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">4</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">4</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>,
-                          <span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fl">5</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">5</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>, <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">rename</span><span class="op">(</span>site <span class="op">=</span> <span class="va">Location</span>, rep <span class="op">=</span> <span class="va">Rep</span>, time <span class="op">=</span> <span class="va">Time</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Horsham_rain</span> <span class="op">&lt;-</span></span>
+<span>   <span class="va">Horsham_w</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">4</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">|</span></span>
+<span>             <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">5</span>, <span class="st">"exposed"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">4</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">4</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>                               <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">5</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">5</span>, <span class="st">"site"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Rep <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">4</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">4</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>                          <span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fl">5</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="va">events</span><span class="op">[[</span><span class="fl">5</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span>, <span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>site <span class="op">=</span> <span class="va">Location</span>, rep <span class="op">=</span> <span class="va">Rep</span>, time <span class="op">=</span> <span class="va">Time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="curyo-rain" class="section level4">
-<h4 class="hasAnchor">
-<a href="#curyo-rain" class="anchor"></a>Curyo Rain</h4>
+<div class="section level4">
+<h4 id="curyo-rain">Curyo Rain<a class="anchor" aria-label="anchor" href="#curyo-rain"></a>
+</h4>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Curyo_rain</span> <span class="op">&lt;-</span>
-   <span class="va">Curyo_w</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>, <span class="st">"exposed"</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>,
-                                                    <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="st">"Curyo"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Rep <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">Time</span> <span class="op">%within%</span> <span class="va">events</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span>
-                             <span class="va">events</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">rename</span><span class="op">(</span>site <span class="op">=</span> <span class="va">Location</span>, rep <span class="op">=</span> <span class="va">Rep</span>, time <span class="op">=</span> <span class="va">Time</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">Curyo_rain</span>, <span class="va">Horsham_irrg</span>, <span class="va">Horsham_rain</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Curyo_rain</span> <span class="op">&lt;-</span></span>
+<span>   <span class="va">Curyo_w</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>, <span class="st">"exposed"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>,</span>
+<span>                                                    <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span> <span class="st">"Curyo"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Rep <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">Time</span> <span class="op"><a href="https://lubridate.tidyverse.org/reference/within-interval.html" class="external-link">%within%</a></span> <span class="va">events</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>, <span class="st">"exposed"</span><span class="op">]</span> <span class="op">~</span></span>
+<span>                             <span class="va">events</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Curyo"</span><span class="op">)</span>, <span class="st">"rep"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>site <span class="op">=</span> <span class="va">Location</span>, rep <span class="op">=</span> <span class="va">Rep</span>, time <span class="op">=</span> <span class="va">Time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">Curyo_rain</span>, <span class="va">Horsham_irrg</span>, <span class="va">Horsham_rain</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="rename-columns-and-add-other-calculations" class="section level3">
-<h3 class="hasAnchor">
-<a href="#rename-columns-and-add-other-calculations" class="anchor"></a>Rename Columns and Add Other Calculations</h3>
-<p>The <code>Wind Speed - average (km/h)</code> column is converted to metres per second and renamed <code>wind_speed</code>. The standard deviation of the wind speed and wind direction are calculated for the data. The columns are then reordered by <code>Location</code>, <code>Rep</code>, <code>Time</code> and the weather data.</p>
+<div class="section level3">
+<h3 id="rename-columns-and-add-other-calculations">Rename Columns and Add Other Calculations<a class="anchor" aria-label="anchor" href="#rename-columns-and-add-other-calculations"></a>
+</h3>
+<p>The <code>Wind Speed - average (km/h)</code> column is converted to
+metres per second and renamed <code>wind_speed</code>. The standard
+deviation of the wind speed and wind direction are calculated for the
+data. The columns are then reordered by <code>Location</code>,
+<code>Rep</code>, <code>Time</code> and the weather data.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cleaned_weather</span> <span class="op">&lt;-</span>
-   <span class="va">weather</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`Wind Speed - average (km/h)` <span class="op">=</span> <span class="va">`Wind Speed - average (km/h)`</span> <span class="op">/</span>
-             <span class="fl">3.6</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">rename</span><span class="op">(</span>wind_speed <span class="op">=</span> <span class="va">`Wind Speed - average (km/h)`</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">rename</span><span class="op">(</span>wind_direction <span class="op">=</span> <span class="va">`Wind Direction - average (º)`</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">rename</span><span class="op">(</span>rainfall <span class="op">=</span> <span class="va">`Rainfall - (mm)`</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">select</span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">arrange</span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-   <span class="fu">mutate_at</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span><span class="op">)</span>, <span class="va">factor</span><span class="op">)</span>
-
-<span class="fu">glimpse</span><span class="op">(</span><span class="va">cleaned_weather</span><span class="op">)</span></code></pre></div>
-<pre><code>## Rows: 2,202
-## Columns: 6
-## $ site           &lt;fct&gt; Curyo, Curyo, Curyo, Curyo, Curyo, Curyo, Curyo, Curyo…
-## $ rep            &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ time           &lt;dttm&gt; 2019-10-15 08:00:00, 2019-10-15 08:10:00, 2019-10-15 …
-## $ wind_speed     &lt;dbl&gt; 3.37, 3.44, 3.30, 3.49, 3.69, 3.73, 3.61, 3.32, 3.40, …
-## $ wind_direction &lt;dbl&gt; 350.537678, 357.810346, 357.167889, 357.911110, 355.97…
-## $ rainfall       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
+<code class="sourceCode R"><span><span class="va">cleaned_weather</span> <span class="op">&lt;-</span></span>
+<span>   <span class="va">weather</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>`Wind Speed - average (km/h)` <span class="op">=</span> <span class="va">`Wind Speed - average (km/h)`</span> <span class="op">/</span></span>
+<span>             <span class="fl">3.6</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>wind_speed <span class="op">=</span> <span class="va">`Wind Speed - average (km/h)`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>wind_direction <span class="op">=</span> <span class="va">`Wind Direction - average (º)`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>rainfall <span class="op">=</span> <span class="va">`Rainfall - (mm)`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span>, <span class="va">time</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span><span class="op">)</span>, <span class="va">factor</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">cleaned_weather</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Rows: 2,202</span></span>
+<span><span class="co">## Columns: 6</span></span>
+<span><span class="co">## $ site           <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Curyo, Curyo, Curyo, Curyo, Curyo, Curyo, Curyo, Curyo,…</span></span>
+<span><span class="co">## $ rep            <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
+<span><span class="co">## $ time           <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2019-10-15 08:00:00, 2019-10-15 08:10:00, 2019-10-15 0…</span></span>
+<span><span class="co">## $ wind_speed     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3.37, 3.44, 3.30, 3.49, 3.69, 3.73, 3.61, 3.32, 3.40, 3…</span></span>
+<span><span class="co">## $ wind_direction <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 350.537678, 357.810346, 357.167889, 357.911110, 355.975…</span></span>
+<span><span class="co">## $ rainfall       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</span></span></code></pre>
 </div>
-<div id="summarise-weather-data-by-event" class="section level3">
-<h3 class="hasAnchor">
-<a href="#summarise-weather-data-by-event" class="anchor"></a>Summarise Weather Data by Event</h3>
-<p>The weather data are now ready for summarising for each event that occurred. The resulting columns are:</p>
+<div class="section level3">
+<h3 id="summarise-weather-data-by-event">Summarise Weather Data by Event<a class="anchor" aria-label="anchor" href="#summarise-weather-data-by-event"></a>
+</h3>
+<p>The weather data are now ready for summarising for each event that
+occurred. The resulting columns are:</p>
 <ul>
 <li><p>mws - mean wind speed in meters per second</p></li>
 <li><p>ws_sd - standard deviation of the wind speed</p></li>
 <li><p>mwd - mean wind direction in degrees</p></li>
-<li><p>wd_sd - standard deviation of the wind direction in degrees</p></li>
-<li><p>sum_rain - total rainfall and irrigation (if applicable) during the event</p></li>
+<li><p>wd_sd - standard deviation of the wind direction in
+degrees</p></li>
+<li><p>sum_rain - total rainfall and irrigation (if applicable) during
+the event</p></li>
 </ul>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">summary_weather</span> <span class="op">&lt;-</span>
-   <span class="va">cleaned_weather</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">summarise</span><span class="op">(</span>
-      mws <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,
-      ws_sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,
-      max_ws <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,
-      min_ws <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,
-      mwd <span class="op">=</span> <span class="fu"><a href="../reference/circular.averaging.html">circular.averaging</a></span><span class="op">(</span><span class="va">wind_direction</span><span class="op">)</span>,
-      sum_rain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span>
-   <span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="co"># add the 11 mm of irrigation to the summary</span>
-      sum_rain <span class="op">=</span>
-         <span class="fu">case_when</span><span class="op">(</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Horsham irrigated"</span> <span class="op">~</span> <span class="va">sum_rain</span> <span class="op">+</span> <span class="fl">11</span>,
-                   <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">sum_rain</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by 'site'. You can override using the `.groups` argument.</code></pre>
+<code class="sourceCode R"><span><span class="va">summary_weather</span> <span class="op">&lt;-</span></span>
+<span>   <span class="va">cleaned_weather</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">rep</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>      mws <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,</span>
+<span>      ws_sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,</span>
+<span>      max_ws <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,</span>
+<span>      min_ws <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">wind_speed</span><span class="op">)</span>,</span>
+<span>      mwd <span class="op">=</span> <span class="fu"><a href="../reference/circular.averaging.html">circular.averaging</a></span><span class="op">(</span><span class="va">wind_direction</span><span class="op">)</span>,</span>
+<span>      sum_rain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="co"># add the 11 mm of irrigation to the summary</span></span>
+<span>      sum_rain <span class="op">=</span></span>
+<span>         <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">site</span> <span class="op">==</span> <span class="st">"Horsham irrigated"</span> <span class="op">~</span> <span class="va">sum_rain</span> <span class="op">+</span> <span class="fl">11</span>,</span>
+<span>                   <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">sum_rain</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## `summarise()` has grouped output by 'site'. You can override using the</span></span>
+<span><span class="co">## `.groups` argument.</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">summary_weather</span>,
-      align <span class="op">=</span> <span class="st">"c"</span>,
-      caption <span class="op">=</span> <span class="st">"Summary weather data for replicated rain event (spread event) per unique site."</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">summary_weather</span>,</span>
+<span>      align <span class="op">=</span> <span class="st">"c"</span>,</span>
+<span>      caption <span class="op">=</span> <span class="st">"Summary weather data for replicated rain event (spread event) per unique site."</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<caption>
-Summary weather data for replicated rain event (spread event) per unique site.
-</caption>
-<thead><tr>
-<th style="text-align:center;">
-site
-</th>
-<th style="text-align:center;">
-rep
-</th>
-<th style="text-align:center;">
-mws
-</th>
-<th style="text-align:center;">
-ws_sd
-</th>
-<th style="text-align:center;">
-max_ws
-</th>
-<th style="text-align:center;">
-min_ws
-</th>
-<th style="text-align:center;">
-mwd
-</th>
-<th style="text-align:center;">
-sum_rain
-</th>
+<caption>Summary weather data for replicated rain event (spread event)
+per unique site.</caption>
+<colgroup>
+<col width="23%">
+<col width="6%">
+<col width="12%">
+<col width="13%">
+<col width="9%">
+<col width="9%">
+<col width="12%">
+<col width="12%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">site</th>
+<th align="center">rep</th>
+<th align="center">mws</th>
+<th align="center">ws_sd</th>
+<th align="center">max_ws</th>
+<th align="center">min_ws</th>
+<th align="center">mwd</th>
+<th align="center">sum_rain</th>
 </tr></thead>
 <tbody>
-<tr>
-<td style="text-align:center;">
-Curyo
-</td>
-<td style="text-align:center;">
-1
-</td>
-<td style="text-align:center;">
-3.577163
-</td>
-<td style="text-align:center;">
-2.2302100
-</td>
-<td style="text-align:center;">
-9.41
-</td>
-<td style="text-align:center;">
-0.00
-</td>
-<td style="text-align:center;">
-353.5045
-</td>
-<td style="text-align:center;">
-0.8
-</td>
+<tr class="odd">
+<td align="center">Curyo</td>
+<td align="center">1</td>
+<td align="center">3.577163</td>
+<td align="center">2.2302100</td>
+<td align="center">9.41</td>
+<td align="center">0.00</td>
+<td align="center">353.5045</td>
+<td align="center">0.8</td>
 </tr>
-<tr>
-<td style="text-align:center;">
-Horsham dryland
-</td>
-<td style="text-align:center;">
-1
-</td>
-<td style="text-align:center;">
-3.085387
-</td>
-<td style="text-align:center;">
-1.9379332
-</td>
-<td style="text-align:center;">
-7.61
-</td>
-<td style="text-align:center;">
-0.00
-</td>
-<td style="text-align:center;">
-311.0201
-</td>
-<td style="text-align:center;">
-4.6
-</td>
+<tr class="even">
+<td align="center">Horsham dryland</td>
+<td align="center">1</td>
+<td align="center">3.085387</td>
+<td align="center">1.9379332</td>
+<td align="center">7.61</td>
+<td align="center">0.00</td>
+<td align="center">311.0201</td>
+<td align="center">4.6</td>
 </tr>
-<tr>
-<td style="text-align:center;">
-Horsham dryland
-</td>
-<td style="text-align:center;">
-2
-</td>
-<td style="text-align:center;">
-3.996127
-</td>
-<td style="text-align:center;">
-2.7133595
-</td>
-<td style="text-align:center;">
-11.24
-</td>
-<td style="text-align:center;">
-0.00
-</td>
-<td style="text-align:center;">
-332.3283
-</td>
-<td style="text-align:center;">
-18.6
-</td>
+<tr class="odd">
+<td align="center">Horsham dryland</td>
+<td align="center">2</td>
+<td align="center">3.996127</td>
+<td align="center">2.7133595</td>
+<td align="center">11.24</td>
+<td align="center">0.00</td>
+<td align="center">332.3283</td>
+<td align="center">18.6</td>
 </tr>
-<tr>
-<td style="text-align:center;">
-Horsham irrigated
-</td>
-<td style="text-align:center;">
-1
-</td>
-<td style="text-align:center;">
-1.902828
-</td>
-<td style="text-align:center;">
-0.9050266
-</td>
-<td style="text-align:center;">
-4.01
-</td>
-<td style="text-align:center;">
-0.35
-</td>
-<td style="text-align:center;">
-234.6542
-</td>
-<td style="text-align:center;">
-11.0
-</td>
+<tr class="even">
+<td align="center">Horsham irrigated</td>
+<td align="center">1</td>
+<td align="center">1.902828</td>
+<td align="center">0.9050266</td>
+<td align="center">4.01</td>
+<td align="center">0.35</td>
+<td align="center">234.6542</td>
+<td align="center">11.0</td>
 </tr>
-<tr>
-<td style="text-align:center;">
-Horsham irrigated
-</td>
-<td style="text-align:center;">
-2
-</td>
-<td style="text-align:center;">
-2.233103
-</td>
-<td style="text-align:center;">
-1.2895001
-</td>
-<td style="text-align:center;">
-4.16
-</td>
-<td style="text-align:center;">
-0.00
-</td>
-<td style="text-align:center;">
-272.7072
-</td>
-<td style="text-align:center;">
-11.0
-</td>
+<tr class="odd">
+<td align="center">Horsham irrigated</td>
+<td align="center">2</td>
+<td align="center">2.233103</td>
+<td align="center">1.2895001</td>
+<td align="center">4.16</td>
+<td align="center">0.00</td>
+<td align="center">272.7072</td>
+<td align="center">11.0</td>
 </tr>
-<tr>
-<td style="text-align:center;">
-Horsham irrigated
-</td>
-<td style="text-align:center;">
-3
-</td>
-<td style="text-align:center;">
-6.531586
-</td>
-<td style="text-align:center;">
-2.1241262
-</td>
-<td style="text-align:center;">
-11.24
-</td>
-<td style="text-align:center;">
-2.75
-</td>
-<td style="text-align:center;">
-333.6699
-</td>
-<td style="text-align:center;">
-11.6
-</td>
+<tr class="even">
+<td align="center">Horsham irrigated</td>
+<td align="center">3</td>
+<td align="center">6.531586</td>
+<td align="center">2.1241262</td>
+<td align="center">11.24</td>
+<td align="center">2.75</td>
+<td align="center">333.6699</td>
+<td align="center">11.6</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="save-weather-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#save-weather-data" class="anchor"></a>Save Weather Data</h2>
-<p>Save weather data for use in visualisation and modelling. This only needs to be done once.</p>
+<div class="section level2">
+<h2 id="save-weather-data">Save Weather Data<a class="anchor" aria-label="anchor" href="#save-weather-data"></a>
+</h2>
+<p>Save weather data for use in visualisation and modelling. This only
+needs to be done once.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">cleaned_weather</span>, file <span class="op">=</span> <span class="st">"./data/cleaned_weather.rda"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">summary_weather</span>, file <span class="op">=</span> <span class="st">"./data/summary_weather.rda"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">cleaned_weather</span>, file <span class="op">=</span> <span class="st">"./data/cleaned_weather.rda"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">summary_weather</span>, file <span class="op">=</span> <span class="st">"./data/summary_weather.rda"</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 
@@ -1386,11 +996,13 @@ Horsham irrigated
 
 
       <footer><div class="copyright">
-  <p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150, GRDC Project DJP1097-001RTX.</p>
+  <p></p>
+<p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150, GRDC Project DJP1097-001RTX.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
@@ -1398,6 +1010,8 @@ Horsham irrigated
 
   
 
+
+  
 
   </body>
 </html>

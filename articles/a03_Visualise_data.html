@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Visualise Data • ChickpeaAscoDispersal</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ChickpeaAscoDispersal</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/">
+  <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,15 +87,16 @@
 
       
 
-      </header><script src="a03_Visualise_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualise Data</h1>
-                        <h4 class="author">A.H. Sparks</h4>
+                        <h4 data-toc-skip class="author">A.H.
+Sparks</h4>
             
-            <h4 class="date">2021-01-19</h4>
+            <h4 data-toc-skip class="date">2024-04-28</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/master/vignettes/a03_Visualise_data.Rmd"><code>vignettes/a03_Visualise_data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/adamhsparks/ChickpeaAscoDispersal/blob/HEAD/vignettes/a03_Visualise_data.Rmd" class="external-link"><code>vignettes/a03_Visualise_data.Rmd</code></a></small>
       <div class="hidden name"><code>a03_Visualise_data.Rmd</code></div>
 
     </div>
@@ -107,159 +104,182 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org">"lubridate"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/clifro/">"clifro"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/sjmgarnier/viridis">"viridis"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://rpkgs.datanovia.com/ggpubr/">"ggpubr"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://here.r-lib.org/">"here"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal">"ChickpeaAscoDispersal"</a></span><span class="op">)</span>
-
-<span class="fu">theme_set</span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="visualise-counts-per-pot" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualise-counts-per-pot" class="anchor"></a>Visualise Counts per Pot</h2>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org" class="external-link">"tidyverse"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org" class="external-link">"lubridate"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/clifro/" class="external-link">"clifro"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://sjmgarnier.github.io/viridis/" class="external-link">"viridis"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">"ggpubr"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://here.r-lib.org/" class="external-link">"here"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adamhsparks/ChickpeaAscoDispersal" class="external-link">"ChickpeaAscoDispersal"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html" class="external-link">theme_pubclean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="visualise-counts-per-pot">Visualise Counts per Pot<a class="anchor" aria-label="anchor" href="#visualise-counts-per-pot"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Mean lesion count per plant"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Mean lesion count per plant"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/lesion-count-1.png" alt="Density plot of mean lesions counted per plant for all six events." width="902.4"><p class="caption">
 Density plot of mean lesions counted per plant for all six events.
 </p>
 </div>
 </div>
-<div id="visualise-the-dispersal-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualise-the-dispersal-data" class="anchor"></a>Visualise the Dispersal Data</h2>
+<div class="section level2">
+<h2 id="visualise-the-dispersal-data">Visualise the Dispersal Data<a class="anchor" aria-label="anchor" href="#visualise-the-dispersal-data"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">distance</span>,
-                          y <span class="op">=</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">geom_count</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">scale_size</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">stat_summary</span><span class="op">(</span>fun.y <span class="op">=</span> <span class="st">"median"</span>,
-                geom <span class="op">=</span> <span class="st">"line"</span>,
-                na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">stat_summary</span><span class="op">(</span>
-      fun.y <span class="op">=</span> <span class="st">"median"</span>,
-      colour <span class="op">=</span> <span class="st">"red"</span>,
-      size <span class="op">=</span> <span class="fl">2</span>,
-      geom <span class="op">=</span> <span class="st">"point"</span>
-   <span class="op">)</span> <span class="op">+</span>
-   <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.window.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">ylab</span><span class="op">(</span><span class="st">"Mean lesion count values"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Distance (m)"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">distance</span>,</span>
+<span>                          y <span class="op">=</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span>fun.y <span class="op">=</span> <span class="st">"median"</span>,</span>
+<span>                geom <span class="op">=</span> <span class="st">"line"</span>,</span>
+<span>                na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span></span>
+<span>      fun.y <span class="op">=</span> <span class="st">"median"</span>,</span>
+<span>      colour <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      geom <span class="op">=</span> <span class="st">"point"</span></span>
+<span>   <span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Mean lesion count values"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Distance (m)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/combined-dispersal-1.png" alt="Mean number of conidia dispersed (counted as lesions) per plant during each spread event. Where the mean lesions per plant for each pot is shown on the y-axis and distance dispersed is on the x-axis. ‘n’ indicates the count of pots with the same mean lesions per trap plant, and is represented by point size. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event." width="902.4"><p class="caption">
-Mean number of conidia dispersed (counted as lesions) per plant during each spread event. Where the mean lesions per plant for each pot is shown on the y-axis and distance dispersed is on the x-axis. ‘n’ indicates the count of pots with the same mean lesions per trap plant, and is represented by point size. Red points and line show median lesions counted per trap plant. Conidia travelled up to 75 m in each of the six irrigation and rainfall event.
+Mean number of conidia dispersed (counted as lesions) per plant during
+each spread event. Where the mean lesions per plant for each pot is
+shown on the y-axis and distance dispersed is on the x-axis. ‘n’
+indicates the count of pots with the same mean lesions per trap plant,
+and is represented by point size. Red points and line show median
+lesions counted per trap plant. Conidia travelled up to 75 m in each of
+the six irrigation and rainfall event.
 </p>
 </div>
 </div>
-<div id="visualise-the-rainfall" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualise-the-rainfall" class="anchor"></a>Visualise the Rainfall</h2>
+<div class="section level2">
+<h2 id="visualise-the-rainfall">Visualise the Rainfall<a class="anchor" aria-label="anchor" href="#visualise-the-rainfall"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="va">cleaned_weather</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"rep"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">dat</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SpEv</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Hour <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">"1 hour"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SpEv</span>, <span class="va">Hour</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">summarize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Hour</span>, y <span class="op">=</span> <span class="va">`sum(rainfall)`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">scale_x_datetime</span><span class="op">(</span>
-      <span class="st">"Date (day-month)"</span>,
-      date_breaks <span class="op">=</span> <span class="st">"day"</span>,
-      date_labels <span class="op">=</span> <span class="st">"%d-%m"</span>,
-      date_minor_breaks <span class="op">=</span> <span class="st">"hour"</span>,
-      guide <span class="op">=</span> <span class="fu">guide_axis</span><span class="op">(</span>check.overlap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-   <span class="op">)</span> <span class="op">+</span>
-   <span class="fu">ylab</span><span class="op">(</span><span class="st">"Precipitation (mm)"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">lesion_counts</span>, <span class="va">cleaned_weather</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"rep"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SpEv</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Hour <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">floor_date</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">"1 hour"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SpEv</span>, <span class="va">Hour</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Hour</span>, y <span class="op">=</span> <span class="va">`sum(rainfall)`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_datetime</a></span><span class="op">(</span></span>
+<span>      <span class="st">"Date (day-month)"</span>,</span>
+<span>      date_breaks <span class="op">=</span> <span class="st">"day"</span>,</span>
+<span>      date_labels <span class="op">=</span> <span class="st">"%d-%m"</span>,</span>
+<span>      date_minor_breaks <span class="op">=</span> <span class="st">"hour"</span>,</span>
+<span>      guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_axis.html" class="external-link">guide_axis</a></span><span class="op">(</span>check.overlap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Precipitation (mm)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/rain-1.png" alt="Ten-minute precipitation data for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, 'Horsham' or 'Curyo'; and whether the site was irrigated, 'Irrg' or rainfed 'Rain' or 'Mixd' (both simultaneously); and event '1', '2' or '3.' Precipitation values, 11&amp;nbsp;mm that were applied, are not shown, only rainfall data are presented." width="902.4"><p class="caption">
-Ten-minute precipitation data for each of the six rainfall or irrigation events at two locations. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; and whether the site was irrigated, ‘Irrg’ or rainfed ‘Rain’ or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’ Precipitation values, 11 mm that were applied, are not shown, only rainfall data are presented.
+Ten-minute precipitation data for each of the six rainfall or irrigation
+events at two locations. Events are denoted by the location, ‘Horsham’
+or ‘Curyo’; and whether the site was irrigated, ‘Irrg’ or rainfed ‘Rain’
+or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’
+Precipitation values, 11 mm that were applied, are not shown, only
+rainfall data are presented.
 </p>
 </div>
 </div>
-<div id="visualise-the-wind-speed-and-direction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualise-the-wind-speed-and-direction" class="anchor"></a>Visualise the Wind Speed and Direction</h2>
+<div class="section level2">
+<h2 id="visualise-the-wind-speed-and-direction">Visualise the Wind Speed and Direction<a class="anchor" aria-label="anchor" href="#visualise-the-wind-speed-and-direction"></a>
+</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pw</span> <span class="op">&lt;-</span>
-   <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span>
-      <span class="va">dat</span>,
-      <span class="fu"><a href="https://docs.ropensci.org/clifro/reference/windrose.html">windrose</a></span><span class="op">(</span>
-         <span class="va">wind_speed</span>,
-         <span class="va">wind_direction</span>,
-         <span class="va">SpEv</span>,
-         n_col <span class="op">=</span> <span class="fl">3</span>,
-         legend_title <span class="op">=</span> <span class="st">"Wind speed (m/s)"</span>
-      <span class="op">)</span>
-   <span class="op">)</span>
-<span class="va">pw</span> <span class="op">+</span>
-   <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Wind Speed (m/s)"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubclean</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pw</span> <span class="op">&lt;-</span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span>
+<span>      <span class="va">dat</span>,</span>
+<span>      <span class="fu"><a href="https://docs.ropensci.org/clifro/reference/windrose.html" class="external-link">windrose</a></span><span class="op">(</span></span>
+<span>         <span class="va">wind_speed</span>,</span>
+<span>         <span class="va">wind_direction</span>,</span>
+<span>         <span class="va">SpEv</span>,</span>
+<span>         n_col <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>         legend_title <span class="op">=</span> <span class="st">"Wind speed (m/s)"</span></span>
+<span>      <span class="op">)</span></span>
+<span>   <span class="op">)</span></span>
+<span><span class="va">pw</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_d</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Wind Speed (m/s)"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html" class="external-link">theme_pubclean</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/wind-1.png" alt="Windroses for spread events showing ten-minute wind speed and direction at the two Horsham sites. Curyo wind speed and direction data are not shown due to a weather station calibration issue resulting in incorrect data for wind direction." width="902.4"><p class="caption">
-Windroses for spread events showing ten-minute wind speed and direction at the two Horsham sites. Curyo wind speed and direction data are not shown due to a weather station calibration issue resulting in incorrect data for wind direction.
+Windroses for spread events showing ten-minute wind speed and direction
+at the two Horsham sites. Curyo wind speed and direction data are not
+shown due to a weather station calibration issue resulting in incorrect
+data for wind direction.
 </p>
 </div>
-<p>When inspecting these data, we noted that the wind direction for Curyo was against the direction of spread along the transects, which led to further investigation of the weather data. That investigation is detailed in <a href="06_Validate_Curyo_weather.html">this analysis</a>.</p>
+<p>When inspecting these data, we noted that the wind direction for
+Curyo was against the direction of spread along the transects, which led
+to further investigation of the weather data. That investigation is
+detailed in <a href="06_Validate_Curyo_weather.html">this
+analysis</a>.</p>
 </div>
-<div id="heatmap-of-lesions-along-transects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#heatmap-of-lesions-along-transects" class="anchor"></a>Heatmap of Lesions Along Transects</h2>
+<div class="section level2">
+<h2 id="heatmap-of-lesions-along-transects">Heatmap of Lesions Along Transects<a class="anchor" aria-label="anchor" href="#heatmap-of-lesions-along-transects"></a>
+</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heat_dat</span> <span class="op">&lt;-</span>
-   <span class="va">lesion_counts</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">SpEv</span>, <span class="va">degrees</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>summed_count_pot <span class="op">=</span>
-             <span class="fu">case_when</span><span class="op">(</span><span class="va">distance</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">m_lesions</span><span class="op">)</span>,
-                       <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">m_lesions</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">heat_dat</span>,
-       <span class="fu">aes</span><span class="op">(</span>
-          x <span class="op">=</span> <span class="va">degrees</span>,
-          y <span class="op">=</span> <span class="va">distance</span>,
-          colour <span class="op">=</span> <span class="va">summed_count_pot</span>,
-          size <span class="op">=</span> <span class="va">summed_count_pot</span>
-       <span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">geom_count</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">heat_dat</span>, <span class="va">distance</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">geom_count</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">heat_dat</span>, <span class="va">distance</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">scale_colour_viridis_c</span><span class="op">(</span>
-      direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,
-      name <span class="op">=</span> <span class="st">"n"</span>,
-      guide <span class="op">=</span> <span class="st">"legend"</span>,
-      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">20</span><span class="op">)</span>
-   <span class="op">)</span> <span class="op">+</span>
-   <span class="fu">coord_polar</span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"x"</span>,
-               start <span class="op">=</span> <span class="fl">0</span>,
-               direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">scale_size</span><span class="op">(</span>
-      range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span>,
-      name <span class="op">=</span> <span class="st">"n"</span>,
-      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">20</span><span class="op">)</span>
-   <span class="op">)</span> <span class="op">+</span>
-   <span class="fu">scale_x_continuous</span><span class="op">(</span>
-      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">90</span>, <span class="fl">180</span>, <span class="fl">270</span><span class="op">)</span>,
-      expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
-      limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span>,
-      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"E"</span>, <span class="st">"S"</span>, <span class="st">"W"</span><span class="op">)</span>
-   <span class="op">)</span> <span class="op">+</span>
-   <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span>,
-                      limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">ylab</span><span class="op">(</span><span class="st">"Distance (m)"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Transect"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heat_dat</span> <span class="op">&lt;-</span></span>
+<span>   <span class="va">lesion_counts</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SpEv</span>, <span class="va">degrees</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>summed_count_pot <span class="op">=</span></span>
+<span>             <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">distance</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">m_lesions</span><span class="op">)</span>,</span>
+<span>                       <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">m_lesions</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">m_lesions</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">heat_dat</span>,</span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>          x <span class="op">=</span> <span class="va">degrees</span>,</span>
+<span>          y <span class="op">=</span> <span class="va">distance</span>,</span>
+<span>          colour <span class="op">=</span> <span class="va">summed_count_pot</span>,</span>
+<span>          size <span class="op">=</span> <span class="va">summed_count_pot</span></span>
+<span>       <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">heat_dat</span>, <span class="va">distance</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html" class="external-link">geom_count</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">heat_dat</span>, <span class="va">distance</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span></span>
+<span>      direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
+<span>      name <span class="op">=</span> <span class="st">"n"</span>,</span>
+<span>      guide <span class="op">=</span> <span class="st">"legend"</span>,</span>
+<span>      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"x"</span>,</span>
+<span>               start <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>               direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size</a></span><span class="op">(</span></span>
+<span>      range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span>,</span>
+<span>      name <span class="op">=</span> <span class="st">"n"</span>,</span>
+<span>      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span></span>
+<span>      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">90</span>, <span class="fl">180</span>, <span class="fl">270</span><span class="op">)</span>,</span>
+<span>      expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>      limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span>,</span>
+<span>      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"E"</span>, <span class="st">"S"</span>, <span class="st">"W"</span><span class="op">)</span></span>
+<span>   <span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span>,</span>
+<span>                      limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Distance (m)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Transect"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">SpEv</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="a03_Visualise_data_files/figure-html/polar_coord_transects-1.png" alt="Heatmap showing count of mean lesions per plant for each pot along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, 'Horsham' or 'Curyo'; source of precipitation 'Irrg' (irrigation), 'Rain' (rainfall) or 'Mixd' (both simultaneously); and event '1', '2' or '3.'" width="902.4"><p class="caption">
-Heatmap showing count of mean lesions per plant for each pot along each of ten transects. Note that any stations where the mean count was zero for any event, the data are not shown for clarity. Events are denoted by the location, ‘Horsham’ or ‘Curyo’; source of precipitation ‘Irrg’ (irrigation), ‘Rain’ (rainfall) or ‘Mixd’ (both simultaneously); and event ‘1’, ‘2’ or ‘3.’
+Heatmap showing count of mean lesions per plant for each pot along each
+of ten transects. Note that any stations where the mean count was zero
+for any event, the data are not shown for clarity. Events are denoted by
+the location, ‘Horsham’ or ‘Curyo’; source of precipitation ‘Irrg’
+(irrigation), ‘Rain’ (rainfall) or ‘Mixd’ (both simultaneously); and
+event ‘1’, ‘2’ or ‘3.’
 </p>
 </div>
 </div>
@@ -276,11 +296,13 @@ Heatmap showing count of mean lesions per plant for each pot along each of ten t
 
 
       <footer><div class="copyright">
-  <p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150, GRDC Project DJP1097-001RTX.</p>
+  <p></p>
+<p>Developed by Ihsanul Khaliq, Joshua Fanning, Paul Melloy, Jean Galloway, Kevin Moore, Daniel Burrell, Adam H. Sparks, GRDC Project USQ1903-003RTX, Agriculture Victoria and GRDC co-investment project DAV00150, GRDC Project DJP1097-001RTX.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
@@ -288,6 +310,8 @@ Heatmap showing count of mean lesions per plant for each pot along each of ten t
 
   
 
+
+  
 
   </body>
 </html>

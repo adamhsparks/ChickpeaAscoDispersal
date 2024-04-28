@@ -1,5 +1,5 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1
+pandoc: 3.1.11
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   a01_Import_raw_data: a01_Import_raw_data.html
@@ -8,8 +8,8 @@ articles:
   a04_lmer: a04_lmer.html
   a05_GAM: a05_GAM.html
   a06_Validate_Curyo_weather: a06_Validate_Curyo_weather.html
-last_built: 2021-01-19T05:12Z
+last_built: 2024-04-28T03:08Z
 urls:
-  reference: https://adamhsparks.github.io/ChickpeaAscoDispersal//reference
-  article: https://adamhsparks.github.io/ChickpeaAscoDispersal//articles
+  reference: https://adamhsparks.github.io/ChickpeaAscoDispersal/reference
+  article: https://adamhsparks.github.io/ChickpeaAscoDispersal/articles
 
