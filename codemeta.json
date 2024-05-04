@@ -3,7 +3,7 @@
   "@type": "SoftwareSourceCode",
   "identifier": "ChickpeaAscoDispersal",
   "description": "Documents the workflow and processes involved in the analysis of data for the paper 'The role of conidia in the dispersal of Ascochyta rabiei', <https://doi.org/10.1007/s10658-020-02126-2>.",
-  "name": "ChickpeaAscoDispersal: Research Compendium for the Paper 'The role of conidia in the dispersal of Ascochyta rabiei'",
+  "name": "ChickpeaAscoDispersal: Research Compendium for the Paper 'The role of conidia in the\n    dispersal of Ascochyta rabiei'",
   "codeRepository": "https://github.com/adamhsparks/ChickpeaAscoDispersal",
   "issueTracker": "https://github.com/adamhsparks/ChickpeaAscoDispersal/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
@@ -100,6 +100,12 @@
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "bomrang",
+      "name": "bomrang",
+      "sameAs": "https://github.com/rOpenSci/bomrang"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "broom",
       "name": "broom",
       "provider": {
@@ -109,12 +115,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=broom"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "bomrang",
-      "name": "bomrang",
-      "sameAs": "https://github.com/rOpenSci/bomrang"
     },
     {
       "@type": "SoftwareApplication",
@@ -336,7 +336,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "12557.203KB",
+  "fileSize": "12556.664KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
